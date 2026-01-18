@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Book your stay at KALONGO FARM - Eco Farm Lodge & Hotel">
+    <title>Book Your Stay - KALONGO FARM</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header with Logo and Navigation -->
+    <header class="header">
+        <div class="container">
+            <div class="logo-section">
+                <img src="images/logo.png" alt="KALONGO FARM Logo" class="logo" id="logo">
+            </div>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="index.html#rooms" class="nav-link">Rooms</a>
+                <a href="index.html#packages" class="nav-link">Packages</a>
+                <a href="index.html#facilities" class="nav-link">Facilities</a>
+                <a href="index.html#location" class="nav-link">Location</a>
+                <a href="booking.html" class="nav-link btn-booking">Book Now</a>
+            </nav>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Booking Hero Section -->
+    <section class="booking-hero" style="background-image: url('images/booking-hero-background.jpg');">
+        <div class="booking-hero-overlay"></div>
+        <div class="booking-hero-content">
+            <h2 class="booking-hero-title">Reserve Your Stay</h2>
+            <p class="booking-hero-subtitle">Experience the perfect blend of comfort and nature</p>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="booking-page">
+        <div class="container">
+            <div class="booking-content-wrapper">
+                <div class="booking-info-card">
+                    <div class="info-icon">🏡</div>
+                    <h3>Why Choose Us?</h3>
+                    <ul class="info-list">
+                        <li>✓ Authentic farm experience</li>
+                        <li>✓ Comfortable accommodations</li>
+                        <li>✓ Farm-fresh organic meals</li>
+                        <li>✓ Swimming pool & activities</li>
+                        <li>✓ Friendly domestic animals</li>
+                    </ul>
+                    <div class="contact-info-box">
+                        <h4>Need Help?</h4>
+                        <p><strong>Phone:</strong> +255 785139150</p>
+                        <p><strong>Email:</strong> info@kalongofarm.com</p>
+                        <p class="whatsapp-note">📱 Bookings sent via WhatsApp</p>
+                    </div>
+                </div>
+                
+                <div class="booking-form-container">
+                    <div class="form-header">
+                        <h2 class="form-title">Complete Your Booking</h2>
+                        <p class="form-subtitle">Fill out the form below and we'll send your booking details to our WhatsApp</p>
+                    </div>
+                    <form class="booking-form-modern" id="bookingForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fullName">Full Name *</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="roomType">Room Type *</label>
+                        <select id="roomType" name="roomType" required>
+                            <option value="">Select Room Type</option>
+                            <option value="A-Cabin">A-Cabin</option>
+                            <option value="Cottage">Cottage</option>
+                            <option value="Kikota">Kikota</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="checkIn">Check-in Date *</label>
+                        <input type="date" id="checkIn" name="checkIn" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="checkOut">Check-out Date *</label>
+                        <input type="date" id="checkOut" name="checkOut" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="guests">Number of Guests *</label>
+                        <input type="number" id="guests" name="guests" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="package">Package (Optional)</label>
+                        <select id="package" name="package">
+                            <option value="">No Package</option>
+                            <option value="Day Visit Package">Day Visit Package</option>
+                            <option value="Weekend Getaway">Weekend Getaway</option>
+                            <option value="Family Retreat">Family Retreat</option>
+                            <option value="Romantic Escape">Romantic Escape</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="message">Additional Message (Optional)</label>
+                    <textarea id="message" name="message" rows="4" placeholder="Any special requests or preferences..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary btn-submit-modern">
+                    <span>Submit Booking</span>
+                    <span class="btn-icon">→</span>
+                </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>KALONGO FARM</h3>
+                    <p>Your gateway to an authentic farm lodge experience</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#rooms">Rooms</a></li>
+                        <li><a href="index.html#packages">Packages</a></li>
+                        <li><a href="index.html#facilities">Facilities</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>Email: info@kalongofarm.com</li>
+                        <li>Phone: +255 785139150</li>
+                        <li><a href="booking.html">Book Now</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 KALONGO FARM. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
