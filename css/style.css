@@ -19,12 +19,20 @@
     box-sizing: border-box;
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
 html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     overflow-x: hidden;
     width: 100%;
+    max-width: 100vw;
 }
 
 body {
@@ -39,11 +47,16 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-img, video, iframe {
+* {
+    max-width: 100%;
+}
+
+img, video, iframe, embed, object {
     max-width: 100%;
     height: auto;
     display: block;
 }
+
 
 table {
     width: 100%;
@@ -303,6 +316,10 @@ table {
     color: var(--white);
     max-width: 800px;
     padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    margin: 0 auto;
 }
 
 .hero-title {
@@ -352,6 +369,14 @@ section {
     max-width: 100vw;
     overflow-x: hidden;
     box-sizing: border-box;
+    position: relative;
+}
+
+section * {
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 @media (max-width: 768px) {
@@ -1521,6 +1546,50 @@ section {
 }
 
 /* ===== Responsive Design ===== */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .container {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+    
+    .section-title,
+    .section-title-modern {
+        font-size: 2.2rem;
+    }
+
+    .section-description {
+        font-size: 1.05rem;
+    }
+
+    .about-card {
+        padding: 35px 25px;
+    }
+
+    .room-content {
+        padding: 22px;
+    }
+
+    .package-card {
+        padding: 28px 25px;
+    }
+
+    .facility-item {
+        padding: 28px 25px;
+    }
+
+    .rooms-grid,
+    .packages-grid,
+    .facilities-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
+    .about-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+}
+
 @media (max-width: 1024px) {
     .container {
         max-width: 100%;
@@ -1530,6 +1599,10 @@ section {
     .section-title,
     .section-title-modern {
         font-size: 2.2rem;
+    }
+
+    .section-description {
+        font-size: 1.05rem;
     }
 }
 
@@ -1572,15 +1645,29 @@ section {
 
     .hero-title {
         font-size: 2.5rem;
+        padding: 0 20px;
     }
 
     .hero-subtitle {
         font-size: 1.2rem;
+        padding: 0 20px;
+    }
+
+    .btn-primary {
+        padding: 12px 30px;
+        font-size: 1rem;
     }
 
     .section-title,
     .section-title-modern {
         font-size: 2rem;
+        padding: 0 15px;
+    }
+
+    .section-description {
+        font-size: 1rem;
+        padding: 0 15px;
+        margin-bottom: 2rem;
     }
 
     .form-row {
@@ -1625,12 +1712,94 @@ section {
         padding: 25px;
     }
     
+    .about-card {
+        padding: 30px 20px;
+    }
+
+    .about-icon {
+        font-size: 3rem;
+    }
+
+    .about-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .about-card p {
+        font-size: 0.95rem;
+    }
+
+    .about-description p {
+        font-size: 1rem;
+    }
+    
     .room-card,
     .package-card,
     .facility-item,
     .about-card {
         width: 100%;
         max-width: 100%;
+    }
+
+    .room-content {
+        padding: 20px;
+    }
+
+    .room-name {
+        font-size: 1.5rem;
+    }
+
+    .room-description {
+        font-size: 0.95rem;
+    }
+
+    .room-features {
+        font-size: 0.9rem;
+    }
+
+    .package-card {
+        padding: 25px 20px;
+    }
+
+    .package-name {
+        font-size: 1.3rem;
+    }
+
+    .package-price {
+        font-size: 1.7rem;
+    }
+
+    .package-features {
+        font-size: 0.95rem;
+    }
+
+    .facility-item {
+        padding: 25px 20px;
+    }
+
+    .facility-icon {
+        font-size: 3.5rem;
+    }
+
+    .facility-item h3 {
+        font-size: 1.3rem;
+    }
+
+    .facility-item p {
+        font-size: 0.95rem;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .footer-section h3,
+    .footer-section h4 {
+        font-size: 1.2rem;
+    }
+
+    .footer-section ul {
+        font-size: 0.9rem;
     }
 }
 
@@ -1641,22 +1810,37 @@ section {
     }
     
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
         padding: 0 15px;
         letter-spacing: 1px;
+        line-height: 1.3;
     }
 
     .hero-subtitle {
-        font-size: 1rem;
+        font-size: 0.95rem;
         padding: 0 15px;
         letter-spacing: 0.5px;
+        line-height: 1.5;
+    }
+
+    .btn-primary {
+        padding: 10px 25px;
+        font-size: 0.9rem;
     }
 
     .section-title,
     .section-title-modern {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         padding: 0 10px;
         letter-spacing: 0.5px;
+        line-height: 1.3;
+    }
+
+    .section-description {
+        font-size: 0.9rem;
+        padding: 0 10px;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
     }
 
     .rooms-grid,
@@ -1667,17 +1851,26 @@ section {
     }
 
     .reviews-slider-container {
-        padding: 0 40px;
+        padding: 0 30px;
     }
 
     .review-content {
-        padding: 25px 20px;
+        padding: 20px 15px;
         grid-template-columns: 1fr !important;
     }
 
     .review-quote {
-        font-size: 0.95rem;
-        padding-left: 20px;
+        font-size: 0.9rem;
+        padding: 0 10px;
+        line-height: 1.6;
+    }
+
+    .review-name {
+        font-size: 1rem;
+    }
+
+    .review-date {
+        font-size: 0.85rem;
     }
 
     .slider-btn {
@@ -1697,15 +1890,35 @@ section {
     }
     
     .about-card {
-        padding: 30px 20px;
+        padding: 25px 15px;
         width: 100%;
         max-width: 100%;
     }
+
+    .about-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+    }
+
+    .about-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+    }
+
+    .about-card p {
+        font-size: 0.9rem;
+        line-height: 1.7;
+    }
     
     .about-description {
-        padding: 30px 20px;
+        padding: 25px 15px;
         width: 100%;
         max-width: 100%;
+    }
+
+    .about-description p {
+        font-size: 0.95rem;
+        line-height: 1.7;
     }
     
     .room-card,
@@ -1719,10 +1932,102 @@ section {
     .room-image {
         height: 220px;
     }
+
+    .room-content {
+        padding: 20px 15px;
+    }
+
+    .room-name {
+        font-size: 1.3rem;
+        margin-bottom: 8px;
+    }
+
+    .room-description {
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+        line-height: 1.6;
+    }
+
+    .room-features {
+        font-size: 0.85rem;
+    }
+
+    .room-features li {
+        padding: 4px 0;
+    }
+
+    .package-card {
+        padding: 20px 15px;
+    }
+
+    .package-name {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+    }
+
+    .package-price {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .package-features {
+        font-size: 0.9rem;
+    }
+
+    .package-features li {
+        padding: 6px 0;
+    }
+
+    .featured-badge {
+        font-size: 0.8rem;
+        padding: 4px 12px;
+        top: -12px;
+        right: 15px;
+    }
+
+    .facility-item {
+        padding: 20px 15px;
+    }
+
+    .facility-icon {
+        font-size: 3rem;
+        margin-bottom: 12px;
+    }
+
+    .facility-item h3 {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+    }
+
+    .facility-item p {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
     
     .footer-content {
         grid-template-columns: 1fr;
         gap: 25px;
+    }
+
+    .footer-section h3 {
+        font-size: 1.1rem;
+    }
+
+    .footer-section h4 {
+        font-size: 1rem;
+    }
+
+    .footer-section ul {
+        font-size: 0.85rem;
+    }
+
+    .footer-section ul li {
+        margin-bottom: 8px;
+    }
+
+    .footer-bottom {
+        font-size: 0.8rem;
+        padding-top: 15px;
     }
     
     .booking-content-wrapper {
