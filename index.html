@@ -20,8 +20,9 @@
             <nav class="nav-menu" id="navMenu">
                 <a href="#home" class="nav-link">Home</a>
                 <a href="#rooms" class="nav-link">Rooms</a>
-                <a href="#packages" class="nav-link">Packages</a>
+                <a href="packages.html" class="nav-link">Packages</a>
                 <a href="#facilities" class="nav-link">Facilities</a>
+                <a href="activities.html" class="nav-link">Activities</a>
                 <a href="#reviews" class="nav-link">Reviews</a>
                 <a href="booking.html" class="nav-link btn-booking">Book Now</a>
             </nav>
@@ -34,12 +35,23 @@
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="hero" style="background-image: url('images/hero-background.jpg');">
-        <div class="hero-overlay"></div>
+    <section id="home" class="hero">
+        <div class="hero-slider">
+            <div class="hero-slide active" style="background-image: url('images/hero-background.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('images/hero-slide2.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('images/hero-slide3.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('images/hero-slide4.jpg');"></div>
+        </div>
         <div class="hero-content">
             <h2 class="hero-title">Welcome to KALONGO FARM</h2>
             <p class="hero-subtitle">Experience the Perfect Blend of Nature, Comfort & Farm Life</p>
             <a href="booking.html" class="btn-primary">Book Your Stay</a>
+        </div>
+        <div class="hero-slider-indicators">
+            <span class="hero-indicator active" data-slide="0"></span>
+            <span class="hero-indicator" data-slide="1"></span>
+            <span class="hero-indicator" data-slide="2"></span>
+            <span class="hero-indicator" data-slide="3"></span>
         </div>
     </section>
 
@@ -82,97 +94,94 @@
             <p class="section-description">Choose from our variety of unique room types, each offering comfort and a connection to nature</p>
             <div class="rooms-grid">
                 <div class="room-card">
-                    <div class="room-image" style="background-image: url('images/rooms/a-cabin.jpg');"></div>
+                    <div class="room-slider-container">
+                        <div class="room-slider" data-room="a-cabin">
+                            <div class="room-slide active" style="background-image: url('images/rooms/a-cabin.jpg');"></div>
+                            <div class="room-slide" style="background-image: url('images/rooms/a-cabin-inside1.jpg');"></div>
+                            <div class="room-slide" style="background-image: url('images/rooms/a-cabin-inside2.jpg');"></div>
+                            <div class="room-slide" style="background-image: url('images/rooms/a-cabin-bathroom.jpg');"></div>
+                        </div>
+                        <button class="room-slider-btn room-prev-btn" data-room="a-cabin">‹</button>
+                        <button class="room-slider-btn room-next-btn" data-room="a-cabin">›</button>
+                        <div class="room-slider-indicators" data-room="a-cabin">
+                            <span class="room-indicator active" data-slide="0"></span>
+                            <span class="room-indicator" data-slide="1"></span>
+                            <span class="room-indicator" data-slide="2"></span>
+                            <span class="room-indicator" data-slide="3"></span>
+                        </div>
+                    </div>
                     <div class="room-content">
                         <h3 class="room-name">A-Cabin</h3>
+                        <p class="room-capacity"> Guest Capacity: 2 Adults or Small Family (2-3 people)</p>
                         <p class="room-description">Cozy cabin accommodations perfect for couples or small families. Experience rustic charm with modern amenities.</p>
                         <ul class="room-features">
                             <li>✓ Comfortable beds</li>
                             <li>✓ Private bathroom</li>
                             <li>✓ Farm view</li>
                             <li>✓ Air conditioning</li>
+                            <li>✓ Sitting area</li>
                         </ul>
                     </div>
                 </div>
                 <div class="room-card">
-                    <div class="room-image" style="background-image: url('images/rooms/cottage.jpg');"></div>
+                    <div class="room-slider-container">
+                        <div class="room-slider" data-room="cottage">
+                            <div class="room-slide active" style="background-image: url('images/rooms/cottage.jpg');"></div>
+                            <div class="room-slide" style="background-image: url('images/rooms/cottage-inside1.jpg');"></div>
+                            <div class="room-slide" style="background-image: url('images/rooms/cottage-inside2.jpg');"></div>
+                            <div class="room-slide" style="background-image: url('images/rooms/cottage-bathroom.jpg');"></div>
+                        </div>
+                        <button class="room-slider-btn room-prev-btn" data-room="cottage">‹</button>
+                        <button class="room-slider-btn room-next-btn" data-room="cottage">›</button>
+                        <div class="room-slider-indicators" data-room="cottage">
+                            <span class="room-indicator active" data-slide="0"></span>
+                            <span class="room-indicator" data-slide="1"></span>
+                            <span class="room-indicator" data-slide="2"></span>
+                            <span class="room-indicator" data-slide="3"></span>
+                        </div>
+                    </div>
                     <div class="room-content">
                         <h3 class="room-name">Cottage</h3>
+                        <p class="room-capacity"> Guest Capacity: Family (4-6 people)</p>
                         <p class="room-description">Spacious cottages ideal for families. Enjoy privacy and comfort surrounded by the natural beauty of our farm.</p>
                         <ul class="room-features">
                             <li>✓ Multiple bedrooms</li>
                             <li>✓ Living area</li>
                             <li>✓ Private veranda</li>
                             <li>✓ Kitchenette</li>
+                            <li>✓ Family-friendly</li>
                         </ul>
                     </div>
                 </div>
                 <div class="room-card">
-                    <div class="room-image" style="background-image: url('images/rooms/kikota.jpg');"></div>
+                    <div class="room-slider-container">
+                        <div class="room-slider" data-room="kikota">
+                            <div class="room-slide active" style="background-image: url('images/rooms/kikota.jpg');"></div>
+                            <div class="room-slide" style="background-image: url('images/rooms/kikota-inside1.jpg');"></div>
+                            <div class="room-slide" style="background-image: url('images/rooms/kikota-inside2.jpg');"></div>
+                            <div class="room-slide" style="background-image: url('images/rooms/kikota-bathroom.jpg');"></div>
+                        </div>
+                        <button class="room-slider-btn room-prev-btn" data-room="kikota">‹</button>
+                        <button class="room-slider-btn room-next-btn" data-room="kikota">›</button>
+                        <div class="room-slider-indicators" data-room="kikota">
+                            <span class="room-indicator active" data-slide="0"></span>
+                            <span class="room-indicator" data-slide="1"></span>
+                            <span class="room-indicator" data-slide="2"></span>
+                            <span class="room-indicator" data-slide="3"></span>
+                        </div>
+                    </div>
                     <div class="room-content">
                         <h3 class="room-name">Kikota</h3>
+                        <p class="room-capacity"> Guest Capacity: 2-4 Adults</p>
                         <p class="room-description">Traditional yet modern accommodations that blend cultural heritage with contemporary comfort.</p>
                         <ul class="room-features">
                             <li>✓ Unique design</li>
                             <li>✓ Cultural experience</li>
                             <li>✓ Garden access</li>
                             <li>✓ All modern amenities</li>
+                            <li>✓ Spacious layout</li>
                         </ul>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Packages Section -->
-    <section id="packages" class="packages">
-        <div class="container">
-            <h2 class="section-title">Our Packages</h2>
-            <p class="section-description">Explore our carefully curated packages designed to enhance your stay</p>
-            <div class="packages-grid">
-                <div class="package-card">
-                    <h3 class="package-name">Day Visit Package</h3>
-                    <div class="package-price">From TZS 50,000</div>
-                    <ul class="package-features">
-                        <li>Farm tour</li>
-                        <li>Animal interaction</li>
-                        <li>Lunch included</li>
-                        <li>Swimming pool access</li>
-                    </ul>
-                </div>
-                <div class="package-card featured">
-                    <div class="featured-badge">Popular</div>
-                    <h3 class="package-name">Weekend Getaway</h3>
-                    <div class="package-price">From TZS 200,000</div>
-                    <ul class="package-features">
-                        <li>2 nights accommodation</li>
-                        <li>All meals included</li>
-                        <li>Farm activities</li>
-                        <li>Guided tours</li>
-                        <li>Pool access</li>
-                    </ul>
-                </div>
-                <div class="package-card">
-                    <h3 class="package-name">Family Retreat</h3>
-                    <div class="package-price">From TZS 350,000</div>
-                    <ul class="package-features">
-                        <li>3 nights accommodation</li>
-                        <li>Family-friendly activities</li>
-                        <li>Kids farm programs</li>
-                        <li>All meals included</li>
-                        <li>Animal feeding sessions</li>
-                    </ul>
-                </div>
-                <div class="package-card">
-                    <h3 class="package-name">Romantic Escape</h3>
-                    <div class="package-price">From TZS 280,000</div>
-                    <ul class="package-features">
-                        <li>2 nights in cabin/cottage</li>
-                        <li>Romantic dinner setup</li>
-                        <li>Sunset farm tour</li>
-                        <li>Breakfast in room</li>
-                        <li>Poolside relaxation</li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -184,35 +193,38 @@
             <h2 class="section-title">Our Facilities</h2>
             <div class="facilities-grid">
                 <div class="facility-item">
-                    <div class="facility-icon">🏊</div>
+                    <div class="facility-image" style="background-image: url('images/facilities/swimming-pool.jpg');"></div>
                     <h3>Swimming Pool</h3>
                     <p>Relax and unwind in our beautiful outdoor swimming pool surrounded by nature</p>
                 </div>
                 <div class="facility-item">
-                    <div class="facility-icon">🐄</div>
+                    <div class="facility-image" style="background-image: url('images/facilities/natural-farm.jpg');"></div>
                     <h3>Natural Farm</h3>
                     <p>Experience authentic farm life with our natural farming practices and organic produce</p>
                 </div>
                 <div class="facility-item">
-                    <div class="facility-icon">🐐</div>
+                    <div class="facility-image" style="background-image: url('images/facilities/domestic-animals.jpg');"></div>
                     <h3>Domestic Animals</h3>
                     <p>Interact with our friendly domestic animals including cows, goats, chickens, and more</p>
                 </div>
                 <div class="facility-item">
-                    <div class="facility-icon">🍽️</div>
+                    <div class="facility-image" style="background-image: url('images/facilities/farm-fresh-food.jpg');"></div>
                     <h3>Farm-Fresh Food</h3>
                     <p>Enjoy delicious meals made from fresh, locally sourced ingredients from our farm</p>
                 </div>
                 <div class="facility-item">
-                    <div class="facility-icon">🌳</div>
+                    <div class="facility-image" style="background-image: url('images/facilities/nature-trails.jpg');"></div>
                     <h3>Nature Trails</h3>
                     <p>Explore our beautiful surroundings through guided nature walks and trails</p>
                 </div>
                 <div class="facility-item">
-                    <div class="facility-icon">🎯</div>
+                    <div class="facility-image" style="background-image: url('images/facilities/activities.jpg');"></div>
                     <h3>Activities</h3>
                     <p>Participate in various farm activities, animal feeding, and educational programs</p>
                 </div>
+            </div>
+            <div class="facilities-cta">
+                <a href="activities.html" class="btn-primary">Explore All Activities</a>
             </div>
         </div>
     </section>
@@ -319,25 +331,35 @@
                     <ul>
                         <li><a href="#home">Home</a></li>
                         <li><a href="#rooms">Rooms</a></li>
-                        <li><a href="#packages">Packages</a></li>
+                        <li><a href="packages.html">Packages</a></li>
                         <li><a href="#facilities">Facilities</a></li>
+                        <li><a href="activities.html">Activities</a></li>
+                        <li><a href="#reviews">Reviews</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Contact</h4>
                     <ul>
+                        <li>📍 Location: KIWIRA TUKUYU</li>
                         <li>Email: info@kalongofarm.com</li>
                         <li>Phone: +255 785139150</li>
                         <li><a href="booking.html">Book Now</a></li>
+                        <li><a href="https://www.instagram.com/kalongo_farm_ecosystem_home?igsh=Z2Z5cXM2c2NqYXNo" target="_blank" rel="noopener noreferrer" class="instagram-footer-link">
+                            <svg class="instagram-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="currentColor"/>
+                            </svg>
+                            Follow us on Instagram
+                        </a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy;  KALONGO FARM. All rights reserved.</p>
+                <p>&copy; KALONGO FARM. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script src="js/script.js"></script>
+    <script src="js/chatbot.js"></script>
 </body>
 </html>

@@ -21,8 +21,10 @@
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="index.html#rooms" class="nav-link">Rooms</a>
                 <a href="index.html#packages" class="nav-link">Packages</a>
+                <a href="packages.html" class="nav-link">Packages</a>
                 <a href="index.html#facilities" class="nav-link">Facilities</a>
-                <a href="index.html#location" class="nav-link">Location</a>
+                <a href="activities.html" class="nav-link">Activities</a>
+                <a href="index.html#reviews" class="nav-link">Reviews</a>
                 <a href="booking.html" class="nav-link btn-booking">Book Now</a>
             </nav>
             <button class="mobile-menu-toggle" id="mobileMenuToggle">
@@ -47,20 +49,19 @@
         <div class="container">
             <div class="booking-content-wrapper">
                 <div class="booking-info-card">
-                    <div class="info-icon">🏡</div>
                     <h3>Why Choose Us?</h3>
                     <ul class="info-list">
-                        <li>✓ Authentic farm experience</li>
-                        <li>✓ Comfortable accommodations</li>
-                        <li>✓ Farm-fresh organic meals</li>
-                        <li>✓ Swimming pool & activities</li>
-                        <li>✓ Friendly domestic animals</li>
+                        <li>✓ Authentic Farm-stay Experience</li>
+                        <li>✓ Nature & Eco lifestyle</li>
+                        <li>✓ Fresh natural food from eco farms</li>
+                        <li>✓ Friendly to outdoor lovers</li>
+                        <li>✓ Relaxed & scenic stay</li>
                     </ul>
                     <div class="contact-info-box">
                         <h4>Need Help?</h4>
                         <p><strong>Phone:</strong> +255 785139150</p>
                         <p><strong>Email:</strong> info@kalongofarm.com</p>
-                        <p class="whatsapp-note">📱 Bookings sent via WhatsApp</p>
+                        <p class="whatsapp-note">Bookings sent via WhatsApp</p>
                     </div>
                 </div>
                 
@@ -92,6 +93,7 @@
                             <option value="A-Cabin">A-Cabin</option>
                             <option value="Cottage">Cottage</option>
                             <option value="Kikota">Kikota</option>
+                            <option value="None">None</option>
                         </select>
                     </div>
                 </div>
@@ -121,9 +123,29 @@
                         </select>
                     </div>
                 </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="eventCategory">Event Category (Optional)</label>
+                        <select id="eventCategory" name="eventCategory">
+                            <option value="">No Special Event</option>
+                            <option value="Wedding">Wedding</option>
+                            <option value="Corporate Event">Corporate Event</option>
+                            <option value="Birthday Celebration">Birthday Celebration</option>
+                            <option value="Anniversary">Anniversary</option>
+                            <option value="Family Gathering">Family Gathering</option>
+                            <option value="Team Building">Team Building</option>
+                            <option value="Conference">Conference</option>
+                            <option value="Other Event">Other Event</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDate">Event Date (If Applicable)</label>
+                        <input type="date" id="eventDate" name="eventDate">
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="message">Additional Message (Optional)</label>
-                    <textarea id="message" name="message" rows="4" placeholder="Any special requests or preferences..."></textarea>
+                    <textarea id="message" name="message" rows="4" placeholder="Any special requests, preferences, or event details..."></textarea>
                 </div>
                 <button type="submit" class="btn-primary btn-submit-modern">
                     <span>Submit Booking</span>
@@ -149,24 +171,35 @@
                         <li><a href="index.html">Home</a></li>
                         <li><a href="index.html#rooms">Rooms</a></li>
                         <li><a href="index.html#packages">Packages</a></li>
+                        <li><a href="packages.html">Packages</a></li>
                         <li><a href="index.html#facilities">Facilities</a></li>
+                        <li><a href="activities.html">Activities</a></li>
+                        <li><a href="index.html#reviews">Reviews</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Contact</h4>
                     <ul>
+                        <li>📍 Location: KIWIRA TUKUYU</li>
                         <li>Email: info@kalongofarm.com</li>
                         <li>Phone: +255 785139150</li>
                         <li><a href="booking.html">Book Now</a></li>
+                        <li><a href="https://www.instagram.com/kalongo_farm_ecosystem_home?igsh=Z2Z5cXM2c2NqYXNo" target="_blank" rel="noopener noreferrer" class="instagram-footer-link">
+                            <svg class="instagram-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="currentColor"/>
+                            </svg>
+                            Follow us on Instagram
+                        </a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 KALONGO FARM. All rights reserved.</p>
+                <p>&copy; KALONGO FARM. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script src="js/script.js"></script>
+    <script src="js/chatbot.js"></script>
 </body>
 </html>
