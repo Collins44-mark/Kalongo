@@ -234,6 +234,37 @@ function setupEventListeners() {
         }
     });
     
+    // Handle mobile keyboard - scroll input into view
+    input.addEventListener('focus', () => {
+        if (window.innerWidth <= 480) {
+            setTimeout(() => {
+                input.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+                const container = document.getElementById('chatbotContainer');
+                if (container) {
+                    container.scrollTop = container.scrollHeight;
+                }
+            }, 300);
+        }
+    });
+    
+    // Adjust container height on mobile when keyboard opens
+    if (window.innerWidth <= 480) {
+        const originalHeight = window.innerHeight;
+        window.addEventListener('resize', () => {
+            const currentHeight = window.innerHeight;
+            const container = document.getElementById('chatbotContainer');
+            if (container && currentHeight < originalHeight) {
+                // Keyboard is open
+                container.style.height = `${currentHeight}px`;
+                container.style.maxHeight = `${currentHeight}px`;
+            } else if (container) {
+                // Keyboard is closed
+                container.style.height = '100vh';
+                container.style.maxHeight = '100vh';
+            }
+        });
+    }
+    
     quickActions.forEach(btn => {
         btn.addEventListener('click', (e) => {
             const action = e.currentTarget.getAttribute('data-action');
