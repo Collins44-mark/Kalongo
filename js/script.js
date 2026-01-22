@@ -322,7 +322,7 @@ if (checkInInput) {
 
 // Booking Form WhatsApp Submission
 // Hotel WhatsApp Number
-const HOTEL_WHATSAPP_NUMBER = '+255 785 139 150';
+const HOTEL_WHATSAPP_NUMBER = '+255 653 626 410';
 
 // Auto-fill form from chatbot
 function autoFillFromChatbot() {

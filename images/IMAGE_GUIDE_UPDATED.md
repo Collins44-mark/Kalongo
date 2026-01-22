@@ -41,10 +41,12 @@ This guide shows you **exactly** where to place each image for the updated websi
 
 ## 🎨 **PAGE HERO BACKGROUND IMAGES** (Inside `/images/` folder)
 
-1. **`pricing-hero-background.jpg`** - Background image for Pricing page hero section
+1. **`pricing-hero-background.jpg`** - Background image for Packages & Pricing page hero section
 2. **`activities-hero-background.jpg`** - Background image for Activities page hero section
+3. **`our-kalongo-hero-background.jpg`** - Background image for Our Kalongo page hero section
+4. **`booking-hero-background.jpg`** - Background image for Booking page hero section
 
-**📝 Note:** These replace the green gradient backgrounds on the pricing and activities pages.
+**📝 Note:** These replace the green gradient backgrounds on the respective pages. All hero backgrounds should have the same dimensions for consistency.
 
 ---
 
@@ -111,14 +113,38 @@ Replace emoji icons with real images:
 
 ---
 
+## 🎬 **OUR KALONGO PAGE MEDIA** (Inside `/images/` and `/videos/` folders)
+
+### Images (3 images needed):
+1. **`kalongo-surroundings1.jpg`** - First image of Kalongo Farm surroundings
+2. **`kalongo-surroundings2.jpg`** - Second image of Kalongo Farm surroundings
+3. **`kalongo-surroundings3.jpg`** - Third image of Kalongo Farm surroundings
+
+### Videos (6 videos needed):
+Create a `videos/` folder in the root directory (same level as `images/`):
+1. **`videos/kalongo-video1.mp4`** - First video of Kalongo Farm experience
+2. **`videos/kalongo-video2.mp4`** - Second video of farm activities
+3. **`videos/kalongo-video3.mp4`** - Third video of natural surroundings
+4. **`videos/kalongo-video4.mp4`** - Fourth video of farm life
+5. **`videos/kalongo-video5.mp4`** - Fifth video of farm experience
+6. **`videos/kalongo-video6.mp4`** - Sixth video of nature & activities
+
+**📝 Note:** 
+- Images should be placed in `/images/` folder
+- Videos should be placed in `/videos/` folder (create this folder if it doesn't exist)
+- All media will be displayed in modern container cards on the Our Kalongo page
+
+---
+
 ## 📋 **IMAGE SPECIFICATIONS**
 
 ### Recommended Image Sizes:
 - **Room Images:** 1200x800px (or similar aspect ratio)
-- **Hero Slides:** 1920x1080px (or similar aspect ratio)
+- **Hero Slides:** 1920x1080px (or similar aspect ratio) - **All hero backgrounds should be the same size**
 - **Package Images:** 800x600px
 - **Facility Images:** 800x600px
 - **Activity Images:** 800x600px
+- **Our Kalongo Images:** 1200x800px (or similar aspect ratio)
 - **Video Posters:** 800x450px (16:9 aspect ratio)
 
 ### File Formats:
