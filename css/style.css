@@ -1127,7 +1127,7 @@ section * {
     height: 450px;
     min-height: 400px;
     max-height: 600px;
-    background-image: url('images/pricing-hero-background.jpg');
+    background-image: url('https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/kalongo/pricing-hero-background.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -2130,7 +2130,7 @@ section * {
     height: 450px;
     min-height: 400px;
     max-height: 600px;
-    background-image: url('images/activities-hero-background.jpg');
+    background-image: url('https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/kalongo/activities-hero-background.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -2567,7 +2567,7 @@ section * {
     height: 450px;
     min-height: 400px;
     max-height: 600px;
-    background-image: url('images/booking-hero-background.jpg');
+    background-image: url('https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/kalongo/booking-hero-background.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -4471,5 +4471,157 @@ section * {
         .chatbot-input {
             font-size: 16px !important;
         }
+    }
+}
+
+/* ===== Enhanced Responsive Styles ===== */
+
+/* Tablet Landscape (900px - 1024px) */
+@media (min-width: 900px) and (max-width: 1024px) {
+    .container {
+        padding: 0 30px;
+    }
+    
+    .rooms-grid,
+    .facilities-grid,
+    .packages-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.3rem;
+    }
+}
+
+/* Tablet Portrait (600px - 899px) */
+@media (min-width: 600px) and (max-width: 899px) {
+    .rooms-grid,
+    .facilities-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .packages-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .nav-menu {
+        gap: 20px;
+    }
+    
+    .btn-booking {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Small Mobile (320px - 480px) */
+@media (max-width: 480px) {
+    /* Ensure touch targets are at least 44px */
+    .btn-primary,
+    .btn-secondary,
+    .btn-booking,
+    .nav-link {
+        min-height: 44px;
+        min-width: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .mobile-menu-toggle {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    .room-slider-btn {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    /* Better spacing for very small screens */
+    .section {
+        padding: 40px 0;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+    
+    .section-description {
+        font-size: 0.95rem;
+        padding: 0 10px;
+    }
+}
+
+/* Extra Small Mobile (max-width: 360px) */
+@media (max-width: 360px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    .hero-title {
+        font-size: 1.75rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+    
+    .section-title {
+        font-size: 1.6rem;
+    }
+    
+    .logo {
+        height: 50px;
+        max-width: 120px;
+    }
+    
+    .facility-item,
+    .room-card,
+    .package-card {
+        padding: 20px 15px;
+    }
+}
+
+/* Landscape Mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero {
+        height: 250px;
+        min-height: 200px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .header,
+    .mobile-menu-toggle,
+    .chatbot-container,
+    .chatbot-toggle-btn,
+    .footer {
+        display: none;
+    }
+    
+    body {
+        font-size: 12pt;
+        line-height: 1.5;
+    }
+    
+    .section {
+        page-break-inside: avoid;
     }
 }

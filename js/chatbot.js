@@ -183,7 +183,7 @@ function createChatbotHTML() {
             <div class="chatbot-header">
                 <div class="chatbot-header-content">
                     <div class="chatbot-avatar">
-                        <img src="images/logo.png" alt="KALONGO FARM Logo" class="chatbot-logo">
+                        <img src="https://res.cloudinary.com/dae3rpnmg/image/upload/v1769261545/logo_xgfgcj.jpg" alt="KALONGO FARM Logo" class="chatbot-logo">
                     </div>
                     <div class="chatbot-header-text">
                         <h3>KALONGO FARM Assistant</h3>
@@ -492,7 +492,7 @@ function showLocationMessage() {
     const locationHTML = `
         <div class="chatbot-message chatbot-bot-message">
             <div class="chatbot-avatar-small">
-                <img src="images/logo.png" alt="KALONGO FARM" class="chatbot-logo-small">
+                <img src="https://res.cloudinary.com/dae3rpnmg/image/upload/v1769261545/logo_xgfgcj.jpg alt="KALONGO FARM" class="chatbot-logo-small">
             </div>
             <div class="chatbot-message-content">
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
@@ -1056,7 +1056,7 @@ function addBotMessage(message) {
     const messageHTML = `
         <div class="chatbot-message chatbot-bot-message">
             <div class="chatbot-avatar-small">
-                <img src="images/logo.png" alt="KALONGO FARM" class="chatbot-logo-small">
+                <img src="hhttps://res.cloudinary.com/dae3rpnmg/image/upload/v1769261545/logo_xgfgcj.jpg" alt="KALONGO FARM" class="chatbot-logo-small">
             </div>
             <div class="chatbot-message-content">${formattedMessage}</div>
         </div>
@@ -1072,7 +1072,7 @@ function showTypingIndicator() {
     const indicatorHTML = `
         <div class="chatbot-message chatbot-bot-message typing-indicator">
             <div class="chatbot-avatar-small">
-                <img src="images/logo.png" alt="KALONGO FARM" class="chatbot-logo-small">
+                <img src="https://res.cloudinary.com/dae3rpnmg/image/upload/v1769261545/logo_xgfgcj.jpg" alt="KALONGO FARM" class="chatbot-logo-small">
             </div>
             <div class="chatbot-message-content">
                 <div class="typing-dots">

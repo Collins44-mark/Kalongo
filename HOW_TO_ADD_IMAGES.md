@@ -2,6 +2,10 @@
 
 Follow this simple guide to add all your images to the website.
 
+> **Note:** The live site now loads assets from **Cloudinary**, not directly from the local `images/` folder.  
+> - Use this file mainly as a list of required image names.  
+> - See `images/IMAGE_GUIDE_UPDATED.md` for Cloudinary-specific instructions, sample URLs, and how to replace `YOUR_CLOUD_NAME` with your actual Cloudinary cloud name.
+
 ## 📁 Folder Location
 All images go inside: `/Users/Prisca/Documents/KALONGOWEB/images/`
 
