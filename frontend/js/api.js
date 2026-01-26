@@ -324,21 +324,19 @@ const Render = {
             
             const imagesHtml = validImages.length > 0 ? validImages.map((img, idx) => {
                 const optimizedUrl = optimizeCloudinaryUrl(img.image_url, 800, 600, 'auto', 'auto');
+                console.log(`📸 Room ${room.name} - Image ${idx + 1}: ${optimizedUrl}`);
                 return `
-                <div class="room-slide ${idx === 0 ? 'active' : ''}" style="position:relative;min-height:300px;">
+                <div class="room-slide ${idx === 0 ? 'active' : ''}" data-slide-index="${idx}">
                     <img src="${optimizedUrl}" 
                          alt="${img.caption || room.name}" 
-                         style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;"
+                         class="room-slide-image"
                          loading="${idx === 0 ? 'eager' : 'lazy'}"
-                         onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';"
-                         onload="if(this.nextElementSibling) this.nextElementSibling.style.display='none';">
-                    <div class="room-slide-placeholder" style="position:absolute;top:0;left:0;width:100%;height:100%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;z-index:1;">
-                        <div class="spinner" style="border: 3px solid #f3f3f3; border-top: 3px solid #4CAF50; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite;"></div>
-                    </div>
+                         onerror="console.error('❌ Failed to load room image ${idx + 1} for ${room.name}:', '${optimizedUrl}'); this.style.display='none';"
+                         onload="console.log('✅ Room image ${idx + 1} loaded for ${room.name}:', '${optimizedUrl}');">
                 </div>
                 `;
             }).join('') : `
-                <div class="room-slide active" style="position:relative;min-height:300px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;">
+                <div class="room-slide active" style="background:#f0f0f0;display:flex;align-items:center;justify-content:center;">
                     <p style="color:#999;text-align:center;">No image available</p>
                 </div>
             `;
@@ -667,9 +665,9 @@ const Render = {
                                  alt="${customerName}'s Review" 
                                  class="review-image" 
                                  loading="${idx === 0 ? 'eager' : 'lazy'}"
-                                 style="display: none;"
-                                 onload="this.style.display='block'; if(this.previousElementSibling) this.previousElementSibling.style.display='none'; console.log('✅ Review image ${idx + 1} loaded')"
-                                 onerror="if(this.previousElementSibling) this.previousElementSibling.style.display='none'; console.error('❌ Failed to load review image ${idx + 1}'); this.style.display='none'">
+                                 style="display: block; width: 100%; height: 100%; object-fit: cover;"
+                                 onload="console.log('✅ Review image ${idx + 1} loaded from Cloudinary:', '${optimizedImageUrl}'); if(this.previousElementSibling) this.previousElementSibling.style.display='none';"
+                                 onerror="console.error('❌ Failed to load review image ${idx + 1} from Cloudinary:', '${optimizedImageUrl}'); if(this.previousElementSibling) this.previousElementSibling.style.display='none'; this.style.display='none';">
                         </div>
                     ` : ''}
                     <div class="review-text">
