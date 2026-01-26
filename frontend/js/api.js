@@ -127,7 +127,6 @@ const API = {
     getFood: () => fetchAPI('/food'),
     getRestaurantMenu: () => fetchAPI('/restaurant-menu'),
     getVideos: () => fetchAPI('/videos'),
-    getGalleryImages: () => fetchAPI('/gallery-images'),
     getReviews: () => fetchAPI('/reviews'),
     getSettings: () => fetchAPI('/settings'),
     // Combined endpoint for faster homepage loading
@@ -824,86 +823,6 @@ const Render = {
         }).join('');
     },
     
-    galleryImages: (images) => {
-        console.log('🖼️ Rendering gallery images...', images?.length || 0);
-        
-        // Try to find container by ID first (most reliable)
-        let imagesContainer = document.getElementById('gallery-images-container');
-        
-        // Fallback: Find the Images section container specifically
-        if (!imagesContainer) {
-            const sections = document.querySelectorAll('.packages-section-modern');
-            sections.forEach(section => {
-                const title = section.querySelector('.section-title-modern');
-                if (title && title.textContent.includes('Images')) {
-                    imagesContainer = section.querySelector('.gallery-grid-modern');
-                }
-            });
-        }
-        
-        // Fallback: try to find second gallery-grid-modern
-        if (!imagesContainer) {
-            const containers = document.querySelectorAll('.gallery-grid-modern');
-            if (containers.length > 1) {
-                imagesContainer = containers[1]; // Second container should be images
-            } else if (containers.length === 1) {
-                // If only one container exists, check if it's empty or has videos
-                const firstContainer = containers[0];
-                const hasVideos = firstContainer.querySelector('video');
-                if (!hasVideos) {
-                    imagesContainer = firstContainer;
-                }
-            }
-        }
-        
-        console.log('🔍 Images container found:', !!imagesContainer);
-        if (!imagesContainer) {
-            console.error('❌ Gallery Images: No images container found. Make sure the page has a container with id="gallery-images-container" or class="gallery-grid-modern" in the Images section.');
-            return;
-        }
-        
-        if (!images || images.length === 0) {
-            console.warn('⚠️ Gallery Images: No images data from API');
-            imagesContainer.innerHTML = '<p style="text-align:center;color:#999;padding:2rem;">No images available at this time. Please add images through the admin panel.</p>';
-            return;
-        }
-        
-        // Filter images for our-kalongo section (include images with section='our-kalongo' or no section, or all if none match)
-        let kalongoImages = images.filter(img => img.section === 'our-kalongo' || !img.section || img.section === '');
-        console.log('  🖼️ Filtered images for our-kalongo:', kalongoImages.length);
-        
-        // If no filtered images, use all images as fallback
-        if (kalongoImages.length === 0 && images.length > 0) {
-            console.log('  ℹ️ No images with our-kalongo section, using all images');
-            kalongoImages = images;
-        }
-        
-        // Only replace if we have API images, otherwise keep fallback HTML
-        if (kalongoImages.length === 0) {
-            console.warn('⚠️ No images from API, keeping fallback images');
-            return; // Keep the hardcoded fallback images
-        }
-        
-        imagesContainer.innerHTML = kalongoImages.map(img => {
-            const optimizedUrl = optimizeCloudinaryUrl(img.image_url, 800, 600, 'auto', 'auto');
-            return `
-            <div class="gallery-item-modern image-item-modern">
-                <img src="${optimizedUrl}" 
-                     alt="${img.caption || 'Kalongo Farm Gallery'}" 
-                     class="gallery-media-modern"
-                     loading="lazy"
-                     onerror="console.error('❌ Failed to load gallery image:', '${optimizedUrl}'); this.style.display='none';">
-                ${img.caption ? `
-                    <div class="gallery-overlay-modern">
-                        <p class="gallery-caption-modern">${img.caption}</p>
-                    </div>
-                ` : ''}
-            </div>
-        `;
-        }).join('');
-        
-        console.log(`✅ Rendered ${kalongoImages.length} gallery images`);
-    },
     
     settings: (settings) => {
         console.log('🎨 Rendering settings...', settings);
@@ -1203,25 +1122,17 @@ async function initializeDataLoading() {
     }
     
     if (path.includes('our-kalongo.html')) {
-        console.log('🎥 Loading videos and images...');
+        console.log('🎥 Loading videos...');
         try {
-            const [videos, images] = await Promise.all([
-                API.getVideos(),
-                API.getGalleryImages()
-            ]);
+            const videos = await API.getVideos();
             console.log('📊 Videos loaded:', videos?.length || 0);
-            console.log('📊 Gallery images loaded:', images?.length || 0);
             setTimeout(() => {
                 // Always try to render videos (even if empty, to show message)
                 console.log('🎥 Calling Render.videos()...');
                 Render.videos(videos || []);
-                
-                // Always try to render images (even if empty, to show message)
-                console.log('🖼️ Calling Render.galleryImages()...');
-                Render.galleryImages(images || []);
             }, 200);
         } catch (error) {
-            console.error('❌ Error loading videos/images:', error);
+            console.error('❌ Error loading videos:', error);
         }
     }
     
