@@ -770,7 +770,21 @@ const Render = {
     
     videos: (videos) => {
         console.log('🎨 Rendering videos...', videos?.length || 0);
-        const container = document.querySelector('.gallery-grid-modern');
+        // Find the Videos section container specifically
+        let container = null;
+        const sections = document.querySelectorAll('.packages-section-modern');
+        sections.forEach(section => {
+            const title = section.querySelector('.section-title-modern');
+            if (title && title.textContent.includes('Videos')) {
+                container = section.querySelector('.gallery-grid-modern');
+            }
+        });
+        
+        // Fallback to first gallery-grid-modern if not found
+        if (!container) {
+            container = document.querySelector('.gallery-grid-modern');
+        }
+        
         console.log('🔍 Gallery container found:', !!container);
         if (!container) {
             console.error('❌ Videos: No gallery container found (.gallery-grid-modern)');
@@ -778,6 +792,7 @@ const Render = {
         }
         if (!videos || videos.length === 0) {
             console.warn('⚠️ Videos: No videos data');
+            container.innerHTML = '<p style="text-align:center;color:#999;padding:2rem;">No videos available at this time.</p>';
             return;
         }
         
@@ -787,6 +802,7 @@ const Render = {
         
         if (kalongoVideos.length === 0) {
             console.warn('⚠️ No videos match our-kalongo section');
+            container.innerHTML = '<p style="text-align:center;color:#999;padding:2rem;">No videos available at this time.</p>';
             return;
         }
         
@@ -810,16 +826,45 @@ const Render = {
     
     galleryImages: (images) => {
         console.log('🖼️ Rendering gallery images...', images?.length || 0);
-        // Find all gallery containers for images
-        const containers = document.querySelectorAll('.gallery-grid-modern');
-        console.log('🔍 Gallery containers found:', containers.length);
         
-        if (containers.length === 0) {
-            console.error('❌ Gallery Images: No gallery container found (.gallery-grid-modern)');
+        // Try to find container by ID first (most reliable)
+        let imagesContainer = document.getElementById('gallery-images-container');
+        
+        // Fallback: Find the Images section container specifically
+        if (!imagesContainer) {
+            const sections = document.querySelectorAll('.packages-section-modern');
+            sections.forEach(section => {
+                const title = section.querySelector('.section-title-modern');
+                if (title && title.textContent.includes('Images')) {
+                    imagesContainer = section.querySelector('.gallery-grid-modern');
+                }
+            });
+        }
+        
+        // Fallback: try to find second gallery-grid-modern
+        if (!imagesContainer) {
+            const containers = document.querySelectorAll('.gallery-grid-modern');
+            if (containers.length > 1) {
+                imagesContainer = containers[1]; // Second container should be images
+            } else if (containers.length === 1) {
+                // If only one container exists, check if it's empty or has videos
+                const firstContainer = containers[0];
+                const hasVideos = firstContainer.querySelector('video');
+                if (!hasVideos) {
+                    imagesContainer = firstContainer;
+                }
+            }
+        }
+        
+        console.log('🔍 Images container found:', !!imagesContainer);
+        if (!imagesContainer) {
+            console.error('❌ Gallery Images: No images container found. Make sure the page has a container with id="gallery-images-container" or class="gallery-grid-modern" in the Images section.');
             return;
         }
+        
         if (!images || images.length === 0) {
-            console.warn('⚠️ Gallery Images: No images data');
+            console.warn('⚠️ Gallery Images: No images data from API');
+            imagesContainer.innerHTML = '<p style="text-align:center;color:#999;padding:2rem;">No images available at this time. Please add images through the admin panel.</p>';
             return;
         }
         
@@ -827,32 +872,9 @@ const Render = {
         const kalongoImages = images.filter(img => img.section === 'our-kalongo' || !img.section);
         console.log('  🖼️ Filtered images for our-kalongo:', kalongoImages.length);
         
-        // Find the images container (should be the second gallery-grid-modern in our-kalongo page)
-        let imagesContainer = null;
-        containers.forEach((container) => {
-            // Check if this container is in the Images section
-            const section = container.closest('.packages-section-modern');
-            if (section) {
-                const title = section.querySelector('.section-title-modern');
-                if (title && title.textContent.includes('Images')) {
-                    imagesContainer = container;
-                }
-            }
-        });
-        
-        // Fallback: use second container if found
-        if (!imagesContainer && containers.length > 1) {
-            imagesContainer = containers[1];
-        }
-        
-        if (!imagesContainer) {
-            console.warn('⚠️ Gallery Images: No images container found');
-            return;
-        }
-        
         if (kalongoImages.length === 0) {
             console.warn('⚠️ No images match our-kalongo section');
-            imagesContainer.innerHTML = '<p style="text-align:center;color:#999;padding:2rem;">No images available at this time.</p>';
+            imagesContainer.innerHTML = '<p style="text-align:center;color:#999;padding:2rem;">No images available for this section. Please add images through the admin panel.</p>';
             return;
         }
         
@@ -864,7 +886,7 @@ const Render = {
                      alt="${img.caption || 'Kalongo Farm Gallery'}" 
                      class="gallery-media-modern"
                      loading="lazy"
-                     onerror="this.style.display='none';">
+                     onerror="console.error('❌ Failed to load gallery image:', '${optimizedUrl}'); this.style.display='none';">
                 ${img.caption ? `
                     <div class="gallery-overlay-modern">
                         <p class="gallery-caption-modern">${img.caption}</p>
@@ -1184,19 +1206,14 @@ async function initializeDataLoading() {
             console.log('📊 Videos loaded:', videos?.length || 0);
             console.log('📊 Gallery images loaded:', images?.length || 0);
             setTimeout(() => {
-                if (videos && videos.length > 0) {
-                    console.log('🎥 Calling Render.videos()...');
-                    Render.videos(videos);
-                } else {
-                    console.warn('⚠️ No videos to display');
-                }
-                if (images && images.length > 0) {
-                    console.log('🖼️ Calling Render.galleryImages()...');
-                    Render.galleryImages(images);
-                } else {
-                    console.warn('⚠️ No gallery images to display');
-                }
-            }, 100);
+                // Always try to render videos (even if empty, to show message)
+                console.log('🎥 Calling Render.videos()...');
+                Render.videos(videos || []);
+                
+                // Always try to render images (even if empty, to show message)
+                console.log('🖼️ Calling Render.galleryImages()...');
+                Render.galleryImages(images || []);
+            }, 200);
         } catch (error) {
             console.error('❌ Error loading videos/images:', error);
         }

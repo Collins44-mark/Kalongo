@@ -181,14 +181,20 @@ def get_gallery_images():
     """Get all gallery images"""
     s = get_session()
     try:
-        images = s.query(GalleryImage).order_by(GalleryImage.order, GalleryImage.id).all()
-        return jsonify([{
-            "id": img.id,
-            "image_url": img.image_url,
-            "caption": img.caption,
-            "section": img.section,
-            "order": img.order,
-        } for img in images])
+        # Check if table exists, if not return empty array
+        try:
+            images = s.query(GalleryImage).order_by(GalleryImage.order, GalleryImage.id).all()
+            return jsonify([{
+                "id": img.id,
+                "image_url": img.image_url,
+                "caption": img.caption,
+                "section": img.section,
+                "order": img.order,
+            } for img in images])
+        except Exception as e:
+            # Table might not exist yet, return empty array
+            print(f"⚠️ Gallery images table might not exist: {e}")
+            return jsonify([])
     finally:
         s.close()
 
