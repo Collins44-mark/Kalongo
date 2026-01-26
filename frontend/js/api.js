@@ -868,14 +868,20 @@ const Render = {
             return;
         }
         
-        // Filter images for our-kalongo section
-        const kalongoImages = images.filter(img => img.section === 'our-kalongo' || !img.section);
+        // Filter images for our-kalongo section (include images with section='our-kalongo' or no section, or all if none match)
+        let kalongoImages = images.filter(img => img.section === 'our-kalongo' || !img.section || img.section === '');
         console.log('  🖼️ Filtered images for our-kalongo:', kalongoImages.length);
         
+        // If no filtered images, use all images as fallback
+        if (kalongoImages.length === 0 && images.length > 0) {
+            console.log('  ℹ️ No images with our-kalongo section, using all images');
+            kalongoImages = images;
+        }
+        
+        // Only replace if we have API images, otherwise keep fallback HTML
         if (kalongoImages.length === 0) {
-            console.warn('⚠️ No images match our-kalongo section');
-            imagesContainer.innerHTML = '<p style="text-align:center;color:#999;padding:2rem;">No images available for this section. Please add images through the admin panel.</p>';
-            return;
+            console.warn('⚠️ No images from API, keeping fallback images');
+            return; // Keep the hardcoded fallback images
         }
         
         imagesContainer.innerHTML = kalongoImages.map(img => {
