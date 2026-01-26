@@ -30,3 +30,10 @@ __pycache__/
 .env.local
 .DS_Store
 *.pid
+
+# Large video files (stored in Cloudinary)
+videos/
+*.mp4
+*.mov
+*.avi
+*.mkv
