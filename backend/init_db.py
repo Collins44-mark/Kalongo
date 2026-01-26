@@ -45,11 +45,13 @@ def seed_admin():
         if session.query(Admin).first():
             print("ℹ️  Admin user already exists. Skipping seed.")
             return
-        admin = Admin(username=os.getenv("ADMIN_USERNAME", "admin"))
-        admin.set_password(os.getenv("ADMIN_PASSWORD", "admin123"))
+        username = os.getenv("ADMIN_USERNAME", "Kalongo")
+        password = os.getenv("ADMIN_PASSWORD", "kalongo@95")
+        admin = Admin(username=username)
+        admin.set_password(password)
         session.add(admin)
         session.commit()
-        print("✅ Default admin created. Username: admin, Password: admin123")
+        print(f"✅ Default admin created. Username: {username}, Password: {password}")
     except Exception as e:
         session.rollback()
         print(f"❌ Error seeding admin: {e}")

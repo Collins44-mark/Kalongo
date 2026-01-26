@@ -62,7 +62,7 @@ All frontend data has been successfully migrated to the database and is now mana
 
 ### Admin Panel
 - **URL**: http://localhost:5001/admin
-- **Login**: `admin` / `admin123`
+- **Login**: `Kalongo` / `kalongo@95`
 - Full CRUD operations for all content
 - Upload images/videos via Cloudinary
 - All changes reflect immediately on frontend

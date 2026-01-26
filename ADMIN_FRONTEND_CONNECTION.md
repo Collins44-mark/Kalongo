@@ -12,7 +12,7 @@ Admin Panel → Database (PostgreSQL) → API Endpoints → Frontend (JavaScript
 
 ### 1. **Admin Adds Content**
 - Go to: http://localhost:5001/admin
-- Login: `admin` / `admin123`
+- Login: `Kalongo` / `kalongo@95`
 - Add/Edit: Hero slides, Rooms, Facilities, Activities, Pricing, Videos, Reviews, Menu
 - **Changes are saved to PostgreSQL database immediately**
 

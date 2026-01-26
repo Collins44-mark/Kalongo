@@ -100,7 +100,7 @@ Admin Panel → Database (PostgreSQL) → API Endpoints → Frontend (JavaScript
 
 ### Admin Panel
 - **URL:** http://localhost:5001/admin
-- **Login:** `admin` / `admin123`
+- **Login:** `Kalongo` / `kalongo@95`
 
 ### API Endpoints
 - Base: `http://localhost:5001/api`

@@ -6,18 +6,119 @@
     <title>Login | Kalongo Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #0f1419; --bg-card: #1a1f26; --border: #2d3748; --text: #e2e8f0; --text-muted: #94a3b8; --primary: #22c55e; --primary-hover: #16a34a; --radius: 12px; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem; }
-        .login-box { width: 100%; max-width: 400px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-        h1 { font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--primary); }
-        input { width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 1rem; margin-bottom: 1rem; }
-        input:focus { outline: none; border-color: var(--primary); }
-        button { width: 100%; padding: 0.75rem; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; }
-        button:hover { background: #16a34a; }
-        .flash { padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem; }
-        .flash.error { background: rgba(239,68,68,0.2); color: #fca5a5; }
-        .flash.success { background: rgba(34,197,94,0.2); color: #86efac; }
+        :root {
+            --bg: #0f1419;
+            --bg-card: #1a1f26;
+            --border: #2d3748;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --primary: #22c55e;
+            --radius: 12px;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        .password-field {
+            position: relative;
+            margin-bottom: 0.75rem;
+        }
+        .password-field input {
+            padding-right: 4.5rem;
+        }
+        .password-field button {
+            position: absolute;
+            top: 50%;
+            right: 0.5rem;
+            transform: translateY(-50%);
+            border-radius: 999px;
+            border: 1px solid transparent;
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--text-muted);
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            min-width: 2.5rem;
+            cursor: pointer;
+            transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+            backdrop-filter: blur(4px);
+        }
+        .password-field button svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            display: block;
+        }
+        .password-field button:hover,
+        .password-field button:focus-visible {
+            border-color: var(--primary);
+            background: rgba(34, 197, 94, 0.2);
+            color: #fff;
+        }
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .login-box form button[type="submit"] {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .login-box form button[type="submit"]:hover {
+            background: #16a34a;
+        }
+        .flash {
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        .flash.error {
+            background: rgba(239,68,68,0.2);
+            color: #fca5a5;
+        }
+        .flash.success {
+            background: rgba(34,197,94,0.2);
+            color: #86efac;
+        }
     </style>
 </head>
 <body>
@@ -28,9 +129,38 @@
         {% endwith %}
         <form method="post" action="{{ url_for('admin.login') }}">
             <input type="text" name="username" placeholder="Username" required autofocus>
-            <input type="password" name="password" placeholder="Password" required>
+            <div class="password-field">
+                <input type="password" name="password" placeholder="Password" required id="passwordInput">
+                <button type="button" id="togglePassword" aria-label="Show password">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true" focusable="false">
+                        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    </svg>
+                </button>
+            </div>
             <button type="submit">Sign in</button>
         </form>
     </div>
+    <script>
+        ;(function() {
+            const passwordInput = document.getElementById("passwordInput")
+            const toggle = document.getElementById("togglePassword")
+            if (!passwordInput || !toggle) return
+
+            const openIcon = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true" focusable="false"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>`
+            const closedIcon = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true" focusable="false"><path d="M1.5 12s4.5-7 10.5-7c2.6 0 4.95.9 6.75 2.4M21.5 12s-4.5 7-10.5 7c-2.6 0-4.95-.9-6.75-2.4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.5 7.5l-9 9M16.5 16.5l-9-9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`
+
+            const updateVisibility = (show) => {
+                passwordInput.type = show ? "text" : "password"
+                toggle.innerHTML = show ? closedIcon : openIcon
+                toggle.setAttribute("aria-label", show ? "Hide password" : "Show password")
+            }
+
+            toggle.addEventListener("click", () => {
+                const shouldShow = passwordInput.type !== "text"
+                updateVisibility(shouldShow)
+            })
+        })()
+    </script>
 </body>
 </html>

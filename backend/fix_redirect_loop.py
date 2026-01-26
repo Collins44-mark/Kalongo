@@ -30,4 +30,4 @@ if __name__ == "__main__":
     print("\nTo fix redirect loops:")
     print("1. Clear your browser cookies for localhost:5001")
     print("2. Restart the Flask server")
-    print("3. Try logging in again with: admin / admin123")
+print("3. Try logging in again with: Kalongo / kalongo@95")

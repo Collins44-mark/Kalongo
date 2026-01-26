@@ -16,7 +16,7 @@ Flask backend API and **Admin Panel** for Kalongo Farm website.
    python init_db.py
    ```
    This creates all tables and seeds:
-   - Default admin: **username** `admin`, **password** `admin123`
+   - Default admin: **username** `Kalongo`, **password** `kalongo@95`
    - Site settings (phone, email, address, etc.)
    - Default rooms: A-Cabin, Cottage, Kikota
 
@@ -28,7 +28,7 @@ Flask backend API and **Admin Panel** for Kalongo Farm website.
 ## Admin Panel
 
 - **URL:** http://localhost:5000/admin
-- **Login:** `admin` / `admin123` (change via `ADMIN_USERNAME` / `ADMIN_PASSWORD` in `.env`)
+- **Login:** `Kalongo` / `kalongo@95` (change via `ADMIN_USERNAME` / `ADMIN_PASSWORD` in `.env`)
 
 ### Admin sections
 

@@ -39,7 +39,7 @@ curl http://localhost:5001/api/reviews
 
 **Step 1:** Go to Admin Panel
 - URL: http://localhost:5001/admin
-- Login: admin / admin123
+- Login: Kalongo / kalongo@95
 
 **Step 2:** Add/Edit Content
 - Go to "Hero Slides"

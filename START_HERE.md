@@ -67,7 +67,7 @@ python3 run_frontend.py
 
 Then:
 - **Customer site**: http://localhost:8000 (auto-opens)
-- **Admin panel**: http://localhost:5001/admin (login: admin/admin123)
+- **Admin panel**: http://localhost:5001/admin (login: Kalongo / kalongo@95)
 
 ---
 

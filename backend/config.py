@@ -13,5 +13,5 @@ class Config:
     CLOUDINARY_API_KEY = os.getenv("CLOUDINARY_API_KEY")
     CLOUDINARY_API_SECRET = os.getenv("CLOUDINARY_API_SECRET")
     # Admin
-    ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "admin")
-    ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin123")  # Change in production!
+    ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "Kalongo")
+    ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "kalongo@95")  # Change in production!

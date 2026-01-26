@@ -73,9 +73,8 @@ KALONGOWEB/
 - **Run**: `python3 run_frontend.py`
 - Shows: Rooms, Facilities, Activities, Pricing, Gallery
 
-### Admin Panel
 - **URL**: http://localhost:5001/admin
-- **Login**: `admin` / `admin123`
+- **Login**: `Kalongo` / `kalongo@95`
 - **Run**: `python3 run_backend.py`
 - Manage: All website content, images, videos, pricing, menu
 

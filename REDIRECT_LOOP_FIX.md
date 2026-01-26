@@ -47,8 +47,8 @@ python app.py
 
 ### Step 3: Login Again
 - URL: http://localhost:5001/admin/login
-- Username: `admin`
-- Password: `admin123`
+- Username: `Kalongo`
+- Password: `kalongo@95`
 
 ### Step 4: Verify Admin User Exists
 ```bash
