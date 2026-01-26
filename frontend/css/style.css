@@ -257,15 +257,33 @@ table {
     background: none;
     border: none;
     cursor: pointer;
+    padding: 8px;
+    z-index: 1000;
+    position: relative;
     gap: 5px;
+    justify-content: center;
+    align-items: center;
 }
 
 .mobile-menu-toggle span {
-    width: 25px;
+    width: 28px;
     height: 3px;
-    background: var(--text-dark);
-    border-radius: 3px;
+    background: var(--primary-color);
+    border-radius: 2px;
     transition: all 0.3s ease;
+    display: block;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
 }
 
 /* ===== Hero Section ===== */
@@ -1944,8 +1962,50 @@ section * {
     .accommodation-grid-modern,
     .food-grid-modern,
     .activities-grid-modern {
-        grid-template-columns: 1fr;
-        gap: 25px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .accommodation-card-modern,
+    .food-card-modern,
+    .activity-card-modern {
+        padding: 20px 15px;
+        border-radius: 15px;
+    }
+    
+    .accommodation-name-modern {
+        font-size: 1.3rem;
+    }
+    
+    .price-item-modern {
+        padding: 12px 15px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .price-label-modern {
+        font-size: 0.9rem;
+    }
+    
+    .price-value-modern {
+        font-size: 1.2rem;
+    }
+    
+    .food-name-modern {
+        font-size: 1.3rem;
+    }
+    
+    .food-price-modern {
+        font-size: 1.8rem;
+    }
+    
+    .activity-name-modern {
+        font-size: 1.2rem;
+    }
+    
+    .activity-price-modern {
+        font-size: 1.3rem;
     }
     
     .accommodation-card-modern.featured-accommodation-modern {
@@ -1958,10 +2018,48 @@ section * {
     
     .menu-grid-modern {
         grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .menu-item-modern {
+        padding: 12px 15px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .menu-item-name-modern {
+        font-size: 0.9rem;
+        flex: 1;
+    }
+    
+    .menu-item-price-modern {
+        font-size: 1rem;
+        margin-left: 10px;
+        white-space: nowrap;
     }
     
     .charges-grid-modern {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .charge-item-modern {
+        padding: 15px 18px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .charge-name-modern {
+        font-size: 0.9rem;
+        flex: 1;
+    }
+    
+    .charge-price-modern {
+        font-size: 1rem;
+        margin-left: 10px;
+        white-space: nowrap;
     }
     
     .menu-category-modern {
@@ -1991,44 +2089,109 @@ section * {
         font-size: 1rem;
     }
     
+    .accommodation-grid-modern,
+    .food-grid-modern,
+    .activities-grid-modern {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .accommodation-card-modern,
+    .food-card-modern,
+    .activity-card-modern {
+        padding: 18px 12px;
+        border-radius: 12px;
+    }
+    
     .accommodation-name-modern {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
+    }
+    
+    .price-item-modern {
+        padding: 10px 12px;
+        gap: 6px;
+    }
+    
+    .price-label-modern {
+        font-size: 0.85rem;
     }
     
     .price-value-modern {
+        font-size: 1.1rem;
+    }
+    
+    .food-name-modern {
         font-size: 1.2rem;
     }
     
     .food-price-modern {
-        font-size: 1.8rem;
-    }
-    
-    .activity-price-modern {
-        font-size: 1.5rem;
-    }
-    
-    .menu-category-title-modern {
         font-size: 1.6rem;
     }
     
-    .menu-item-modern {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
+    .activity-name-modern {
+        font-size: 1.1rem;
     }
     
-    .menu-item-price-modern {
-        margin-left: 0;
+    .activity-price-modern {
+        font-size: 1.2rem;
     }
     
-    .charge-item-modern {
-        flex-direction: column;
-        align-items: flex-start;
+    .menu-grid-modern {
+        grid-template-columns: 1fr;
         gap: 10px;
     }
     
+    .menu-category-title-modern {
+        font-size: 1.5rem;
+    }
+    
+    .menu-item-modern {
+        padding: 12px 15px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .menu-item-name-modern {
+        font-size: 0.9rem;
+        flex: 1;
+    }
+    
+    .menu-item-price-modern {
+        font-size: 1rem;
+        margin-left: 10px;
+    }
+    
+    .charges-grid-modern {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .charge-item-modern {
+        padding: 15px 18px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .charge-name-modern {
+        font-size: 0.9rem;
+        flex: 1;
+    }
+    
     .charge-price-modern {
-        margin-left: 0;
+        font-size: 1rem;
+        margin-left: 10px;
+    }
+    
+    .menu-item-price-modern {
+        margin-left: 10px;
+        white-space: nowrap;
+    }
+    
+    .charge-price-modern {
+        margin-left: 10px;
+        white-space: nowrap;
     }
 }
 
@@ -3502,20 +3665,73 @@ section * {
 
     .nav-menu {
         position: fixed;
-        top: 80px;
-        left: -100%;
-        width: 100%;
+        top: 70px;
+        right: -100%;
+        width: 280px;
+        max-width: 85vw;
+        height: calc(100vh - 70px);
         flex-direction: column;
         background: var(--white);
-        box-shadow: var(--shadow);
-        padding: 20px;
-        transition: left 0.3s ease;
-        gap: 15px;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.15);
+        padding: 15px 0;
+        transition: right 0.3s ease;
+        gap: 5px;
         z-index: 999;
+        overflow-y: auto;
+        border-left: 1px solid var(--bg-light);
     }
 
     .nav-menu.active {
+        right: 0;
+    }
+    
+    /* Mobile Menu Overlay */
+    .nav-menu-overlay {
+        display: none;
+        position: fixed;
+        top: 70px;
         left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .nav-menu-overlay.active {
+        display: block;
+        opacity: 1;
+    }
+    
+    .nav-link {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+        border-left: 3px solid transparent;
+        transition: all 0.2s;
+        margin: 0 10px;
+        border-radius: 8px;
+    }
+    
+    .nav-link:hover,
+    .nav-link.active {
+        background: rgba(76, 175, 80, 0.1);
+        border-left-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+    
+    .nav-link.btn-booking {
+        background: var(--primary-color);
+        color: var(--white);
+        border-left: none;
+        margin: 10px;
+        text-align: center;
+    }
+    
+    .nav-link.btn-booking:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
     }
 
     .logo {

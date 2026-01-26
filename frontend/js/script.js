@@ -1,19 +1,66 @@
-// Mobile Menu Toggle
+// Mobile Menu Toggle with Modern UI
 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
 const navMenu = document.getElementById('navMenu');
 
-if (mobileMenuToggle) {
-    mobileMenuToggle.addEventListener('click', () => {
+// Create overlay element if it doesn't exist
+let menuOverlay = document.querySelector('.nav-menu-overlay');
+if (!menuOverlay && navMenu) {
+    menuOverlay = document.createElement('div');
+    menuOverlay.className = 'nav-menu-overlay';
+    document.body.appendChild(menuOverlay);
+}
+
+function toggleMobileMenu() {
+    if (navMenu && mobileMenuToggle) {
         navMenu.classList.toggle('active');
-    });
+        mobileMenuToggle.classList.toggle('active');
+        if (menuOverlay) {
+            menuOverlay.classList.toggle('active');
+        }
+        
+        // Prevent body scroll when menu is open
+        if (navMenu.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    }
+}
+
+function closeMobileMenu() {
+    if (navMenu && mobileMenuToggle) {
+        navMenu.classList.remove('active');
+        mobileMenuToggle.classList.remove('active');
+        if (menuOverlay) {
+            menuOverlay.classList.remove('active');
+        }
+        document.body.style.overflow = '';
+    }
+}
+
+if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+}
+
+if (menuOverlay) {
+    menuOverlay.addEventListener('click', closeMobileMenu);
 }
 
 // Close mobile menu when clicking on a link
 const navLinks = document.querySelectorAll('.nav-link');
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
+        if (window.innerWidth <= 768) {
+            setTimeout(closeMobileMenu, 200);
+        }
     });
+});
+
+// Close menu on window resize if desktop
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && navMenu && navMenu.classList.contains('active')) {
+        closeMobileMenu();
+    }
 });
 
 // Hero Slider Functionality
