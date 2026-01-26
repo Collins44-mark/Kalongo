@@ -153,33 +153,12 @@ window.addEventListener('roomsRendered', (event) => {
     console.log('📢 Received roomsRendered event, initializing room sliders...');
     setTimeout(() => {
         const rooms = event.detail?.rooms || [];
+        console.log(`🏠 Initializing ${rooms.length} room sliders...`);
         rooms.forEach(room => {
             if (room.slug) {
                 initializeRoomSlider(room.slug);
             }
         });
-        // Start synchronized sliders
-        if (rooms.length > 0) {
-            const allRooms = rooms.map(r => r.slug).filter(Boolean);
-            if (allRooms.length > 0 && roomSlideIntervals) {
-                setTimeout(() => {
-                    if (roomSlideIntervals['synchronized']) {
-                        clearInterval(roomSlideIntervals['synchronized']);
-                    }
-                    roomSlideIntervals['synchronized'] = setInterval(() => {
-                        allRooms.forEach(room => {
-                            const roomSlider = document.querySelector(`.room-slider[data-room="${room}"]`);
-                            if (!roomSlider) return;
-                            const slides = roomSlider.querySelectorAll('.room-slide');
-                            if (slides.length > 0) {
-                                const next = ((currentRoomSlides[room] || 0) + 1) % slides.length;
-                                showRoomSlide(room, next);
-                            }
-                        });
-                    }, 4000);
-                }, 500);
-            }
-        }
     }, 200);
 });
 
@@ -234,23 +213,32 @@ window.addEventListener('reviewsRendered', () => {
     }, 100);
 });
 
-// Room Sliders Functionality (Synchronized)
+// Room Sliders Functionality - Each room has independent slider
 let currentRoomSlides = {};
 let roomSlideIntervals = {};
 
 function initializeRoomSlider(roomName) {
     const slider = document.querySelector(`.room-slider[data-room="${roomName}"]`);
-    if (!slider) return;
+    if (!slider) {
+        console.warn(`⚠️ Room slider not found for: ${roomName}`);
+        return;
+    }
     
     const slides = slider.querySelectorAll('.room-slide');
     const indicators = document.querySelectorAll(`.room-slider-indicators[data-room="${roomName}"] .room-indicator`);
     const prevBtn = document.querySelector(`.room-prev-btn[data-room="${roomName}"]`);
     const nextBtn = document.querySelector(`.room-next-btn[data-room="${roomName}"]`);
     
-    if (slides.length === 0) return;
+    if (slides.length === 0) {
+        console.warn(`⚠️ No slides found for room: ${roomName}`);
+        return;
+    }
+    
+    console.log(`✅ Initializing room slider for ${roomName} with ${slides.length} slides`);
     
     currentRoomSlides[roomName] = 0;
     
+    // Function to show specific slide for this room only
     function showRoomSlide(room, index) {
         const roomSlider = document.querySelector(`.room-slider[data-room="${room}"]`);
         if (!roomSlider) return;
@@ -258,9 +246,17 @@ function initializeRoomSlider(roomName) {
         const roomSlides = roomSlider.querySelectorAll('.room-slide');
         const roomIndicators = document.querySelectorAll(`.room-slider-indicators[data-room="${room}"] .room-indicator`);
         
+        if (roomSlides.length === 0) return;
+        
+        // Ensure index is valid
+        if (index < 0) index = roomSlides.length - 1;
+        if (index >= roomSlides.length) index = 0;
+        
+        // Remove active from all slides and indicators for this room
         roomSlides.forEach(slide => slide.classList.remove('active'));
         roomIndicators.forEach(indicator => indicator.classList.remove('active'));
         
+        // Activate the selected slide and indicator
         if (roomSlides[index]) {
             roomSlides[index].classList.add('active');
         }
@@ -269,80 +265,101 @@ function initializeRoomSlider(roomName) {
         }
         
         currentRoomSlides[room] = index;
+        console.log(`🎬 Room ${room}: Showing slide ${index + 1} of ${roomSlides.length}`);
     }
     
+    // Function to go to next slide for this room only
     function nextRoomSlide(room) {
         const roomSlider = document.querySelector(`.room-slider[data-room="${room}"]`);
         if (!roomSlider) return;
         const slides = roomSlider.querySelectorAll('.room-slide');
-        const next = (currentRoomSlides[room] + 1) % slides.length;
+        if (slides.length === 0) return;
+        const current = currentRoomSlides[room] || 0;
+        const next = (current + 1) % slides.length;
         showRoomSlide(room, next);
     }
     
+    // Function to go to previous slide for this room only
     function prevRoomSlide(room) {
         const roomSlider = document.querySelector(`.room-slider[data-room="${room}"]`);
         if (!roomSlider) return;
         const slides = roomSlider.querySelectorAll('.room-slide');
-        const prev = (currentRoomSlides[room] - 1 + slides.length) % slides.length;
+        if (slides.length === 0) return;
+        const current = currentRoomSlides[room] || 0;
+        const prev = (current - 1 + slides.length) % slides.length;
         showRoomSlide(room, prev);
     }
     
-    // Synchronized auto-advance for all room sliders
-    function startSynchronizedRoomSliders() {
-        const allRooms = ['a-cabin', 'cottage', 'kikota'];
-        if (roomSlideIntervals['synchronized']) {
-            clearInterval(roomSlideIntervals['synchronized']);
+    // Start auto-advance for this specific room
+    function startRoomSlider(room) {
+        // Clear any existing interval for this room
+        if (roomSlideIntervals[room]) {
+            clearInterval(roomSlideIntervals[room]);
         }
-        roomSlideIntervals['synchronized'] = setInterval(() => {
-            allRooms.forEach(room => {
-                nextRoomSlide(room);
-            });
-        }, 4000);
+        
+        // Only auto-advance if there's more than one slide
+        const roomSlider = document.querySelector(`.room-slider[data-room="${room}"]`);
+        if (roomSlider) {
+            const slides = roomSlider.querySelectorAll('.room-slide');
+            if (slides.length > 1) {
+                roomSlideIntervals[room] = setInterval(() => {
+                    nextRoomSlide(room);
+                }, 4000);
+                console.log(`✅ Auto-advance started for room: ${room}`);
+            }
+        }
     }
     
-    // Button handlers
+    // Button handlers - only for this specific room
     if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            const allRooms = ['a-cabin', 'cottage', 'kikota'];
-            allRooms.forEach(room => {
-                prevRoomSlide(room);
-            });
-            if (roomSlideIntervals['synchronized']) {
-                clearInterval(roomSlideIntervals['synchronized']);
+        // Remove existing listeners
+        const newPrevBtn = prevBtn.cloneNode(true);
+        prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn);
+        
+        newPrevBtn.addEventListener('click', () => {
+            prevRoomSlide(roomName);
+            // Restart auto-advance
+            if (roomSlideIntervals[roomName]) {
+                clearInterval(roomSlideIntervals[roomName]);
             }
-            startSynchronizedRoomSliders();
+            startRoomSlider(roomName);
         });
     }
     
     if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            const allRooms = ['a-cabin', 'cottage', 'kikota'];
-            allRooms.forEach(room => {
-                nextRoomSlide(room);
-            });
-            if (roomSlideIntervals['synchronized']) {
-                clearInterval(roomSlideIntervals['synchronized']);
+        // Remove existing listeners
+        const newNextBtn = nextBtn.cloneNode(true);
+        nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
+        
+        newNextBtn.addEventListener('click', () => {
+            nextRoomSlide(roomName);
+            // Restart auto-advance
+            if (roomSlideIntervals[roomName]) {
+                clearInterval(roomSlideIntervals[roomName]);
             }
-            startSynchronizedRoomSliders();
+            startRoomSlider(roomName);
         });
     }
     
-    // Indicator handlers
+    // Indicator handlers - only for this specific room
     indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-            const allRooms = ['a-cabin', 'cottage', 'kikota'];
-            allRooms.forEach(room => {
-                showRoomSlide(room, index);
-            });
-            if (roomSlideIntervals['synchronized']) {
-                clearInterval(roomSlideIntervals['synchronized']);
+        // Remove existing listeners
+        const newIndicator = indicator.cloneNode(true);
+        indicator.parentNode.replaceChild(newIndicator, indicator);
+        
+        newIndicator.addEventListener('click', () => {
+            showRoomSlide(roomName, index);
+            // Restart auto-advance
+            if (roomSlideIntervals[roomName]) {
+                clearInterval(roomSlideIntervals[roomName]);
             }
-            startSynchronizedRoomSliders();
+            startRoomSlider(roomName);
         });
     });
     
-    // Initialize first slide
+    // Initialize first slide and start auto-advance
     showRoomSlide(roomName, 0);
+    startRoomSlider(roomName);
 }
 
 // Initialize all room sliders and start synchronized animation
@@ -362,43 +379,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Initialize room sliders
-    const roomNames = ['a-cabin', 'cottage', 'kikota'];
-    roomNames.forEach(roomName => {
-        initializeRoomSlider(roomName);
-    });
-    
-    // Start synchronized room sliders
-    if (roomNames.length > 0) {
-        setTimeout(() => {
-            const allRooms = ['a-cabin', 'cottage', 'kikota'];
-            function startSynchronizedRoomSliders() {
-                if (roomSlideIntervals['synchronized']) {
-                    clearInterval(roomSlideIntervals['synchronized']);
-                }
-                roomSlideIntervals['synchronized'] = setInterval(() => {
-                    allRooms.forEach(room => {
-                        const roomSlider = document.querySelector(`.room-slider[data-room="${room}"]`);
-                        if (!roomSlider) return;
-                        const slides = roomSlider.querySelectorAll('.room-slide');
-                        const next = (currentRoomSlides[room] + 1) % slides.length;
-                        const roomSlides = roomSlider.querySelectorAll('.room-slide');
-                        const roomIndicators = document.querySelectorAll(`.room-slider-indicators[data-room="${room}"] .room-indicator`);
-                        roomSlides.forEach(slide => slide.classList.remove('active'));
-                        roomIndicators.forEach(indicator => indicator.classList.remove('active'));
-                        if (roomSlides[next]) {
-                            roomSlides[next].classList.add('active');
-                        }
-                        if (roomIndicators[next]) {
-                            roomIndicators[next].classList.add('active');
-                        }
-                        currentRoomSlides[room] = next;
-                    });
-                }, 4000);
+    // Initialize room sliders if they exist (fallback - main initialization happens via event)
+    setTimeout(() => {
+        const allRoomSliders = document.querySelectorAll('.room-slider');
+        allRoomSliders.forEach(slider => {
+            const roomName = slider.getAttribute('data-room');
+            if (roomName && !currentRoomSlides[roomName]) {
+                initializeRoomSlider(roomName);
             }
-            startSynchronizedRoomSliders();
-        }, 1000);
-    }
+        });
+    }, 1000);
 });
 
 // Reviews Slider Functionality
@@ -472,15 +462,23 @@ function prevReviewSlide() {
 }
 
 function startReviewSlider() {
+    // Refresh slides count
+    reviewSlides = document.querySelectorAll('.review-slide');
+    totalReviewSlides = reviewSlides.length;
+    
     if (totalReviewSlides > 0) {
         if (reviewSlideInterval) {
             clearInterval(reviewSlideInterval);
         }
-        // Start auto-advance every 5 seconds
-        reviewSlideInterval = setInterval(() => {
-            nextReviewSlide();
-        }, 5000);
-        console.log(`✅ Review slider started (${totalReviewSlides} slides, 5s interval)`);
+        // Only auto-advance if there's more than one review
+        if (totalReviewSlides > 1) {
+            reviewSlideInterval = setInterval(() => {
+                nextReviewSlide();
+            }, 5000);
+            console.log(`✅ Review slider started (${totalReviewSlides} slides, 5s interval)`);
+        } else {
+            console.log(`✅ Review slider: Only 1 review, no auto-advance needed`);
+        }
     }
 }
 
