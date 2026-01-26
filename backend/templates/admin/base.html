@@ -189,6 +189,7 @@
                 <a href="{{ url_for('admin.food_list') }}" class="{% if 'food' in request.endpoint %}active{% endif %}">Food</a>
                 <a href="{{ url_for('admin.restaurant_menu_list') }}" class="{% if 'restaurant_menu' in request.endpoint %}active{% endif %}">Restaurant Menu</a>
                 <a href="{{ url_for('admin.videos_list') }}" class="{% if 'video' in request.endpoint %}active{% endif %}">Videos</a>
+                <a href="{{ url_for('admin.gallery_images_list') }}" class="{% if 'gallery_image' in request.endpoint %}active{% endif %}">Gallery Images</a>
                 <a href="{{ url_for('admin.reviews_list') }}" class="{% if 'review' in request.endpoint %}active{% endif %}">Reviews</a>
                 <a href="{{ url_for('admin.settings') }}" class="{% if request.endpoint == 'admin.settings' %}active{% endif %}">Settings</a>
                 <a href="{{ url_for('admin.logout') }}" style="margin-top: 1rem; color: #f87171;">Logout</a>

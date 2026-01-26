@@ -127,6 +127,7 @@ const API = {
     getFood: () => fetchAPI('/food'),
     getRestaurantMenu: () => fetchAPI('/restaurant-menu'),
     getVideos: () => fetchAPI('/videos'),
+    getGalleryImages: () => fetchAPI('/gallery-images'),
     getReviews: () => fetchAPI('/reviews'),
     getSettings: () => fetchAPI('/settings'),
     // Combined endpoint for faster homepage loading
@@ -789,10 +790,12 @@ const Render = {
             return;
         }
         
-        container.innerHTML = kalongoVideos.map(v => `
+        container.innerHTML = kalongoVideos.map(v => {
+            const optimizedUrl = optimizeCloudinaryUrl(v.url, 800, 600, 'auto', 'auto');
+            return `
             <div class="gallery-item-modern video-item-modern">
                 <video class="gallery-media-modern" controls preload="metadata" loading="lazy">
-                    <source src="${v.url}" type="video/mp4">
+                    <source src="${optimizedUrl}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 ${v.caption ? `
@@ -801,7 +804,77 @@ const Render = {
                     </div>
                 ` : ''}
             </div>
-        `).join('');
+        `;
+        }).join('');
+    },
+    
+    galleryImages: (images) => {
+        console.log('🖼️ Rendering gallery images...', images?.length || 0);
+        // Find all gallery containers for images
+        const containers = document.querySelectorAll('.gallery-grid-modern');
+        console.log('🔍 Gallery containers found:', containers.length);
+        
+        if (containers.length === 0) {
+            console.error('❌ Gallery Images: No gallery container found (.gallery-grid-modern)');
+            return;
+        }
+        if (!images || images.length === 0) {
+            console.warn('⚠️ Gallery Images: No images data');
+            return;
+        }
+        
+        // Filter images for our-kalongo section
+        const kalongoImages = images.filter(img => img.section === 'our-kalongo' || !img.section);
+        console.log('  🖼️ Filtered images for our-kalongo:', kalongoImages.length);
+        
+        // Find the images container (should be the second gallery-grid-modern in our-kalongo page)
+        let imagesContainer = null;
+        containers.forEach((container) => {
+            // Check if this container is in the Images section
+            const section = container.closest('.packages-section-modern');
+            if (section) {
+                const title = section.querySelector('.section-title-modern');
+                if (title && title.textContent.includes('Images')) {
+                    imagesContainer = container;
+                }
+            }
+        });
+        
+        // Fallback: use second container if found
+        if (!imagesContainer && containers.length > 1) {
+            imagesContainer = containers[1];
+        }
+        
+        if (!imagesContainer) {
+            console.warn('⚠️ Gallery Images: No images container found');
+            return;
+        }
+        
+        if (kalongoImages.length === 0) {
+            console.warn('⚠️ No images match our-kalongo section');
+            imagesContainer.innerHTML = '<p style="text-align:center;color:#999;padding:2rem;">No images available at this time.</p>';
+            return;
+        }
+        
+        imagesContainer.innerHTML = kalongoImages.map(img => {
+            const optimizedUrl = optimizeCloudinaryUrl(img.image_url, 800, 600, 'auto', 'auto');
+            return `
+            <div class="gallery-item-modern image-item-modern">
+                <img src="${optimizedUrl}" 
+                     alt="${img.caption || 'Kalongo Farm Gallery'}" 
+                     class="gallery-media-modern"
+                     loading="lazy"
+                     onerror="this.style.display='none';">
+                ${img.caption ? `
+                    <div class="gallery-overlay-modern">
+                        <p class="gallery-caption-modern">${img.caption}</p>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+        }).join('');
+        
+        console.log(`✅ Rendered ${kalongoImages.length} gallery images`);
     },
     
     settings: (settings) => {
@@ -1102,10 +1175,14 @@ async function initializeDataLoading() {
     }
     
     if (path.includes('our-kalongo.html')) {
-        console.log('🎥 Loading videos...');
+        console.log('🎥 Loading videos and images...');
         try {
-            const videos = await API.getVideos();
+            const [videos, images] = await Promise.all([
+                API.getVideos(),
+                API.getGalleryImages()
+            ]);
             console.log('📊 Videos loaded:', videos?.length || 0);
+            console.log('📊 Gallery images loaded:', images?.length || 0);
             setTimeout(() => {
                 if (videos && videos.length > 0) {
                     console.log('🎥 Calling Render.videos()...');
@@ -1113,9 +1190,15 @@ async function initializeDataLoading() {
                 } else {
                     console.warn('⚠️ No videos to display');
                 }
+                if (images && images.length > 0) {
+                    console.log('🖼️ Calling Render.galleryImages()...');
+                    Render.galleryImages(images);
+                } else {
+                    console.warn('⚠️ No gallery images to display');
+                }
             }, 100);
         } catch (error) {
-            console.error('❌ Error loading videos:', error);
+            console.error('❌ Error loading videos/images:', error);
         }
     }
     

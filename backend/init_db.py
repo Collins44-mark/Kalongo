@@ -27,6 +27,7 @@ from models import (
     Review,
     RestaurantMenuCategory,
     RestaurantMenuItem,
+    GalleryImage,
 )
 
 

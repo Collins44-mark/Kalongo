@@ -197,3 +197,16 @@ class RestaurantMenuItem(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     category = relationship("RestaurantMenuCategory", back_populates="items")
+
+
+class GalleryImage(Base):
+    """Gallery images for 'our kalongo' section"""
+    __tablename__ = "gallery_images"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    image_url = Column(String(500), nullable=False)
+    caption = Column(String(300), nullable=True)
+    section = Column(String(100), nullable=True)  # our-kalongo, gallery, etc.
+    order = Column(Integer, default=0)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

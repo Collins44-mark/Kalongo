@@ -22,6 +22,7 @@ from models import (
     Review,
     RestaurantMenuCategory,
     RestaurantMenuItem,
+    GalleryImage,
 )
 from utils.cloudinary_upload import upload_image, upload_video
 
@@ -702,6 +703,15 @@ def videos_list():
             if not url:
                 flash("Video file or URL required.", "error")
                 return redirect(url_for("admin.videos_list"))
+            
+            # Limit videos for "our-kalongo" section to 6
+            if section == "our-kalongo":
+                from sqlalchemy import func
+                existing_count = s.query(func.count(Video.id)).filter_by(section="our-kalongo").scalar() or 0
+                if existing_count >= 6:
+                    flash("Maximum limit reached: Only 6 videos are allowed for 'our-kalongo' section. Please delete an existing video first.", "error")
+                    return redirect(url_for("admin.videos_list"))
+            
             v = Video(url=url, caption=caption or None, section=section, order=order)
             s.add(v)
             s.commit()
@@ -744,8 +754,8 @@ def video_edit(pk):
             flash("Video not found.", "error")
             return redirect(url_for("admin.videos_list"))
         if request.method == "POST":
+            new_section = request.form.get("section", "").strip() or "gallery"
             v.caption = request.form.get("caption", "").strip() or None
-            v.section = request.form.get("section", "").strip() or "gallery"
             v.order = int(request.form.get("order") or 0)
             url = request.form.get("video_url", "").strip()
             f = request.files.get("video")
@@ -753,6 +763,16 @@ def video_edit(pk):
                 url = upload_video(f, folder="kalongo/videos")
             if url:
                 v.url = url
+            
+            # Limit videos for "our-kalongo" section to 6
+            if new_section == "our-kalongo" and v.section != "our-kalongo":
+                from sqlalchemy import func
+                existing_count = s.query(func.count(Video.id)).filter_by(section="our-kalongo").scalar() or 0
+                if existing_count >= 6:
+                    flash("Maximum limit reached: Only 6 videos are allowed for 'our-kalongo' section. Please delete an existing video first.", "error")
+                    return redirect(url_for("admin.videos_list"))
+            
+            v.section = new_section
             s.commit()
             flash("Video updated.", "success")
             return redirect(url_for("admin.videos_list"))
@@ -1135,3 +1155,122 @@ def restaurant_menu_item_delete(pk):
     finally:
         s.close()
     return redirect(url_for("admin.restaurant_menu_list"))
+
+
+# ---------- Gallery Images (for Our Kalongo) ----------
+
+
+@admin_bp.route("/gallery-images", methods=["GET", "POST"])
+@login_required
+def gallery_images_list():
+    s = get_session()
+    try:
+        if request.method == "POST":
+            caption = request.form.get("caption", "").strip()
+            section = request.form.get("section", "").strip() or "our-kalongo"
+            order = int(request.form.get("order") or 0)
+            url = request.form.get("image_url", "").strip()
+            f = request.files.get("image")
+            if f and f.filename and f.content_type in ALLOWED_IMAGE:
+                url = upload_image(f, folder="kalongo/gallery")
+            if not url:
+                flash("Image or URL required.", "error")
+                return redirect(url_for("admin.gallery_images_list"))
+            
+            # Limit images for "our-kalongo" section to 5
+            if section == "our-kalongo":
+                from sqlalchemy import func
+                existing_count = s.query(func.count(GalleryImage.id)).filter_by(section="our-kalongo").scalar() or 0
+                if existing_count >= 5:
+                    flash("Maximum limit reached: Only 5 images are allowed for 'our-kalongo' section. Please delete an existing image first.", "error")
+                    return redirect(url_for("admin.gallery_images_list"))
+            
+            img = GalleryImage(image_url=url, caption=caption or None, section=section, order=order)
+            s.add(img)
+            s.commit()
+            flash("Gallery image added.", "success")
+            return redirect(url_for("admin.gallery_images_list"))
+        # Pagination - optimized
+        page = request.args.get('page', 1, type=int)
+        per_page = 30
+        from sqlalchemy import func
+        total = s.query(func.count(GalleryImage.id)).scalar() or 0
+        items = s.query(GalleryImage).order_by(GalleryImage.order, GalleryImage.id).offset((page - 1) * per_page).limit(per_page).all()
+        pages = (total + per_page - 1) // per_page if total > 0 else 1
+        pagination = {
+            'page': page,
+            'pages': pages,
+            'per_page': per_page,
+            'total': total,
+            'has_prev': page > 1,
+            'has_next': page < pages,
+            'prev_num': page - 1 if page > 1 else None,
+            'next_num': page + 1 if page < pages else None,
+            'items': items
+        }
+        return render_template("admin/gallery_images.html", items=items, pagination=pagination)
+    except Exception as e:
+        s.rollback()
+        flash(str(e), "error")
+        return redirect(url_for("admin.gallery_images_list"))
+    finally:
+        s.close()
+
+
+@admin_bp.route("/gallery-images/<int:pk>/edit", methods=["GET", "POST"])
+@login_required
+def gallery_image_edit(pk):
+    s = get_session()
+    try:
+        img = s.query(GalleryImage).get(pk)
+        if not img:
+            flash("Gallery image not found.", "error")
+            return redirect(url_for("admin.gallery_images_list"))
+        if request.method == "POST":
+            new_section = request.form.get("section", "").strip() or "our-kalongo"
+            img.caption = request.form.get("caption", "").strip() or None
+            img.order = int(request.form.get("order") or 0)
+            url = request.form.get("image_url", "").strip()
+            f = request.files.get("image")
+            if f and f.filename and f.content_type in ALLOWED_IMAGE:
+                url = upload_image(f, folder="kalongo/gallery")
+            if url:
+                img.image_url = url
+            
+            # Limit images for "our-kalongo" section to 5
+            if new_section == "our-kalongo" and img.section != "our-kalongo":
+                from sqlalchemy import func
+                existing_count = s.query(func.count(GalleryImage.id)).filter_by(section="our-kalongo").scalar() or 0
+                if existing_count >= 5:
+                    flash("Maximum limit reached: Only 5 images are allowed for 'our-kalongo' section. Please delete an existing image first.", "error")
+                    return redirect(url_for("admin.gallery_images_list"))
+            
+            img.section = new_section
+            s.commit()
+            flash("Gallery image updated.", "success")
+            return redirect(url_for("admin.gallery_images_list"))
+        return render_template("admin/gallery_image_edit.html", item=img)
+    except Exception as e:
+        s.rollback()
+        flash(str(e), "error")
+        return redirect(url_for("admin.gallery_images_list"))
+    finally:
+        s.close()
+
+
+@admin_bp.route("/gallery-images/<int:pk>/delete", methods=["POST"])
+@login_required
+def gallery_image_delete(pk):
+    s = get_session()
+    try:
+        img = s.query(GalleryImage).get(pk)
+        if img:
+            s.delete(img)
+            s.commit()
+            flash("Gallery image removed.", "success")
+    except Exception as e:
+        s.rollback()
+        flash(str(e), "error")
+    finally:
+        s.close()
+    return redirect(url_for("admin.gallery_images_list"))
