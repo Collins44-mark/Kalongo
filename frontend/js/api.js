@@ -8,8 +8,8 @@ const API_BASE_URL = (() => {
     if (hostname === 'localhost' || hostname === '127.0.0.1') {
         return 'http://localhost:5001/api';
     }
-    // For production, use same origin
-    return '/api';
+    // For production, use Render backend URL
+    return 'https://kalongo.onrender.com/api';
 })();
 const API_TIMEOUT = 3000; // 3 seconds timeout (optimized for speed)
 
@@ -820,7 +820,8 @@ async function checkBackendHealth() {
         if (API_BASE_URL.includes('localhost') || API_BASE_URL.includes('127.0.0.1')) {
             healthUrl = 'http://localhost:5001/health';
         } else {
-            healthUrl = '/health';
+            // Use the same base URL as API (production backend)
+            healthUrl = API_BASE_URL.replace('/api', '/health');
         }
         
         const controller = new AbortController();
