@@ -2015,7 +2015,7 @@ section * {
     .accommodation-grid-modern,
     .food-grid-modern,
     .activities-grid-modern {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
         gap: 15px;
     }
     
@@ -2069,9 +2069,10 @@ section * {
         transform: translateY(-8px) scale(1.02);
     }
     
+    /* Menu grid: Auto-detect 2-4 columns on tablet/mobile */
     .menu-grid-modern {
-        grid-template-columns: 1fr;
-        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
     }
     
     .menu-item-modern {
@@ -2092,8 +2093,9 @@ section * {
         white-space: nowrap;
     }
     
+    /* Charges grid: Auto-detect 2-4 columns */
     .charges-grid-modern {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
         gap: 12px;
     }
     
@@ -2142,10 +2144,11 @@ section * {
         font-size: 1rem;
     }
     
+    /* Auto-detect 2-4 columns on mobile based on available space */
     .accommodation-grid-modern,
     .food-grid-modern,
     .activities-grid-modern {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
         gap: 12px;
     }
     
@@ -2189,8 +2192,10 @@ section * {
         font-size: 1.2rem;
     }
     
+    /* Menu grid: Auto-detect 2-4 columns on mobile phones */
+    /* minmax(130px, 1fr) allows 2-4 columns depending on screen width and item count */
     .menu-grid-modern {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
         gap: 10px;
     }
     
@@ -2213,10 +2218,12 @@ section * {
     .menu-item-price-modern {
         font-size: 1rem;
         margin-left: 10px;
+        white-space: nowrap;
     }
     
+    /* Charges grid: Auto-detect 2-4 columns on mobile */
     .charges-grid-modern {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
         gap: 12px;
     }
     
@@ -2234,15 +2241,6 @@ section * {
     
     .charge-price-modern {
         font-size: 1rem;
-        margin-left: 10px;
-    }
-    
-    .menu-item-price-modern {
-        margin-left: 10px;
-        white-space: nowrap;
-    }
-    
-    .charge-price-modern {
         margin-left: 10px;
         white-space: nowrap;
     }
@@ -4884,113 +4882,118 @@ section * {
 
 /* ===== Restaurant Menu & Gallery Mobile Responsive ===== */
 @media (max-width: 768px) {
+    /* Auto-detect 2-4 columns on tablet/mobile - removed !important to allow responsive grid */
     .menu-grid-modern {
-        grid-template-columns: 1fr !important;
-        gap: 12px !important;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
     }
     
     .menu-item-modern {
-        padding: 12px !important;
-        font-size: 0.9rem !important;
+        padding: 12px;
+        font-size: 0.9rem;
     }
     
     .menu-category-modern {
-        margin-bottom: 2rem !important;
+        margin-bottom: 2rem;
     }
     
     .menu-category-title-modern {
-        font-size: 1.3rem !important;
-        margin-bottom: 1rem !important;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
     }
     
     .gallery-grid-modern {
-        grid-template-columns: 1fr !important;
-        gap: 15px !important;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
     }
     
     .gallery-item-modern {
-        width: 100% !important;
+        width: 100%;
     }
     
     .gallery-media-modern {
-        width: 100% !important;
-        height: auto !important;
+        width: 100%;
+        height: auto;
     }
     
     .packages-grid-modern,
     .pricing-grid-modern {
-        grid-template-columns: 1fr !important;
-        gap: 20px !important;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
     }
     
     .packages-section-modern {
-        padding: 1.5rem 0 !important;
+        padding: 1.5rem 0;
     }
     
     .section-header-modern {
-        padding: 0 1rem !important;
+        padding: 0 1rem;
     }
     
     .section-title-modern {
-        font-size: 1.5rem !important;
+        font-size: 1.5rem;
     }
     
     .section-description-modern {
-        font-size: 0.9rem !important;
+        font-size: 0.9rem;
     }
 }
 
 @media (max-width: 480px) {
+    /* Auto-detect 2-4 columns on mobile phones */
     .menu-grid-modern {
-        gap: 10px !important;
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 10px;
     }
     
     .menu-item-modern {
-        padding: 10px !important;
-        font-size: 0.85rem !important;
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 5px !important;
+        padding: 12px 15px;
+        font-size: 0.9rem;
+        flex-direction: row;
+        align-items: center;
+        gap: 0;
     }
     
     .menu-item-name-modern {
-        font-size: 0.9rem !important;
+        font-size: 0.9rem;
     }
     
     .menu-item-price-modern {
-        font-size: 0.85rem !important;
+        font-size: 1rem;
     }
     
     .menu-category-title-modern {
-        font-size: 1.2rem !important;
+        font-size: 1.2rem;
     }
     
     .gallery-grid-modern {
-        gap: 12px !important;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
     }
     
     .packages-section-modern {
-        padding: 1rem 0 !important;
+        padding: 1rem 0;
     }
     
     .section-title-modern {
-        font-size: 1.3rem !important;
+        font-size: 1.3rem;
     }
 }
 
 /* Tablet Landscape (768px - 1024px) */
 @media (min-width: 768px) and (max-width: 1024px) {
+    /* Auto-detect 2-4 columns on tablet */
     .menu-grid-modern {
-        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     }
     
     .gallery-grid-modern {
-        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     }
     
     .packages-grid-modern,
     .pricing-grid-modern {
-        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     }
 }
 
