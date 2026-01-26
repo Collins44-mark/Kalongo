@@ -130,19 +130,25 @@ def get_rooms():
         rooms = s.query(Room).options(joinedload(Room.images)).order_by(Room.order, Room.id).all()
         result = []
         for room in rooms:
+            # Filter out images with null or empty URLs
+            valid_images = [
+                {
+                    "id": img.id,
+                    "image_url": img.image_url,
+                    "caption": img.caption or "",
+                    "order": img.order or 0,
+                }
+                for img in room.images
+                if img.image_url and img.image_url.strip()  # Only include images with valid URLs
+            ]
             result.append({
                 "id": room.id,
                 "name": room.name,
                 "slug": room.slug,
-                "description": room.description,
-                "capacity": room.capacity,
+                "description": room.description or "",
+                "capacity": room.capacity or "",
                 "features": room.features or [],
-                "images": sorted([{
-                    "id": img.id,
-                    "image_url": img.image_url,
-                    "caption": img.caption,
-                    "order": img.order,
-                } for img in room.images], key=lambda x: (x["order"], x["id"])),
+                "images": sorted(valid_images, key=lambda x: (x["order"], x["id"])),
             })
         return jsonify(result)
     finally:
@@ -172,13 +178,18 @@ def get_activities():
     s = get_session()
     try:
         activities = s.query(Activity).order_by(Activity.order, Activity.id).all()
-        return jsonify([{
-            "id": a.id,
-            "name": a.name,
-            "description": a.description,
-            "image_url": a.image_url,
-            "order": a.order,
-        } for a in activities])
+        result = []
+        for a in activities:
+            # Only include activities with valid data
+            if a.name:  # Ensure activity has a name
+                result.append({
+                    "id": a.id,
+                    "name": a.name,
+                    "description": a.description or "",
+                    "image_url": a.image_url if a.image_url and a.image_url.strip() else None,
+                    "order": a.order or 0,
+                })
+        return jsonify(result)
     finally:
         s.close()
 
@@ -253,14 +264,19 @@ def get_reviews():
     s = get_session()
     try:
         reviews = s.query(Review).order_by(Review.order, Review.id).all()
-        return jsonify([{
-            "id": r.id,
-            "customer_name": r.customer_name,
-            "image_url": r.image_url,
-            "quote": r.quote,
-            "rating": r.rating,
-            "order": r.order,
-        } for r in reviews])
+        result = []
+        for r in reviews:
+            # Only include reviews with valid data
+            if r.customer_name or r.quote:  # Ensure review has at least name or quote
+                result.append({
+                    "id": r.id,
+                    "customer_name": r.customer_name or "Guest",
+                    "image_url": r.image_url if r.image_url and r.image_url.strip() else None,
+                    "quote": r.quote or "",
+                    "rating": r.rating if r.rating else 5,
+                    "order": r.order or 0,
+                })
+        return jsonify(result)
     finally:
         s.close()
 
@@ -330,15 +346,19 @@ def get_homepage_data():
                 "id": room.id,
                 "name": room.name,
                 "slug": room.slug,
-                "description": room.description,
-                "capacity": room.capacity,
+                "description": room.description or "",
+                "capacity": room.capacity or "",
                 "features": room.features or [],
-                "images": sorted([{
-                    "id": img.id,
-                    "image_url": img.image_url,
-                    "caption": img.caption,
-                    "order": img.order,
-                } for img in room.images], key=lambda x: (x["order"], x["id"])),
+                "images": sorted([
+                    {
+                        "id": img.id,
+                        "image_url": img.image_url,
+                        "caption": img.caption or "",
+                        "order": img.order or 0,
+                    }
+                    for img in room.images
+                    if img.image_url and img.image_url.strip()  # Only include images with valid URLs
+                ], key=lambda x: (x["order"], x["id"])),
             } for room in rooms],
             "facilities": [{
                 "id": f.id,
@@ -349,12 +369,12 @@ def get_homepage_data():
             } for f in facilities],
             "reviews": [{
                 "id": r.id,
-                "customer_name": r.customer_name,
-                "image_url": r.image_url,
-                "quote": r.quote,
-                "rating": r.rating,
-                "order": r.order,
-            } for r in reviews],
+                "customer_name": r.customer_name or "Guest",
+                "image_url": r.image_url if r.image_url and r.image_url.strip() else None,
+                "quote": r.quote or "",
+                "rating": r.rating if r.rating else 5,
+                "order": r.order or 0,
+            } for r in reviews if r.customer_name or r.quote],  # Only include reviews with valid data
             "settings": settings_dict,
         })
     finally:

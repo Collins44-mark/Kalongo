@@ -319,21 +319,33 @@ const Render = {
         
         // Render rooms immediately while images preload
         container.innerHTML = rooms.map(room => {
+            // Filter out images with empty URLs
+            const validImages = (room.images || []).filter(img => img.image_url && img.image_url.trim());
             
-            const imagesHtml = (room.images || []).map((img, idx) => {
-                const optimizedUrl = img.image_url ? optimizeCloudinaryUrl(img.image_url, 800, 600, 'auto', 'auto') : '';
+            const imagesHtml = validImages.length > 0 ? validImages.map((img, idx) => {
+                const optimizedUrl = optimizeCloudinaryUrl(img.image_url, 800, 600, 'auto', 'auto');
                 return `
-                <div class="room-slide ${idx === 0 ? 'active' : ''}" style="position:relative;background-image: url('${optimizedUrl}'); background-size: cover; background-position: center;">
-                    <div class="room-slide-placeholder" style="position:absolute;top:0;left:0;width:100%;height:100%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;">
+                <div class="room-slide ${idx === 0 ? 'active' : ''}" style="position:relative;min-height:300px;">
+                    <img src="${optimizedUrl}" 
+                         alt="${img.caption || room.name}" 
+                         style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;"
+                         loading="${idx === 0 ? 'eager' : 'lazy'}"
+                         onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';"
+                         onload="if(this.nextElementSibling) this.nextElementSibling.style.display='none';">
+                    <div class="room-slide-placeholder" style="position:absolute;top:0;left:0;width:100%;height:100%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;z-index:1;">
                         <div class="spinner" style="border: 3px solid #f3f3f3; border-top: 3px solid #4CAF50; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite;"></div>
                     </div>
                 </div>
                 `;
-            }).join('');
+            }).join('') : `
+                <div class="room-slide active" style="position:relative;min-height:300px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;">
+                    <p style="color:#999;text-align:center;">No image available</p>
+                </div>
+            `;
             
-            const indicatorsHtml = (room.images || []).map((_, idx) =>
+            const indicatorsHtml = validImages.length > 1 ? validImages.map((_, idx) =>
                 `<span class="room-indicator ${idx === 0 ? 'active' : ''}" data-slide="${idx}"></span>`
-            ).join('');
+            ).join('') : '';
             
             const featuresHtml = (room.features || []).map(f => `<li>✓ ${f}</li>`).join('');
             
@@ -402,30 +414,56 @@ const Render = {
     
     activities: (activities) => {
         console.log('🎨 Rendering activities...', activities?.length || 0);
-        // Try grid first (for packages page)
-        let container = document.querySelector('.activities-grid-modern');
-        console.log('🔍 Activities grid container found:', !!container);
-        if (container && activities && activities.length > 0) {
-            container.innerHTML = activities.map(act => `
-                <div class="activity-card-modern">
-                    ${act.image_url ? `<img src="${act.image_url}" alt="${act.name}" style="width:100%;height:200px;object-fit:cover;border-radius:10px;margin-bottom:1rem;">` : ''}
-                    <h3 class="activity-name-modern">${act.name}</h3>
-                    ${act.description ? `<p class="activity-duration-modern">${act.description}</p>` : ''}
-                </div>
-            `).join('');
+        if (!activities || activities.length === 0) {
+            console.warn('⚠️ Activities: No activities data');
             return;
         }
         
-        // Try list container (for activities page)
-        container = document.querySelector('.activities-list-container');
-        if (container && activities && activities.length > 0) {
-            container.innerHTML = activities.map(act => `
-                <div class="activities-group">
-                    <h3 class="activities-group-title">${act.name}</h3>
-                    ${act.description ? `<p style="color: var(--text-light); margin-top: 0.5rem;">${act.description}</p>` : ''}
-                    ${act.image_url ? `<img src="${act.image_url}" alt="${act.name}" style="width:100%;max-width:400px;height:250px;object-fit:cover;border-radius:10px;margin-top:1rem;">` : ''}
+        // Try list container first (for activities page)
+        let container = document.querySelector('.activities-list-container');
+        console.log('🔍 Activities list container found:', !!container);
+        if (container) {
+            container.innerHTML = activities.map(act => {
+                if (!act.name) return ''; // Skip activities without names
+                const optimizedImageUrl = act.image_url ? optimizeCloudinaryUrl(act.image_url, 800, 600, 'auto', 'auto') : null;
+                return `
+                <div class="activities-group" style="margin-bottom: 2rem; padding: 1.5rem; background: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <h3 class="activities-group-title" style="color: var(--primary-color); margin-bottom: 0.5rem;">${act.name}</h3>
+                    ${act.description ? `<p style="color: var(--text-light); margin-top: 0.5rem; line-height: 1.6;">${act.description}</p>` : ''}
+                    ${optimizedImageUrl ? `
+                        <div style="margin-top: 1rem;">
+                            <img src="${optimizedImageUrl}" 
+                                 alt="${act.name}" 
+                                 style="width:100%;max-width:500px;height:300px;object-fit:cover;border-radius:10px;display:block;margin:1rem auto;"
+                                 loading="lazy"
+                                 onerror="this.style.display='none';">
+                        </div>
+                    ` : ''}
                 </div>
-            `).join('');
+            `;
+            }).filter(html => html).join('');
+            console.log(`✅ Rendered ${activities.length} activities in list container`);
+            return;
+        }
+        
+        // Try grid container (for packages page)
+        container = document.querySelector('.activities-grid-modern');
+        console.log('🔍 Activities grid container found:', !!container);
+        if (container) {
+            container.innerHTML = activities.map(act => {
+                if (!act.name) return '';
+                const optimizedImageUrl = act.image_url ? optimizeCloudinaryUrl(act.image_url, 400, 300, 'auto', 'auto') : null;
+                return `
+                <div class="activity-card-modern">
+                    ${optimizedImageUrl ? `<img src="${optimizedImageUrl}" alt="${act.name}" style="width:100%;height:200px;object-fit:cover;border-radius:10px;margin-bottom:1rem;" loading="lazy" onerror="this.style.display='none';">` : ''}
+                    <h3 class="activity-name-modern">${act.name}</h3>
+                    ${act.description ? `<p class="activity-duration-modern">${act.description}</p>` : ''}
+                </div>
+            `;
+            }).filter(html => html).join('');
+            console.log(`✅ Rendered ${activities.length} activities in grid container`);
+        } else {
+            console.error('❌ Activities: No container found (.activities-list-container or .activities-grid-modern)');
         }
     },
     
@@ -1087,16 +1125,39 @@ async function initializeDataLoading() {
         console.log('🏃 Loading activities...');
         try {
             const activities = await API.getActivities();
-            setTimeout(() => {
-                if (activities && activities.length > 0) {
-                    console.log('🏃 Calling Render.activities()...');
-                    Render.activities(activities);
+            console.log('📊 Activities received:', activities?.length || 0);
+            if (activities && activities.length > 0) {
+                // Wait for DOM to be ready
+                const renderActivities = () => {
+                    const container = document.querySelector('.activities-list-container');
+                    if (container) {
+                        console.log('🏃 Calling Render.activities()...');
+                        Render.activities(activities);
+                    } else {
+                        console.warn('⚠️ Activities container not ready, retrying...');
+                        setTimeout(renderActivities, 200);
+                    }
+                };
+                
+                if (document.readyState === 'complete') {
+                    setTimeout(renderActivities, 100);
                 } else {
-                    console.warn('⚠️ No activities to display');
+                    window.addEventListener('load', () => setTimeout(renderActivities, 100));
+                    setTimeout(renderActivities, 200);
                 }
-            }, 100);
+            } else {
+                console.warn('⚠️ No activities to display');
+                const container = document.querySelector('.activities-list-container');
+                if (container) {
+                    container.innerHTML = '<p style="text-align:center;color:#999;padding:2rem;">No activities available at this time. Please check back later.</p>';
+                }
+            }
         } catch (error) {
             console.error('❌ Error loading activities:', error);
+            const container = document.querySelector('.activities-list-container');
+            if (container) {
+                container.innerHTML = '<p style="text-align:center;color:#d32f2f;padding:2rem;">Error loading activities. Please refresh the page.</p>';
+            }
         }
     }
     

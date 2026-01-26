@@ -692,18 +692,39 @@ This booking was submitted through the KALONGO FARM website`;
         // Encode message for URL
         const encodedMessage = encodeURIComponent(bookingMessage);
         
-        // Create WhatsApp URL with hotel number (remove spaces and + sign for URL)
-        const whatsappNumber = HOTEL_WHATSAPP_NUMBER.replace(/\s+/g, '').replace('+', '');
+        // Create WhatsApp URL with hotel number (keep + sign, only remove spaces)
+        const whatsappNumber = HOTEL_WHATSAPP_NUMBER.replace(/\s+/g, '');
         const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
         
-        // Open WhatsApp in new tab/window
-        window.open(whatsappURL, '_blank');
+        console.log('📱 Opening WhatsApp with URL:', whatsappURL);
+        console.log('📱 WhatsApp Number:', whatsappNumber);
+        console.log('📱 Message length:', bookingMessage.length);
         
-        // Show success message
-        alert('Booking form submitted! Opening WhatsApp to send your booking details to KALONGO FARM...\n\nPlease review and send the message to confirm your booking.');
+        // Try to open WhatsApp
+        try {
+            // Open WhatsApp in new tab/window
+            const whatsappWindow = window.open(whatsappURL, '_blank');
+            
+            // Check if window was blocked
+            if (!whatsappWindow || whatsappWindow.closed || typeof whatsappWindow.closed === 'undefined') {
+                // Popup was blocked, try alternative method
+                alert('Please allow popups for this site, or copy this link:\n\n' + whatsappURL);
+                // Fallback: try direct navigation
+                window.location.href = whatsappURL;
+            } else {
+                // Show success message
+                alert('✅ Booking form submitted!\n\nOpening WhatsApp to send your booking details to KALONGO FARM...\n\nPlease review and send the message to confirm your booking.');
+            }
+        } catch (error) {
+            console.error('Error opening WhatsApp:', error);
+            // Fallback: show URL for manual copy
+            alert('Please copy this link and open it in your browser:\n\n' + whatsappURL);
+        }
         
-        // Reset form after successful submission
-        bookingForm.reset();
+        // Reset form after submission attempt
+        setTimeout(() => {
+            bookingForm.reset();
+        }, 1000);
     });
 }
 
