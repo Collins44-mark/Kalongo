@@ -67,12 +67,30 @@ if (menuOverlay) {
     menuOverlay.addEventListener('click', closeMobileMenu);
 }
 
-// Close mobile menu when clicking on a link
+// Close mobile menu when clicking on a link and handle navigation
 const navLinks = document.querySelectorAll('.nav-link');
 navLinks.forEach(link => {
-    link.addEventListener('click', () => {
+    link.addEventListener('click', (e) => {
         if (window.innerWidth <= 768) {
             setTimeout(closeMobileMenu, 200);
+        }
+        
+        // Handle rooms navigation - ensure it goes to the rooms section
+        const href = link.getAttribute('href');
+        if (href && (href.includes('#rooms') || href === 'index.html#rooms')) {
+            // If we're on a different page, navigate first
+            if (window.location.pathname !== '/index.html' && window.location.pathname !== '/' && !window.location.pathname.endsWith('index.html')) {
+                window.location.href = 'index.html#rooms';
+                e.preventDefault();
+                return;
+            }
+            // If we're on index.html, scroll to rooms section
+            setTimeout(() => {
+                const roomsSection = document.getElementById('rooms');
+                if (roomsSection) {
+                    roomsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 300);
         }
     });
 });

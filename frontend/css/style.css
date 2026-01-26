@@ -1717,8 +1717,9 @@ section * {
     border-radius: 12px;
     border: 1px solid var(--bg-light);
     transition: all 0.2s ease;
-    overflow: hidden;
+    overflow: visible;
     min-width: 0;
+    word-wrap: break-word;
 }
 
 .price-item-modern:hover {
@@ -1733,10 +1734,10 @@ section * {
     font-weight: 500;
     flex: 1;
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     margin-right: 10px;
+    padding-right: 10px;
 }
 
 .price-value-modern {
@@ -1746,6 +1747,7 @@ section * {
     white-space: nowrap;
     flex-shrink: 0;
     min-width: fit-content;
+    margin-left: 10px;
 }
 
 /* Food Cards - Auto-detecting 2-4 columns */
@@ -1932,8 +1934,9 @@ section * {
     border-radius: 12px;
     transition: all 0.2s ease;
     border: 1px solid transparent;
-    overflow: hidden;
+    overflow: visible;
     min-width: 0;
+    word-wrap: break-word;
 }
 
 .menu-item-modern:hover {
@@ -1949,10 +1952,10 @@ section * {
     font-weight: 500;
     flex: 1;
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     margin-right: 10px;
+    padding-right: 10px;
 }
 
 .menu-item-price-modern {
@@ -1992,8 +1995,9 @@ section * {
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
     border: 1px solid var(--bg-light);
     transition: all 0.3s ease;
-    overflow: hidden;
+    overflow: visible;
     min-width: 0;
+    word-wrap: break-word;
 }
 
 .charge-item-modern:hover {
@@ -2008,10 +2012,10 @@ section * {
     font-weight: 500;
     flex: 1;
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     margin-right: 10px;
+    padding-right: 10px;
 }
 
 .charge-price-modern {
@@ -2080,15 +2084,16 @@ section * {
         flex-direction: column;
         align-items: flex-start;
         gap: 8px;
-        overflow: hidden;
+        overflow: visible;
         min-width: 0;
+        word-wrap: break-word;
     }
     
     .price-label-modern {
         font-size: 0.9rem;
         width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
         white-space: nowrap;
     }
     
@@ -2153,9 +2158,9 @@ section * {
         font-size: 0.9rem;
         flex: 1;
         min-width: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
         margin-right: 8px;
     }
     
@@ -2186,9 +2191,9 @@ section * {
         font-size: 0.9rem;
         flex: 1;
         min-width: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
         margin-right: 8px;
     }
     
@@ -2251,16 +2256,16 @@ section * {
     .price-item-modern {
         padding: 10px 12px;
         gap: 6px;
-        overflow: hidden;
+        overflow: visible;
         min-width: 0;
+        word-wrap: break-word;
     }
     
     .price-label-modern {
         font-size: 0.85rem;
         width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
     
     .price-value-modern {
@@ -2308,17 +2313,26 @@ section * {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        overflow: hidden;
+        min-width: 0;
     }
     
     .menu-item-name-modern {
         font-size: 0.9rem;
         flex: 1;
+        min-width: 0;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        margin-right: 8px;
     }
     
     .menu-item-price-modern {
         font-size: 1rem;
-        margin-left: 10px;
+        margin-left: 8px;
         white-space: nowrap;
+        flex-shrink: 0;
+        min-width: fit-content;
     }
     
     /* Charges grid: Auto-detect 2-4 columns on mobile */
@@ -2332,17 +2346,26 @@ section * {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        overflow: hidden;
+        min-width: 0;
     }
     
     .charge-name-modern {
         font-size: 0.9rem;
         flex: 1;
+        min-width: 0;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        margin-right: 8px;
     }
     
     .charge-price-modern {
         font-size: 1rem;
-        margin-left: 10px;
+        margin-left: 8px;
         white-space: nowrap;
+        flex-shrink: 0;
+        min-width: fit-content;
     }
 }
 
@@ -2385,6 +2408,7 @@ section * {
     width: 100%;
     height: 300px;
     object-fit: cover;
+    object-position: center;
     display: block;
     border-radius: 20px 20px 0 0;
 }
@@ -2435,6 +2459,13 @@ section * {
     
     .gallery-media-modern {
         height: 250px;
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+    }
+    
+    .gallery-item-modern {
+        overflow: hidden;
     }
     
     .gallery-caption-modern {
@@ -2449,7 +2480,17 @@ section * {
     }
     
     .gallery-media-modern {
-        height: 220px;
+        height: 250px;
+        min-height: 250px;
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+    }
+    
+    .gallery-item-modern {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
     }
     
     .gallery-overlay-modern {

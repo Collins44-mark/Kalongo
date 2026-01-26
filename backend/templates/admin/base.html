@@ -212,6 +212,7 @@
             const overlay = document.getElementById('sidebarOverlay');
             const toggle = document.getElementById('mobileMenuToggle');
             const icon = document.getElementById('menuIcon');
+            const body = document.body;
             
             sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
@@ -219,8 +220,16 @@
             
             if (sidebar.classList.contains('active')) {
                 icon.textContent = '✕';
+                // Prevent body scroll when sidebar is open
+                body.style.overflow = 'hidden';
+                body.style.position = 'fixed';
+                body.style.width = '100%';
             } else {
                 icon.textContent = '☰';
+                // Restore body scroll when sidebar is closed
+                body.style.overflow = '';
+                body.style.position = '';
+                body.style.width = '';
             }
         }
         
@@ -229,24 +238,35 @@
             const overlay = document.getElementById('sidebarOverlay');
             const toggle = document.getElementById('mobileMenuToggle');
             const icon = document.getElementById('menuIcon');
+            const body = document.body;
             
             sidebar.classList.remove('active');
             overlay.classList.remove('active');
             toggle.classList.remove('active');
             icon.textContent = '☰';
+            
+            // Restore body scroll
+            body.style.overflow = '';
+            body.style.position = '';
+            body.style.width = '';
         }
         
-        // Close menu when clicking on a nav link
+        // Close menu when clicking on a nav link and navigate
         document.addEventListener('DOMContentLoaded', function() {
             const navLinks = document.querySelectorAll('.sidebar nav a');
             navLinks.forEach(link => {
-                link.addEventListener('click', function() {
+                link.addEventListener('click', function(e) {
+                    // Allow navigation to proceed
+                    // Close menu on mobile after a short delay to allow navigation
                     if (window.innerWidth <= 768) {
-                        setTimeout(closeMobileMenu, 300);
+                        setTimeout(closeMobileMenu, 100);
                     }
                 });
             });
         });
+        
+        // Close sidebar when clicking overlay
+        document.getElementById('sidebarOverlay').addEventListener('click', closeMobileMenu);
     </script>
 </body>
 </html>
