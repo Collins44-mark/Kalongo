@@ -18,11 +18,25 @@ function toggleMobileMenu() {
             menuOverlay.classList.toggle('active');
         }
         
-        // Prevent body scroll when menu is open
+        // Prevent body scroll when menu is open - modern way
         if (navMenu.classList.contains('active')) {
+            // Get current scroll position
+            const scrollY = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = '100%';
             document.body.style.overflow = 'hidden';
+            // Store scroll position for restoration
+            document.body.dataset.scrollY = scrollY;
         } else {
+            // Restore scroll position
+            const scrollY = document.body.dataset.scrollY || 0;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
             document.body.style.overflow = '';
+            window.scrollTo(0, parseInt(scrollY || 0));
+            delete document.body.dataset.scrollY;
         }
     }
 }
@@ -34,7 +48,14 @@ function closeMobileMenu() {
         if (menuOverlay) {
             menuOverlay.classList.remove('active');
         }
+        // Restore scroll position
+        const scrollY = document.body.dataset.scrollY || 0;
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
         document.body.style.overflow = '';
+        window.scrollTo(0, parseInt(scrollY || 0));
+        delete document.body.dataset.scrollY;
     }
 }
 

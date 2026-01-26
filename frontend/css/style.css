@@ -1622,12 +1622,29 @@ section * {
     font-weight: 400;
 }
 
-/* Accommodation Cards */
+/* Accommodation Cards - Auto-detecting 2-4 columns */
 .accommodation-grid-modern {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
     margin-top: 40px;
+}
+
+/* Desktop: 4 columns for many items, 3 for medium, 2 for few */
+@media (min-width: 1200px) {
+    .accommodation-grid-modern {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Tablet: 2-3 columns */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .accommodation-grid-modern {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
 }
 
 .accommodation-card-modern {
@@ -1715,12 +1732,21 @@ section * {
     color: var(--primary-color);
 }
 
-/* Food Cards */
+/* Food Cards - Auto-detecting 2-4 columns */
 .food-grid-modern {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
     margin-top: 40px;
+}
+
+@media (min-width: 1200px) {
+    .food-grid-modern {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 .food-card-modern {
@@ -1764,12 +1790,21 @@ section * {
     color: var(--primary-color);
 }
 
-/* Activity Cards */
+/* Activity Cards - Auto-detecting 2-4 columns */
 .activities-grid-modern {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
     margin-top: 40px;
+}
+
+@media (min-width: 1200px) {
+    .activities-grid-modern {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 .activity-card-modern {
@@ -1850,8 +1885,17 @@ section * {
 
 .menu-grid-modern {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 15px;
+}
+
+@media (min-width: 1200px) {
+    .menu-grid-modern {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 .menu-item-modern {
@@ -1886,12 +1930,21 @@ section * {
     margin-left: 15px;
 }
 
-/* Charges Grid */
+/* Charges Grid - Auto-detecting 2-4 columns */
 .charges-grid-modern {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
     margin-top: 40px;
+}
+
+@media (min-width: 1200px) {
+    .charges-grid-modern {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 .charge-item-modern {
