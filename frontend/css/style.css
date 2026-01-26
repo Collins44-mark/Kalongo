@@ -3325,6 +3325,9 @@ section * {
     border-radius: 20px;
     padding: 40px;
     box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .form-header {
@@ -3427,11 +3430,17 @@ section * {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 25px;
     margin-bottom: 25px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .booking-form-modern .form-group {
     margin-bottom: 0;
     position: relative;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .booking-form-modern .form-group label {
@@ -3446,6 +3455,7 @@ section * {
 .booking-form-modern .form-group select,
 .booking-form-modern .form-group textarea {
     width: 100%;
+    max-width: 100%;
     padding: 15px 20px;
     border: 2px solid #e0e0e0;
     border-radius: 12px;
@@ -3454,6 +3464,7 @@ section * {
     transition: all 0.3s ease;
     background: var(--white);
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    box-sizing: border-box;
 }
 
 .booking-form-modern .form-group input:focus,
@@ -3554,6 +3565,9 @@ section * {
 
     .booking-form-container {
         padding: 30px 20px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .form-title {
@@ -3601,12 +3615,42 @@ section * {
     .booking-form-modern .form-row {
         grid-template-columns: 1fr;
         gap: 20px;
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        box-sizing: border-box;
+    }
+    
+    .booking-form-modern .form-group {
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        box-sizing: border-box;
     }
     
     .form-group input,
     .form-group select,
     .form-group textarea {
         font-size: 16px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Fix date inputs specifically on mobile */
+    .booking-form-modern .form-group input[type="date"] {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        -webkit-appearance: none;
+        -moz-appearance: textfield;
+    }
+    
+    .booking-form-modern .form-group input[type="date"]::-webkit-calendar-picker-indicator {
+        margin-left: 0;
+        padding: 0;
     }
 }
 
@@ -3615,10 +3659,16 @@ section * {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
     margin-bottom: 20px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .form-group {
     margin-bottom: 20px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .form-group label {
@@ -3632,12 +3682,14 @@ section * {
 .form-group select,
 .form-group textarea {
     width: 100%;
+    max-width: 100%;
     padding: 12px 15px;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     transition: border-color 0.3s ease;
+    box-sizing: border-box;
 }
 
 .form-group input:focus,
@@ -4162,7 +4214,50 @@ section * {
     
     .about-description,
     .booking-form-container {
-        padding: 25px;
+        padding: 25px 15px;
+    }
+    
+    .booking-form-modern {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        padding: 0;
+    }
+    
+    .booking-form-modern .form-row {
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    .booking-form-modern .form-group {
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    .booking-form-modern .form-group input,
+    .booking-form-modern .form-group select,
+    .booking-form-modern .form-group textarea {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        padding: 12px 15px;
+    }
+    
+    /* Ensure date inputs don't exceed container on mobile */
+    .booking-form-modern .form-group input[type="date"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        -webkit-appearance: none;
+        -moz-appearance: textfield;
     }
     
     .about-card {
