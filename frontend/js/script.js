@@ -18,23 +18,100 @@ navLinks.forEach(link => {
 
 // Hero Slider Functionality
 let currentHeroSlide = 0;
-const heroSlides = document.querySelectorAll('.hero-slide');
-const heroIndicators = document.querySelectorAll('.hero-indicator');
-const totalHeroSlides = heroSlides.length;
+let heroSlides = [];
+let heroIndicators = [];
+let totalHeroSlides = 0;
 let heroSlideInterval;
 
+// Function to initialize hero slider (called after slides are loaded)
+function initHeroSlider() {
+    heroSlides = document.querySelectorAll('.hero-slide');
+    heroIndicators = document.querySelectorAll('.hero-indicator');
+    totalHeroSlides = heroSlides.length;
+    
+    console.log('🔍 Hero slider initialization:', {
+        slides: heroSlides.length,
+        indicators: heroIndicators.length,
+        totalHeroSlides
+    });
+    
+    if (totalHeroSlides > 0) {
+        // Ensure first slide is active
+        showHeroSlide(0);
+        console.log('✅ Hero slider initialized with', totalHeroSlides, 'slides');
+        
+        // Set up indicator click handlers
+        heroIndicators.forEach((indicator, index) => {
+            // Remove existing listeners to avoid duplicates
+            const newIndicator = indicator.cloneNode(true);
+            indicator.parentNode.replaceChild(newIndicator, indicator);
+            
+            newIndicator.addEventListener('click', () => {
+                if (heroSlideInterval) {
+                    clearInterval(heroSlideInterval);
+                }
+                showHeroSlide(index);
+                startHeroSlider();
+            });
+        });
+        
+        // Update heroIndicators array
+        heroIndicators = document.querySelectorAll('.hero-indicator');
+        
+        startHeroSlider();
+    } else {
+        console.warn('⚠️ No hero slides found for slider');
+    }
+}
+
 function showHeroSlide(index) {
-    heroSlides.forEach(slide => slide.classList.remove('active'));
+    // Refresh slides and indicators in case DOM changed
+    heroSlides = document.querySelectorAll('.hero-slide');
+    heroIndicators = document.querySelectorAll('.hero-indicator');
+    totalHeroSlides = heroSlides.length;
+    
+    if (!heroSlides || heroSlides.length === 0) {
+        console.warn('No hero slides available');
+        return;
+    }
+    
+    // Ensure index is valid
+    if (index < 0) index = totalHeroSlides - 1;
+    if (index >= totalHeroSlides) index = 0;
+    
+    console.log(`🎬 Showing hero slide ${index + 1} of ${totalHeroSlides}`);
+    
+    // Remove active class from all slides and set opacity
+    heroSlides.forEach((slide, idx) => {
+        slide.classList.remove('active');
+        if (idx === index) {
+            slide.style.opacity = '1';
+            slide.style.zIndex = '2';
+            slide.classList.add('active');
+        } else {
+            slide.style.opacity = '0';
+            slide.style.zIndex = '1';
+        }
+    });
+    
+    // Remove active class from all indicators
     heroIndicators.forEach(indicator => indicator.classList.remove('active'));
     
-    if (heroSlides[index]) {
-        heroSlides[index].classList.add('active');
-    }
+    // Add active class to current indicator
     if (heroIndicators[index]) {
         heroIndicators[index].classList.add('active');
     }
     
     currentHeroSlide = index;
+    
+    // Update hero content if available
+    const slideData = window.heroSlidesData?.[index];
+    if (slideData) {
+        const titleEl = document.querySelector('.hero-title');
+        const subtitleEl = document.querySelector('.hero-subtitle');
+        if (slideData.title && titleEl) titleEl.textContent = slideData.title;
+        if (slideData.subtitle && subtitleEl) subtitleEl.textContent = slideData.subtitle;
+    }
 }
 
 function nextHeroSlide() {
@@ -44,9 +121,118 @@ function nextHeroSlide() {
 
 function startHeroSlider() {
     if (totalHeroSlides > 0) {
-        heroSlideInterval = setInterval(nextHeroSlide, 5000);
+        // Clear any existing interval
+        if (heroSlideInterval) {
+            clearInterval(heroSlideInterval);
+        }
+        // Start auto-advance every 5 seconds
+        heroSlideInterval = setInterval(() => {
+            nextHeroSlide();
+        }, 5000);
+        console.log(`✅ Hero slider started (${totalHeroSlides} slides, 5s interval)`);
     }
 }
+
+// Listen for hero slides being rendered by api.js
+let heroSliderInitialized = false;
+window.addEventListener('heroSlidesRendered', () => {
+    if (heroSliderInitialized) {
+        console.log('⚠️ Hero slider already initialized, skipping...');
+        return;
+    }
+    console.log('📢 Received heroSlidesRendered event, initializing slider...');
+    setTimeout(() => {
+        initHeroSlider();
+        heroSliderInitialized = true;
+        window.heroSliderInitialized = true;
+    }, 50);
+});
+
+// Listen for rooms being rendered
+window.addEventListener('roomsRendered', (event) => {
+    console.log('📢 Received roomsRendered event, initializing room sliders...');
+    setTimeout(() => {
+        const rooms = event.detail?.rooms || [];
+        rooms.forEach(room => {
+            if (room.slug) {
+                initializeRoomSlider(room.slug);
+            }
+        });
+        // Start synchronized sliders
+        if (rooms.length > 0) {
+            const allRooms = rooms.map(r => r.slug).filter(Boolean);
+            if (allRooms.length > 0 && roomSlideIntervals) {
+                setTimeout(() => {
+                    if (roomSlideIntervals['synchronized']) {
+                        clearInterval(roomSlideIntervals['synchronized']);
+                    }
+                    roomSlideIntervals['synchronized'] = setInterval(() => {
+                        allRooms.forEach(room => {
+                            const roomSlider = document.querySelector(`.room-slider[data-room="${room}"]`);
+                            if (!roomSlider) return;
+                            const slides = roomSlider.querySelectorAll('.room-slide');
+                            if (slides.length > 0) {
+                                const next = ((currentRoomSlides[room] || 0) + 1) % slides.length;
+                                showRoomSlide(room, next);
+                            }
+                        });
+                    }, 4000);
+                }, 500);
+            }
+        }
+    }, 200);
+});
+
+// Listen for reviews being rendered
+let reviewSliderInitialized = false;
+window.addEventListener('reviewsRendered', () => {
+    if (reviewSliderInitialized) {
+        console.log('⚠️ Review slider already initialized, skipping...');
+        return;
+    }
+    console.log('📢 Received reviewsRendered event, initializing review slider...');
+    setTimeout(() => {
+        initReviewSlider();
+        reviewSliderInitialized = true;
+        window.reviewSliderInitialized = true;
+        
+        // Set up navigation buttons
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                if (reviewSlideInterval) {
+                    clearInterval(reviewSlideInterval);
+                }
+                prevReviewSlide();
+                startReviewSlider();
+            });
+        }
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                if (reviewSlideInterval) {
+                    clearInterval(reviewSlideInterval);
+                }
+                nextReviewSlide();
+                startReviewSlider();
+            });
+        }
+        
+        // Set up indicator click handlers
+        reviewIndicators = document.querySelectorAll('.indicator, .slider-indicators .indicator, #sliderIndicators .indicator');
+        reviewIndicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                if (reviewSlideInterval) {
+                    clearInterval(reviewSlideInterval);
+                }
+                showReviewSlide(index);
+                startReviewSlider();
+            });
+        });
+    }, 100);
+});
 
 // Room Sliders Functionality (Synchronized)
 let currentRoomSlides = {};
@@ -216,26 +402,86 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Reviews Slider Functionality
-let currentSlide = 0;
-const slides = document.querySelectorAll('.review-slide');
-const indicators = document.querySelectorAll('.indicator');
-const totalSlides = slides.length;
-let slideInterval;
+let currentReviewSlide = 0;
+let reviewSlides = [];
+let reviewIndicators = [];
+let totalReviewSlides = 0;
+let reviewSlideInterval;
 
-function showSlide(index) {
+function initReviewSlider() {
+    reviewSlides = document.querySelectorAll('.review-slide');
+    reviewIndicators = document.querySelectorAll('.indicator, .slider-indicators .indicator, #sliderIndicators .indicator');
+    totalReviewSlides = reviewSlides.length;
+    
+    console.log('🔍 Review slider initialization:', {
+        slides: reviewSlides.length,
+        indicators: reviewIndicators.length,
+        totalReviewSlides
+    });
+    
+    if (totalReviewSlides > 0) {
+        // Ensure first slide is active
+        showReviewSlide(0);
+        console.log('✅ Review slider initialized with', totalReviewSlides, 'slides');
+        startReviewSlider();
+    } else {
+        console.warn('⚠️ No review slides found for slider');
+    }
+}
+
+function showReviewSlide(index) {
+    // Refresh slides and indicators in case DOM changed
+    reviewSlides = document.querySelectorAll('.review-slide');
+    reviewIndicators = document.querySelectorAll('.indicator, .slider-indicators .indicator, #sliderIndicators .indicator');
+    totalReviewSlides = reviewSlides.length;
+    
+    if (!reviewSlides || reviewSlides.length === 0) {
+        console.warn('No review slides available');
+        return;
+    }
+    
+    // Ensure index is valid
+    if (index < 0) index = totalReviewSlides - 1;
+    if (index >= totalReviewSlides) index = 0;
+    
+    console.log(`🎬 Showing review slide ${index + 1} of ${totalReviewSlides}`);
+    
     // Hide all slides
-    slides.forEach(slide => slide.classList.remove('active'));
-    indicators.forEach(indicator => indicator.classList.remove('active'));
+    reviewSlides.forEach(slide => slide.classList.remove('active'));
+    reviewIndicators.forEach(indicator => indicator.classList.remove('active'));
     
     // Show current slide
-    if (slides[index]) {
-        slides[index].classList.add('active');
+    if (reviewSlides[index]) {
+        reviewSlides[index].classList.add('active');
     }
-    if (indicators[index]) {
-        indicators[index].classList.add('active');
+    if (reviewIndicators[index]) {
+        reviewIndicators[index].classList.add('active');
     }
     
-    currentSlide = index;
+    currentReviewSlide = index;
+}
+
+function nextReviewSlide() {
+    const next = (currentReviewSlide + 1) % totalReviewSlides;
+    showReviewSlide(next);
+}
+
+function prevReviewSlide() {
+    const prev = (currentReviewSlide - 1 + totalReviewSlides) % totalReviewSlides;
+    showReviewSlide(prev);
+}
+
+function startReviewSlider() {
+    if (totalReviewSlides > 0) {
+        if (reviewSlideInterval) {
+            clearInterval(reviewSlideInterval);
+        }
+        // Start auto-advance every 5 seconds
+        reviewSlideInterval = setInterval(() => {
+            nextReviewSlide();
+        }, 5000);
+        console.log(`✅ Review slider started (${totalReviewSlides} slides, 5s interval)`);
+    }
 }
 
 function nextSlide() {

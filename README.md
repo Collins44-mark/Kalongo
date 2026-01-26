@@ -1,121 +1,145 @@
-# KALONGO FARM - Eco Farm Lodge Website
+# 🌿 KALONGO FARM - Website & Admin Panel
 
-A modern, responsive website for KALONGO FARM - an ecosystem farm lodge offering unique accommodations and farm experiences.
+A modern farm lodge website with full admin panel for content management.
 
-## Features
+## 🚀 Quick Start
 
-- ✅ Responsive design (mobile, tablet, desktop)
-- ✅ Logo and company name in header
-- ✅ Three room types: A-Cabin, Cottage, Kikota
-- ✅ Package offerings with pricing
-- ✅ Facilities showcase (swimming pool, farm, animals, etc.)
-- ✅ Booking form with WhatsApp integration
-- ✅ Google Maps integration showing live location
-- ✅ Modern, clean design with smooth animations
+### Option 1: Run Frontend Website (Customer-Facing)
 
-## Setup Instructions
+**Simple way:**
+```bash
+python3 run_frontend.py
+```
+This will:
+- Start a web server on http://localhost:8000
+- Open the website in your browser automatically
+- Serve the customer-facing frontend
 
-### 1. Google Maps API Key
+### Option 2: Run Backend Server (Required for Full Functionality)
 
-To enable the Google Maps functionality, you need to:
-
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project or select an existing one
-3. Enable the "Maps JavaScript API"
-4. Create an API key
-5. Open `index.html` and replace `YOUR_API_KEY` on line 295 with your actual API key:
-
-```html
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_ACTUAL_API_KEY&callback=initMap" async defer></script>
+```bash
+python3 run_backend.py
+```
+Or manually:
+```bash
+cd backend
+source venv/bin/activate
+python app.py
 ```
 
-### 2. Update Hotel Location Coordinates
+Backend runs on: http://localhost:5001
 
-In `js/script.js`, update the coordinates (line 12) with your actual location:
+### Option 3: Run Both (Recommended)
 
-```javascript
-const kalongoFarmLocation = { lat: YOUR_LATITUDE, lng: YOUR_LONGITUDE };
+**Terminal 1 - Backend:**
+```bash
+python3 run_backend.py
 ```
 
-You can get coordinates from Google Maps by right-clicking on your location.
+**Terminal 2 - Frontend:**
+```bash
+python3 run_frontend.py
+```
 
-### 3. Replace Logo
-
-Replace the placeholder logo in `index.html` (line 17). You can:
-- Upload your logo image to an `images` folder
-- Update the `src` attribute: `src="images/your-logo.png"`
-
-Current placeholder: `https://via.placeholder.com/80x80/4CAF50/ffffff?text=KF`
-
-### 4. Update Contact Information
-
-Update the following in `index.html`:
-- Address in the Location section (around line 257)
-- Email and phone in Location section and Footer
-- WhatsApp number field default (if desired)
-
-### 5. Update Images (Optional)
-
-The website uses Unsplash images. You can replace them with your own:
-- Room images in the Rooms section
-- Hero background image
-- Any other images as needed
-
-## File Structure
+## 📁 Project Structure
 
 ```
 KALONGOWEB/
-├── index.html          # Main HTML file
-├── css/
-│   └── style.css      # Stylesheet
-├── js/
-│   └── script.js      # JavaScript functionality
-└── README.md          # This file
+├── frontend/          # Customer-facing website (HTML, CSS, JS)
+│   ├── index.html     # Homepage
+│   ├── packages.html   # Packages & Pricing
+│   ├── activities.html # Activities
+│   ├── our-kalongo.html # Gallery & Videos
+│   ├── booking.html    # Booking page
+│   ├── pricing.html    # Pricing details
+│   ├── css/           # Stylesheets
+│   └── js/            # JavaScript (API client, scripts)
+│
+├── backend/           # Flask backend & Admin Panel
+│   ├── app.py        # Main Flask application
+│   ├── models.py     # Database models
+│   ├── routes/       # API & Admin routes
+│   ├── templates/    # Admin panel templates
+│   └── venv/         # Python virtual environment
+│
+├── run_frontend.py   # Quick frontend server
+└── run_backend.py    # Quick backend server
 ```
 
-## How It Works
+## 🌐 Access Points
 
-### Booking System
-1. Visitors fill out the booking form
-2. Form data is formatted into a WhatsApp message
-3. WhatsApp opens with the pre-filled message
-4. Visitor sends the message to the hotel's WhatsApp number
+### Customer Website
+- **URL**: http://localhost:8000/index.html
+- **Run**: `python3 run_frontend.py`
+- Shows: Rooms, Facilities, Activities, Pricing, Gallery
 
-**Note:** Make sure to provide the correct WhatsApp number format (with country code, e.g., +1234567890)
+### Admin Panel
+- **URL**: http://localhost:5001/admin
+- **Login**: `admin` / `admin123`
+- **Run**: `python3 run_backend.py`
+- Manage: All website content, images, videos, pricing, menu
 
-### Google Maps
-- Shows the hotel's location on an interactive map
-- Automatically centers based on the provided coordinates
-- Displays a marker with hotel information
+### API Endpoints
+- **Base**: http://localhost:5001/api
+- **Endpoints**: `/hero-slides`, `/rooms`, `/facilities`, `/activities`, `/pricing`, `/food`, `/restaurant-menu`, `/videos`, `/reviews`, `/settings`
 
-## Browser Support
+## 📝 Features
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers (iOS Safari, Chrome Mobile)
+### Frontend
+- ✅ Fully responsive (mobile, tablet, desktop)
+- ✅ Dynamic content from database
+- ✅ Fast loading with optimized images
+- ✅ Modern UI/UX
 
-## Customization
+### Backend
+- ✅ PostgreSQL database
+- ✅ Cloudinary image/video hosting
+- ✅ Full admin panel
+- ✅ RESTful API
+- ✅ Fast performance with caching
 
-All colors and styling can be customized in `css/style.css` using CSS variables at the top of the file:
+## 🔧 Requirements
 
-```css
-:root {
-    --primary-color: #4CAF50;  /* Main brand color */
-    --secondary-color: #8BC34A;
-    --accent-color: #FF9800;
-    /* ... more variables */
-}
-```
+### Backend
+- Python 3.8+
+- PostgreSQL database (configured in `.env`)
+- Cloudinary account (configured in `.env`)
 
-## Notes
+### Frontend
+- Modern web browser
+- Backend server running (for API data)
 
-- The website uses Google Fonts (Poppins) - requires internet connection
-- Google Maps requires an active API key
-- WhatsApp integration works on devices with WhatsApp installed
-- All forms include basic validation
+## 📚 Documentation
 
-## Support
+- `COMPLETE_MIGRATION_SUMMARY.md` - Data migration details
+- `FRONTEND_BACKEND_LINKING.md` - API integration guide
+- `OPTIMIZATION_SUMMARY.md` - Performance optimizations
+- `REDIRECT_LOOP_FIX.md` - Admin panel troubleshooting
 
-For questions or issues, refer to the code comments or customize as needed for your specific requirements.
+## 🆘 Troubleshooting
+
+### Frontend shows directory listing
+- Use `python3 run_frontend.py` instead of opening files directly
+
+### Backend not connecting
+- Check if PostgreSQL is running
+- Verify `.env` file has correct `DATABASE_URL`
+- Run: `cd backend && python test_db.py`
+
+### Images not loading
+- Ensure backend is running
+- Check Cloudinary URLs in database
+- Verify API endpoints: http://localhost:5001/api/hero-slides
+
+### Admin panel redirect loop
+- Clear browser cookies for localhost:5001
+- Restart backend server
+- See `REDIRECT_LOOP_FIX.md` for details
+
+## 📞 Support
+
+For issues or questions, check the documentation files or verify:
+1. Backend server is running (http://localhost:5001/health)
+2. Frontend server is running (http://localhost:8000)
+3. Database connection is working
+4. All environment variables are set

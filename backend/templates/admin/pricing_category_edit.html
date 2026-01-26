@@ -1,0 +1,19 @@
+{% extends "admin/base.html" %}
+{% block title %}Edit Category{% endblock %}
+{% block content %}
+<h2>Edit pricing category</h2>
+<div class="card">
+    <form method="post">
+        <div class="form-row">
+            <div><label>Name</label><input type="text" name="name" value="{{ category.name }}" required></div>
+            <div><label>Type</label><select name="category_type"><option value="">—</option><option value="accommodation" {% if category.category_type == 'accommodation' %}selected{% endif %}>accommodation</option><option value="food" {% if category.category_type == 'food' %}selected{% endif %}>food</option><option value="activity" {% if category.category_type == 'activity' %}selected{% endif %}>activity</option></select></div>
+            <div><label>Order</label><input type="number" name="order" value="{{ category.order }}"></div>
+        </div>
+        <div><label>Description</label><textarea name="description" rows="2">{{ category.description or '' }}</textarea></div>
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="{{ url_for('admin.pricing_list') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

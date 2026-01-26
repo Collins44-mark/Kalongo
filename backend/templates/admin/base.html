@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin{% endblock %} | Kalongo Farm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f1419;
+            --bg-card: #1a1f26;
+            --border: #2d3748;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --primary: #22c55e;
+            --primary-hover: #16a34a;
+            --danger: #ef4444;
+            --radius: 12px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { color: var(--primary-hover); text-decoration: underline; }
+        .layout { display: flex; min-height: 100vh; }
+        .sidebar { width: 260px; background: var(--bg-card); border-right: 1px solid var(--border); padding: 1.5rem 0; flex-shrink: 0; }
+        .sidebar h1 { font-size: 1.25rem; padding: 0 1.5rem 1rem; color: var(--primary); }
+        .sidebar nav a { display: block; padding: 0.6rem 1.5rem; color: var(--text-muted); transition: all 0.2s; }
+        .sidebar nav a:hover { color: var(--text); background: rgba(34,197,94,0.1); text-decoration: none; }
+        .sidebar nav a.active { color: var(--primary); background: rgba(34,197,94,0.15); font-weight: 500; }
+        .main { flex: 1; padding: 2rem; overflow-auto; }
+        .main h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .flash { padding: 0.75rem 1rem; border-radius: var(--radius); margin-bottom: 1rem; }
+        .flash.success { background: rgba(34,197,94,0.2); color: #86efac; }
+        .flash.error { background: rgba(239,68,68,0.2); color: #fca5a5; }
+        .flash.info { background: rgba(59,130,246,0.2); color: #93c5fd; }
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--shadow); }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; cursor: pointer; border: none; font-size: 0.9rem; transition: all 0.2s; }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-secondary { background: var(--border); color: var(--text); }
+        .btn-secondary:hover { background: #3d4a5c; }
+        .btn-danger { background: var(--danger); color: #fff; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-sm { padding: 0.35rem 0.75rem; font-size: 0.85rem; }
+        input, textarea, select { width: 100%; padding: 0.6rem 0.75rem; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-family: inherit; margin-bottom: 0.75rem; }
+        input:focus, textarea:focus { outline: none; border-color: var(--primary); }
+        label { display: block; margin-bottom: 0.35rem; color: var(--text-muted); font-size: 0.9rem; }
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+        .stat { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
+        .stat span { display: block; font-size: 1.75rem; font-weight: 700; color: var(--primary); }
+        .stat p { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+        th { color: var(--text-muted); font-weight: 500; font-size: 0.85rem; }
+        .thumb { width: 60px; height: 40px; object-fit: cover; border-radius: 6px; loading: lazy; }
+        .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        @media (max-width: 768px) { 
+            .layout { flex-direction: column; } 
+            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); max-height: 60vh; overflow-y: auto; }
+            .main { padding: 1rem; }
+            .card { padding: 1rem; }
+            table { font-size: 0.85rem; }
+            th, td { padding: 0.5rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .grid { grid-template-columns: 1fr; }
+            .actions { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
+            .logo-section img { max-width: 120px !important; }
+        }
+        @media (max-width: 480px) {
+            .main { padding: 0.75rem; }
+            .card { padding: 0.75rem; margin-bottom: 1rem; }
+            h2 { font-size: 1.25rem; }
+            .stat { padding: 1rem; }
+            .stat span { font-size: 1.5rem; }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="logo-section" style="padding: 0 1.5rem 1rem; display: flex; align-items: center; justify-content: center;">
+                <img src="https://res.cloudinary.com/dae3rpnmg/image/upload/v1769261545/logo_xgfgcj.jpg" alt="Kalongo Logo" style="max-width: 180px; height: auto; object-fit: contain;" loading="eager">
+            </div>
+            <nav>
+                <a href="{{ url_for('admin.dashboard') }}" class="{% if request.endpoint == 'admin.dashboard' %}active{% endif %}">Dashboard</a>
+                <a href="{{ url_for('admin.hero_list') }}" class="{% if request.endpoint == 'admin.hero_list' %}active{% endif %}">Hero Slides</a>
+                <a href="{{ url_for('admin.rooms_list') }}" class="{% if 'room' in request.endpoint %}active{% endif %}">Rooms & Images</a>
+                <a href="{{ url_for('admin.facilities_list') }}" class="{% if 'facility' in request.endpoint %}active{% endif %}">Facilities</a>
+                <a href="{{ url_for('admin.activities_list') }}" class="{% if 'activity' in request.endpoint %}active{% endif %}">Activities</a>
+                <a href="{{ url_for('admin.pricing_list') }}" class="{% if 'pricing' in request.endpoint %}active{% endif %}">Pricing</a>
+                <a href="{{ url_for('admin.food_list') }}" class="{% if 'food' in request.endpoint %}active{% endif %}">Food</a>
+                <a href="{{ url_for('admin.restaurant_menu_list') }}" class="{% if 'restaurant_menu' in request.endpoint %}active{% endif %}">Restaurant Menu</a>
+                <a href="{{ url_for('admin.videos_list') }}" class="{% if 'video' in request.endpoint %}active{% endif %}">Videos</a>
+                <a href="{{ url_for('admin.reviews_list') }}" class="{% if 'review' in request.endpoint %}active{% endif %}">Reviews</a>
+                <a href="{{ url_for('admin.settings') }}" class="{% if request.endpoint == 'admin.settings' %}active{% endif %}">Settings</a>
+                <a href="{{ url_for('admin.logout') }}" style="margin-top: 1rem; color: #f87171;">Logout</a>
+            </nav>
+        </aside>
+        <main class="main">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for cat, msg in messages %}
+                        <div class="flash {{ cat }}">{{ msg }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

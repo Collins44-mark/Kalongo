@@ -1,0 +1,40 @@
+{% extends "admin/base.html" %}
+{% block title %}Restaurant Menu{% endblock %}
+{% block content %}
+<h2>Restaurant Menu</h2>
+<p style="color: var(--text-muted); margin-bottom: 1rem;">Manage restaurant menu categories and items.</p>
+<div class="card">
+    <h3 style="margin-bottom: 1rem;">Add category</h3>
+    <form method="post">
+        <div class="form-row">
+            <div><label>Category name</label><input type="text" name="name" placeholder="e.g. Breakfast" required></div>
+            <div><label>Order</label><input type="number" name="order" value="0"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Add category</button>
+    </form>
+</div>
+<div class="card">
+    <h3 style="margin-bottom: 1rem;">Categories</h3>
+    <table>
+        <thead><tr><th>Name</th><th>Items</th><th>Order</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for c in categories %}
+            <tr>
+                <td>{{ c.name }}</td>
+                <td>{{ c.items|length }}</td>
+                <td>{{ c.order }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('admin.restaurant_menu_items', pk=c.id) }}" class="btn btn-primary btn-sm">Items</a>
+                    <a href="{{ url_for('admin.restaurant_menu_category_edit', pk=c.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                    <form action="{{ url_for('admin.restaurant_menu_category_delete', pk=c.id) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4" style="color: var(--text-muted);">No categories yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

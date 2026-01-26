@@ -1,0 +1,46 @@
+{% extends "admin/base.html" %}
+{% block title %}Pricing Items – {{ category.name }}{% endblock %}
+{% block content %}
+<h2>Pricing items: {{ category.name }}</h2>
+<p style="color: var(--text-muted); margin-bottom: 1rem;"><a href="{{ url_for('admin.pricing_list') }}">← Back to categories</a></p>
+<div class="card">
+    <h3 style="margin-bottom: 1rem;">Add item</h3>
+    <form method="post">
+        <div class="form-row">
+            <div><label>Name</label><input type="text" name="name" placeholder="e.g. Cabin" required></div>
+            <div><label>Price label</label><input type="text" name="price_label" placeholder="e.g. Per Night (BB)"></div>
+            <div><label>Price value</label><input type="text" name="price_value" placeholder="e.g. TZS 180,000" required></div>
+        </div>
+        <div class="form-row">
+            <div><label>Description</label><textarea name="description" rows="1" placeholder="Optional"></textarea></div>
+            <div><label>Order</label><input type="number" name="order" value="0"></div>
+            <div><label><input type="checkbox" name="featured"> Featured</label></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Add item</button>
+    </form>
+</div>
+<div class="card">
+    <h3 style="margin-bottom: 1rem;">Items</h3>
+    <table>
+        <thead><tr><th>Name</th><th>Label</th><th>Price</th><th>Featured</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for i in items %}
+            <tr>
+                <td>{{ i.name }}</td>
+                <td>{{ i.price_label or '—' }}</td>
+                <td>{{ i.price_value }}</td>
+                <td>{{ 'Yes' if i.featured else '—' }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('admin.pricing_item_edit', pk=i.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                    <form action="{{ url_for('admin.pricing_item_delete', pk=i.id) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5" style="color: var(--text-muted);">No items yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

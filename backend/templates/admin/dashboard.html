@@ -1,0 +1,44 @@
+{% extends "admin/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2>Dashboard</h2>
+<p style="color: var(--text-muted); margin-bottom: 1.5rem;">Overview of your Kalongo Farm content.</p>
+<div class="grid">
+    <a href="{{ url_for('admin.hero_list') }}" class="stat" style="text-decoration: none; color: inherit;">
+        <span>{{ counts.hero }}</span>
+        <p>Hero Slides</p>
+    </a>
+    <a href="{{ url_for('admin.rooms_list') }}" class="stat" style="text-decoration: none; color: inherit;">
+        <span>{{ counts.rooms }}</span>
+        <p>Rooms</p>
+    </a>
+    <a href="{{ url_for('admin.facilities_list') }}" class="stat" style="text-decoration: none; color: inherit;">
+        <span>{{ counts.facilities }}</span>
+        <p>Facilities</p>
+    </a>
+    <a href="{{ url_for('admin.activities_list') }}" class="stat" style="text-decoration: none; color: inherit;">
+        <span>{{ counts.activities }}</span>
+        <p>Activities</p>
+    </a>
+    <a href="{{ url_for('admin.pricing_list') }}" class="stat" style="text-decoration: none; color: inherit;">
+        <span>{{ counts.pricing_cats }}</span>
+        <p>Pricing Categories</p>
+    </a>
+    <a href="{{ url_for('admin.food_list') }}" class="stat" style="text-decoration: none; color: inherit;">
+        <span>{{ counts.food }}</span>
+        <p>Food Items</p>
+    </a>
+    <a href="{{ url_for('admin.restaurant_menu_list') }}" class="stat" style="text-decoration: none; color: inherit;">
+        <span>{{ counts.restaurant_menu }}</span>
+        <p>Restaurant Menu</p>
+    </a>
+    <a href="{{ url_for('admin.videos_list') }}" class="stat" style="text-decoration: none; color: inherit;">
+        <span>{{ counts.videos }}</span>
+        <p>Videos</p>
+    </a>
+    <a href="{{ url_for('admin.reviews_list') }}" class="stat" style="text-decoration: none; color: inherit;">
+        <span>{{ counts.reviews }}</span>
+        <p>Reviews</p>
+    </a>
+</div>
+{% endblock %}

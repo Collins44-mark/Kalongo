@@ -1,0 +1,19 @@
+{% extends "admin/base.html" %}
+{% block title %}Edit Item{% endblock %}
+{% block content %}
+<h2>Edit menu item</h2>
+<p style="color: var(--text-muted); margin-bottom: 1rem;"><a href="{{ url_for('admin.restaurant_menu_items', pk=item.category_id) }}">← Back to {{ item.category.name }}</a></p>
+<div class="card">
+    <form method="post">
+        <div class="form-row">
+            <div><label>Name</label><input type="text" name="name" value="{{ item.name }}" required></div>
+            <div><label>Price</label><input type="text" name="price" value="{{ item.price }}" required></div>
+            <div><label>Order</label><input type="number" name="order" value="{{ item.order }}"></div>
+        </div>
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="{{ url_for('admin.restaurant_menu_items', pk=item.category_id) }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

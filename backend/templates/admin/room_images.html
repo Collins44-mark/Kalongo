@@ -1,0 +1,42 @@
+{% extends "admin/base.html" %}
+{% block title %}Images – {{ room.name }}{% endblock %}
+{% block content %}
+<h2>Images: {{ room.name }}</h2>
+<p style="color: var(--text-muted); margin-bottom: 1rem;"><a href="{{ url_for('admin.rooms_list') }}">← Back to rooms</a></p>
+<div class="card">
+    <h3 style="margin-bottom: 1rem;">Add image</h3>
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-row">
+            <div><label>Image (file)</label><input type="file" name="image" accept="image/*"></div>
+            <div><label>Or image URL</label><input type="url" name="image_url" placeholder="https://..."></div>
+        </div>
+        <div class="form-row">
+            <div><label>Caption</label><input type="text" name="caption" placeholder="Optional"></div>
+            <div><label>Order</label><input type="number" name="order" value="0"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Add image</button>
+    </form>
+</div>
+<div class="card">
+    <h3 style="margin-bottom: 1rem;">Images</h3>
+    <table>
+        <thead><tr><th>Preview</th><th>Caption</th><th>Order</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for img in images %}
+            <tr>
+                <td><img src="{{ img.image_url }}" alt="" class="thumb" style="width:80px;height:50px;"></td>
+                <td>{{ img.caption or '—' }}</td>
+                <td>{{ img.order }}</td>
+                <td>
+                    <form action="{{ url_for('admin.room_image_delete', room_id=room.id, img_id=img.id) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4" style="color: var(--text-muted);">No images yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

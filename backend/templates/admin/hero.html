@@ -1,0 +1,54 @@
+{% extends "admin/base.html" %}
+{% block title %}Hero Slides{% endblock %}
+{% block content %}
+<h2>Hero Slides</h2>
+<p style="color: var(--text-muted); margin-bottom: 1rem;">Manage homepage hero carousel images.</p>
+<div class="card">
+    <h3 style="margin-bottom: 1rem;">Add slide</h3>
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-row">
+            <div><label>Image (file)</label><input type="file" name="image" accept="image/*"></div>
+            <div><label>Or image URL</label><input type="url" name="image_url" placeholder="https://..."></div>
+        </div>
+        <div class="form-row">
+            <div><label>Title</label><input type="text" name="title" placeholder="Welcome to KALONGO FARM"></div>
+            <div><label>Subtitle</label><input type="text" name="subtitle" placeholder="Experience..."></div>
+        </div>
+        <div><label>Order</label><input type="number" name="order" value="0"></div>
+        <button type="submit" class="btn btn-primary">Add slide</button>
+    </form>
+</div>
+<div class="card">
+    <h3 style="margin-bottom: 1rem;">Current slides</h3>
+    <table>
+        <thead><tr><th>Preview</th><th>Title</th><th>Order</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for s in slides %}
+            <tr>
+                <td><img src="{{ s.image_url }}" alt="" class="thumb" style="width:80px;height:50px;"></td>
+                <td>{{ s.title or '—' }}</td>
+                <td>{{ s.order }}</td>
+                <td>
+                    <form action="{{ url_for('admin.hero_delete', pk=s.id) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4" style="color: var(--text-muted);">No slides yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if pagination.pages > 1 %}
+    <div style="margin-top: 1rem; display: flex; gap: 0.5rem; align-items: center; justify-content: center;">
+        {% if pagination.has_prev %}
+        <a href="?page={{ pagination.prev_num }}" class="btn btn-secondary btn-sm">Previous</a>
+        {% endif %}
+        <span style="color: var(--text-muted);">Page {{ pagination.page }} of {{ pagination.pages }}</span>
+        {% if pagination.has_next %}
+        <a href="?page={{ pagination.next_num }}" class="btn btn-secondary btn-sm">Next</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

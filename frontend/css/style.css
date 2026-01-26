@@ -12,6 +12,16 @@
     --shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
 }
 
+/* Loading spinner animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
 /* ===== Reset & Base Styles ===== */
 * {
     margin: 0;
@@ -1042,11 +1052,17 @@ section * {
     background-position: center center;
     background-repeat: no-repeat;
     opacity: 0;
-    transition: opacity 1s ease-in-out;
+    transition: opacity 0.8s ease-in-out;
+    will-change: opacity; /* Optimize for animations */
 }
 
 .hero-slide.active {
     opacity: 1;
+    z-index: 2;
+}
+
+.hero-slide:not(.active) {
+    z-index: 1;
 }
 
 .hero-slider-indicators {
@@ -3155,6 +3171,7 @@ section * {
     display: none;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
+    will-change: opacity; /* Optimize for animations */
 }
 
 .review-slide.active {
@@ -4587,6 +4604,118 @@ section * {
     .room-card,
     .package-card {
         padding: 20px 15px;
+    }
+}
+
+/* ===== Restaurant Menu & Gallery Mobile Responsive ===== */
+@media (max-width: 768px) {
+    .menu-grid-modern {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+    
+    .menu-item-modern {
+        padding: 12px !important;
+        font-size: 0.9rem !important;
+    }
+    
+    .menu-category-modern {
+        margin-bottom: 2rem !important;
+    }
+    
+    .menu-category-title-modern {
+        font-size: 1.3rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .gallery-grid-modern {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+    
+    .gallery-item-modern {
+        width: 100% !important;
+    }
+    
+    .gallery-media-modern {
+        width: 100% !important;
+        height: auto !important;
+    }
+    
+    .packages-grid-modern,
+    .pricing-grid-modern {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+    
+    .packages-section-modern {
+        padding: 1.5rem 0 !important;
+    }
+    
+    .section-header-modern {
+        padding: 0 1rem !important;
+    }
+    
+    .section-title-modern {
+        font-size: 1.5rem !important;
+    }
+    
+    .section-description-modern {
+        font-size: 0.9rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-grid-modern {
+        gap: 10px !important;
+    }
+    
+    .menu-item-modern {
+        padding: 10px !important;
+        font-size: 0.85rem !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 5px !important;
+    }
+    
+    .menu-item-name-modern {
+        font-size: 0.9rem !important;
+    }
+    
+    .menu-item-price-modern {
+        font-size: 0.85rem !important;
+    }
+    
+    .menu-category-title-modern {
+        font-size: 1.2rem !important;
+    }
+    
+    .gallery-grid-modern {
+        gap: 12px !important;
+    }
+    
+    .packages-section-modern {
+        padding: 1rem 0 !important;
+    }
+    
+    .section-title-modern {
+        font-size: 1.3rem !important;
+    }
+}
+
+/* Tablet Landscape (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .menu-grid-modern {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .gallery-grid-modern {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .packages-grid-modern,
+    .pricing-grid-modern {
+        grid-template-columns: repeat(2, 1fr) !important;
     }
 }
 

@@ -1,0 +1,55 @@
+{% extends "admin/base.html" %}
+{% block title %}Facilities{% endblock %}
+{% block content %}
+<h2>Facilities</h2>
+<p style="color: var(--text-muted); margin-bottom: 1rem;">Manage facility cards (Swimming Pool, Nature Trails, etc.).</p>
+<div class="card">
+    <h3 style="margin-bottom: 1rem;">Add facility</h3>
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-row">
+            <div><label>Name</label><input type="text" name="name" placeholder="e.g. Nature Trails" required></div>
+            <div><label>Order</label><input type="number" name="order" value="0"></div>
+        </div>
+        <div><label>Description</label><textarea name="description" rows="2" placeholder="Short description"></textarea></div>
+        <div class="form-row">
+            <div><label>Image (file)</label><input type="file" name="image" accept="image/*"></div>
+            <div><label>Or image URL</label><input type="url" name="image_url" placeholder="https://..."></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Add facility</button>
+    </form>
+</div>
+<div class="card">
+    <h3 style="margin-bottom: 1rem;">Current facilities</h3>
+    <table>
+        <thead><tr><th>Preview</th><th>Name</th><th>Order</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for f in items %}
+            <tr>
+                <td>{% if f.image_url %}<img src="{{ f.image_url }}" alt="" class="thumb">{% else %}—{% endif %}</td>
+                <td>{{ f.name }}</td>
+                <td>{{ f.order }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('admin.facility_edit', pk=f.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                    <form action="{{ url_for('admin.facility_delete', pk=f.id) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4" style="color: var(--text-muted);">No facilities yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if pagination and pagination.pages > 1 %}
+    <div style="margin-top: 1rem; display: flex; gap: 0.5rem; align-items: center; justify-content: center;">
+        {% if pagination.has_prev %}
+        <a href="?page={{ pagination.prev_num }}" class="btn btn-secondary btn-sm">Previous</a>
+        {% endif %}
+        <span style="color: var(--text-muted);">Page {{ pagination.page }} of {{ pagination.pages }}</span>
+        {% if pagination.has_next %}
+        <a href="?page={{ pagination.next_num }}" class="btn btn-secondary btn-sm">Next</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

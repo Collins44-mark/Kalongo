@@ -21,3 +21,12 @@ npm-debug.log*
 # Temporary files
 *.tmp
 *.temp
+
+# Python
+backend/venv/
+__pycache__/
+*.py[cod]
+.env
+.env.local
+.DS_Store
+*.pid

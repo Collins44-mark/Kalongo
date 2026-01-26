@@ -1,0 +1,55 @@
+{% extends "admin/base.html" %}
+{% block title %}Videos{% endblock %}
+{% block content %}
+<h2>Videos</h2>
+<p style="color: var(--text-muted); margin-bottom: 1rem;">Upload videos and set captions. Use section: gallery, homepage, our-kalongo.</p>
+<div class="card">
+    <h3 style="margin-bottom: 1rem;">Add video</h3>
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-row">
+            <div><label>Video (file)</label><input type="file" name="video" accept="video/*"></div>
+            <div><label>Or video URL</label><input type="url" name="video_url" placeholder="https://..."></div>
+        </div>
+        <div class="form-row">
+            <div><label>Caption</label><input type="text" name="caption" placeholder="Short caption"></div>
+            <div><label>Section</label><input type="text" name="section" value="gallery" placeholder="gallery / homepage / our-kalongo"></div>
+            <div><label>Order</label><input type="number" name="order" value="0"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Add video</button>
+    </form>
+</div>
+<div class="card">
+    <h3 style="margin-bottom: 1rem;">Videos</h3>
+    <table>
+        <thead><tr><th>Caption</th><th>Section</th><th>Order</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for v in items %}
+            <tr>
+                <td>{{ v.caption or '—' }}</td>
+                <td>{{ v.section or 'gallery' }}</td>
+                <td>{{ v.order }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('admin.video_edit', pk=v.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                    <form action="{{ url_for('admin.video_delete', pk=v.id) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4" style="color: var(--text-muted);">No videos yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if pagination and pagination.pages > 1 %}
+    <div style="margin-top: 1rem; display: flex; gap: 0.5rem; align-items: center; justify-content: center;">
+        {% if pagination.has_prev %}
+        <a href="?page={{ pagination.prev_num }}" class="btn btn-secondary btn-sm">Previous</a>
+        {% endif %}
+        <span style="color: var(--text-muted);">Page {{ pagination.page }} of {{ pagination.pages }}</span>
+        {% if pagination.has_next %}
+        <a href="?page={{ pagination.next_num }}" class="btn btn-secondary btn-sm">Next</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

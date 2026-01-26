@@ -1,0 +1,23 @@
+{% extends "admin/base.html" %}
+{% block title %}Rooms{% endblock %}
+{% block content %}
+<h2>Rooms</h2>
+<p style="color: var(--text-muted); margin-bottom: 1rem;">Manage room images for A-Cabin, Cottage, and Kikota.</p>
+<div class="card">
+    <h3 style="margin-bottom: 1rem;">Rooms</h3>
+    <table>
+        <thead><tr><th>Room</th><th>Slug</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for r in rooms %}
+            <tr>
+                <td>{{ r.name }}</td>
+                <td><code>{{ r.slug }}</code></td>
+                <td><a href="{{ url_for('admin.room_images', pk=r.id) }}" class="btn btn-primary btn-sm">Manage images</a></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3" style="color: var(--text-muted);">No rooms. Run <code>python init_db.py</code> to seed default rooms.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
