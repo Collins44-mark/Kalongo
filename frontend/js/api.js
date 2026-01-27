@@ -937,7 +937,7 @@ async function initializeDataLoading() {
     const path = window.location.pathname;
     console.log(`📄 Current page: ${path}`);
     
-    if (path.includes('index.html') || path === '/' || path.endsWith('/')) {
+    if (path === '/' || path.endsWith('/') || path.includes('index.html')) {
         console.log('🏠 Loading homepage data...');
         try {
             // Use combined endpoint for faster loading
@@ -1179,7 +1179,7 @@ async function initializeDataLoading() {
     console.log('✅ Frontend initialization complete');
     
     // Trigger hero slider initialization after slides are rendered
-    if (path.includes('index.html') || path === '/' || path.endsWith('/')) {
+    if (path === '/' || path.endsWith('/') || path.includes('index.html')) {
         setTimeout(() => {
             // Dispatch custom event to notify script.js that slides are ready
             const event = new CustomEvent('heroSlidesRendered');
