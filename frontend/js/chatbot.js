@@ -863,7 +863,7 @@ function showBookingButton() {
         <div class="chatbot-message chatbot-bot-message">
             <div class="chatbot-message-content">
                 <p style="margin-bottom: 15px;">Ready to book? I'll take you to our booking page where you can complete your reservation!</p>
-                <a href="booking.html" class="whatsapp-booking-btn" onclick="localStorage.setItem('fromChatbot', 'true');">
+                <a href="/booking" class="whatsapp-booking-btn" onclick="localStorage.setItem('fromChatbot', 'true');">
                     📅 Book Now
                 </a>
             </div>
@@ -1092,7 +1092,7 @@ function showPackageBookingButton() {
         <div class="chatbot-message chatbot-bot-message">
             <div class="chatbot-message-content">
                 <p style="margin-bottom: 15px;">Perfect! Ready to book this package? I'll take you to our booking page where you can complete your reservation!</p>
-                <a href="booking.html" class="whatsapp-booking-btn" onclick="localStorage.setItem('fromChatbot', 'true');">
+                <a href="/booking" class="whatsapp-booking-btn" onclick="localStorage.setItem('fromChatbot', 'true');">
                     📅 Book Now
                 </a>
             </div>
