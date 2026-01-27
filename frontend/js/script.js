@@ -522,14 +522,40 @@ function showReviewSlide(index) {
     
     console.log(`🎬 Showing review slide ${index + 1} of ${totalReviewSlides}`);
     
-    // Hide all slides
-    reviewSlides.forEach(slide => slide.classList.remove('active'));
-    reviewIndicators.forEach(indicator => indicator.classList.remove('active'));
+    // Smooth fade transition - fade out current, then fade in new
+    const currentActive = document.querySelector('.review-slide.active');
     
-    // Show current slide
-    if (reviewSlides[index]) {
-        reviewSlides[index].classList.add('active');
+    if (currentActive && currentActive !== reviewSlides[index]) {
+        // Fade out current slide
+        currentActive.style.opacity = '0';
+        setTimeout(() => {
+            currentActive.classList.remove('active');
+            // Fade in new slide
+            if (reviewSlides[index]) {
+                reviewSlides[index].classList.add('active');
+                reviewSlides[index].style.opacity = '0';
+                // Force reflow
+                void reviewSlides[index].offsetHeight;
+                reviewSlides[index].style.opacity = '1';
+            }
+        }, 300);
+    } else {
+        // First time or same slide - just show it
+        reviewSlides.forEach(slide => {
+            slide.classList.remove('active');
+            slide.style.opacity = '0';
+        });
+        
+        if (reviewSlides[index]) {
+            reviewSlides[index].classList.add('active');
+            setTimeout(() => {
+                reviewSlides[index].style.opacity = '1';
+            }, 50);
+        }
     }
+    
+    // Update indicators
+    reviewIndicators.forEach(indicator => indicator.classList.remove('active'));
     if (reviewIndicators[index]) {
         reviewIndicators[index].classList.add('active');
     }
@@ -653,6 +679,84 @@ if (checkInInput) {
 // Booking Form WhatsApp Submission
 // Hotel WhatsApp Number
 const HOTEL_WHATSAPP_NUMBER = '+255 653 626 410';
+
+// WhatsApp Modal Function
+function showWhatsAppModal(whatsappURL) {
+    // Create modal overlay
+    const modalOverlay = document.createElement('div');
+    modalOverlay.className = 'whatsapp-modal-overlay';
+    modalOverlay.innerHTML = `
+        <div class="whatsapp-modal">
+            <div class="whatsapp-modal-header">
+                <h3>📱 Redirecting to WhatsApp</h3>
+                <button class="whatsapp-modal-close" onclick="closeWhatsAppModal()">&times;</button>
+            </div>
+            <div class="whatsapp-modal-body">
+                <div class="whatsapp-icon-large">💬</div>
+                <p class="whatsapp-modal-message">
+                    Your booking details have been prepared! We're redirecting you to WhatsApp to send your booking request to KALONGO FARM.
+                </p>
+                <p class="whatsapp-modal-note">
+                    Please review the message and send it to confirm your booking.
+                </p>
+                <div class="whatsapp-modal-actions">
+                    <a href="${whatsappURL}" target="_blank" class="btn-primary whatsapp-modal-btn" onclick="closeWhatsAppModal()">
+                        Open WhatsApp
+                    </a>
+                    <button class="btn-secondary whatsapp-modal-btn" onclick="copyWhatsAppLink('${whatsappURL}')">
+                        Copy Link
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modalOverlay);
+    document.body.style.overflow = 'hidden';
+    
+    // Auto-redirect after 2 seconds
+    setTimeout(() => {
+        const whatsappWindow = window.open(whatsappURL, '_blank');
+        if (!whatsappWindow || whatsappWindow.closed || typeof whatsappWindow.closed === 'undefined') {
+            // Popup blocked, user can click button
+        } else {
+            closeWhatsAppModal();
+        }
+    }, 2000);
+}
+
+function closeWhatsAppModal() {
+    const modal = document.querySelector('.whatsapp-modal-overlay');
+    if (modal) {
+        modal.style.opacity = '0';
+        setTimeout(() => {
+            modal.remove();
+            document.body.style.overflow = '';
+        }, 300);
+    }
+}
+
+function copyWhatsAppLink(url) {
+    navigator.clipboard.writeText(url).then(() => {
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = '✓ Copied!';
+        btn.style.background = 'var(--primary-color)';
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = '';
+        }, 2000);
+    }).catch(() => {
+        alert('Please copy this link manually:\n\n' + url);
+    });
+}
+
+// Close modal on overlay click
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('whatsapp-modal-overlay')) {
+        closeWhatsAppModal();
+    }
+});
 
 // Auto-fill form from chatbot
 function autoFillFromChatbot() {
@@ -784,26 +888,8 @@ This booking was submitted through the KALONGO FARM website`;
         console.log('📱 WhatsApp Number:', whatsappNumber);
         console.log('📱 Message length:', bookingMessage.length);
         
-        // Try to open WhatsApp
-        try {
-            // Open WhatsApp in new tab/window
-            const whatsappWindow = window.open(whatsappURL, '_blank');
-            
-            // Check if window was blocked
-            if (!whatsappWindow || whatsappWindow.closed || typeof whatsappWindow.closed === 'undefined') {
-                // Popup was blocked, try alternative method
-                alert('Please allow popups for this site, or copy this link:\n\n' + whatsappURL);
-                // Fallback: try direct navigation
-                window.location.href = whatsappURL;
-            } else {
-                // Show success message
-                alert('✅ Booking form submitted!\n\nOpening WhatsApp to send your booking details to KALONGO FARM...\n\nPlease review and send the message to confirm your booking.');
-            }
-        } catch (error) {
-            console.error('Error opening WhatsApp:', error);
-            // Fallback: show URL for manual copy
-            alert('Please copy this link and open it in your browser:\n\n' + whatsappURL);
-        }
+        // Show WhatsApp redirect modal
+        showWhatsAppModal(whatsappURL);
         
         // Reset form after submission attempt
         setTimeout(() => {
