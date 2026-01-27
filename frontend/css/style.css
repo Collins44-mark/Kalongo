@@ -3743,7 +3743,8 @@ section * {
     position: relative;
     overflow: hidden;
     border-radius: 20px;
-    min-height: 400px; /* Fixed height to prevent layout shift */
+    min-height: 450px; /* Fixed height to prevent layout shift */
+    width: 100%;
 }
 
 .review-slide {
@@ -3752,25 +3753,31 @@ section * {
     top: 0;
     left: 0;
     opacity: 0;
+    visibility: hidden;
     transform: translateX(100%);
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-    will-change: opacity, transform;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+    will-change: transform, opacity;
     pointer-events: none;
+    z-index: 1;
 }
 
 .review-slide.active {
     position: relative;
     opacity: 1;
+    visibility: visible;
     transform: translateX(0);
     pointer-events: auto;
+    z-index: 2;
 }
 
 .review-slide.prev {
     transform: translateX(-100%);
+    opacity: 0;
 }
 
 .review-slide.next {
     transform: translateX(100%);
+    opacity: 0;
 }
 
 .review-content {
@@ -3781,9 +3788,10 @@ section * {
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-    align-items: center;
+    align-items: flex-start;
     min-height: 400px; /* Fixed height to prevent layout shift */
     box-sizing: border-box;
+    width: 100%;
 }
 
 .review-image-container {
@@ -3810,6 +3818,10 @@ section * {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: visible;
 }
 
 .review-stars {
@@ -3826,6 +3838,11 @@ section * {
     font-style: italic;
     position: relative;
     padding-left: 25px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    max-width: 100%;
+    display: block;
 }
 
 .review-quote::before {
@@ -3844,6 +3861,8 @@ section * {
     font-weight: 600;
     color: var(--primary-color);
     margin-top: 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .review-date {
@@ -4201,11 +4220,26 @@ section * {
         grid-template-columns: 1fr;
         gap: 30px;
         text-align: center;
-        min-height: 400px; /* Maintain fixed height */
+        min-height: 450px; /* Fixed height to prevent layout shift */
+        align-items: flex-start;
     }
     
     .reviews-slider {
-        min-height: 400px; /* Maintain fixed height */
+        min-height: 450px; /* Fixed height to prevent layout shift */
+    }
+    
+    .review-quote {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: visible;
+        text-overflow: clip;
     }
 
     .review-image-container {
@@ -4421,23 +4455,62 @@ section * {
     }
 
     .review-content {
-        padding: 20px 15px;
+        padding: 25px 20px;
         grid-template-columns: 1fr !important;
-        min-height: 350px; /* Maintain fixed height on mobile */
+        min-height: 500px; /* Fixed height to prevent layout shift */
+        height: auto;
+        align-items: flex-start;
     }
     
     .reviews-slider {
-        min-height: 350px; /* Maintain fixed height on mobile */
+        min-height: 500px; /* Fixed height to prevent layout shift */
     }
 
     .review-quote {
-        font-size: 0.9rem;
-        padding: 0 10px;
-        line-height: 1.6;
+        font-size: 1rem;
+        padding: 0 15px;
+        padding-left: 30px;
+        line-height: 1.7;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: visible;
+        text-overflow: clip;
+    }
+    
+    .review-text {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: visible;
+    }
+    
+    .review-image-container {
+        max-width: 100%;
+        width: 100%;
+        margin: 0 auto 20px;
+        height: auto;
+    }
+    
+    .review-image {
+        min-height: 250px;
+        max-height: 300px;
+        width: 100%;
+        object-fit: cover;
     }
 
     .review-name {
         font-size: 1rem;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .review-stars {
+        font-size: 1.3rem;
     }
 
     .review-date {

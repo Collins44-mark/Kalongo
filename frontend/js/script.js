@@ -522,28 +522,36 @@ function showReviewSlide(index) {
     
     console.log(`🎬 Showing review slide ${index + 1} of ${totalReviewSlides}`);
     
-    // Determine slide direction for smooth horizontal animation
+    // Get current active slide index
     const currentActiveIndex = Array.from(reviewSlides).findIndex(slide => slide.classList.contains('active'));
-    const direction = index > currentActiveIndex ? 'next' : 'prev';
     
-    // Remove all classes from slides
+    // Determine direction for smooth slide animation
+    let direction = 'next';
+    if (currentActiveIndex >= 0) {
+        if (index > currentActiveIndex || (index === 0 && currentActiveIndex === totalReviewSlides - 1)) {
+            direction = 'next';
+        } else {
+            direction = 'prev';
+        }
+    }
+    
+    // Remove all state classes
     reviewSlides.forEach(slide => {
         slide.classList.remove('active', 'prev', 'next');
+        // Reset inline styles
+        slide.style.opacity = '';
+        slide.style.transform = '';
+        slide.style.visibility = '';
     });
     
-    // Add direction classes for smooth animation
+    // Set previous slide state
     if (currentActiveIndex >= 0 && currentActiveIndex !== index) {
         reviewSlides[currentActiveIndex].classList.add(direction === 'next' ? 'prev' : 'next');
     }
     
-    // Show new slide with proper direction
+    // Activate new slide
     if (reviewSlides[index]) {
         reviewSlides[index].classList.add('active');
-        // Small delay to ensure smooth transition
-        setTimeout(() => {
-            reviewSlides[index].style.opacity = '1';
-            reviewSlides[index].style.transform = 'translateX(0)';
-        }, 10);
     }
     
     // Update indicators
