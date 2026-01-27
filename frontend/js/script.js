@@ -522,36 +522,28 @@ function showReviewSlide(index) {
     
     console.log(`🎬 Showing review slide ${index + 1} of ${totalReviewSlides}`);
     
-    // Smooth fade transition - fade out current, then fade in new
-    const currentActive = document.querySelector('.review-slide.active');
+    // Determine slide direction for smooth horizontal animation
+    const currentActiveIndex = Array.from(reviewSlides).findIndex(slide => slide.classList.contains('active'));
+    const direction = index > currentActiveIndex ? 'next' : 'prev';
     
-    if (currentActive && currentActive !== reviewSlides[index]) {
-        // Fade out current slide
-        currentActive.style.opacity = '0';
+    // Remove all classes from slides
+    reviewSlides.forEach(slide => {
+        slide.classList.remove('active', 'prev', 'next');
+    });
+    
+    // Add direction classes for smooth animation
+    if (currentActiveIndex >= 0 && currentActiveIndex !== index) {
+        reviewSlides[currentActiveIndex].classList.add(direction === 'next' ? 'prev' : 'next');
+    }
+    
+    // Show new slide with proper direction
+    if (reviewSlides[index]) {
+        reviewSlides[index].classList.add('active');
+        // Small delay to ensure smooth transition
         setTimeout(() => {
-            currentActive.classList.remove('active');
-            // Fade in new slide
-            if (reviewSlides[index]) {
-                reviewSlides[index].classList.add('active');
-                reviewSlides[index].style.opacity = '0';
-                // Force reflow
-                void reviewSlides[index].offsetHeight;
-                reviewSlides[index].style.opacity = '1';
-            }
-        }, 300);
-    } else {
-        // First time or same slide - just show it
-        reviewSlides.forEach(slide => {
-            slide.classList.remove('active');
-            slide.style.opacity = '0';
-        });
-        
-        if (reviewSlides[index]) {
-            reviewSlides[index].classList.add('active');
-            setTimeout(() => {
-                reviewSlides[index].style.opacity = '1';
-            }, 50);
-        }
+            reviewSlides[index].style.opacity = '1';
+            reviewSlides[index].style.transform = 'translateX(0)';
+        }, 10);
     }
     
     // Update indicators
@@ -888,13 +880,22 @@ This booking was submitted through the KALONGO FARM website`;
         console.log('📱 WhatsApp Number:', whatsappNumber);
         console.log('📱 Message length:', bookingMessage.length);
         
-        // Show WhatsApp redirect modal
-        showWhatsAppModal(whatsappURL);
+        // Directly open WhatsApp without any messages
+        try {
+            window.open(whatsappURL, '_blank');
+            // Silently reset form after a brief delay
+            setTimeout(() => {
+                bookingForm.reset();
+            }, 500);
+        } catch (error) {
+            // Silent fallback - just navigate directly
+            window.location.href = whatsappURL;
+        }
         
-        // Reset form after submission attempt
+        // Silently reset form after brief delay
         setTimeout(() => {
             bookingForm.reset();
-        }, 1000);
+        }, 500);
     });
 }
 
