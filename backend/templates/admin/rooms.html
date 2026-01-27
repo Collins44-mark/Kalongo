@@ -6,13 +6,17 @@
 <div class="card">
     <h3 style="margin-bottom: 1rem;">Rooms</h3>
     <table>
-        <thead><tr><th>Room</th><th>Slug</th><th>Actions</th></tr></thead>
+        <thead><tr><th>Room</th><th>Slug</th><th>Capacity</th><th>Actions</th></tr></thead>
         <tbody>
             {% for r in rooms %}
             <tr>
                 <td>{{ r.name }}</td>
                 <td><code>{{ r.slug }}</code></td>
-                <td><a href="{{ url_for('admin.room_images', pk=r.id) }}" class="btn btn-primary btn-sm">Manage images</a></td>
+                <td>{{ r.capacity or '—' }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('admin.room_edit', pk=r.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                    <a href="{{ url_for('admin.room_images', pk=r.id) }}" class="btn btn-primary btn-sm">Images</a>
+                </td>
             </tr>
             {% else %}
             <tr><td colspan="3" style="color: var(--text-muted);">No rooms. Run <code>python init_db.py</code> to seed default rooms.</td></tr>

@@ -1,0 +1,23 @@
+{% extends "admin/base.html" %}
+{% block title %}Edit Room{% endblock %}
+{% block content %}
+<h2>Edit Room: {{ room.name }}</h2>
+<div class="card">
+    <form method="post">
+        <div><label>Room Name *</label><input type="text" name="name" value="{{ room.name }}" required></div>
+        <div><label>Slug</label><input type="text" value="{{ room.slug }}" disabled style="background: var(--border); color: var(--text-muted);"><small style="color: var(--text-muted); display: block; margin-top: 0.25rem;">Slug cannot be changed</small></div>
+        <div><label>Capacity</label><input type="text" name="capacity" value="{{ room.capacity or '' }}" placeholder="e.g., 2 Adults or Small Family (2-3 people)"></div>
+        <div><label>Description</label><textarea name="description" rows="4" placeholder="Room description...">{{ room.description or '' }}</textarea></div>
+        <div>
+            <label>Features (one per line)</label>
+            <textarea name="features" rows="8" placeholder="Enter features, one per line:&#10;Comfortable beds&#10;Private bathroom&#10;Air conditioning&#10;Farm view">{{ features_text }}</textarea>
+            <small style="color: var(--text-muted); display: block; margin-top: 0.25rem;">Enter each feature on a new line. These will appear as checkmarks in the room listing.</small>
+        </div>
+        <div><label>Order</label><input type="number" name="order" value="{{ room.order or 0 }}"></div>
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{{ url_for('admin.rooms_list') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

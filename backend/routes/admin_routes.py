@@ -1007,6 +1007,52 @@ def room_image_delete(room_id, img_id):
     return redirect(url_for("admin.room_images", pk=room_id))
 
 
+@admin_bp.route("/rooms/<int:pk>/edit", methods=["GET", "POST"])
+@login_required
+def room_edit(pk):
+    s = get_session()
+    try:
+        room = s.query(Room).get(pk)
+        if not room:
+            flash("Room not found.", "error")
+            return redirect(url_for("admin.rooms_list"))
+        
+        if request.method == "POST":
+            room.name = request.form.get("name", "").strip()
+            room.description = request.form.get("description", "").strip() or None
+            room.capacity = request.form.get("capacity", "").strip() or None
+            room.order = int(request.form.get("order") or 0)
+            
+            # Handle features - can be comma-separated or newline-separated
+            features_text = request.form.get("features", "").strip()
+            if features_text:
+                # Split by comma or newline, clean each feature
+                features = [f.strip() for f in features_text.replace('\n', ',').split(',') if f.strip()]
+                room.features = features if features else None
+            else:
+                room.features = None
+            
+            s.commit()
+            flash("Room updated.", "success")
+            return redirect(url_for("admin.rooms_list"))
+        
+        # Convert features list to text for editing (one per line)
+        features_text = ""
+        if room.features:
+            if isinstance(room.features, list):
+                features_text = "\n".join(room.features)
+            else:
+                features_text = str(room.features)
+        
+        return render_template("admin/room_edit.html", room=room, features_text=features_text)
+    except Exception as e:
+        s.rollback()
+        flash(str(e), "error")
+        return redirect(url_for("admin.rooms_list"))
+    finally:
+        s.close()
+
+
 # ---------- Restaurant Menu ----------
 
 
