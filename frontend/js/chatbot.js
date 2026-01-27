@@ -283,6 +283,8 @@ function toggleChatbot() {
     const container = document.getElementById('chatbotContainer');
     const toggleBtn = document.getElementById('chatbotToggleBtn');
     const backdrop = document.getElementById('chatbotBackdrop');
+    const html = document.documentElement;
+    const body = document.body;
     
     chatState.isOpen = !chatState.isOpen;
     
@@ -290,13 +292,29 @@ function toggleChatbot() {
         container.classList.add('active');
         if (backdrop) backdrop.classList.add('active');
         toggleBtn.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Prevent body scroll
+        // Prevent body and html scroll - stable like sidebar
+        const scrollY = window.scrollY;
+        body.style.position = 'fixed';
+        body.style.top = `-${scrollY}px`;
+        body.style.width = '100%';
+        body.style.overflow = 'hidden';
+        html.style.overflow = 'hidden';
+        // Store scroll position
+        body.setAttribute('data-scroll-y', scrollY);
         document.getElementById('chatbotInput').focus();
     } else {
         container.classList.remove('active');
         if (backdrop) backdrop.classList.remove('active');
         toggleBtn.classList.remove('active');
-        document.body.style.overflow = ''; // Restore body scroll
+        // Restore scroll position
+        const scrollY = body.getAttribute('data-scroll-y') || '0';
+        body.style.position = '';
+        body.style.top = '';
+        body.style.width = '';
+        body.style.overflow = '';
+        html.style.overflow = '';
+        body.removeAttribute('data-scroll-y');
+        window.scrollTo(0, parseInt(scrollY));
     }
 }
 
@@ -305,12 +323,22 @@ function closeChatbot() {
     const container = document.getElementById('chatbotContainer');
     const toggleBtn = document.getElementById('chatbotToggleBtn');
     const backdrop = document.getElementById('chatbotBackdrop');
+    const html = document.documentElement;
+    const body = document.body;
     
     chatState.isOpen = false;
     container.classList.remove('active');
     if (backdrop) backdrop.classList.remove('active');
     toggleBtn.classList.remove('active');
-    document.body.style.overflow = ''; // Restore body scroll
+    // Restore scroll position
+    const scrollY = body.getAttribute('data-scroll-y') || '0';
+    body.style.position = '';
+    body.style.top = '';
+    body.style.width = '';
+    body.style.overflow = '';
+    html.style.overflow = '';
+    body.removeAttribute('data-scroll-y');
+    window.scrollTo(0, parseInt(scrollY));
 }
 
 // Add greeting message
