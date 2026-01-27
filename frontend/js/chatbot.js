@@ -292,29 +292,60 @@ function toggleChatbot() {
         container.classList.add('active');
         if (backdrop) backdrop.classList.add('active');
         toggleBtn.classList.add('active');
+        
         // Prevent body and html scroll - stable like sidebar
-        const scrollY = window.scrollY;
+        const scrollY = window.pageYOffset || window.scrollY || document.documentElement.scrollTop;
+        
+        // Lock scroll on body
         body.style.position = 'fixed';
         body.style.top = `-${scrollY}px`;
+        body.style.left = '0';
+        body.style.right = '0';
         body.style.width = '100%';
         body.style.overflow = 'hidden';
+        body.style.overscrollBehavior = 'none';
+        
+        // Lock scroll on html
         html.style.overflow = 'hidden';
+        html.style.position = 'relative';
+        html.style.height = '100%';
+        html.style.overscrollBehavior = 'none';
+        
         // Store scroll position
         body.setAttribute('data-scroll-y', scrollY);
-        document.getElementById('chatbotInput').focus();
+        window.chatbotScrollY = scrollY;
+        
+        // Focus input after a small delay
+        setTimeout(() => {
+            const input = document.getElementById('chatbotInput');
+            if (input) input.focus();
+        }, 100);
     } else {
         container.classList.remove('active');
         if (backdrop) backdrop.classList.remove('active');
         toggleBtn.classList.remove('active');
+        
         // Restore scroll position
-        const scrollY = body.getAttribute('data-scroll-y') || '0';
+        const scrollY = body.getAttribute('data-scroll-y') || window.chatbotScrollY || '0';
+        
+        // Unlock scroll
         body.style.position = '';
         body.style.top = '';
+        body.style.left = '';
+        body.style.right = '';
         body.style.width = '';
         body.style.overflow = '';
-        html.style.overflow = '';
+        body.style.overscrollBehavior = '';
         body.removeAttribute('data-scroll-y');
+        
+        html.style.overflow = '';
+        html.style.position = '';
+        html.style.height = '';
+        html.style.overscrollBehavior = '';
+        
+        // Restore scroll position
         window.scrollTo(0, parseInt(scrollY));
+        delete window.chatbotScrollY;
     }
 }
 
@@ -330,15 +361,28 @@ function closeChatbot() {
     container.classList.remove('active');
     if (backdrop) backdrop.classList.remove('active');
     toggleBtn.classList.remove('active');
+    
     // Restore scroll position
-    const scrollY = body.getAttribute('data-scroll-y') || '0';
+    const scrollY = body.getAttribute('data-scroll-y') || window.chatbotScrollY || '0';
+    
+    // Unlock scroll
     body.style.position = '';
     body.style.top = '';
+    body.style.left = '';
+    body.style.right = '';
     body.style.width = '';
     body.style.overflow = '';
-    html.style.overflow = '';
+    body.style.overscrollBehavior = '';
     body.removeAttribute('data-scroll-y');
+    
+    html.style.overflow = '';
+    html.style.position = '';
+    html.style.height = '';
+    html.style.overscrollBehavior = '';
+    
+    // Restore scroll position
     window.scrollTo(0, parseInt(scrollY));
+    delete window.chatbotScrollY;
 }
 
 // Add greeting message
