@@ -4877,6 +4877,7 @@ section * {
 }
 
 .chatbot-header-text h3 {
+    font-family: 'Dancing Script', cursive;
     font-size: 1.1rem;
     font-weight: 600;
     margin: 0;
@@ -5699,6 +5700,7 @@ section * {
 }
 
 .whatsapp-modal-header h3 {
+    font-family: 'Dancing Script', cursive;
     margin: 0;
     font-size: 1.4rem;
     font-weight: 600;
