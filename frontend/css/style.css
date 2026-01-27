@@ -4739,6 +4739,7 @@ section * {
     right: 20px;
     width: 380px;
     max-width: calc(100vw - 40px);
+    z-index: 9999;
     height: 600px;
     max-height: calc(100vh - 120px);
     background: var(--white);
@@ -5186,6 +5187,25 @@ section * {
         bottom: 0;
         height: 100vh;
         max-height: 100vh;
+        border-radius: 0;
+    }
+    
+    .chatbot-backdrop {
+        display: block;
+    }
+    
+    .chatbot-close-btn {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 36px !important;
+        background: rgba(255,255,255,0.3) !important;
+        border: 2px solid rgba(255,255,255,0.6) !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    
+    .chatbot-close-btn:active {
+        transform: rotate(90deg) scale(0.95);
+    }
         border-radius: 0;
         position: fixed;
     }

@@ -179,6 +179,7 @@ function initChatbot() {
 // Create chatbot HTML structure
 function createChatbotHTML() {
     const chatbotHTML = `
+        <div class="chatbot-backdrop" id="chatbotBackdrop"></div>
         <div class="chatbot-container" id="chatbotContainer">
             <div class="chatbot-header">
                 <div class="chatbot-header-content">
@@ -190,7 +191,7 @@ function createChatbotHTML() {
                         <p class="chatbot-status">Online</p>
                     </div>
                 </div>
-                <button class="chatbot-close-btn" id="chatbotCloseBtn">×</button>
+                <button class="chatbot-close-btn" id="chatbotCloseBtn" aria-label="Close chatbot">×</button>
             </div>
             <div class="chatbot-messages" id="chatbotMessages">
                 <!-- Messages will be added here -->
@@ -220,12 +221,16 @@ function createChatbotHTML() {
 function setupEventListeners() {
     const toggleBtn = document.getElementById('chatbotToggleBtn');
     const closeBtn = document.getElementById('chatbotCloseBtn');
+    const backdrop = document.getElementById('chatbotBackdrop');
     const sendBtn = document.getElementById('chatbotSendBtn');
     const input = document.getElementById('chatbotInput');
     const quickActions = document.querySelectorAll('.quick-action-btn');
     
     toggleBtn.addEventListener('click', toggleChatbot);
-    closeBtn.addEventListener('click', toggleChatbot);
+    closeBtn.addEventListener('click', closeChatbot);
+    if (backdrop) {
+        backdrop.addEventListener('click', closeChatbot);
+    }
     sendBtn.addEventListener('click', handleSendMessage);
     
     input.addEventListener('keypress', (e) => {
@@ -277,17 +282,35 @@ function setupEventListeners() {
 function toggleChatbot() {
     const container = document.getElementById('chatbotContainer');
     const toggleBtn = document.getElementById('chatbotToggleBtn');
+    const backdrop = document.getElementById('chatbotBackdrop');
     
     chatState.isOpen = !chatState.isOpen;
     
     if (chatState.isOpen) {
         container.classList.add('active');
+        if (backdrop) backdrop.classList.add('active');
         toggleBtn.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent body scroll
         document.getElementById('chatbotInput').focus();
     } else {
         container.classList.remove('active');
+        if (backdrop) backdrop.classList.remove('active');
         toggleBtn.classList.remove('active');
+        document.body.style.overflow = ''; // Restore body scroll
     }
+}
+
+// Close chatbot (separate function for easier closing)
+function closeChatbot() {
+    const container = document.getElementById('chatbotContainer');
+    const toggleBtn = document.getElementById('chatbotToggleBtn');
+    const backdrop = document.getElementById('chatbotBackdrop');
+    
+    chatState.isOpen = false;
+    container.classList.remove('active');
+    if (backdrop) backdrop.classList.remove('active');
+    toggleBtn.classList.remove('active');
+    document.body.style.overflow = ''; // Restore body scroll
 }
 
 // Add greeting message
