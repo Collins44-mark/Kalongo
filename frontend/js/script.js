@@ -77,20 +77,12 @@ navLinks.forEach(link => {
         
         // Handle rooms navigation - ensure it goes to the rooms section
         const href = link.getAttribute('href');
-        if (href && (href.includes('#rooms') || href === '/#rooms' || href === '#rooms')) {
-            // If we're on a different page, navigate first
-            if (window.location.pathname !== '/' && !window.location.pathname.endsWith('/') && !window.location.pathname.includes('index.html')) {
-                window.location.href = '/#rooms';
-                e.preventDefault();
-                return;
+        // All anchor links now go to home page - no hash in URL
+        if (href && (href === '/' || href === 'index.html' || href === '/index.html')) {
+            // If already on home page, do nothing or scroll to top
+            if (window.location.pathname === '/' || window.location.pathname.endsWith('/') || window.location.pathname.includes('index.html')) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-            // If we're on index.html, scroll to rooms section
-            setTimeout(() => {
-                const roomsSection = document.getElementById('rooms');
-                if (roomsSection) {
-                    roomsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }, 300);
         }
     });
 });
