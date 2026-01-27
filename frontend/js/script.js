@@ -77,10 +77,10 @@ navLinks.forEach(link => {
         
         // Handle rooms navigation - ensure it goes to the rooms section
         const href = link.getAttribute('href');
-        if (href && (href.includes('#rooms') || href === 'index.html#rooms')) {
+        if (href && (href.includes('#rooms') || href === '/#rooms' || href === '#rooms')) {
             // If we're on a different page, navigate first
-            if (window.location.pathname !== '/index.html' && window.location.pathname !== '/' && !window.location.pathname.endsWith('index.html')) {
-                window.location.href = 'index.html#rooms';
+            if (window.location.pathname !== '/' && !window.location.pathname.endsWith('/') && !window.location.pathname.includes('index.html')) {
+                window.location.href = '/#rooms';
                 e.preventDefault();
                 return;
             }
@@ -907,11 +907,30 @@ This booking was submitted through the KALONGO FARM website`;
     });
 }
 
+// Clean URLs - remove index.html from URL
+function cleanURL() {
+    if (window.location.pathname.includes('index.html')) {
+        const cleanPath = window.location.pathname.replace(/index\.html$/, '') || '/';
+        const hash = window.location.hash;
+        const search = window.location.search;
+        const cleanURL = cleanPath + hash + search;
+        window.history.replaceState({}, '', cleanURL);
+    }
+}
+
+// Run on page load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', cleanURL);
+} else {
+    cleanURL();
+}
+
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const href = this.getAttribute('href');
+        const target = document.querySelector(href);
         if (target) {
             const headerOffset = 100;
             const elementPosition = target.getBoundingClientRect().top;
@@ -921,6 +940,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 top: offsetPosition,
                 behavior: 'smooth'
             });
+            
+            // Clean URL after scroll
+            setTimeout(() => {
+                window.history.replaceState({}, '', href);
+            }, 100);
         }
     });
 });
