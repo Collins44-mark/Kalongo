@@ -2,20 +2,16 @@
 {% block title %}Rooms{% endblock %}
 {% block content %}
 <h2>Rooms</h2>
-<p style="color: var(--text-muted); margin-bottom: 1rem;">Manage rooms and images by category (Rooms, Family Houses, etc.).</p>
-<p style="margin-bottom: 1rem;">
-    <a href="{{ url_for('admin.room_categories_list') }}" class="btn btn-secondary">Room Categories</a>
-    <a href="{{ url_for('admin.room_add') }}" class="btn btn-primary">Add Room</a>
-</p>
+<p style="color: var(--text-muted); margin-bottom: 1rem;">Manage accommodation types: A-Cabin, Cottage, Kikota, Family House. Add rooms and upload images.</p>
+<p style="margin-bottom: 1rem;"><a href="{{ url_for('admin.room_add') }}" class="btn btn-primary">Add Room</a></p>
 <div class="card">
     <h3 style="margin-bottom: 1rem;">All Rooms</h3>
     <table>
-        <thead><tr><th>Room</th><th>Category</th><th>Slug</th><th>Capacity</th><th>Actions</th></tr></thead>
+        <thead><tr><th>Room</th><th>Slug</th><th>Capacity</th><th>Actions</th></tr></thead>
         <tbody>
             {% for r in rooms %}
             <tr>
                 <td>{{ r.name }}</td>
-                <td>{{ r.category.name if r.category else '—' }}</td>
                 <td><code>{{ r.slug }}</code></td>
                 <td>{{ r.capacity or '—' }}</td>
                 <td class="actions">
@@ -24,7 +20,7 @@
                 </td>
             </tr>
             {% else %}
-            <tr><td colspan="5" style="color: var(--text-muted);">No rooms. <a href="{{ url_for('admin.room_add') }}">Add a room</a> or run <code>python init_db.py</code> to seed defaults.</td></tr>
+            <tr><td colspan="4" style="color: var(--text-muted);">No rooms. <a href="{{ url_for('admin.room_add') }}">Add a room</a> or run <code>python init_db.py</code> to seed defaults.</td></tr>
             {% endfor %}
         </tbody>
     </table>

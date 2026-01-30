@@ -11,7 +11,6 @@ from models import (
     Admin,
     SiteSettings,
     HeroSlide,
-    RoomCategory,
     Room,
     RoomImage,
     Facility,
@@ -940,82 +939,7 @@ def settings():
         s.close()
 
 
-# ---------- Room Categories ----------
-
-
-@admin_bp.route("/room-categories", methods=["GET"])
-@login_required
-def room_categories_list():
-    s = get_session()
-    try:
-        categories = s.query(RoomCategory).order_by(RoomCategory.order, RoomCategory.id).all()
-        return render_template("admin/room_categories.html", categories=categories)
-    finally:
-        s.close()
-
-
-@admin_bp.route("/room-categories/add", methods=["GET", "POST"])
-@login_required
-def room_category_add():
-    s = get_session()
-    try:
-        if request.method == "POST":
-            name = request.form.get("name", "").strip()
-            slug = request.form.get("slug", "").strip().lower().replace(" ", "-") or None
-            if not name:
-                flash("Name is required.", "error")
-                return redirect(url_for("admin.room_category_add"))
-            if not slug:
-                slug = name.lower().replace(" ", "-")
-            if s.query(RoomCategory).filter_by(slug=slug).first():
-                flash("A category with this slug already exists.", "error")
-                return redirect(url_for("admin.room_category_add"))
-            order = int(request.form.get("order") or 0)
-            cat = RoomCategory(name=name, slug=slug, order=order)
-            s.add(cat)
-            s.commit()
-            flash("Room category added.", "success")
-            return redirect(url_for("admin.room_categories_list"))
-        return render_template("admin/room_category_edit.html", category=None)
-    except Exception as e:
-        s.rollback()
-        flash(str(e), "error")
-        return redirect(url_for("admin.room_categories_list"))
-    finally:
-        s.close()
-
-
-@admin_bp.route("/room-categories/<int:pk>/edit", methods=["GET", "POST"])
-@login_required
-def room_category_edit(pk):
-    s = get_session()
-    try:
-        category = s.query(RoomCategory).get(pk)
-        if not category:
-            flash("Category not found.", "error")
-            return redirect(url_for("admin.room_categories_list"))
-        if request.method == "POST":
-            category.name = request.form.get("name", "").strip()
-            slug = request.form.get("slug", "").strip().lower().replace(" ", "-")
-            if slug and slug != category.slug:
-                if s.query(RoomCategory).filter_by(slug=slug).first():
-                    flash("A category with this slug already exists.", "error")
-                    return redirect(url_for("admin.room_category_edit", pk=pk))
-                category.slug = slug
-            category.order = int(request.form.get("order") or 0)
-            s.commit()
-            flash("Room category updated.", "success")
-            return redirect(url_for("admin.room_categories_list"))
-        return render_template("admin/room_category_edit.html", category=category)
-    except Exception as e:
-        s.rollback()
-        flash(str(e), "error")
-        return redirect(url_for("admin.room_categories_list"))
-    finally:
-        s.close()
-
-
-# ---------- Rooms (list + images, per category) ----------
+# ---------- Rooms (list + images) ----------
 
 
 @admin_bp.route("/rooms", methods=["GET"])
@@ -1024,9 +948,8 @@ def rooms_list():
     s = get_session()
     try:
         from sqlalchemy.orm import joinedload
-        categories = s.query(RoomCategory).order_by(RoomCategory.order, RoomCategory.id).all()
-        rooms = s.query(Room).options(joinedload(Room.images), joinedload(Room.category)).order_by(Room.order, Room.id).limit(50).all()
-        return render_template("admin/rooms.html", rooms=rooms, categories=categories)
+        rooms = s.query(Room).options(joinedload(Room.images)).order_by(Room.order, Room.id).limit(50).all()
+        return render_template("admin/rooms.html", rooms=rooms)
     finally:
         s.close()
 
@@ -1036,29 +959,20 @@ def rooms_list():
 def room_add():
     s = get_session()
     try:
-        categories = s.query(RoomCategory).order_by(RoomCategory.order, RoomCategory.id).all()
-        if not categories:
-            flash("Add a room category first (e.g. Rooms, Family Houses).", "error")
-            return redirect(url_for("admin.room_categories_list"))
         if request.method == "POST":
             name = request.form.get("name", "").strip()
             slug = request.form.get("slug", "").strip().lower().replace(" ", "-") or None
-            category_id = request.form.get("category_id")
             if not name:
                 flash("Room name is required.", "error")
                 return redirect(url_for("admin.room_add"))
             if not slug:
                 slug = name.lower().replace(" ", "-")
-            if not category_id:
-                flash("Please select a room category.", "error")
-                return redirect(url_for("admin.room_add"))
             if s.query(Room).filter_by(slug=slug).first():
                 flash("A room with this slug already exists.", "error")
                 return redirect(url_for("admin.room_add"))
             room = Room(
                 name=name,
                 slug=slug,
-                category_id=int(category_id),
                 description=request.form.get("description", "").strip() or None,
                 capacity=request.form.get("capacity", "").strip() or None,
                 order=int(request.form.get("order") or 0),
@@ -1071,7 +985,7 @@ def room_add():
             s.commit()
             flash("Room added. You can now add images.", "success")
             return redirect(url_for("admin.room_images", pk=room.id))
-        return render_template("admin/room_add.html", categories=categories)
+        return render_template("admin/room_add.html")
     except Exception as e:
         s.rollback()
         flash(str(e), "error")
@@ -1141,16 +1055,11 @@ def room_edit(pk):
         if not room:
             flash("Room not found.", "error")
             return redirect(url_for("admin.rooms_list"))
-        categories = s.query(RoomCategory).order_by(RoomCategory.order, RoomCategory.id).all()
         if request.method == "POST":
             room.name = request.form.get("name", "").strip()
             room.description = request.form.get("description", "").strip() or None
             room.capacity = request.form.get("capacity", "").strip() or None
             room.order = int(request.form.get("order") or 0)
-            cat_id = request.form.get("category_id")
-            if cat_id:
-                room.category_id = int(cat_id)
-            # Handle features - can be comma-separated or newline-separated
             features_text = request.form.get("features", "").strip()
             if features_text:
                 features = [f.strip() for f in features_text.replace("\n", ",").split(",") if f.strip()]
@@ -1163,7 +1072,7 @@ def room_edit(pk):
         features_text = ""
         if room.features:
             features_text = "\n".join(room.features) if isinstance(room.features, list) else str(room.features)
-        return render_template("admin/room_edit.html", room=room, features_text=features_text, categories=categories)
+        return render_template("admin/room_edit.html", room=room, features_text=features_text)
     except Exception as e:
         s.rollback()
         flash(str(e), "error")

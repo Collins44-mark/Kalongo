@@ -11,7 +11,7 @@ const API_BASE_URL = (() => {
     // For production, use Render backend URL
     return 'https://kalongo.onrender.com/api';
 })();
-const API_TIMEOUT = 3000; // 3 seconds timeout (optimized for speed)
+const API_TIMEOUT = 15000; // 15 seconds (allows backend cold start on Render)
 
 // Image preloading cache
 const imageCache = new Map();
@@ -121,7 +121,6 @@ async function fetchAPI(endpoint, useCache = true) {
 const API = {
     getHeroSlides: () => fetchAPI('/hero-slides'),
     getRooms: () => fetchAPI('/rooms'),
-    getRoomCategories: () => fetchAPI('/room-categories'),
     getFacilities: () => fetchAPI('/facilities'),
     getActivities: () => fetchAPI('/activities'),
     getPricing: () => fetchAPI('/pricing'),
@@ -313,32 +312,6 @@ const Render = {
     roomsInto: (container, rooms) => {
         if (!container || !rooms || rooms.length === 0) return;
         container.innerHTML = rooms.map(room => Render.roomCardHtml(room)).join('');
-    },
-
-    /** Render room categories: each category goes into its section by data-category-slug */
-    roomCategories: (categories) => {
-        if (!categories || categories.length === 0) return;
-        const allRooms = [];
-        categories.forEach(cat => {
-            const section = document.querySelector(`[data-category-slug="${cat.slug}"]`);
-            const grid = section ? section.querySelector('.rooms-grid') : null;
-            if (section && grid) {
-                if (cat.rooms && cat.rooms.length > 0) {
-                    Render.roomsInto(grid, cat.rooms);
-                    allRooms.push(...cat.rooms);
-                    section.style.display = '';
-                } else {
-                    grid.innerHTML = '';
-                    section.style.display = 'none';
-                }
-            }
-        });
-        setTimeout(() => {
-            window.dispatchEvent(new CustomEvent('roomsRendered', { detail: { rooms: allRooms } }));
-            if (typeof initializeRoomSlider === 'function') {
-                allRooms.forEach(room => { if (room.slug) initializeRoomSlider(room.slug); });
-            }
-        }, 150);
     },
 
     rooms: (rooms) => {
@@ -914,52 +887,43 @@ async function initializeDataLoading() {
     if (path === '/' || path.endsWith('/') || path.includes('index.html')) {
         console.log('🏠 Loading homepage data...');
         try {
-            // Use combined endpoint for faster loading
-            const homepageData = await API.getHomepageData();
-            
-            // Declare variables in outer scope
-            let heroSlidesData, roomsData, facilitiesData, reviewsData;
-            
-            if (homepageData) {
+            let heroSlidesData = [], roomsData = [], facilitiesData = [], reviewsData = [];
+            let homepageData = null;
+            try {
+                homepageData = await API.getHomepageData();
+            } catch (e) {
+                console.warn('⚠️ Homepage combined endpoint failed:', e.message);
+            }
+            if (homepageData && (homepageData.rooms?.length || homepageData.reviews?.length || homepageData.hero_slides?.length)) {
                 heroSlidesData = homepageData.hero_slides || [];
                 roomsData = homepageData.rooms || [];
-                const roomCategoriesData = homepageData.room_categories || [];
                 facilitiesData = homepageData.facilities || [];
                 reviewsData = homepageData.reviews || [];
                 const homepageSettings = homepageData.settings || {};
-                console.log('📊 Homepage data loaded (combined endpoint):', {
+                console.log('📊 Homepage data loaded (combined):', {
                     heroSlides: heroSlidesData.length,
                     rooms: roomsData.length,
-                    room_categories: roomCategoriesData.length,
                     facilities: facilitiesData.length,
-                    reviews: reviewsData.length,
-                    settings: Object.keys(homepageSettings).length
+                    reviews: reviewsData.length
                 });
-                
-                // Render settings from combined endpoint
                 if (homepageSettings && Object.keys(homepageSettings).length > 0) {
                     Render.settings(homepageSettings);
                 }
-            } else {
-                // Fallback to individual endpoints if combined fails
-                console.warn('⚠️ Combined endpoint failed, using individual endpoints...');
-                const [heroSlides, rooms, facilities, reviews] = await Promise.all([
-                    API.getHeroSlides(),
-                    API.getRooms(),
-                    API.getFacilities(),
-                    API.getReviews(),
+            }
+            if (!roomsData?.length || !reviewsData?.length) {
+                console.warn('⚠️ Fetching rooms/reviews individually as fallback...');
+                const [rooms, reviews] = await Promise.all([
+                    roomsData?.length ? Promise.resolve(roomsData) : API.getRooms().catch(() => []),
+                    reviewsData?.length ? Promise.resolve(reviewsData) : API.getReviews().catch(() => []),
                 ]);
-                console.log('📊 Homepage data loaded (individual endpoints):', {
-                    heroSlides: heroSlides?.length || 0,
-                    rooms: rooms?.length || 0,
-                    facilities: facilities?.length || 0,
-                    reviews: reviews?.length || 0
-                });
-                
-                heroSlidesData = heroSlides;
-                roomsData = rooms;
-                facilitiesData = facilities;
-                reviewsData = reviews;
+                if (!roomsData?.length) roomsData = Array.isArray(rooms) ? rooms : [];
+                if (!reviewsData?.length) reviewsData = Array.isArray(reviews) ? reviews : [];
+                if (!heroSlidesData?.length) {
+                    try { heroSlidesData = await API.getHeroSlides(); } catch (_) {}
+                }
+                if (!facilitiesData?.length) {
+                    try { facilitiesData = await API.getFacilities(); } catch (_) {}
+                }
             }
             
             // Render all data immediately (parallel rendering for speed)
@@ -974,10 +938,7 @@ async function initializeDataLoading() {
                     console.warn('⚠️ No hero slides to display');
                 }
                 
-                if (roomCategoriesData && roomCategoriesData.length > 0) {
-                    console.log('🏠 Calling Render.roomCategories()...');
-                    renderPromises.push(Promise.resolve(Render.roomCategories(roomCategoriesData)));
-                } else if (roomsData && roomsData.length > 0) {
+                if (roomsData && roomsData.length > 0) {
                     console.log('🏠 Calling Render.rooms()...');
                     const roomsContainer = document.querySelector('.rooms-grid');
                     if (roomsContainer) {
@@ -989,7 +950,7 @@ async function initializeDataLoading() {
                         }, 200);
                     }
                 } else {
-                    console.warn('⚠️ No rooms or room categories to display');
+                    console.warn('⚠️ No rooms to display');
                 }
                 
                 if (facilitiesData && facilitiesData.length > 0) {

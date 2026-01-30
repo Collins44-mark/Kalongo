@@ -6,7 +6,6 @@ from sqlalchemy.orm import sessionmaker
 from database import engine, SessionLocal
 from models import (
     HeroSlide,
-    RoomCategory,
     Room,
     RoomImage,
     Facility,
@@ -52,54 +51,26 @@ def get_hero_slides():
 
 @api_bp.route("/rooms")
 def get_rooms():
-    """Get all rooms with their images - optimized with eager loading (legacy; prefer /room-categories)"""
+    """Get all rooms with their images - A-Cabin, Cottage, Kikota, Family House"""
     s = get_session()
     try:
         from sqlalchemy.orm import joinedload
         rooms = s.query(Room).options(joinedload(Room.images)).order_by(Room.order, Room.id).all()
         result = []
         for room in rooms:
-            result.append(_room_to_dict(room))
-        return jsonify(result)
-    finally:
-        s.close()
-
-
-def _room_to_dict(room):
-    return {
-        "id": room.id,
-        "name": room.name,
-        "slug": room.slug,
-        "description": room.description,
-        "capacity": room.capacity,
-        "features": room.features or [],
-        "images": sorted([{
-            "id": img.id,
-            "image_url": img.image_url,
-            "caption": img.caption,
-            "order": img.order,
-        } for img in room.images], key=lambda x: (x["order"], x["id"])),
-    }
-
-
-@api_bp.route("/room-categories")
-def get_room_categories():
-    """Get room categories with their rooms and images - for Rooms and Family Houses sections"""
-    s = get_session()
-    try:
-        from sqlalchemy.orm import joinedload
-        categories = s.query(RoomCategory).options(
-            joinedload(RoomCategory.rooms).joinedload(Room.images)
-        ).order_by(RoomCategory.order, RoomCategory.id).all()
-        result = []
-        for cat in categories:
-            rooms = sorted(cat.rooms, key=lambda r: (r.order, r.id))
             result.append({
-                "id": cat.id,
-                "name": cat.name,
-                "slug": cat.slug,
-                "order": cat.order,
-                "rooms": [_room_to_dict(r) for r in rooms],
+                "id": room.id,
+                "name": room.name,
+                "slug": room.slug,
+                "description": room.description,
+                "capacity": room.capacity,
+                "features": room.features or [],
+                "images": sorted([{
+                    "id": img.id,
+                    "image_url": img.image_url,
+                    "caption": img.caption,
+                    "order": img.order,
+                } for img in room.images], key=lambda x: (x["order"], x["id"])),
             })
         return jsonify(result)
     finally:

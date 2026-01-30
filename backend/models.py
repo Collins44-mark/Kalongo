@@ -46,26 +46,11 @@ class HeroSlide(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
-class RoomCategory(Base):
-    """Room category: e.g. Rooms, Family Houses"""
-    __tablename__ = "room_categories"
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(100), nullable=False)
-    slug = Column(String(100), unique=True, nullable=False)
-    order = Column(Integer, default=0)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-
-    rooms = relationship("Room", back_populates="category", cascade="all, delete-orphan", order_by="Room.order")
-
-
 class Room(Base):
     __tablename__ = "rooms"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    category_id = Column(Integer, ForeignKey("room_categories.id"), nullable=True)  # null = legacy, assign in seed
-    name = Column(String(100), nullable=False)  # A-Cabin, Cottage, Kikota
+    name = Column(String(100), nullable=False)  # A-Cabin, Cottage, Kikota, Family House
     slug = Column(String(100), unique=True, nullable=False)
     description = Column(Text, nullable=True)
     capacity = Column(String(100), nullable=True)
@@ -74,7 +59,6 @@ class Room(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    category = relationship("RoomCategory", back_populates="rooms")
     images = relationship("RoomImage", back_populates="room", cascade="all, delete-orphan", order_by="RoomImage.order")
 
 
