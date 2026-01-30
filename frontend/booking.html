@@ -124,14 +124,17 @@
                     </div>
                     <p class="cost-summary-note">Rates based on daily rates. Weekend & holiday rates may apply—confirm at booking.</p>
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="adults">Number of Adults *</label>
-                        <input type="number" id="adults" name="adults" min="0" value="1" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="children">Number of Children</label>
-                        <input type="number" id="children" name="children" min="0" value="0">
+                <div class="form-group form-group-guests">
+                    <label>Number of Guests *</label>
+                    <div class="guests-box">
+                        <div class="guests-half">
+                            <span class="guests-label">Adults</span>
+                            <input type="number" id="adults" name="adults" min="0" value="1" required>
+                        </div>
+                        <div class="guests-half">
+                            <span class="guests-label">Children</span>
+                            <input type="number" id="children" name="children" min="0" value="0">
+                        </div>
                     </div>
                 </div>
                 <div class="form-row">
