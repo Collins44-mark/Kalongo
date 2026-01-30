@@ -136,9 +136,8 @@ const API = {
 // Render functions
 const Render = {
     heroSlides: (slides) => {
-        console.log('🎨 Rendering hero slides...', slides?.length || 0);
+        console.log('🎨 Rendering hero slides (modern swipe)...', slides?.length || 0);
         const slider = document.querySelector('.hero-slider');
-        const indicators = document.querySelector('.hero-slider-indicators');
         if (!slider || !slides || slides.length === 0) {
             console.warn('❌ Hero slides: No slider element or no slides data');
             return;
@@ -146,100 +145,22 @@ const Render = {
         
         // Clear existing content
         slider.innerHTML = '';
-        if (indicators) indicators.innerHTML = '';
         
-        // Preload ALL images immediately in parallel for instant display
-        console.log('📥 Preloading all hero images...');
-        const imagePromises = slides.map((slide, idx) => {
-            if (slide.image_url) {
-                return preloadImage(slide.image_url).then(() => {
-                    console.log(`✅ Preloaded hero image ${idx + 1}/${slides.length}`);
-                    return true;
-                }).catch(() => {
-                    console.warn(`⚠️ Failed to preload hero image ${idx + 1}:`, slide.image_url);
-                    return false;
-                });
-            }
-            return Promise.resolve(false);
-        });
-        
-        // Render slides immediately (don't wait for preload)
+        // Render slides as flex items for swipe
         slides.forEach((slide, idx) => {
             const slideDiv = document.createElement('div');
-            slideDiv.className = `hero-slide ${idx === 0 ? 'active' : ''}`;
+            slideDiv.className = 'hero-slide';
             slideDiv.setAttribute('data-slide-index', idx);
             
             if (slide.image_url) {
-                // Optimize Cloudinary URL
                 const optimizedUrl = optimizeCloudinaryUrl(slide.image_url, 1920, 1080, 'auto', 'auto');
-                
-                // Add loading placeholder
-                const placeholder = document.createElement('div');
-                placeholder.className = 'hero-slide-placeholder';
-                placeholder.style.cssText = `
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    z-index: 1;
-                `;
-                placeholder.innerHTML = `
-                    <div class="spinner" style="border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid white; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite;"></div>
-                `;
-                slideDiv.appendChild(placeholder);
-                
-                // Use img element for better loading control
-                const img = document.createElement('img');
-                img.src = optimizedUrl;
-                img.alt = slide.title || `Hero slide ${idx + 1}`;
-                img.style.cssText = 'width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;opacity:0;transition:opacity 0.5s;';
-                img.loading = idx === 0 ? 'eager' : 'lazy';
-                img.onload = () => {
-                    img.style.opacity = '1';
-                    placeholder.style.display = 'none';
-                    console.log(`✅ Hero image ${idx + 1} loaded`);
-                };
-                img.onerror = () => {
-                    placeholder.style.display = 'none';
-                    console.error(`❌ Failed to load hero image ${idx + 1}:`, optimizedUrl);
-                };
-                slideDiv.appendChild(img);
-                
-                // Also set as background for CSS compatibility
                 slideDiv.style.backgroundImage = `url('${optimizedUrl}')`;
                 slideDiv.style.backgroundSize = 'cover';
                 slideDiv.style.backgroundPosition = 'center';
                 slideDiv.style.backgroundRepeat = 'no-repeat';
             }
             
-            slideDiv.style.cssText += `
-                width: 100%;
-                height: 100%;
-                min-height: 500px;
-                position: absolute;
-                top: 0;
-                left: 0;
-                opacity: ${idx === 0 ? '1' : '0'};
-                transition: opacity 0.8s ease-in-out;
-                z-index: ${idx === 0 ? '2' : '1'};
-                display: block;
-            `;
-            
             slider.appendChild(slideDiv);
-            
-            if (indicators) {
-                const indicator = document.createElement('span');
-                indicator.className = `hero-indicator ${idx === 0 ? 'active' : ''}`;
-                indicator.setAttribute('data-slide', idx);
-                indicator.style.cursor = 'pointer';
-                indicator.setAttribute('aria-label', `Go to slide ${idx + 1}`);
-                indicators.appendChild(indicator);
-            }
         });
         
         console.log(`✅ Created ${slides.length} hero slide elements`);
@@ -279,25 +200,19 @@ const Render = {
         }, 100);
     },
     
-    /** Build HTML for one room card (slideshow, features) - shared by rooms and roomCategories */
+    /** Build HTML for one room card (modern swipe slideshow, no arrows/dots) */
     roomCardHtml: (room) => {
         const validImages = (room.images || []).filter(img => img.image_url && img.image_url.trim());
         const imagesHtml = validImages.length > 0 ? validImages.map((img, idx) => {
             const optimizedUrl = optimizeCloudinaryUrl(img.image_url, 800, 600, 'auto', 'auto');
-            return `<div class="room-slide ${idx === 0 ? 'active' : ''}" data-slide-index="${idx}">
+            return `<div class="room-slide" data-slide-index="${idx}">
                 <img src="${optimizedUrl}" alt="${(img.caption || room.name).replace(/"/g, '&quot;')}" class="room-slide-image" loading="${idx === 0 ? 'eager' : 'lazy'}">
             </div>`;
-        }).join('') : `<div class="room-slide active" style="background:#f0f0f0;display:flex;align-items:center;justify-content:center;"><p style="color:#999;text-align:center;">No image available</p></div>`;
-        const indicatorsHtml = validImages.length > 1 ? validImages.map((_, idx) =>
-            `<span class="room-indicator ${idx === 0 ? 'active' : ''}" data-slide="${idx}"></span>`
-        ).join('') : '';
+        }).join('') : `<div class="room-slide" style="background:#f0f0f0;display:flex;align-items:center;justify-content:center;"><p style="color:#999;text-align:center;">No image available</p></div>`;
         const featuresHtml = (room.features || []).map(f => `<li>✓ ${f}</li>`).join('');
         return `<div class="room-card">
-            <div class="room-slider-container">
+            <div class="room-slider-container" data-room="${room.slug}">
                 <div class="room-slider" data-room="${room.slug}">${imagesHtml}</div>
-                <button class="room-slider-btn room-prev-btn" data-room="${room.slug}">‹</button>
-                <button class="room-slider-btn room-next-btn" data-room="${room.slug}">›</button>
-                <div class="room-slider-indicators" data-room="${room.slug}">${indicatorsHtml}</div>
             </div>
             <div class="room-content">
                 <h3 class="room-name">${room.name}</h3>
@@ -560,13 +475,11 @@ const Render = {
     },
     
     reviews: (reviews) => {
-        console.log('🎨 Rendering reviews...', reviews?.length || 0);
+        console.log('🎨 Rendering reviews (modern swipe)...', reviews?.length || 0);
         const slider = document.querySelector('#reviewsSlider, .reviews-slider');
-        const indicators = document.querySelector('#sliderIndicators, .slider-indicators');
         console.log('🔍 Reviews slider found:', !!slider);
-        console.log('🔍 Reviews indicators found:', !!indicators);
         if (!slider) {
-            console.error('❌ Reviews: No slider element found (#reviewsSlider or .reviews-slider)');
+            console.error('❌ Reviews: No slider element found');
             return;
         }
         if (!reviews || reviews.length === 0) {
@@ -574,47 +487,24 @@ const Render = {
             return;
         }
         
-        // Preload all review images immediately
-        console.log('📥 Preloading all review images...');
-        const imagePromises = reviews.map((review, idx) => {
-            if (review.image_url) {
-                return preloadImage(review.image_url).then(() => {
-                    console.log(`✅ Preloaded review image ${idx + 1}/${reviews.length}`);
-                    return true;
-                }).catch(() => {
-                    console.warn(`⚠️ Failed to preload review image ${idx + 1}:`, review.image_url);
-                    return false;
-                });
-            }
-            return Promise.resolve(false);
-        });
-        
-        // Render reviews immediately with proper structure
+        // Render reviews as flex items for swipe (no dots/arrows)
         slider.innerHTML = reviews.map((review, idx) => {
-            // Optimize image URL
             const optimizedImageUrl = review.image_url ? optimizeCloudinaryUrl(review.image_url, 400, 400, 'auto', 'auto') : null;
-            
-            // Extract review data with fallbacks
             const rating = review.rating || 5;
             const stars = '★'.repeat(Math.min(rating, 5)) + '☆'.repeat(Math.max(0, 5 - rating));
             const quote = review.quote || 'Great experience at Kalongo Farm!';
             const customerName = review.customer_name || 'Happy Guest';
             
             return `
-            <div class="review-slide ${idx === 0 ? 'active' : ''}" data-review-index="${idx}">
+            <div class="review-slide" data-review-index="${idx}">
                 <div class="review-content">
                     ${optimizedImageUrl ? `
                         <div class="review-image-container">
-                            <div class="image-placeholder" style="display: flex; align-items: center; justify-content: center; background: #f0f0f0; border-radius: 15px; width: 100%; height: 100%; min-height: 300px;">
-                                <div class="spinner" style="border: 3px solid #f3f3f3; border-top: 3px solid #4CAF50; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;"></div>
-                            </div>
                             <img src="${optimizedImageUrl}" 
                                  alt="${customerName}'s Review" 
                                  class="review-image" 
                                  loading="${idx === 0 ? 'eager' : 'lazy'}"
-                                 style="display: block; width: 100%; height: 100%; object-fit: cover;"
-                                 onload="console.log('✅ Review image ${idx + 1} loaded from Cloudinary:', '${optimizedImageUrl}'); if(this.previousElementSibling) this.previousElementSibling.style.display='none';"
-                                 onerror="console.error('❌ Failed to load review image ${idx + 1} from Cloudinary:', '${optimizedImageUrl}'); if(this.previousElementSibling) this.previousElementSibling.style.display='none'; this.style.display='none';">
+                                 style="display: block; width: 100%; height: 100%; object-fit: cover;">
                         </div>
                     ` : ''}
                     <div class="review-text">
@@ -627,31 +517,13 @@ const Render = {
             `;
         }).join('');
         
-        if (indicators) {
-            indicators.innerHTML = reviews.map((_, idx) =>
-                `<span class="indicator ${idx === 0 ? 'active' : ''}" data-slide="${idx}" aria-label="Go to review ${idx + 1}"></span>`
-            ).join('');
-        }
-        
         console.log(`✅ Created ${reviews.length} review slide elements`);
         
-        // Wait for images to preload, then dispatch event
-        Promise.allSettled(imagePromises).then(() => {
-            console.log('✅ All review images preloaded, initializing slider...');
-            // Dispatch event after images are ready
-            setTimeout(() => {
-                const event = new CustomEvent('reviewsRendered', { detail: { reviews } });
-                window.dispatchEvent(event);
-                console.log('📢 Dispatched reviewsRendered event');
-            }, 50);
-        });
-        
-        // Also dispatch immediately for faster initialization
+        // Dispatch event to initialize swipe slider
         setTimeout(() => {
-            if (!window.reviewSliderInitialized) {
-                const event = new CustomEvent('reviewsRendered', { detail: { reviews } });
-                window.dispatchEvent(event);
-            }
+            const event = new CustomEvent('reviewsRendered', { detail: { reviews } });
+            window.dispatchEvent(event);
+            console.log('📢 Dispatched reviewsRendered event');
         }, 100);
     },
     

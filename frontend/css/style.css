@@ -973,35 +973,41 @@ section * {
     font-size: 1rem;
 }
 
-/* ===== Room Slider Styles ===== */
+/* ===== Room Slider Styles (Modern Swipe) ===== */
 .room-slider-container {
     position: relative;
     height: 350px;
     width: 100%;
     overflow: hidden;
     background-color: var(--bg-light);
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    cursor: grab;
+    touch-action: pan-y pinch-zoom;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.room-slider-container:active {
+    cursor: grabbing;
 }
 
 .room-slider {
-    position: relative;
+    display: flex;
     width: 100%;
     height: 100%;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+}
+
+.room-slider.dragging {
+    transition: none;
 }
 
 .room-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
+    flex: 0 0 100%;
     width: 100%;
     height: 100%;
-    opacity: 0;
-    transition: opacity 0.6s ease-in-out;
-    z-index: 1;
-}
-
-.room-slide.active {
-    opacity: 1;
-    z-index: 2;
+    position: relative;
 }
 
 .room-slide-image {
@@ -1009,65 +1015,13 @@ section * {
     height: 100%;
     object-fit: cover;
     display: block;
+    pointer-events: none;
 }
 
-.room-slider-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.8rem;
-    color: var(--primary-color);
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-.room-slider-btn:hover {
-    background: var(--white);
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-}
-
-.room-prev-btn {
-    left: 15px;
-}
-
-.room-next-btn {
-    right: 15px;
-}
-
+/* Hide room slider buttons and indicators */
+.room-slider-btn,
 .room-slider-indicators {
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-    z-index: 10;
-}
-
-.room-indicator {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.room-indicator.active {
-    background: var(--white);
-    width: 25px;
-    border-radius: 5px;
+    display: none !important;
 }
 
 .room-capacity {
@@ -1081,20 +1035,6 @@ section * {
     .room-slider-container {
         height: 280px;
     }
-    
-    .room-slider-btn {
-        width: 35px;
-        height: 35px;
-        font-size: 1.5rem;
-    }
-    
-    .room-prev-btn {
-        left: 10px;
-    }
-    
-    .room-next-btn {
-        right: 10px;
-    }
 }
 
 @media (max-width: 480px) {
@@ -1103,7 +1043,7 @@ section * {
     }
 }
 
-/* ===== Hero Slider Styles ===== */
+/* ===== Hero Slider Styles (Modern Swipe) ===== */
 .hero-slider {
     position: absolute;
     top: 0;
@@ -1111,54 +1051,37 @@ section * {
     width: 100%;
     height: 100%;
     z-index: 0;
+    display: flex;
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+    cursor: grab;
+    touch-action: pan-y pinch-zoom;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.hero-slider:active {
+    cursor: grabbing;
+}
+
+.hero-slider.dragging {
+    transition: none;
 }
 
 .hero-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
+    flex: 0 0 100%;
     width: 100%;
     height: 100%;
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-    will-change: opacity; /* Optimize for animations */
+    will-change: transform;
 }
 
-.hero-slide.active {
-    opacity: 1;
-    z-index: 2;
-}
-
-.hero-slide:not(.active) {
-    z-index: 1;
-}
-
-.hero-slider-indicators {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 12px;
-    z-index: 5;
-}
-
+/* Hide hero slider indicators */
+.hero-slider-indicators,
 .hero-indicator {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.hero-indicator.active {
-    background: var(--white);
-    width: 30px;
-    border-radius: 6px;
+    display: none !important;
 }
 
 /* ===== Package Image Styles ===== */
@@ -3802,52 +3725,39 @@ section * {
     pointer-events: none;
 }
 
+/* Reviews slider: modern swipe-based, no dots/arrows */
 .reviews-slider-container {
     position: relative;
     max-width: 900px;
     margin: 3rem auto 0;
-    padding: 0 60px;
+    padding: 0 20px;
+    overflow: hidden;
+    cursor: grab;
+    touch-action: pan-y pinch-zoom;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.reviews-slider-container:active {
+    cursor: grabbing;
 }
 
 .reviews-slider {
-    position: relative;
-    overflow: hidden;
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
     border-radius: 20px;
-    min-height: 450px; /* Fixed height to prevent layout shift */
-    width: 100%;
+}
+
+.reviews-slider.dragging {
+    transition: none;
 }
 
 .review-slide {
-    position: absolute;
+    flex: 0 0 100%;
     width: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateX(100%);
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
-    will-change: transform, opacity;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.review-slide.active {
-    position: relative;
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(0);
-    pointer-events: auto;
-    z-index: 2;
-}
-
-.review-slide.prev {
-    transform: translateX(-100%);
-    opacity: 0;
-}
-
-.review-slide.next {
-    transform: translateX(100%);
-    opacity: 0;
+    box-sizing: border-box;
+    padding: 0 10px;
 }
 
 .review-content {
@@ -3940,73 +3850,11 @@ section * {
     color: var(--text-light);
 }
 
-/* Slider Controls */
-.slider-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--primary-color);
-    color: var(--white);
-    border: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 2rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    z-index: 10;
-    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
-}
-
-.slider-btn:hover {
-    background: var(--primary-dark);
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
-}
-
-.prev-btn {
-    left: 0;
-}
-
-.next-btn {
-    right: 0;
-}
-
-.slider-btn span {
-    line-height: 1;
-    font-weight: 300;
-}
-
-/* Slider Indicators */
-.slider-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 30px;
-}
-
+/* Hide slider buttons and indicators (modern swipe style) */
+.slider-btn,
+.slider-indicators,
 .indicator {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #ccc;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.indicator:hover {
-    background: var(--primary-color);
-    transform: scale(1.2);
-}
-
-.indicator.active {
-    background: var(--primary-color);
-    width: 30px;
-    border-radius: 6px;
+    display: none !important;
 }
 
 /* ===== Footer ===== */
@@ -4283,19 +4131,14 @@ section * {
     }
 
     .reviews-slider-container {
-        padding: 0 50px;
+        padding: 0 15px;
     }
 
     .review-content {
         grid-template-columns: 1fr;
         gap: 30px;
         text-align: center;
-        min-height: 450px; /* Fixed height to prevent layout shift */
         align-items: flex-start;
-    }
-    
-    .reviews-slider {
-        min-height: 450px; /* Fixed height to prevent layout shift */
     }
     
     .review-quote {
@@ -4319,12 +4162,6 @@ section * {
 
     .review-image {
         min-height: 250px;
-    }
-
-    .slider-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1.5rem;
     }
     
     .about-description,
@@ -4521,19 +4358,14 @@ section * {
     }
 
     .reviews-slider-container {
-        padding: 0 30px;
+        padding: 0 10px;
     }
 
     .review-content {
         padding: 25px 20px;
         grid-template-columns: 1fr !important;
-        min-height: 500px; /* Fixed height to prevent layout shift */
         height: auto;
         align-items: flex-start;
-    }
-    
-    .reviews-slider {
-        min-height: 500px; /* Fixed height to prevent layout shift */
     }
 
     .review-quote {
@@ -4567,8 +4399,8 @@ section * {
     }
     
     .review-image {
-        min-height: 250px;
-        max-height: 300px;
+        min-height: 200px;
+        max-height: 250px;
         width: 100%;
         object-fit: cover;
     }
@@ -4585,12 +4417,6 @@ section * {
 
     .review-date {
         font-size: 0.85rem;
-    }
-
-    .slider-btn {
-        width: 35px;
-        height: 35px;
-        font-size: 1.3rem;
     }
     
     .logo {

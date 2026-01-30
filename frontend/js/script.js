@@ -117,122 +117,153 @@ window.addEventListener('resize', () => {
     }
 });
 
-// Hero Slider Functionality
-let currentHeroSlide = 0;
-let heroSlides = [];
-let heroIndicators = [];
-let totalHeroSlides = 0;
-let heroSlideInterval;
+// ===== Modern Swipe Slider System =====
+// Reusable swipe/drag slider with auto-advance
 
-// Function to initialize hero slider (called after slides are loaded)
-function initHeroSlider() {
-    heroSlides = document.querySelectorAll('.hero-slide');
-    heroIndicators = document.querySelectorAll('.hero-indicator');
-    totalHeroSlides = heroSlides.length;
+function createSwipeSlider(sliderContainer, options = {}) {
+    const {
+        slideSelector = '.slide',
+        autoAdvanceMs = 5000,
+        transitionMs = 500,
+        onSlideChange = null,
+    } = options;
     
-    console.log('🔍 Hero slider initialization:', {
-        slides: heroSlides.length,
-        indicators: heroIndicators.length,
-        totalHeroSlides
-    });
+    if (!sliderContainer) return null;
     
-    if (totalHeroSlides > 0) {
-        // Ensure first slide is active
-        showHeroSlide(0);
-        console.log('✅ Hero slider initialized with', totalHeroSlides, 'slides');
-        
-        // Set up indicator click handlers
-        heroIndicators.forEach((indicator, index) => {
-            // Remove existing listeners to avoid duplicates
-            const newIndicator = indicator.cloneNode(true);
-            indicator.parentNode.replaceChild(newIndicator, indicator);
-            
-            newIndicator.addEventListener('click', () => {
-                if (heroSlideInterval) {
-                    clearInterval(heroSlideInterval);
-                }
-                showHeroSlide(index);
-                startHeroSlider();
-            });
-        });
-        
-        // Update heroIndicators array
-        heroIndicators = document.querySelectorAll('.hero-indicator');
-        
-        startHeroSlider();
-    } else {
-        console.warn('⚠️ No hero slides found for slider');
+    const slider = sliderContainer.querySelector('[class*="slider"]:not([class*="container"])') || sliderContainer;
+    const slides = slider.querySelectorAll(slideSelector);
+    if (slides.length === 0) return null;
+    
+    let currentIndex = 0;
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
+    let autoAdvanceInterval = null;
+    
+    function updateSlider(animate = true) {
+        if (!animate) slider.classList.add('dragging');
+        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        if (!animate) {
+            requestAnimationFrame(() => slider.classList.remove('dragging'));
+        }
+        if (onSlideChange) onSlideChange(currentIndex);
     }
+    
+    function goTo(index) {
+        currentIndex = Math.max(0, Math.min(index, slides.length - 1));
+        updateSlider();
+    }
+    
+    function next() {
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateSlider();
+    }
+    
+    function prev() {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        updateSlider();
+    }
+    
+    function startAutoAdvance() {
+        stopAutoAdvance();
+        if (slides.length > 1) {
+            autoAdvanceInterval = setInterval(next, autoAdvanceMs);
+        }
+    }
+    
+    function stopAutoAdvance() {
+        if (autoAdvanceInterval) {
+            clearInterval(autoAdvanceInterval);
+            autoAdvanceInterval = null;
+        }
+    }
+    
+    // Touch/mouse drag handlers
+    function handleDragStart(e) {
+        isDragging = true;
+        startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+        currentX = startX;
+        slider.classList.add('dragging');
+        stopAutoAdvance();
+    }
+    
+    function handleDragMove(e) {
+        if (!isDragging) return;
+        currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+        const diff = currentX - startX;
+        const percent = (diff / sliderContainer.offsetWidth) * 100;
+        slider.style.transform = `translateX(calc(-${currentIndex * 100}% + ${percent}%))`;
+    }
+    
+    function handleDragEnd() {
+        if (!isDragging) return;
+        isDragging = false;
+        slider.classList.remove('dragging');
+        const diff = currentX - startX;
+        const threshold = sliderContainer.offsetWidth * 0.15; // 15% swipe triggers change
+        if (diff < -threshold) {
+            next(); // Swipe left = next slide (loops)
+        } else if (diff > threshold) {
+            prev(); // Swipe right = prev slide (loops)
+        } else {
+            updateSlider(); // Snap back
+        }
+        startAutoAdvance();
+    }
+    
+    // Bind events
+    sliderContainer.addEventListener('mousedown', handleDragStart);
+    sliderContainer.addEventListener('mousemove', handleDragMove);
+    sliderContainer.addEventListener('mouseup', handleDragEnd);
+    sliderContainer.addEventListener('mouseleave', handleDragEnd);
+    sliderContainer.addEventListener('touchstart', handleDragStart, { passive: true });
+    sliderContainer.addEventListener('touchmove', handleDragMove, { passive: true });
+    sliderContainer.addEventListener('touchend', handleDragEnd);
+    
+    // Initialize
+    updateSlider(false);
+    startAutoAdvance();
+    
+    return { goTo, next, prev, startAutoAdvance, stopAutoAdvance, getCurrentIndex: () => currentIndex };
 }
 
-function showHeroSlide(index) {
-    // Refresh slides and indicators in case DOM changed
-    heroSlides = document.querySelectorAll('.hero-slide');
-    heroIndicators = document.querySelectorAll('.hero-indicator');
-    totalHeroSlides = heroSlides.length;
+// Hero Slider - Modern Swipe
+let heroSwipeSlider = null;
+
+function initHeroSlider() {
+    const heroSection = document.querySelector('.hero');
+    const heroSlider = document.querySelector('.hero-slider');
+    if (!heroSection || !heroSlider) return;
     
-    if (!heroSlides || heroSlides.length === 0) {
-        console.warn('No hero slides available');
+    const slides = heroSlider.querySelectorAll('.hero-slide');
+    console.log('🔍 Hero slider initialization:', { slides: slides.length });
+    
+    if (slides.length === 0) {
+        console.warn('⚠️ No hero slides found');
         return;
     }
     
-    // Ensure index is valid
-    if (index < 0) index = totalHeroSlides - 1;
-    if (index >= totalHeroSlides) index = 0;
-    
-    console.log(`🎬 Showing hero slide ${index + 1} of ${totalHeroSlides}`);
-    
-    // Remove active class from all slides and set opacity
-    heroSlides.forEach((slide, idx) => {
-        slide.classList.remove('active');
-        if (idx === index) {
-            slide.style.opacity = '1';
-            slide.style.zIndex = '2';
-            slide.classList.add('active');
-        } else {
-            slide.style.opacity = '0';
-            slide.style.zIndex = '1';
+    // Use swipe slider for hero
+    heroSwipeSlider = createSwipeSlider(heroSection, {
+        slideSelector: '.hero-slide',
+        autoAdvanceMs: 6000,
+        onSlideChange: (idx) => {
+            const slideData = window.heroSlidesData?.[idx];
+            if (slideData) {
+                const titleEl = document.querySelector('.hero-title');
+                const subtitleEl = document.querySelector('.hero-subtitle');
+                if (slideData.title && titleEl) titleEl.textContent = slideData.title;
+                if (slideData.subtitle && subtitleEl) subtitleEl.textContent = slideData.subtitle;
+            }
         }
     });
-    
-    // Remove active class from all indicators
-    heroIndicators.forEach(indicator => indicator.classList.remove('active'));
-    
-    // Add active class to current indicator
-    if (heroIndicators[index]) {
-        heroIndicators[index].classList.add('active');
-    }
-    
-    currentHeroSlide = index;
-    
-    // Update hero content if available
-    const slideData = window.heroSlidesData?.[index];
-    if (slideData) {
-        const titleEl = document.querySelector('.hero-title');
-        const subtitleEl = document.querySelector('.hero-subtitle');
-        if (slideData.title && titleEl) titleEl.textContent = slideData.title;
-        if (slideData.subtitle && subtitleEl) subtitleEl.textContent = slideData.subtitle;
-    }
+    console.log('✅ Hero swipe slider initialized with', slides.length, 'slides');
 }
 
-function nextHeroSlide() {
-    const next = (currentHeroSlide + 1) % totalHeroSlides;
-    showHeroSlide(next);
-}
-
-function startHeroSlider() {
-    if (totalHeroSlides > 0) {
-        // Clear any existing interval
-        if (heroSlideInterval) {
-            clearInterval(heroSlideInterval);
-        }
-        // Start auto-advance every 5 seconds
-        heroSlideInterval = setInterval(() => {
-            nextHeroSlide();
-        }, 5000);
-        console.log(`✅ Hero slider started (${totalHeroSlides} slides, 5s interval)`);
-    }
-}
+// Legacy hero functions (kept for compatibility)
+function showHeroSlide(index) { if (heroSwipeSlider) heroSwipeSlider.goTo(index); }
+function nextHeroSlide() { if (heroSwipeSlider) heroSwipeSlider.next(); }
+function startHeroSlider() { if (heroSwipeSlider) heroSwipeSlider.startAutoAdvance(); }
 
 // Listen for hero slides being rendered by api.js
 let heroSliderInitialized = false;
@@ -275,404 +306,95 @@ window.addEventListener('reviewsRendered', () => {
         initReviewSlider();
         reviewSliderInitialized = true;
         window.reviewSliderInitialized = true;
-        
-        // Set up navigation buttons
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                if (reviewSlideInterval) {
-                    clearInterval(reviewSlideInterval);
-                }
-                prevReviewSlide();
-                startReviewSlider();
-            });
-        }
-        
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                if (reviewSlideInterval) {
-                    clearInterval(reviewSlideInterval);
-                }
-                nextReviewSlide();
-                startReviewSlider();
-            });
-        }
-        
-        // Set up indicator click handlers
-        reviewIndicators = document.querySelectorAll('.indicator, .slider-indicators .indicator, #sliderIndicators .indicator');
-        reviewIndicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', () => {
-                if (reviewSlideInterval) {
-                    clearInterval(reviewSlideInterval);
-                }
-                showReviewSlide(index);
-                startReviewSlider();
-            });
-        });
     }, 100);
 });
 
-// Room Sliders Functionality - Each room has independent slider
-let currentRoomSlides = {};
-let roomSlideIntervals = {};
+// Room Sliders - Modern Swipe
+let roomSwipeSliders = {};
 
 function initializeRoomSlider(roomName) {
-    const slider = document.querySelector(`.room-slider[data-room="${roomName}"]`);
-    if (!slider) {
-        console.warn(`⚠️ Room slider not found for: ${roomName}`);
+    const sliderContainer = document.querySelector(`.room-slider-container[data-room="${roomName}"]`) 
+        || document.querySelector(`.room-slider[data-room="${roomName}"]`)?.parentElement;
+    
+    if (!sliderContainer) {
+        console.warn(`⚠️ Room slider container not found for: ${roomName}`);
         return;
     }
     
-    const slides = slider.querySelectorAll('.room-slide');
-    const indicators = document.querySelectorAll(`.room-slider-indicators[data-room="${roomName}"] .room-indicator`);
-    const prevBtn = document.querySelector(`.room-prev-btn[data-room="${roomName}"]`);
-    const nextBtn = document.querySelector(`.room-next-btn[data-room="${roomName}"]`);
+    const slider = sliderContainer.querySelector('.room-slider');
+    if (!slider) return;
     
+    const slides = slider.querySelectorAll('.room-slide');
     if (slides.length === 0) {
         console.warn(`⚠️ No slides found for room: ${roomName}`);
         return;
     }
     
-    console.log(`✅ Initializing room slider for ${roomName} with ${slides.length} slides`);
+    // Add data-room to container for styling
+    sliderContainer.setAttribute('data-room', roomName);
     
-    currentRoomSlides[roomName] = 0;
+    console.log(`✅ Initializing room swipe slider for ${roomName} with ${slides.length} slides`);
     
-    // Function to show specific slide for this room only
-    function showRoomSlide(room, index) {
-        const roomSlider = document.querySelector(`.room-slider[data-room="${room}"]`);
-        if (!roomSlider) return;
-        
-        const roomSlides = roomSlider.querySelectorAll('.room-slide');
-        const roomIndicators = document.querySelectorAll(`.room-slider-indicators[data-room="${room}"] .room-indicator`);
-        
-        if (roomSlides.length === 0) return;
-        
-        // Ensure index is valid
-        if (index < 0) index = roomSlides.length - 1;
-        if (index >= roomSlides.length) index = 0;
-        
-        // Remove active from all slides and indicators for this room
-        roomSlides.forEach(slide => slide.classList.remove('active'));
-        roomIndicators.forEach(indicator => indicator.classList.remove('active'));
-        
-        // Activate the selected slide and indicator
-        if (roomSlides[index]) {
-            roomSlides[index].classList.add('active');
-        }
-        if (roomIndicators[index]) {
-            roomIndicators[index].classList.add('active');
-        }
-        
-        currentRoomSlides[room] = index;
-        console.log(`🎬 Room ${room}: Showing slide ${index + 1} of ${roomSlides.length}`);
-    }
-    
-    // Function to go to next slide for this room only
-    function nextRoomSlide(room) {
-        const roomSlider = document.querySelector(`.room-slider[data-room="${room}"]`);
-        if (!roomSlider) return;
-        const slides = roomSlider.querySelectorAll('.room-slide');
-        if (slides.length === 0) return;
-        const current = currentRoomSlides[room] || 0;
-        const next = (current + 1) % slides.length;
-        showRoomSlide(room, next);
-    }
-    
-    // Function to go to previous slide for this room only
-    function prevRoomSlide(room) {
-        const roomSlider = document.querySelector(`.room-slider[data-room="${room}"]`);
-        if (!roomSlider) return;
-        const slides = roomSlider.querySelectorAll('.room-slide');
-        if (slides.length === 0) return;
-        const current = currentRoomSlides[room] || 0;
-        const prev = (current - 1 + slides.length) % slides.length;
-        showRoomSlide(room, prev);
-    }
-    
-    // Start auto-advance for this specific room
-    function startRoomSlider(room) {
-        // Clear any existing interval for this room
-        if (roomSlideIntervals[room]) {
-            clearInterval(roomSlideIntervals[room]);
-        }
-        
-        // Only auto-advance if there's more than one slide
-        const roomSlider = document.querySelector(`.room-slider[data-room="${room}"]`);
-        if (roomSlider) {
-            const slides = roomSlider.querySelectorAll('.room-slide');
-            if (slides.length > 1) {
-                roomSlideIntervals[room] = setInterval(() => {
-                    nextRoomSlide(room);
-                }, 4000);
-                console.log(`✅ Auto-advance started for room: ${room}`);
-            }
-        }
-    }
-    
-    // Button handlers - only for this specific room
-    if (prevBtn) {
-        // Remove existing listeners
-        const newPrevBtn = prevBtn.cloneNode(true);
-        prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn);
-        
-        newPrevBtn.addEventListener('click', () => {
-            prevRoomSlide(roomName);
-            // Restart auto-advance
-            if (roomSlideIntervals[roomName]) {
-                clearInterval(roomSlideIntervals[roomName]);
-            }
-            startRoomSlider(roomName);
-        });
-    }
-    
-    if (nextBtn) {
-        // Remove existing listeners
-        const newNextBtn = nextBtn.cloneNode(true);
-        nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
-        
-        newNextBtn.addEventListener('click', () => {
-            nextRoomSlide(roomName);
-            // Restart auto-advance
-            if (roomSlideIntervals[roomName]) {
-                clearInterval(roomSlideIntervals[roomName]);
-            }
-            startRoomSlider(roomName);
-        });
-    }
-    
-    // Indicator handlers - only for this specific room
-    indicators.forEach((indicator, index) => {
-        // Remove existing listeners
-        const newIndicator = indicator.cloneNode(true);
-        indicator.parentNode.replaceChild(newIndicator, indicator);
-        
-        newIndicator.addEventListener('click', () => {
-            showRoomSlide(roomName, index);
-            // Restart auto-advance
-            if (roomSlideIntervals[roomName]) {
-                clearInterval(roomSlideIntervals[roomName]);
-            }
-            startRoomSlider(roomName);
-        });
+    roomSwipeSliders[roomName] = createSwipeSlider(sliderContainer, {
+        slideSelector: '.room-slide',
+        autoAdvanceMs: 4000
     });
-    
-    // Initialize first slide and start auto-advance
-    showRoomSlide(roomName, 0);
-    startRoomSlider(roomName);
 }
 
-// Initialize all room sliders and start synchronized animation
+// Initialize all room sliders on DOMContentLoaded (fallback)
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize hero slider
-    if (totalHeroSlides > 0) {
-        showHeroSlide(0);
-        startHeroSlider();
-        
-        // Hero indicator handlers
-        heroIndicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', () => {
-                clearInterval(heroSlideInterval);
-                showHeroSlide(index);
-                startHeroSlider();
-            });
-        });
-    }
-    
-    // Initialize room sliders if they exist (fallback - main initialization happens via event)
     setTimeout(() => {
         const allRoomSliders = document.querySelectorAll('.room-slider');
         allRoomSliders.forEach(slider => {
             const roomName = slider.getAttribute('data-room');
-            if (roomName && !currentRoomSlides[roomName]) {
+            if (roomName && !roomSwipeSliders[roomName]) {
                 initializeRoomSlider(roomName);
             }
         });
     }, 1000);
 });
 
-// Reviews Slider Functionality
-let currentReviewSlide = 0;
-let reviewSlides = [];
-let reviewIndicators = [];
-let totalReviewSlides = 0;
-let reviewSlideInterval;
+// Reviews Slider - Modern Swipe
+let reviewSwipeSlider = null;
 
 function initReviewSlider() {
-    reviewSlides = document.querySelectorAll('.review-slide');
-    reviewIndicators = document.querySelectorAll('.indicator, .slider-indicators .indicator, #sliderIndicators .indicator');
-    totalReviewSlides = reviewSlides.length;
-    
-    console.log('🔍 Review slider initialization:', {
-        slides: reviewSlides.length,
-        indicators: reviewIndicators.length,
-        totalReviewSlides
-    });
-    
-    if (totalReviewSlides > 0) {
-        // Ensure first slide is active
-        showReviewSlide(0);
-        console.log('✅ Review slider initialized with', totalReviewSlides, 'slides');
-        startReviewSlider();
-    } else {
-        console.warn('⚠️ No review slides found for slider');
-    }
-}
-
-function showReviewSlide(index) {
-    // Refresh slides and indicators in case DOM changed
-    reviewSlides = document.querySelectorAll('.review-slide');
-    reviewIndicators = document.querySelectorAll('.indicator, .slider-indicators .indicator, #sliderIndicators .indicator');
-    totalReviewSlides = reviewSlides.length;
-    
-    if (!reviewSlides || reviewSlides.length === 0) {
-        console.warn('No review slides available');
+    const sliderContainer = document.querySelector('.reviews-slider-container');
+    if (!sliderContainer) {
+        console.warn('⚠️ Reviews slider container not found');
         return;
     }
     
-    // Ensure index is valid
-    if (index < 0) index = totalReviewSlides - 1;
-    if (index >= totalReviewSlides) index = 0;
+    const slider = sliderContainer.querySelector('.reviews-slider');
+    if (!slider) return;
     
-    console.log(`🎬 Showing review slide ${index + 1} of ${totalReviewSlides}`);
+    const slides = slider.querySelectorAll('.review-slide');
+    console.log('🔍 Review slider initialization:', { slides: slides.length });
     
-    // Get current active slide index
-    const currentActiveIndex = Array.from(reviewSlides).findIndex(slide => slide.classList.contains('active'));
-    
-    // Determine direction for smooth slide animation
-    let direction = 'next';
-    if (currentActiveIndex >= 0) {
-        if (index > currentActiveIndex || (index === 0 && currentActiveIndex === totalReviewSlides - 1)) {
-            direction = 'next';
-        } else {
-            direction = 'prev';
-        }
+    if (slides.length === 0) {
+        console.warn('⚠️ No review slides found');
+        return;
     }
     
-    // Remove all state classes
-    reviewSlides.forEach(slide => {
-        slide.classList.remove('active', 'prev', 'next');
-        // Reset inline styles
-        slide.style.opacity = '';
-        slide.style.transform = '';
-        slide.style.visibility = '';
+    reviewSwipeSlider = createSwipeSlider(sliderContainer, {
+        slideSelector: '.review-slide',
+        autoAdvanceMs: 5000
     });
-    
-    // Set previous slide state
-    if (currentActiveIndex >= 0 && currentActiveIndex !== index) {
-        reviewSlides[currentActiveIndex].classList.add(direction === 'next' ? 'prev' : 'next');
-    }
-    
-    // Activate new slide
-    if (reviewSlides[index]) {
-        reviewSlides[index].classList.add('active');
-    }
-    
-    // Update indicators
-    reviewIndicators.forEach(indicator => indicator.classList.remove('active'));
-    if (reviewIndicators[index]) {
-        reviewIndicators[index].classList.add('active');
-    }
-    
-    currentReviewSlide = index;
+    console.log('✅ Review swipe slider initialized with', slides.length, 'slides');
 }
 
-function nextReviewSlide() {
-    const next = (currentReviewSlide + 1) % totalReviewSlides;
-    showReviewSlide(next);
-}
+// Legacy review functions (kept for compatibility)
+function showReviewSlide(index) { if (reviewSwipeSlider) reviewSwipeSlider.goTo(index); }
+function nextReviewSlide() { if (reviewSwipeSlider) reviewSwipeSlider.next(); }
+function prevReviewSlide() { if (reviewSwipeSlider) reviewSwipeSlider.prev(); }
+function startReviewSlider() { if (reviewSwipeSlider) reviewSwipeSlider.startAutoAdvance(); }
 
-function prevReviewSlide() {
-    const prev = (currentReviewSlide - 1 + totalReviewSlides) % totalReviewSlides;
-    showReviewSlide(prev);
-}
-
-function startReviewSlider() {
-    // Refresh slides count
-    reviewSlides = document.querySelectorAll('.review-slide');
-    totalReviewSlides = reviewSlides.length;
-    
-    if (totalReviewSlides > 0) {
-        if (reviewSlideInterval) {
-            clearInterval(reviewSlideInterval);
-        }
-        // Only auto-advance if there's more than one review
-        if (totalReviewSlides > 1) {
-            reviewSlideInterval = setInterval(() => {
-                nextReviewSlide();
-            }, 5000);
-            console.log(`✅ Review slider started (${totalReviewSlides} slides, 5s interval)`);
-        } else {
-            console.log(`✅ Review slider: Only 1 review, no auto-advance needed`);
-        }
-    }
-}
-
-function nextSlide() {
-    const next = (currentSlide + 1) % totalSlides;
-    showSlide(next);
-}
-
-function prevSlide() {
-    const prev = (currentSlide - 1 + totalSlides) % totalSlides;
-    showSlide(prev);
-}
-
-function startSlider() {
-    // Auto-advance slider every 5 seconds
-    slideInterval = setInterval(nextSlide, 5000);
-}
-
-function stopSlider() {
-    clearInterval(slideInterval);
-}
-
-// Initialize slider when DOM is loaded
+// Initialize on DOM load
 document.addEventListener('DOMContentLoaded', () => {
     // Auto-fill from chatbot if applicable
     if (window.location.pathname.includes('booking.html')) {
         autoFillFromChatbot();
     }
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const sliderContainer = document.querySelector('.reviews-slider-container');
-    
-    if (prevBtn && nextBtn && slides.length > 0) {
-        // Button click handlers
-        prevBtn.addEventListener('click', () => {
-            stopSlider();
-            prevSlide();
-            startSlider();
-        });
-        
-        nextBtn.addEventListener('click', () => {
-            stopSlider();
-            nextSlide();
-            startSlider();
-        });
-        
-        // Indicator click handlers
-        indicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', () => {
-                stopSlider();
-                showSlide(index);
-                startSlider();
-            });
-        });
-        
-        // Pause slider on hover
-        if (sliderContainer) {
-            sliderContainer.addEventListener('mouseenter', stopSlider);
-            sliderContainer.addEventListener('mouseleave', startSlider);
-        }
-        
-        // Start auto-slide
-        startSlider();
-        
-        // Initialize first slide
-        showSlide(0);
-    }
+    // Reviews slider initialization is handled by reviewsRendered event
 });
 
 // Set minimum date for check-in and check-out inputs
