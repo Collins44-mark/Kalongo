@@ -12,6 +12,7 @@ from sqlalchemy.orm import joinedload
 from models import (
     Admin,
     HeroSlide,
+    RoomCategory,
     Room,
     RoomImage,
     Facility,
@@ -343,21 +344,72 @@ def get_gallery_images():
         s.close()
 
 
+def _room_to_dict(room):
+    valid_images = [
+        {"id": img.id, "image_url": img.image_url, "caption": img.caption or "", "order": img.order or 0}
+        for img in room.images
+        if img.image_url and img.image_url.strip()
+    ]
+    return {
+        "id": room.id,
+        "name": room.name,
+        "slug": room.slug,
+        "description": room.description or "",
+        "capacity": room.capacity or "",
+        "features": room.features or [],
+        "images": sorted(valid_images, key=lambda x: (x["order"], x["id"])),
+    }
+
+
+@app.route("/api/room-categories")
+def get_room_categories():
+    """Get room categories with their rooms and images (Rooms, Family Houses, etc.)"""
+    s = get_session()
+    try:
+        categories = s.query(RoomCategory).options(
+            joinedload(RoomCategory.rooms).joinedload(Room.images)
+        ).order_by(RoomCategory.order, RoomCategory.id).all()
+        result = []
+        for cat in categories:
+            rooms = sorted(cat.rooms, key=lambda r: (r.order, r.id))
+            result.append({
+                "id": cat.id,
+                "name": cat.name,
+                "slug": cat.slug,
+                "order": cat.order,
+                "rooms": [_room_to_dict(r) for r in rooms],
+            })
+        return jsonify(result)
+    finally:
+        s.close()
+
+
 @app.route("/api/homepage-data")
 def get_homepage_data():
     """Combined endpoint for homepage data - faster loading"""
     s = get_session()
     try:
-        # Fetch all data in parallel queries
         hero_slides = s.query(HeroSlide).filter_by(active=True).order_by(HeroSlide.order, HeroSlide.id).limit(20).all()
-        rooms = s.query(Room).options(joinedload(Room.images)).order_by(Room.order, Room.id).all()
         facilities = s.query(Facility).order_by(Facility.order, Facility.id).all()
         reviews = s.query(Review).order_by(Review.order, Review.id).all()
         settings = s.query(SiteSettings).all()
-        
-        # Build response
+        categories = s.query(RoomCategory).options(
+            joinedload(RoomCategory.rooms).joinedload(Room.images)
+        ).order_by(RoomCategory.order, RoomCategory.id).all()
         settings_dict = {s.key: s.value for s in settings}
-        
+        room_categories = []
+        for cat in categories:
+            rooms = sorted(cat.rooms, key=lambda r: (r.order, r.id))
+            room_categories.append({
+                "id": cat.id,
+                "name": cat.name,
+                "slug": cat.slug,
+                "order": cat.order,
+                "rooms": [_room_to_dict(r) for r in rooms],
+            })
+        rooms_legacy = []
+        for cat in categories:
+            rooms_legacy.extend([_room_to_dict(r) for r in sorted(cat.rooms, key=lambda r: (r.order, r.id))])
         return jsonify({
             "hero_slides": [{
                 "id": slide.id,
@@ -366,24 +418,8 @@ def get_homepage_data():
                 "subtitle": slide.subtitle,
                 "order": slide.order,
             } for slide in hero_slides],
-            "rooms": [{
-                "id": room.id,
-                "name": room.name,
-                "slug": room.slug,
-                "description": room.description or "",
-                "capacity": room.capacity or "",
-                "features": room.features or [],
-                "images": sorted([
-                    {
-                        "id": img.id,
-                        "image_url": img.image_url,
-                        "caption": img.caption or "",
-                        "order": img.order or 0,
-                    }
-                    for img in room.images
-                    if img.image_url and img.image_url.strip()  # Only include images with valid URLs
-                ], key=lambda x: (x["order"], x["id"])),
-            } for room in rooms],
+            "rooms": rooms_legacy,
+            "room_categories": room_categories,
             "facilities": [{
                 "id": f.id,
                 "name": f.name,

@@ -1,0 +1,28 @@
+{% extends "admin/base.html" %}
+{% block title %}Room Categories{% endblock %}
+{% block content %}
+<h2>Room Categories</h2>
+<p style="color: var(--text-muted); margin-bottom: 1rem;">Manage categories like "Rooms" and "Family Houses". Each category can have multiple rooms with images.</p>
+<p style="margin-bottom: 1rem;"><a href="{{ url_for('admin.rooms_list') }}">← Back to Rooms</a></p>
+<div class="card">
+    <h3 style="margin-bottom: 1rem;">Categories</h3>
+    <p><a href="{{ url_for('admin.room_category_add') }}" class="btn btn-primary">Add Category</a></p>
+    <table>
+        <thead><tr><th>Name</th><th>Slug</th><th>Order</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for c in categories %}
+            <tr>
+                <td>{{ c.name }}</td>
+                <td><code>{{ c.slug }}</code></td>
+                <td>{{ c.order }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('admin.room_category_edit', pk=c.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4" style="color: var(--text-muted);">No categories yet. Add one (e.g. Rooms, Family Houses).</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

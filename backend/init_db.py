@@ -16,6 +16,7 @@ from models import (
     Admin,
     SiteSettings,
     HeroSlide,
+    RoomCategory,
     Room,
     RoomImage,
     Facility,
@@ -60,11 +61,51 @@ def seed_admin():
         session.close()
 
 
-def seed_rooms():
-    """Seed default rooms (A-Cabin, Cottage, Kikota)"""
+def migrate_room_category_column():
+    """Add category_id to rooms table if it doesn't exist"""
+    from sqlalchemy import text
+    with engine.connect() as conn:
+        try:
+            conn.execute(text("ALTER TABLE rooms ADD COLUMN category_id INTEGER"))
+            conn.commit()
+            print("✅ Added category_id to rooms table.")
+        except Exception as e:
+            if "duplicate column" in str(e).lower() or "already exists" in str(e).lower():
+                print("ℹ️  rooms.category_id already exists.")
+            else:
+                print(f"⚠️  Migration category_id: {e}")
+            conn.rollback()
+
+
+def seed_room_categories():
+    """Seed room categories: Rooms, Family Houses"""
     from sqlalchemy.orm import sessionmaker
     Session = sessionmaker(bind=engine)
     session = Session()
+    defaults = [
+        ("Rooms", "rooms", 0),
+        ("Family Houses", "family-houses", 1),
+    ]
+    try:
+        for name, slug, order in defaults:
+            if session.query(RoomCategory).filter_by(slug=slug).first():
+                continue
+            session.add(RoomCategory(name=name, slug=slug, order=order))
+        session.commit()
+        print("✅ Room categories seeded.")
+    except Exception as e:
+        session.rollback()
+        print(f"❌ Error seeding room categories: {e}")
+    finally:
+        session.close()
+
+
+def seed_rooms():
+    """Seed default rooms (A-Cabin, Cottage, Kikota) under 'Rooms' category"""
+    from sqlalchemy.orm import sessionmaker
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    rooms_category = session.query(RoomCategory).filter_by(slug="rooms").first()
     defaults = [
         ("A-Cabin", "a-cabin", "Cozy cabin for 2-3 people.", "2 Adults or Small Family", ["Comfortable beds", "Private bathroom", "Farm view", "Air conditioning", "Sitting area"]),
         ("Cottage", "cottage", "Family cottage for 4-6 people.", "Family (4-6 people)", ["Multiple bedrooms", "Living area", "Kitchenette", "Private veranda"]),
@@ -74,8 +115,15 @@ def seed_rooms():
         for name, slug, desc, cap, features in defaults:
             if session.query(Room).filter_by(slug=slug).first():
                 continue
-            session.add(Room(name=name, slug=slug, description=desc, capacity=cap, features=features))
+            r = Room(name=name, slug=slug, description=desc, capacity=cap, features=features)
+            if rooms_category:
+                r.category_id = rooms_category.id
+            session.add(r)
         session.commit()
+        # Assign existing rooms without category to 'Rooms'
+        if rooms_category:
+            session.query(Room).filter(Room.category_id == None).update({Room.category_id: rooms_category.id})
+            session.commit()
         print("✅ Default rooms seeded.")
     except Exception as e:
         session.rollback()
@@ -118,6 +166,10 @@ if __name__ == "__main__":
     seed_admin()
     print("\nSeeding site settings...")
     seed_site_settings()
+    print("\nSeeding room categories...")
+    seed_room_categories()
+    print("\nMigrating rooms table (category_id)...")
+    migrate_room_category_column()
     print("\nSeeding default rooms...")
     seed_rooms()
     print("\n✅ Database initialization complete.")

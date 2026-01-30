@@ -121,6 +121,7 @@ async function fetchAPI(endpoint, useCache = true) {
 const API = {
     getHeroSlides: () => fetchAPI('/hero-slides'),
     getRooms: () => fetchAPI('/rooms'),
+    getRoomCategories: () => fetchAPI('/room-categories'),
     getFacilities: () => fetchAPI('/facilities'),
     getActivities: () => fetchAPI('/activities'),
     getPricing: () => fetchAPI('/pricing'),
@@ -279,112 +280,85 @@ const Render = {
         }, 100);
     },
     
+    /** Build HTML for one room card (slideshow, features) - shared by rooms and roomCategories */
+    roomCardHtml: (room) => {
+        const validImages = (room.images || []).filter(img => img.image_url && img.image_url.trim());
+        const imagesHtml = validImages.length > 0 ? validImages.map((img, idx) => {
+            const optimizedUrl = optimizeCloudinaryUrl(img.image_url, 800, 600, 'auto', 'auto');
+            return `<div class="room-slide ${idx === 0 ? 'active' : ''}" data-slide-index="${idx}">
+                <img src="${optimizedUrl}" alt="${(img.caption || room.name).replace(/"/g, '&quot;')}" class="room-slide-image" loading="${idx === 0 ? 'eager' : 'lazy'}">
+            </div>`;
+        }).join('') : `<div class="room-slide active" style="background:#f0f0f0;display:flex;align-items:center;justify-content:center;"><p style="color:#999;text-align:center;">No image available</p></div>`;
+        const indicatorsHtml = validImages.length > 1 ? validImages.map((_, idx) =>
+            `<span class="room-indicator ${idx === 0 ? 'active' : ''}" data-slide="${idx}"></span>`
+        ).join('') : '';
+        const featuresHtml = (room.features || []).map(f => `<li>✓ ${f}</li>`).join('');
+        return `<div class="room-card">
+            <div class="room-slider-container">
+                <div class="room-slider" data-room="${room.slug}">${imagesHtml}</div>
+                <button class="room-slider-btn room-prev-btn" data-room="${room.slug}">‹</button>
+                <button class="room-slider-btn room-next-btn" data-room="${room.slug}">›</button>
+                <div class="room-slider-indicators" data-room="${room.slug}">${indicatorsHtml}</div>
+            </div>
+            <div class="room-content">
+                <h3 class="room-name">${room.name}</h3>
+                ${room.capacity ? `<p class="room-capacity">Guest Capacity: ${room.capacity}</p>` : ''}
+                ${room.description ? `<p class="room-description">${room.description}</p>` : ''}
+                ${featuresHtml ? `<ul class="room-features">${featuresHtml}</ul>` : ''}
+            </div>
+        </div>`;
+    },
+
+    /** Render rooms into a specific container (for Rooms and Family Houses sections) */
+    roomsInto: (container, rooms) => {
+        if (!container || !rooms || rooms.length === 0) return;
+        container.innerHTML = rooms.map(room => Render.roomCardHtml(room)).join('');
+    },
+
+    /** Render room categories: each category goes into its section by data-category-slug */
+    roomCategories: (categories) => {
+        if (!categories || categories.length === 0) return;
+        const allRooms = [];
+        categories.forEach(cat => {
+            const section = document.querySelector(`[data-category-slug="${cat.slug}"]`);
+            const grid = section ? section.querySelector('.rooms-grid') : null;
+            if (section && grid) {
+                if (cat.rooms && cat.rooms.length > 0) {
+                    Render.roomsInto(grid, cat.rooms);
+                    allRooms.push(...cat.rooms);
+                    section.style.display = '';
+                } else {
+                    grid.innerHTML = '';
+                    section.style.display = 'none';
+                }
+            }
+        });
+        setTimeout(() => {
+            window.dispatchEvent(new CustomEvent('roomsRendered', { detail: { rooms: allRooms } }));
+            if (typeof initializeRoomSlider === 'function') {
+                allRooms.forEach(room => { if (room.slug) initializeRoomSlider(room.slug); });
+            }
+        }, 150);
+    },
+
     rooms: (rooms) => {
         console.log('🎨 Rendering rooms...', rooms?.length || 0);
-        
-        // Try multiple selectors
-        let container = document.querySelector('.rooms-grid');
-        if (!container) {
-            container = document.querySelector('#rooms .rooms-grid');
-        }
-        if (!container) {
-            container = document.querySelector('[id="rooms"] .rooms-grid');
-        }
-        
-        console.log('🔍 Rooms container found:', !!container);
+        let container = document.querySelector('.rooms-grid') || document.querySelector('#rooms .rooms-grid') || document.querySelector('[id="rooms"] .rooms-grid');
         if (!container) {
             console.error('❌ Rooms: No container found (.rooms-grid)');
-            console.error('   Available containers:', Array.from(document.querySelectorAll('[class*="room"], [id*="room"]')).map(el => el.className || el.id));
             return;
         }
         if (!rooms || rooms.length === 0) {
             console.warn('⚠️ Rooms: No rooms data');
             return;
         }
-        
-        console.log('  📝 Rendering', rooms.length, 'rooms into container');
-        // Preload all room images in parallel
-        const roomImagePromises = [];
-        rooms.forEach(room => {
-            if (room.images && room.images.length > 0) {
-                room.images.forEach(img => {
-                    if (img.image_url) {
-                        roomImagePromises.push(preloadImage(img.image_url).catch(() => {
-                            console.warn('Failed to preload room image:', img.image_url);
-                        }));
-                    }
-                });
-            }
-        });
-        
-        // Render rooms immediately while images preload
-        container.innerHTML = rooms.map(room => {
-            // Filter out images with empty URLs
-            const validImages = (room.images || []).filter(img => img.image_url && img.image_url.trim());
-            
-            const imagesHtml = validImages.length > 0 ? validImages.map((img, idx) => {
-                const optimizedUrl = optimizeCloudinaryUrl(img.image_url, 800, 600, 'auto', 'auto');
-                console.log(`📸 Room ${room.name} - Image ${idx + 1}: ${optimizedUrl}`);
-                return `
-                <div class="room-slide ${idx === 0 ? 'active' : ''}" data-slide-index="${idx}">
-                    <img src="${optimizedUrl}" 
-                         alt="${img.caption || room.name}" 
-                         class="room-slide-image"
-                         loading="${idx === 0 ? 'eager' : 'lazy'}"
-                         onerror="console.error('❌ Failed to load room image ${idx + 1} for ${room.name}:', '${optimizedUrl}'); this.style.display='none';"
-                         onload="console.log('✅ Room image ${idx + 1} loaded for ${room.name}:', '${optimizedUrl}');">
-                </div>
-                `;
-            }).join('') : `
-                <div class="room-slide active" style="background:#f0f0f0;display:flex;align-items:center;justify-content:center;">
-                    <p style="color:#999;text-align:center;">No image available</p>
-                </div>
-            `;
-            
-            const indicatorsHtml = validImages.length > 1 ? validImages.map((_, idx) =>
-                `<span class="room-indicator ${idx === 0 ? 'active' : ''}" data-slide="${idx}"></span>`
-            ).join('') : '';
-            
-            const featuresHtml = (room.features || []).map(f => `<li>✓ ${f}</li>`).join('');
-            
-            return `
-                <div class="room-card">
-                    <div class="room-slider-container">
-                        <div class="room-slider" data-room="${room.slug}">
-                            ${imagesHtml}
-                        </div>
-                        <button class="room-slider-btn room-prev-btn" data-room="${room.slug}">‹</button>
-                        <button class="room-slider-btn room-next-btn" data-room="${room.slug}">›</button>
-                        <div class="room-slider-indicators" data-room="${room.slug}">
-                            ${indicatorsHtml}
-                        </div>
-                    </div>
-                    <div class="room-content">
-                        <h3 class="room-name">${room.name}</h3>
-                        ${room.capacity ? `<p class="room-capacity">Guest Capacity: ${room.capacity}</p>` : ''}
-                        ${room.description ? `<p class="room-description">${room.description}</p>` : ''}
-                        ${featuresHtml ? `<ul class="room-features">${featuresHtml}</ul>` : ''}
-                    </div>
-                </div>
-            `;
-        }).join('');
-        
-        // Dispatch event to reinitialize room sliders
+        Render.roomsInto(container, rooms);
         setTimeout(() => {
-            const event = new CustomEvent('roomsRendered', { detail: { rooms } });
-            window.dispatchEvent(event);
-            console.log('📢 Dispatched roomsRendered event');
-            
-            // Also try direct initialization
+            window.dispatchEvent(new CustomEvent('roomsRendered', { detail: { rooms } }));
             if (typeof initializeRoomSlider === 'function') {
-                rooms.forEach(room => {
-                    if (room.slug) {
-                        initializeRoomSlider(room.slug);
-                    }
-                });
+                rooms.forEach(room => { if (room.slug) initializeRoomSlider(room.slug); });
             }
         }, 150);
-        
         console.log(`✅ Rendered ${rooms.length} rooms`);
     },
     
@@ -947,16 +921,16 @@ async function initializeDataLoading() {
             let heroSlidesData, roomsData, facilitiesData, reviewsData;
             
             if (homepageData) {
-                // Extract data from combined response
                 heroSlidesData = homepageData.hero_slides || [];
                 roomsData = homepageData.rooms || [];
+                const roomCategoriesData = homepageData.room_categories || [];
                 facilitiesData = homepageData.facilities || [];
                 reviewsData = homepageData.reviews || [];
                 const homepageSettings = homepageData.settings || {};
-                
                 console.log('📊 Homepage data loaded (combined endpoint):', {
                     heroSlides: heroSlidesData.length,
                     rooms: roomsData.length,
+                    room_categories: roomCategoriesData.length,
                     facilities: facilitiesData.length,
                     reviews: reviewsData.length,
                     settings: Object.keys(homepageSettings).length
@@ -1000,24 +974,22 @@ async function initializeDataLoading() {
                     console.warn('⚠️ No hero slides to display');
                 }
                 
-                if (roomsData && roomsData.length > 0) {
+                if (roomCategoriesData && roomCategoriesData.length > 0) {
+                    console.log('🏠 Calling Render.roomCategories()...');
+                    renderPromises.push(Promise.resolve(Render.roomCategories(roomCategoriesData)));
+                } else if (roomsData && roomsData.length > 0) {
                     console.log('🏠 Calling Render.rooms()...');
                     const roomsContainer = document.querySelector('.rooms-grid');
                     if (roomsContainer) {
                         renderPromises.push(Promise.resolve(Render.rooms(roomsData)));
                     } else {
-                        console.warn('⚠️ Rooms container not ready, retrying...');
                         setTimeout(() => {
                             const retryContainer = document.querySelector('.rooms-grid');
-                            if (retryContainer) {
-                                Render.rooms(roomsData);
-                            } else {
-                                console.error('❌ Rooms container still not found after retry');
-                            }
+                            if (retryContainer) Render.rooms(roomsData);
                         }, 200);
                     }
                 } else {
-                    console.warn('⚠️ No rooms to display');
+                    console.warn('⚠️ No rooms or room categories to display');
                 }
                 
                 if (facilitiesData && facilitiesData.length > 0) {
