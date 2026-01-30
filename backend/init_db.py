@@ -154,6 +154,7 @@ def seed_site_settings():
         ("instagram", "https://instagram.com/kalongofarm"),
         ("facebook", "https://facebook.com/kalongofarm"),
         ("logo_url", "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769261545/logo_xgfgcj.jpg"),
+        ("show_prices", "false"),  # Admin toggle: false = prices hidden on web by default
     ]
     try:
         for key, value in defaults:

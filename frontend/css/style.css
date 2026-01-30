@@ -5763,6 +5763,11 @@ section * {
     }
 }
 
+/* ===== Hide prices when admin sets show_prices = false (Our Services page) ===== */
+body.prices-hidden .price-display {
+    display: none !important;
+}
+
 /* ===== Fix Mobile Zoom on Tel Input ===== */
 input[type="tel"],
 input[type="phone"] {

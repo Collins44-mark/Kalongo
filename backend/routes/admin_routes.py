@@ -910,26 +910,30 @@ def review_delete(pk):
 def settings():
     s = get_session()
     try:
-        keys = ["phone", "whatsapp", "email", "address", "instagram", "facebook", "logo_url", "about_text"]
+        keys = ["phone", "whatsapp", "email", "address", "instagram", "facebook", "logo_url", "about_text", "show_prices"]
         if request.method == "POST":
             clear_settings_cache()  # Clear cache on update
             for k in keys:
-                v = request.form.get(k, "").strip()
-                row = s.query(SiteSettings).filter_by(key=k).first()
-                if row:
-                    row.value = v or None
+                if k == "show_prices":
+                    v = "true" if request.form.get(k) in ("on", "true", "1") else "false"
                 else:
-                    s.add(SiteSettings(key=k, value=v or None))
+                    v = request.form.get(k, "").strip()
+                row = s.query(SiteSettings).filter_by(key=k).first()
+                save_val = v if k == "show_prices" else (v or None)
+                if row:
+                    row.value = save_val
+                else:
+                    s.add(SiteSettings(key=k, value=save_val))
             s.commit()
             flash("Settings saved.", "success")
             return redirect(url_for("admin.settings"))
         # Optimized: single query for all settings
         settings_rows = s.query(SiteSettings).filter(SiteSettings.key.in_(keys)).all()
         settings_map = {row.key: row.value for row in settings_rows}
-        # Fill missing keys with empty strings
+        # Fill missing keys
         for key in keys:
             if key not in settings_map:
-                settings_map[key] = ""
+                settings_map[key] = "false" if key == "show_prices" else ""
         return render_template("admin/settings.html", settings=settings_map, keys=keys)
     except Exception as e:
         s.rollback()

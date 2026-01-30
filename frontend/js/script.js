@@ -567,6 +567,16 @@ if (bookingForm) {
         e.preventDefault();
         
         // Get form values
+        const adults = document.getElementById('adults')?.value || '0';
+        const children = document.getElementById('children')?.value || '0';
+        const totalGuests = parseInt(adults || 0, 10) + parseInt(children || 0, 10);
+        const costRoomType = document.getElementById('costRoomType')?.textContent || '—';
+        const costNights = document.getElementById('costNights')?.textContent || '0';
+        const costPerNight = document.getElementById('costPerNight')?.textContent || '—';
+        const costTotal = document.getElementById('costTotal')?.textContent || '—';
+        const currencySelect = document.getElementById('currencySelect');
+        const currencyLabel = currencySelect ? currencySelect.options[currencySelect.selectedIndex]?.text : 'TZS';
+        
         const formData = {
             fullName: document.getElementById('fullName').value,
             email: document.getElementById('email').value,
@@ -574,14 +584,20 @@ if (bookingForm) {
             roomType: document.getElementById('roomType').value,
             checkIn: document.getElementById('checkIn').value,
             checkOut: document.getElementById('checkOut').value,
-            guests: document.getElementById('guests').value,
-            package: document.getElementById('package').value || 'None',
+            adults,
+            children,
+            totalGuests: totalGuests || adults,
             eventCategory: document.getElementById('eventCategory') ? document.getElementById('eventCategory').value || 'None' : 'None',
             eventDate: document.getElementById('eventDate') ? document.getElementById('eventDate').value || 'None' : 'None',
-            message: document.getElementById('message').value || 'None'
+            message: document.getElementById('message').value || 'None',
+            costRoomType,
+            costNights,
+            costPerNight,
+            costTotal,
+            currencyLabel
         };
 
-        // Create booking message - well formatted and classic
+        // Create booking message - well formatted with price summary
         const bookingMessage = `NEW BOOKING REQUEST - KALONGO FARM
 
 
@@ -597,8 +613,17 @@ BOOKING DETAILS
 Room Type: ${formData.roomType}
 Check-in Date: ${formData.checkIn}
 Check-out Date: ${formData.checkOut}
-Number of Guests: ${formData.guests}
-Package: ${formData.package}
+Adults: ${formData.adults}
+Children: ${formData.children}
+Total Guests: ${formData.totalGuests}
+
+
+COST SUMMARY (as seen by guest)
+
+Room Type: ${formData.costRoomType}
+Nights: ${formData.costNights}
+Price per Night: ${formData.costPerNight}
+Total Amount: ${formData.costTotal} (${formData.currencyLabel})
 
 
 EVENT INFORMATION

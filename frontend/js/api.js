@@ -315,13 +315,12 @@ const Render = {
         }
     },
     
-    pricing: (pricing) => {
-        console.log('🎨 Rendering pricing...', pricing?.length || 0);
+    pricing: (pricing, showPrices = true) => {
+        console.log('🎨 Rendering pricing...', pricing?.length || 0, 'showPrices:', showPrices);
         if (!pricing || pricing.length === 0) {
             console.warn('⚠️ Pricing: No pricing data');
             return;
         }
-        
         pricing.forEach(category => {
             console.log(`  📦 Processing category: ${category.name} (${category.category_type}) with ${category.items?.length || 0} items`);
             if (category.category_type === 'accommodation') {
@@ -352,7 +351,7 @@ const Render = {
                                     ${items.map(item => `
                                         <div class="price-item-modern">
                                             <span class="price-label-modern">${item.price_label || ''}</span>
-                                            <span class="price-value-modern">${item.price_value}</span>
+                                            <span class="price-value-modern price-display">${item.price_value}</span>
                                         </div>
                                     `).join('')}
                                 </div>
@@ -399,7 +398,7 @@ const Render = {
                             <div class="activity-card-modern ${isFree ? 'free-activity-modern' : ''}">
                                 <h3 class="activity-name-modern">${item.name}</h3>
                                 <p class="activity-duration-modern">${item.price_label || ''}</p>
-                                <div class="activity-price-modern">${item.price_value || ''}</div>
+                                <div class="activity-price-modern price-display">${item.price_value || ''}</div>
                             </div>
                         `;
                     }).join('');
@@ -419,7 +418,7 @@ const Render = {
                             ${item.featured ? '<div class="featured-badge-modern">Best Value</div>' : ''}
                             <h3 class="food-name-modern">${item.name}</h3>
                             ${item.description ? `<p class="food-description-modern">${item.description}</p>` : ''}
-                            <div class="food-price-modern">${item.price_value || item.price_label}</div>
+                            <div class="food-price-modern price-display">${item.price_value || item.price_label}</div>
                         </div>
                     `).join('');
                     console.log(`  ✅ Rendered ${category.items.length} food items`);
@@ -455,7 +454,7 @@ const Render = {
                 ${item.featured ? '<div class="featured-badge-modern">Best Value</div>' : ''}
                 <h3 class="food-name-modern">${item.name}</h3>
                 ${item.description ? `<p class="food-description-modern">${item.description}</p>` : ''}
-                <div class="food-price-modern">${item.price}</div>
+                <div class="food-price-modern price-display">${item.price}</div>
             </div>
         `).join('');
         
@@ -564,7 +563,7 @@ const Render = {
                     ${category.items.map(item => `
                         <div class="menu-item-modern">
                             <span class="menu-item-name-modern">${item.name}</span>
-                            <span class="menu-item-price-modern">${item.price}</span>
+                            <span class="menu-item-price-modern price-display">${item.price}</span>
                         </div>
                     `).join('')}
                 </div>
@@ -852,17 +851,19 @@ async function initializeDataLoading() {
                 API.getFood(),
                 API.getRestaurantMenu(),
             ]);
+            const showPrices = (window.siteSettings?.show_prices || '').toLowerCase() === 'true';
             console.log('📊 Packages data loaded:', {
                 pricing: pricing?.length || 0,
                 food: food?.length || 0,
-                menu: menu?.length || 0
+                menu: menu?.length || 0,
+                showPrices
             });
             
             // Render with retry logic to ensure DOM is ready
             const renderPackages = () => {
                 if (pricing && pricing.length > 0) {
                     console.log('📦 Calling Render.pricing()...');
-                    Render.pricing(pricing);
+                    Render.pricing(pricing, showPrices);
                 } else {
                     console.warn('⚠️ No pricing data to display');
                 }
@@ -880,6 +881,11 @@ async function initializeDataLoading() {
                 } else {
                     console.warn('⚠️ No restaurant menu to display');
                 }
+                if (!showPrices) {
+                    document.body.classList.add('prices-hidden');
+                } else {
+                    document.body.classList.remove('prices-hidden');
+                }
             };
             
             // Try immediately, then retry if needed
@@ -896,16 +902,17 @@ async function initializeDataLoading() {
         // Also render activities pricing if available
         if (pricing) {
             const actCategory = pricing.find(c => c.category_type === 'activity');
+            const showPrices = (window.siteSettings?.show_prices || '').toLowerCase() === 'true';
             if (actCategory) {
                 const container = document.querySelector('.activities-grid-modern');
                 if (container) {
                     container.innerHTML = actCategory.items.map(item => {
-                        const isFree = item.price_value.toLowerCase().includes('free');
+                        const isFree = (item.price_value || '').toLowerCase().includes('free');
                         return `
                             <div class="activity-card-modern ${isFree ? 'free-activity-modern' : ''}">
                                 <h3 class="activity-name-modern">${item.name}</h3>
                                 <p class="activity-duration-modern">${item.price_label || ''}</p>
-                                <div class="activity-price-modern">${item.price_value}</div>
+                                <div class="activity-price-modern price-display">${item.price_value || ''}</div>
                             </div>
                         `;
                     }).join('');

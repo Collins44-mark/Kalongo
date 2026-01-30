@@ -17,6 +17,12 @@
         </div>
         <div><label>Logo URL</label><input type="url" name="logo_url" value="{{ settings.get('logo_url', '') }}" placeholder="https://..."></div>
         <div><label>About text</label><textarea name="about_text" rows="4" placeholder="Short about text for the site">{{ settings.get('about_text', '') }}</textarea></div>
+        <div style="margin: 1rem 0; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <input type="checkbox" name="show_prices" value="true" {{ 'checked' if settings.get('show_prices') == 'true' else '' }}>
+                <span><strong>Show prices on website</strong> (Our Services page) – When unchecked, services are shown without prices.</span>
+            </label>
+        </div>
         <button type="submit" class="btn btn-primary">Save settings</button>
     </form>
 </div>
