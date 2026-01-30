@@ -325,6 +325,15 @@ table {
     overflow: hidden;
 }
 
+/* Laptop/desktop: full responsive hero, show images fully */
+@media (min-width: 1025px) {
+    .hero {
+        min-height: 70vh;
+        height: 70vh;
+        max-height: 90vh;
+    }
+}
+
 @media (max-width: 1024px) {
     .hero {
         height: 400px;
@@ -1071,6 +1080,15 @@ section * {
     background-repeat: no-repeat;
 }
 
+/* Laptop/desktop: show full hero image without zoom, responsive */
+@media (min-width: 1025px) {
+    .hero-slide {
+        background-size: contain;
+        background-position: center center;
+        background-color: #1a2e1a;
+    }
+}
+
 /* Hide hero slider indicators */
 .hero-slider-indicators,
 .hero-indicator {
@@ -1141,8 +1159,16 @@ section * {
     text-align: center;
     position: relative;
     overflow: hidden;
-    padding: 100px 0 80px;
-    color: var(--white);
+}
+
+@media (min-width: 1025px) {
+    .pricing-hero {
+        min-height: 50vh;
+        height: 50vh;
+        max-height: 70vh;
+        background-size: cover;
+        background-position: center center;
+    }
 }
 
 @media (max-width: 1024px) {
@@ -2664,9 +2690,16 @@ section * {
     justify-content: center;
     text-align: center;
     position: relative;
-    overflow: hidden;
-    padding: 100px 0 80px;
-    color: var(--white);
+}
+
+@media (min-width: 1025px) {
+    .activities-hero {
+        min-height: 50vh;
+        height: 50vh;
+        max-height: 70vh;
+        background-size: cover;
+        background-position: center center;
+    }
 }
 
 @media (max-width: 1024px) {
@@ -3104,6 +3137,16 @@ section * {
     overflow: hidden;
 }
 
+@media (min-width: 1025px) {
+    .booking-hero {
+        min-height: 50vh;
+        height: 50vh;
+        max-height: 70vh;
+        background-size: cover;
+        background-position: center center;
+    }
+}
+
 @media (max-width: 1024px) {
     .booking-hero {
         height: 400px;
@@ -3502,6 +3545,85 @@ section * {
 
 .btn-submit-modern:hover .btn-icon {
     transform: translateX(5px);
+}
+
+/* Booking Cost Summary */
+.booking-cost-summary {
+    margin: 24px 0 28px;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(76, 175, 80, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.cost-summary-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin: 0 0 16px 0;
+}
+
+.cost-summary-currency {
+    margin-bottom: 16px;
+}
+
+.cost-summary-currency label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 6px;
+}
+
+.cost-summary-currency select {
+    width: 100%;
+    max-width: 280px;
+    padding: 10px 14px;
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    border-radius: 8px;
+    background: var(--white);
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.cost-summary-details {
+    display: grid;
+    gap: 10px;
+}
+
+.cost-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.cost-row:last-child {
+    border-bottom: none;
+}
+
+.cost-label {
+    font-size: 0.95rem;
+    color: var(--text-dark);
+}
+
+.cost-value {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.cost-row.cost-total .cost-value {
+    font-size: 1.2rem;
+    color: var(--primary-dark);
+}
+
+.cost-summary-note {
+    margin: 14px 0 0;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    line-height: 1.4;
 }
 
 /* Responsive for booking page */
@@ -5654,6 +5776,11 @@ input[type="phone"] {
         background-position: center center !important;
         background-attachment: scroll;
         background-repeat: no-repeat;
+    }
+    
+    .hero-slide {
+        background-size: contain !important;
+        background-position: center center !important;
     }
     
     .hero-slide img {

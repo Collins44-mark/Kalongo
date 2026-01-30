@@ -86,6 +86,8 @@
                             <option value="A-Cabin">A-Cabin</option>
                             <option value="Cottage">Cottage</option>
                             <option value="Kikota">Kikota</option>
+                            <option value="Family House">Family House</option>
+                            <option value="Tent">Tent</option>
                             <option value="None">None</option>
                         </select>
                     </div>
@@ -99,6 +101,28 @@
                         <label for="checkOut">Check-out Date *</label>
                         <input type="date" id="checkOut" name="checkOut" required>
                     </div>
+                </div>
+                <!-- Pricing Summary -->
+                <div class="booking-cost-summary" id="bookingCostSummary">
+                    <h4 class="cost-summary-title">Cost Summary</h4>
+                    <div class="cost-summary-currency">
+                        <label for="currencySelect">Display Currency</label>
+                        <select id="currencySelect">
+                            <option value="TZS" selected>TZS (Tanzanian Shilling)</option>
+                            <option value="USD">USD (US Dollar)</option>
+                            <option value="EUR">EUR (Euro)</option>
+                            <option value="GBP">GBP (British Pound)</option>
+                            <option value="KES">KES (Kenyan Shilling)</option>
+                            <option value="ZAR">ZAR (South African Rand)</option>
+                        </select>
+                    </div>
+                    <div class="cost-summary-details">
+                        <div class="cost-row"><span class="cost-label">Room Type</span><span class="cost-value" id="costRoomType">—</span></div>
+                        <div class="cost-row"><span class="cost-label">Number of Nights</span><span class="cost-value" id="costNights">0</span></div>
+                        <div class="cost-row"><span class="cost-label">Price per Night</span><span class="cost-value" id="costPerNight">—</span></div>
+                        <div class="cost-row cost-total"><span class="cost-label">Total Amount</span><span class="cost-value" id="costTotal">—</span></div>
+                    </div>
+                    <p class="cost-summary-note">Rates based on daily rates. Weekend & holiday rates may apply—confirm at booking.</p>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
@@ -194,6 +218,7 @@
 
     <script src="js/api.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/booking-pricing.js"></script>
     <script src="js/chatbot.js"></script>
 </body>
 </html>
