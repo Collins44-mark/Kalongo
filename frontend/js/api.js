@@ -180,23 +180,11 @@ const Render = {
         // Store slides data globally for content updates
         window.heroSlidesData = slides;
         
-        // Wait for images to preload, then dispatch event
-        Promise.allSettled(imagePromises).then(() => {
-            console.log('✅ All hero images preloaded, initializing slider...');
-            // Dispatch event after images are ready
-            setTimeout(() => {
-                const event = new CustomEvent('heroSlidesRendered');
-                window.dispatchEvent(event);
-                console.log('📢 Dispatched heroSlidesRendered event');
-            }, 50);
-        });
-        
-        // Also dispatch immediately for faster initialization
+        // Dispatch event to initialize swipe slider
         setTimeout(() => {
-            if (!window.heroSliderInitialized) {
-                const event = new CustomEvent('heroSlidesRendered');
-                window.dispatchEvent(event);
-            }
+            const event = new CustomEvent('heroSlidesRendered');
+            window.dispatchEvent(event);
+            console.log('📢 Dispatched heroSlidesRendered event');
         }, 100);
     },
     
