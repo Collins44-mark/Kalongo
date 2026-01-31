@@ -1,7 +1,9 @@
 /**
  * Booking Page - Cost Summary with Nights, Guest-Based Pricing & Multi-Currency
- * Fetches prices from API, varies by room type + number of guests (occupancy).
- * Prices: A-Cabin/Cottage (single 150k, couple 180k), Family (couples 250k, 5 occupants 550k), Kikota 400k
+ * Room type + number of guests → total price per night, then × nights.
+ * A-Cabin/Cottage: even → couple price; odd → couples + one single.
+ * Family: every 5 → 550k; remaining 2 → 250k.
+ * Kikota: guests × 400,000 per night.
  */
 (function() {
     'use strict';
@@ -101,6 +103,12 @@
         return null;
     }
 
+    /**
+     * Price per night (TZS) and occupancy description.
+     * A-Cabin/Cottage: single 150k, couple 180k; even guests = couples only, odd = couples + one single.
+     * Family: 5 persons = 550k, 2 persons = 250k; groups of 5 + remainder (2 → 250k, 1→250k, 3–4→500k).
+     * Kikota: guests × 400,000 per night.
+     */
     function getPriceForRoomAndGuests(roomType, totalGuests) {
         const prices = pricingFromAPI && Object.keys(pricingFromAPI).length
             ? (pricingFromAPI[roomType] || FALLBACK_PRICES[roomType])
@@ -108,24 +116,39 @@
 
         if (!prices || roomType === 'None') return { price: 0, occupancyLabel: '—' };
 
+        const g = Math.max(0, totalGuests);
+        const single = prices.single ?? 150000;
+        const couple = prices.couple ?? 180000;
+        const familyTwo = prices.couples ?? 250000;
+        const familyFive = prices.fiveOccupants ?? 550000;
+        const kikotaPerPerson = prices.flat ?? 400000;
+
         if (roomType === 'A-Cabin' || roomType === 'Cottage') {
-            const g = Math.max(0, totalGuests);
-            if (g <= 1) return { price: prices.single ?? 150000, occupancyLabel: 'Single occupancy' };
-            return { price: prices.couple ?? 180000, occupancyLabel: 'Couple' };
+            if (g === 0) return { price: 0, occupancyLabel: '—' };
+            const couplesCount = Math.floor(g / 2);
+            const hasSingle = g % 2 === 1;
+            const price = couplesCount * couple + (hasSingle ? single : 0);
+            const label = !couplesCount ? '1 single' : hasSingle ? couplesCount + ' couple(s) + 1 single' : couplesCount + ' couple(s)';
+            return { price: price, occupancyLabel: label };
         }
 
         if (roomType === 'Family House') {
-            const g = Math.max(0, totalGuests);
-            if (g >= 5) return { price: prices.fiveOccupants ?? 550000, occupancyLabel: '5 occupants' };
-            return { price: prices.couples ?? 250000, occupancyLabel: 'Couples' };
+            if (g === 0) return { price: 0, occupancyLabel: '—' };
+            const groupsOf5 = Math.floor(g / 5);
+            const rem = g % 5;
+            const remainderPrice = rem === 0 ? 0 : rem <= 2 ? familyTwo : 2 * familyTwo;
+            const price = groupsOf5 * familyFive + remainderPrice;
+            const label = groupsOf5 ? (groupsOf5 + '×5') + (rem ? ' + ' + rem : '') : rem + ' guest(s)';
+            return { price: price, occupancyLabel: label };
         }
 
         if (roomType === 'Kikota') {
-            return { price: prices.flat ?? 400000, occupancyLabel: 'Per night' };
+            if (g === 0) return { price: 0, occupancyLabel: '—' };
+            const price = g * kikotaPerPerson;
+            return { price: price, occupancyLabel: g + ' × ' + (kikotaPerPerson / 1000) + 'k' };
         }
 
         if (roomType === 'Tent') {
-            const g = Math.max(0, totalGuests);
             if (g <= 1) return { price: prices.single ?? 50000, occupancyLabel: 'Single' };
             return { price: prices.double ?? 80000, occupancyLabel: 'Double' };
         }
