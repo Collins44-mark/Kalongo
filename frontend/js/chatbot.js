@@ -27,11 +27,17 @@ const HOTEL_DATA = {
         'kikota': {
             name: 'Kikota',
             capacity: '2-4 Adults',
-            dailyRate: 400000,
-            weekendRate: 400000,
-            holidayRate: 400000,
+            perPersonRate: 400000,
             description: 'Traditional yet modern accommodations.',
             features: ['Unique design', 'Garden access', 'Cultural experience', 'All modern amenities']
+        },
+        'family-house': {
+            name: 'Family House',
+            capacity: 'Family (2-8 people)',
+            twoPersonRate: 250000,
+            fivePersonRate: 550000,
+            description: 'Spacious family accommodation.',
+            features: ['Multiple bedrooms', 'Living area', 'Kitchen', 'Full amenities']
         }
     },
     packages: {
@@ -77,12 +83,37 @@ const HOTEL_DATA = {
     }
 };
 
+// Price per night (TZS) based on room type + guests. Matches booking form logic.
+function getPriceForRoomAndGuests(roomKey, guests) {
+    const g = Math.max(0, guests);
+    const SINGLE = 150000, COUPLE = 180000, FAMILY_TWO = 250000, FAMILY_FIVE = 550000, KIKOTA_PER = 400000;
+
+    if (roomKey === 'a-cabin' || roomKey === 'cottage') {
+        if (g === 0) return 0;
+        const couples = Math.floor(g / 2);
+        const hasSingle = g % 2 === 1;
+        return couples * COUPLE + (hasSingle ? SINGLE : 0);
+    }
+    if (roomKey === 'family-house') {
+        if (g === 0) return 0;
+        const groupsOf5 = Math.floor(g / 5);
+        const rem = g % 5;
+        const remainderPrice = rem === 0 ? 0 : rem <= 2 ? FAMILY_TWO : 2 * FAMILY_TWO;
+        return groupsOf5 * FAMILY_FIVE + remainderPrice;
+    }
+    if (roomKey === 'kikota') {
+        return g * KIKOTA_PER;
+    }
+    return 0;
+}
+
 // FAQ Data
 const FAQ_DATA = {
     'room types': {
-        response: `We offer three types of accommodations:
+        response: `We offer four types of accommodations:
 🏠 **A-Cabin**: Perfect for 2 adults or small families (2-3 people)
 🏠 **Cottage**: Ideal for families (4-6 people)
+🏠 **Family House**: Spacious for 2-8 people
 🏠 **Kikota**: Great for 2-4 adults
 
 Would you like to know more about a specific room type?`,
@@ -91,12 +122,12 @@ Would you like to know more about a specific room type?`,
     'prices': {
         response: `Here are our accommodation rates (per night):
 
-**A-Cabin:** TZS 180,000 (couple) | TZS 150,000 (single occupancy)
-**Cottage:** TZS 180,000 (couple) | TZS 150,000 (single occupancy)
-**Family House:** TZS 250,000 (couples) | TZS 550,000 (5 occupants)
-**Kikota:** TZS 400,000
+**A-Cabin:** TZS 150,000 (1 person) | TZS 180,000 (2 persons). More guests: even = couple rate; odd = couples + one single.
+**Cottage:** Same as A-Cabin.
+**Family House:** TZS 250,000 (2 persons) | TZS 550,000 (5 persons). Groups of 5 + remainder.
+**Kikota:** TZS 400,000 per person per night.
 
-Would you like to see our packages?`,
+Would you like to see our packages or get a quote?`,
         keywords: ['price', 'cost', 'rate', 'fee', 'how much', 'pricing', 'tariff']
     },
     'check in': {
@@ -579,7 +610,7 @@ function showLocationMessage() {
     const locationHTML = `
         <div class="chatbot-message chatbot-bot-message">
             <div class="chatbot-avatar-small">
-                <img src="https://res.cloudinary.com/dae3rpnmg/image/upload/v1769261545/logo_xgfgcj.jpg alt="KALONGO FARM" class="chatbot-logo-small">
+                <img src="https://res.cloudinary.com/dae3rpnmg/image/upload/v1769261545/logo_xgfgcj.jpg" alt="KALONGO FARM" class="chatbot-logo-small">
             </div>
             <div class="chatbot-message-content">
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
@@ -783,44 +814,36 @@ function generateRecommendation() {
     
     // Recommendation logic
     let recommendation = null;
-    let rate = 0;
     
     // Determine room based on guests and stay type
     if (guests <= 2 && stayType !== 'family') {
-        // A-Cabin or Kikota for 2 or fewer
         if (budget === 'under-100k' || budget === '100k-150k') {
             recommendation = 'a-cabin';
         } else {
             recommendation = 'kikota';
         }
     } else if (guests <= 4 && stayType === 'family') {
-        // Kikota or Cottage for small families
         if (budget === 'under-100k' || budget === '100k-150k') {
             recommendation = 'kikota';
         } else {
             recommendation = 'cottage';
         }
+    } else if (guests >= 5) {
+        recommendation = 'family-house';
     } else {
-        // Cottage for larger groups/families
         recommendation = 'cottage';
     }
     
-    // Get rate based on stay period
+    // Get rate using guest-based pricing (matches booking form)
+    const rate = getPriceForRoomAndGuests(recommendation, guests);
     const room = HOTEL_DATA.rooms[recommendation];
-    if (stayPeriod === 'weekday') {
-        rate = room.dailyRate;
-    } else if (stayPeriod === 'weekend') {
-        rate = room.weekendRate;
-    } else {
-        rate = room.holidayRate;
-    }
     
     // Generate recommendation message
     const recommendationMessage = `Perfect! Based on your preferences, I recommend:
 
 🏠 **${room.name}**
 👥 Capacity: ${room.capacity}
-💰 ${stayPeriod.charAt(0).toUpperCase() + stayPeriod.slice(1)} Rate: TZS ${rate.toLocaleString()}/night
+💰 Price: TZS ${rate.toLocaleString()}/night (for ${guests} ${guests === 1 ? 'guest' : 'guests'})
 📝 ${room.description}
 
 **Features:**
@@ -1143,7 +1166,7 @@ function addBotMessage(message) {
     const messageHTML = `
         <div class="chatbot-message chatbot-bot-message">
             <div class="chatbot-avatar-small">
-                <img src="hhttps://res.cloudinary.com/dae3rpnmg/image/upload/v1769261545/logo_xgfgcj.jpg" alt="KALONGO FARM" class="chatbot-logo-small">
+                <img src="https://res.cloudinary.com/dae3rpnmg/image/upload/v1769261545/logo_xgfgcj.jpg" alt="KALONGO FARM" class="chatbot-logo-small">
             </div>
             <div class="chatbot-message-content">${formattedMessage}</div>
         </div>
