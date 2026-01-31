@@ -102,6 +102,19 @@
                         <input type="date" id="checkOut" name="checkOut" required>
                     </div>
                 </div>
+                <div class="form-group form-group-guests">
+                    <label>Number of Guests *</label>
+                    <div class="guests-box">
+                        <div class="guests-half">
+                            <span class="guests-label">Adults</span>
+                            <input type="number" id="adults" name="adults" min="0" value="1" required>
+                        </div>
+                        <div class="guests-half">
+                            <span class="guests-label">Children</span>
+                            <input type="number" id="children" name="children" min="0" value="0">
+                        </div>
+                    </div>
+                </div>
                 <!-- Pricing Summary -->
                 <div class="booking-cost-summary" id="bookingCostSummary">
                     <h4 class="cost-summary-title">Cost Summary</h4>
@@ -118,24 +131,13 @@
                     </div>
                     <div class="cost-summary-details">
                         <div class="cost-row"><span class="cost-label">Room Type</span><span class="cost-value" id="costRoomType">—</span></div>
+                        <div class="cost-row" id="costOccupancyRow"><span class="cost-label">Occupancy Rate</span><span class="cost-value" id="costOccupancy">—</span></div>
+                        <div class="cost-row"><span class="cost-label">Number of Guests</span><span class="cost-value" id="costGuests">—</span></div>
                         <div class="cost-row"><span class="cost-label">Number of Nights</span><span class="cost-value" id="costNights">0</span></div>
                         <div class="cost-row"><span class="cost-label">Price per Night</span><span class="cost-value" id="costPerNight">—</span></div>
                         <div class="cost-row cost-total"><span class="cost-label">Total Amount</span><span class="cost-value" id="costTotal">—</span></div>
                     </div>
-                    <p class="cost-summary-note">Rates based on daily rates. Weekend & holiday rates may apply—confirm at booking.</p>
-                </div>
-                <div class="form-group form-group-guests">
-                    <label>Number of Guests *</label>
-                    <div class="guests-box">
-                        <div class="guests-half">
-                            <span class="guests-label">Adults</span>
-                            <input type="number" id="adults" name="adults" min="0" value="1" required>
-                        </div>
-                        <div class="guests-half">
-                            <span class="guests-label">Children</span>
-                            <input type="number" id="children" name="children" min="0" value="0">
-                        </div>
-                    </div>
+                    <p class="cost-summary-note">Rates vary by occupancy (guests). Single/couple rates for A-Cabin & Cottage; Family rates for 2–4 or 5+ guests. Confirm at booking.</p>
                 </div>
                 <div class="form-row">
                     <div class="form-group">

@@ -7,27 +7,29 @@ const HOTEL_DATA = {
         'a-cabin': {
             name: 'A-Cabin',
             capacity: '2 Adults or Small Family (2-3 people)',
-            dailyRate: 80000,
-            weekendRate: 100000,
-            holidayRate: 120000,
+            dailyRate: 180000,
+            singleRate: 150000,
+            weekendRate: 180000,
+            holidayRate: 180000,
             description: 'Cozy cabin accommodations perfect for couples or small families.',
             features: ['Private bathroom', 'Farm view', 'Air conditioning', 'Sitting area']
         },
         'cottage': {
             name: 'Cottage',
             capacity: 'Family (4-6 people)',
-            dailyRate: 150000,
+            dailyRate: 180000,
+            singleRate: 150000,
             weekendRate: 180000,
-            holidayRate: 220000,
+            holidayRate: 180000,
             description: 'Spacious cottages ideal for families.',
             features: ['Multiple bedrooms', 'Living area', 'Private veranda', 'Kitchenette']
         },
         'kikota': {
             name: 'Kikota',
             capacity: '2-4 Adults',
-            dailyRate: 120000,
-            weekendRate: 150000,
-            holidayRate: 180000,
+            dailyRate: 400000,
+            weekendRate: 400000,
+            holidayRate: 400000,
             description: 'Traditional yet modern accommodations.',
             features: ['Unique design', 'Garden access', 'Cultural experience', 'All modern amenities']
         }
@@ -87,22 +89,12 @@ Would you like to know more about a specific room type?`,
         keywords: ['room', 'accommodation', 'stay', 'lodging', 'cabin', 'cottage', 'kikota']
     },
     'prices': {
-        response: `Here are our rates:
+        response: `Here are our accommodation rates (per night):
 
-**Daily Rates (per night):**
-• A-Cabin: TZS ${HOTEL_DATA.rooms['a-cabin'].dailyRate.toLocaleString()}
-• Cottage: TZS ${HOTEL_DATA.rooms['cottage'].dailyRate.toLocaleString()}
-• Kikota: TZS ${HOTEL_DATA.rooms['kikota'].dailyRate.toLocaleString()}
-
-**Weekend Rates (per night):**
-• A-Cabin: TZS ${HOTEL_DATA.rooms['a-cabin'].weekendRate.toLocaleString()}
-• Cottage: TZS ${HOTEL_DATA.rooms['cottage'].weekendRate.toLocaleString()}
-• Kikota: TZS ${HOTEL_DATA.rooms['kikota'].weekendRate.toLocaleString()}
-
-**Holiday Rates (per night):**
-• A-Cabin: TZS ${HOTEL_DATA.rooms['a-cabin'].holidayRate.toLocaleString()}
-• Cottage: TZS ${HOTEL_DATA.rooms['cottage'].holidayRate.toLocaleString()}
-• Kikota: TZS ${HOTEL_DATA.rooms['kikota'].holidayRate.toLocaleString()}
+**A-Cabin:** TZS 180,000 (couple) | TZS 150,000 (single occupancy)
+**Cottage:** TZS 180,000 (couple) | TZS 150,000 (single occupancy)
+**Family House:** TZS 250,000 (couples) | TZS 550,000 (5 occupants)
+**Kikota:** TZS 400,000
 
 Would you like to see our packages?`,
         keywords: ['price', 'cost', 'rate', 'fee', 'how much', 'pricing', 'tariff']
