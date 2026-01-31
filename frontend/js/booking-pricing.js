@@ -161,11 +161,9 @@
             roomType: document.getElementById('roomType'),
             checkIn: document.getElementById('checkIn'),
             checkOut: document.getElementById('checkOut'),
-            adults: document.getElementById('adults'),
-            children: document.getElementById('children'),
+            guests: document.getElementById('guests'),
             currencySelect: document.getElementById('currencySelect'),
             costRoomType: document.getElementById('costRoomType'),
-            costOccupancy: document.getElementById('costOccupancy'),
             costGuests: document.getElementById('costGuests'),
             costNights: document.getElementById('costNights'),
             costPerNight: document.getElementById('costPerNight'),
@@ -174,11 +172,8 @@
     }
 
     function getTotalGuests() {
-        const adults = document.getElementById('adults');
-        const children = document.getElementById('children');
-        const a = Math.max(0, parseInt(adults?.value || 0, 10) || 0);
-        const c = Math.max(0, parseInt(children?.value || 0, 10) || 0);
-        return a + c;
+        const el = document.getElementById('guests');
+        return Math.max(0, parseInt(el?.value || 0, 10) || 0);
     }
 
     function calculateNights(checkInStr, checkOutStr) {
@@ -242,11 +237,10 @@
         const totalGuests = getTotalGuests();
         const nights = calculateNights(checkIn, checkOut);
 
-        const { price: pricePerNightTZS, occupancyLabel } = getPriceForRoomAndGuests(roomType, totalGuests);
+        const { price: pricePerNightTZS } = getPriceForRoomAndGuests(roomType, totalGuests);
         const totalTZS = nights * pricePerNightTZS;
 
         els.costRoomType.textContent = roomType || '—';
-        if (els.costOccupancy) els.costOccupancy.textContent = occupancyLabel;
         if (els.costGuests) els.costGuests.textContent = totalGuests;
         els.costNights.textContent = nights;
 
@@ -260,7 +254,7 @@
     }
 
     function setupListeners() {
-        const ids = ['roomType', 'checkIn', 'checkOut', 'currencySelect', 'adults', 'children'];
+        const ids = ['roomType', 'checkIn', 'checkOut', 'currencySelect', 'guests'];
         ids.forEach(id => {
             const el = document.getElementById(id);
             if (el) {

@@ -102,22 +102,13 @@
                         <input type="date" id="checkOut" name="checkOut" required>
                     </div>
                 </div>
-                <div class="form-group form-group-guests">
-                    <label>Number of Guests *</label>
-                    <div class="guests-box">
-                        <div class="guests-half">
-                            <span class="guests-label">Adults</span>
-                            <input type="number" id="adults" name="adults" min="0" value="1" required>
-                        </div>
-                        <div class="guests-half">
-                            <span class="guests-label">Children</span>
-                            <input type="number" id="children" name="children" min="0" value="0">
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label for="guests">Number of Guests *</label>
+                    <input type="number" id="guests" name="guests" min="1" value="1" required placeholder="e.g. 2">
                 </div>
-                <!-- Pricing Summary -->
+                <!-- Cost -->
                 <div class="booking-cost-summary" id="bookingCostSummary">
-                    <h4 class="cost-summary-title">Cost Summary</h4>
+                    <h4 class="cost-summary-title">Cost</h4>
                     <div class="cost-summary-currency">
                         <label for="currencySelect">Display Currency</label>
                         <select id="currencySelect">
@@ -131,13 +122,11 @@
                     </div>
                     <div class="cost-summary-details">
                         <div class="cost-row"><span class="cost-label">Room Type</span><span class="cost-value" id="costRoomType">—</span></div>
-                        <div class="cost-row" id="costOccupancyRow"><span class="cost-label">Occupancy Rate</span><span class="cost-value" id="costOccupancy">—</span></div>
                         <div class="cost-row"><span class="cost-label">Number of Guests</span><span class="cost-value" id="costGuests">—</span></div>
                         <div class="cost-row"><span class="cost-label">Number of Nights</span><span class="cost-value" id="costNights">0</span></div>
                         <div class="cost-row"><span class="cost-label">Price per Night</span><span class="cost-value" id="costPerNight">—</span></div>
                         <div class="cost-row cost-total"><span class="cost-label">Total Amount</span><span class="cost-value" id="costTotal">—</span></div>
                     </div>
-                    <p class="cost-summary-note">A-Cabin & Cottage: even guests = couple rate; odd = couples + one single. Family: every 5 = 550k, remaining 2 = 250k. Kikota: guests × 400k/night. Confirm at booking.</p>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
