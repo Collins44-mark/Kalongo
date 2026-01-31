@@ -120,13 +120,15 @@ def migrate_pricing():
     s.flush()
     
     acc_items = [
-        {"name": "Cabin", "price_label": "Per Night (BB)", "price_value": "TZS 180,000", "order": 0},
-        {"name": "Cottage", "price_label": "Per Night (BB)", "price_value": "TZS 180,000", "order": 1},
-        {"name": "Family Cottage", "price_label": "2 People (BB)", "price_value": "TZS 250,000", "featured": True, "order": 2},
-        {"name": "Family Cottage", "price_label": "6 People (BB)", "price_value": "TZS 550,000", "featured": True, "order": 3},
-        {"name": "Kikota", "price_label": "Per Night (BB)", "price_value": "TZS 400,000", "order": 4},
-        {"name": "Tents", "price_label": "Single (BB)", "price_value": "TZS 50,000", "order": 5},
-        {"name": "Tents", "price_label": "Double (BB)", "price_value": "TZS 80,000", "order": 6},
+        {"name": "A-Cabin", "price_label": "Couple", "price_value": "TZS 180,000", "order": 0},
+        {"name": "A-Cabin", "price_label": "Single occupancy", "price_value": "TZS 150,000", "order": 1},
+        {"name": "Cottage", "price_label": "Couple", "price_value": "TZS 180,000", "order": 2},
+        {"name": "Cottage", "price_label": "Single occupancy", "price_value": "TZS 150,000", "order": 3},
+        {"name": "Family", "price_label": "Couples", "price_value": "TZS 250,000", "featured": True, "order": 4},
+        {"name": "Family", "price_label": "5 occupants", "price_value": "TZS 550,000", "featured": True, "order": 5},
+        {"name": "Kikota", "price_label": "Per Night (BB)", "price_value": "TZS 400,000", "order": 6},
+        {"name": "Tents", "price_label": "Single (BB)", "price_value": "TZS 50,000", "order": 7},
+        {"name": "Tents", "price_label": "Double (BB)", "price_value": "TZS 80,000", "order": 8},
     ]
     for item_data in acc_items:
         item_data["category_id"] = acc_cat.id
