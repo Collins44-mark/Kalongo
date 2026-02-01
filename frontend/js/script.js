@@ -567,9 +567,8 @@ if (bookingForm) {
         e.preventDefault();
         
         // Get form values
-        const adults = document.getElementById('adults')?.value || '0';
-        const children = document.getElementById('children')?.value || '0';
-        const totalGuests = parseInt(adults || 0, 10) + parseInt(children || 0, 10);
+        const guestsEl = document.getElementById('guests');
+        const totalGuests = Math.max(0, parseInt(guestsEl?.value || 0, 10)) || 0;
         const costRoomType = document.getElementById('costRoomType')?.textContent || '—';
         const costNights = document.getElementById('costNights')?.textContent || '0';
         const costPerNight = document.getElementById('costPerNight')?.textContent || '—';
@@ -584,9 +583,7 @@ if (bookingForm) {
             roomType: document.getElementById('roomType').value,
             checkIn: document.getElementById('checkIn').value,
             checkOut: document.getElementById('checkOut').value,
-            adults,
-            children,
-            totalGuests: totalGuests || adults,
+            totalGuests,
             eventCategory: document.getElementById('eventCategory') ? document.getElementById('eventCategory').value || 'None' : 'None',
             eventDate: document.getElementById('eventDate') ? document.getElementById('eventDate').value || 'None' : 'None',
             message: document.getElementById('message').value || 'None',
@@ -613,12 +610,10 @@ BOOKING DETAILS
 Room Type: ${formData.roomType}
 Check-in Date: ${formData.checkIn}
 Check-out Date: ${formData.checkOut}
-Adults: ${formData.adults}
-Children: ${formData.children}
-Total Guests: ${formData.totalGuests}
+Number of Guests: ${formData.totalGuests}
 
 
-COST SUMMARY (as seen by guest)
+COST SUMMARY
 
 Room Type: ${formData.costRoomType}
 Nights: ${formData.costNights}
