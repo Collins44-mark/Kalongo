@@ -4206,11 +4206,8 @@ section * {
 }
 
 .quick-link-item:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.14);
     color: var(--white) !important;
-    transform: translateX(4px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 /* Footer email link */
