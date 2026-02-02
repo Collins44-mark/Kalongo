@@ -1600,6 +1600,74 @@ section * {
     color: var(--primary-color);
 }
 
+/* CTA icon buttons (packages & pricing Ready to Book) */
+.btn-cta-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    min-height: 44px;
+}
+
+.btn-cta-whatsapp {
+    background: #25D366;
+    color: #fff;
+    border: none;
+}
+
+.btn-cta-whatsapp:hover {
+    background: #128C7E;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+.btn-cta-phone {
+    background: #007AFF;
+    color: #fff;
+    border: none;
+}
+
+.btn-cta-phone:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
+}
+
+/* Packages CTA (gradient background): outline style */
+.packages-cta-buttons .btn-cta-icon {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--white);
+    border: 2px solid var(--white);
+}
+
+.packages-cta-buttons .btn-cta-whatsapp:hover {
+    background: #25D366;
+    color: #fff;
+    border-color: #25D366;
+}
+
+.packages-cta-buttons .btn-cta-phone:hover {
+    background: #007AFF;
+    color: #fff;
+    border-color: #007AFF;
+}
+
+/* Pricing CTA (white background): solid colors */
+.pricing-cta-buttons .btn-cta-whatsapp {
+    background: #25D366;
+    color: #fff;
+}
+
+.pricing-cta-buttons .btn-cta-phone {
+    background: #007AFF;
+    color: #fff;
+}
+
 .btn-secondary {
     display: inline-block;
     background: var(--white);
@@ -4081,6 +4149,11 @@ section * {
     margin-bottom: 30px;
 }
 
+.footer-contact-heading {
+    margin-top: 1.25rem;
+    margin-bottom: 12px;
+}
+
 .footer-section h3 {
     color: var(--primary-color);
     margin-bottom: 15px;
@@ -4571,8 +4644,20 @@ section * {
     }
 
     .footer-content {
-        grid-template-columns: 1fr;
-        gap: 25px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px 24px;
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+    }
+
+    .footer-quick-links {
+        grid-column: 1;
+    }
+
+    .footer-contact-info {
+        grid-column: 2;
     }
 
     .footer-section h3,
@@ -4827,8 +4912,20 @@ section * {
     }
     
     .footer-content {
-        grid-template-columns: 1fr;
-        gap: 25px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px 20px;
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+    }
+
+    .footer-quick-links {
+        grid-column: 1;
+    }
+
+    .footer-contact-info {
+        grid-column: 2;
     }
 
     .footer-section h3 {
@@ -4836,7 +4933,7 @@ section * {
     }
 
     .footer-section h4 {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 
     .footer-section ul {
