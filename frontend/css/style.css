@@ -4178,11 +4178,11 @@ section * {
     margin-bottom: 10px;
 }
 
-/* Quick Links - glassmorphism modern design */
+/* Quick Links */
 .quick-links-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .quick-links-list li {
@@ -4191,23 +4191,16 @@ section * {
 
 .quick-link-item {
     display: block;
-    padding: 12px 18px;
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 10px;
-    color: rgba(255, 255, 255, 0.9) !important;
+    padding: 8px 0;
+    color: rgba(255, 255, 255, 0.85) !important;
     text-decoration: none;
     font-weight: 500;
     font-size: 0.95rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: color 0.3s ease;
 }
 
 .quick-link-item:hover {
-    background: rgba(255, 255, 255, 0.14);
-    color: var(--white) !important;
+    color: var(--primary-color) !important;
 }
 
 /* Footer email link */
