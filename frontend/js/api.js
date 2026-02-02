@@ -664,11 +664,10 @@ const Render = {
             });
             console.log('✅ Updated footer contact info');
         }
-        // Update footer email link
-        const footerEmail = document.querySelector('.footer-email');
-        if (footerEmail && settings.email) {
-            footerEmail.textContent = settings.email;
-            footerEmail.href = `mailto:${settings.email}`;
+        // Update footer mail link href
+        const mailLink = document.querySelector('.mail-footer-link');
+        if (mailLink && settings.email) {
+            mailLink.href = `mailto:${settings.email}`;
         }
         // Update "Visit Us" link with admin map coordinates
         const visitLinks = document.querySelectorAll('.btn-visit-footer');

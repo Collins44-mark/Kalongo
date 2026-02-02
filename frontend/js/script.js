@@ -493,6 +493,72 @@ document.addEventListener('click', (e) => {
     if (e.target.classList.contains('whatsapp-modal-overlay')) {
         closeWhatsAppModal();
     }
+    if (e.target.classList.contains('call-modal-overlay')) {
+        closeCallModal();
+    }
+});
+
+// Call Modal - shows Call/Cancel when tapping Call Us
+let callModalTelUrl = null;
+
+function showCallModal(telUrl) {
+    callModalTelUrl = telUrl;
+    const rawNumber = (telUrl || '').replace(/^tel:/i, '').replace(/\s/g, '').trim();
+    const displayNumber = rawNumber.startsWith('+') && rawNumber.length >= 12
+        ? `${rawNumber.slice(0, 4)} ${rawNumber.slice(4, 7)} ${rawNumber.slice(7, 10)} ${rawNumber.slice(10)}`
+        : rawNumber;
+
+    const modalOverlay = document.createElement('div');
+    modalOverlay.className = 'call-modal-overlay';
+    modalOverlay.innerHTML = `
+        <div class="call-modal">
+            <div class="call-modal-header">
+                <h3>📞 Call Us</h3>
+                <button class="call-modal-close" aria-label="Close">&times;</button>
+            </div>
+            <div class="call-modal-body">
+                <p class="call-modal-number">${displayNumber}</p>
+                <p class="call-modal-note">Allow this site to make a phone call?</p>
+                <div class="call-modal-actions">
+                    <button type="button" class="btn-primary call-modal-btn call-confirm-btn">Call</button>
+                    <button type="button" class="btn-secondary call-modal-btn call-cancel-btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    modalOverlay.querySelector('.call-modal-close').addEventListener('click', closeCallModal);
+    modalOverlay.querySelector('.call-cancel-btn').addEventListener('click', closeCallModal);
+    modalOverlay.querySelector('.call-confirm-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        closeCallModal();
+        window.location.href = telUrl;
+    });
+
+    document.body.appendChild(modalOverlay);
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCallModal() {
+    const modal = document.querySelector('.call-modal-overlay');
+    if (modal) {
+        modal.style.opacity = '0';
+        setTimeout(() => {
+            modal.remove();
+            document.body.style.overflow = '';
+        }, 300);
+    }
+    callModalTelUrl = null;
+}
+
+// Intercept tel: links to show call modal (event delegation for dynamic content)
+document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href^="tel:"]');
+    if (link) {
+        e.preventDefault();
+        const telUrl = link.getAttribute('href');
+        if (telUrl) showCallModal(telUrl);
+    }
 });
 
 // Auto-fill form from chatbot

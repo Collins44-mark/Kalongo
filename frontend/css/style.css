@@ -4204,15 +4204,31 @@ section * {
     transform: scale(0.98);
 }
 
-/* Footer email link */
-.footer-email {
+/* Mail footer link (IG style) */
+.mail-footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     color: rgba(255, 255, 255, 0.85) !important;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    padding: 5px 0;
 }
 
-.footer-email:hover {
-    color: var(--primary-color) !important;
+.mail-footer-link:hover {
+    color: #EA4335 !important;
+    transform: translateX(5px);
+}
+
+.mail-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transition: all 0.3s ease;
+}
+
+.mail-footer-link:hover .mail-icon {
+    transform: scale(1.1);
 }
 
 .footer-section a {
@@ -6077,6 +6093,129 @@ section * {
     }
     
     .whatsapp-modal-btn {
+        width: 100%;
+    }
+}
+
+/* Call Modal - Call Us confirmation */
+.call-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 20px;
+    transition: opacity 0.3s ease;
+}
+
+.call-modal {
+    background: var(--white);
+    border-radius: 16px;
+    max-width: 380px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.call-modal-header {
+    background: linear-gradient(135deg, #007AFF, #0056b3);
+    color: var(--white);
+    padding: 20px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.call-modal-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.call-modal-close {
+    background: transparent;
+    border: none;
+    color: var(--white);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 8px;
+    line-height: 1;
+}
+
+.call-modal-close:hover {
+    opacity: 0.8;
+}
+
+.call-modal-body {
+    padding: 30px 25px;
+    text-align: center;
+}
+
+.call-modal-number {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0 0 12px 0;
+}
+
+.call-modal-note {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin: 0 0 25px 0;
+}
+
+.call-modal-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.call-modal-btn {
+    padding: 12px 30px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.call-modal-btn.btn-primary {
+    background: #007AFF;
+    color: var(--white);
+}
+
+.call-modal-btn.btn-primary:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+}
+
+.call-modal-btn.btn-secondary {
+    background: var(--bg-light);
+    color: var(--text-dark);
+    border: 2px solid var(--border);
+}
+
+.call-modal-btn.btn-secondary:hover {
+    background: var(--border);
+}
+
+@media (max-width: 480px) {
+    .call-modal {
+        max-width: 100%;
+    }
+
+    .call-modal-actions {
+        flex-direction: column;
+    }
+
+    .call-modal-btn {
         width: 100%;
     }
 }
