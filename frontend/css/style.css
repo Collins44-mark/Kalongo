@@ -289,22 +289,27 @@ table {
 .btn-visit-footer {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 16px;
+    gap: 8px;
+    padding: 10px 20px;
     background: var(--primary-color);
     color: var(--white) !important;
-    border-radius: 8px;
+    border-radius: 10px;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 0.9rem;
-    transition: background 0.2s, transform 0.2s;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
     min-height: 44px;
     min-width: 44px;
     box-sizing: border-box;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.35);
 }
 .btn-visit-footer:hover {
     background: var(--primary-dark);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.45);
+}
+.btn-visit-footer .visit-icon {
+    flex-shrink: 0;
 }
 
 .instagram-link {
@@ -4171,6 +4176,52 @@ section * {
 
 .footer-section ul li {
     margin-bottom: 10px;
+}
+
+/* Quick Links - glassmorphism modern design */
+.quick-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.quick-links-list li {
+    margin-bottom: 0;
+}
+
+.quick-link-item {
+    display: block;
+    padding: 12px 18px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.quick-link-item:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--white) !important;
+    transform: translateX(4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Footer email link */
+.footer-email {
+    color: rgba(255, 255, 255, 0.85) !important;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-email:hover {
+    color: var(--primary-color) !important;
 }
 
 .footer-section a {

@@ -661,16 +661,14 @@ const Render = {
                 if (li.textContent.includes('Phone:')) {
                     li.textContent = `Phone: ${settings.phone}`;
                 }
-                if (li.textContent.includes('Email:')) {
-                    li.textContent = `Email: ${settings.email || ''}`;
-                }
             });
             console.log('✅ Updated footer contact info');
         }
-        // Update footer address (Location text)
-        const footerAddress = document.querySelector('.footer-address');
-        if (footerAddress && settings.address) {
-            footerAddress.textContent = settings.address;
+        // Update footer email link
+        const footerEmail = document.querySelector('.footer-email');
+        if (footerEmail && settings.email) {
+            footerEmail.textContent = settings.email;
+            footerEmail.href = `mailto:${settings.email}`;
         }
         // Update "Visit Us" link with admin map coordinates
         const visitLinks = document.querySelectorAll('.btn-visit-footer');
