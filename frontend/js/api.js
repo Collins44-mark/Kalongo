@@ -667,6 +667,18 @@ const Render = {
             });
             console.log('✅ Updated footer contact info');
         }
+        // Update footer address (Location text)
+        const footerAddress = document.querySelector('.footer-address');
+        if (footerAddress && settings.address) {
+            footerAddress.textContent = settings.address;
+        }
+        // Update "Visit Us" link with admin map coordinates
+        const visitLinks = document.querySelectorAll('.btn-visit-footer');
+        const coords = (settings.map_coordinates || '-9.1379842,33.5286078').trim().replace(/\s+/g, '');
+        const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(coords)}`;
+        visitLinks.forEach(a => {
+            a.href = mapsUrl;
+        });
         
         // Store for other uses
         window.siteSettings = settings;

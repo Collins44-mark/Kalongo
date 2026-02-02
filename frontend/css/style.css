@@ -281,6 +281,32 @@ table {
     display: none;
 }
 
+/* Visit Us in footer (below Location) */
+.footer-visit-li {
+    list-style: none;
+    margin-top: 0.5rem;
+}
+.btn-visit-footer {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--primary-color);
+    color: var(--white) !important;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: background 0.2s, transform 0.2s;
+    min-height: 44px;
+    min-width: 44px;
+    box-sizing: border-box;
+}
+.btn-visit-footer:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
 .instagram-link {
     color: var(--text-dark) !important;
     transition: all 0.3s ease;

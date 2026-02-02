@@ -910,7 +910,7 @@ def review_delete(pk):
 def settings():
     s = get_session()
     try:
-        keys = ["phone", "whatsapp", "email", "address", "instagram", "facebook", "logo_url", "about_text", "show_prices"]
+        keys = ["phone", "whatsapp", "email", "address", "instagram", "facebook", "logo_url", "about_text", "show_prices", "map_coordinates"]
         if request.method == "POST":
             clear_settings_cache()  # Clear cache on update
             for k in keys:
@@ -933,7 +933,7 @@ def settings():
         # Fill missing keys
         for key in keys:
             if key not in settings_map:
-                settings_map[key] = "false" if key == "show_prices" else ""
+                settings_map[key] = "false" if key == "show_prices" else ("" if key != "map_coordinates" else "-9.1379842,33.5286078")
         return render_template("admin/settings.html", settings=settings_map, keys=keys)
     except Exception as e:
         s.rollback()

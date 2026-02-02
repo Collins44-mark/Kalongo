@@ -150,11 +150,12 @@ def seed_site_settings():
     defaults = [
         ("phone", "+255 xxx xxx xxx"),
         ("email", "info@kalongofarm.com"),
-        ("address", "KIWIRA TUKUYU, Mbeya Region, Tanzania"),
+        ("address", "ibulla village, Kiwira, Tukuyu -Mbeya, Tanzania"),
         ("instagram", "https://instagram.com/kalongofarm"),
         ("facebook", "https://facebook.com/kalongofarm"),
         ("logo_url", "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769261545/logo_xgfgcj.jpg"),
         ("show_prices", "false"),  # Admin toggle: false = prices hidden on web by default
+        ("map_coordinates", "-9.1379842,33.5286078"),  # For "Visit Us" Google Maps directions link
     ]
     try:
         for key, value in defaults:
