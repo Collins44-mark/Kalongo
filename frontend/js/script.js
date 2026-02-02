@@ -493,9 +493,6 @@ document.addEventListener('click', (e) => {
     if (e.target.classList.contains('whatsapp-modal-overlay')) {
         closeWhatsAppModal();
     }
-    if (e.target.classList.contains('call-modal-overlay')) {
-        closeCallModal();
-    }
 });
 
 // Call Modal - shows Call/Cancel when tapping Call Us
@@ -512,22 +509,17 @@ function showCallModal(telUrl) {
     modalOverlay.className = 'call-modal-overlay';
     modalOverlay.innerHTML = `
         <div class="call-modal">
-            <div class="call-modal-header">
-                <h3>📞 Call Us</h3>
-                <button class="call-modal-close" aria-label="Close">&times;</button>
-            </div>
             <div class="call-modal-body">
                 <p class="call-modal-number">${displayNumber}</p>
-                <p class="call-modal-note">Allow this site to make a phone call?</p>
                 <div class="call-modal-actions">
-                    <button type="button" class="btn-primary call-modal-btn call-confirm-btn">Call</button>
-                    <button type="button" class="btn-secondary call-modal-btn call-cancel-btn">Cancel</button>
+                    <button type="button" class="call-modal-btn call-confirm-btn">Call</button>
+                    <button type="button" class="call-modal-btn call-cancel-btn">Cancel</button>
                 </div>
             </div>
         </div>
     `;
 
-    modalOverlay.querySelector('.call-modal-close').addEventListener('click', closeCallModal);
+    modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeCallModal(); });
     modalOverlay.querySelector('.call-cancel-btn').addEventListener('click', closeCallModal);
     modalOverlay.querySelector('.call-confirm-btn').addEventListener('click', (e) => {
         e.preventDefault();
