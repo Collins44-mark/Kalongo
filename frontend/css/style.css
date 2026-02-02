@@ -4136,6 +4136,64 @@ section * {
     transform: scale(1.1);
 }
 
+/* WhatsApp footer link button */
+.whatsapp-footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #25D366;
+    color: #fff !important;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    min-height: 44px;
+}
+
+.whatsapp-footer-link:hover {
+    background: #128C7E;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+}
+
+.whatsapp-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    flex-shrink: 0;
+}
+
+/* Phone footer link button */
+.phone-footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #007AFF;
+    color: #fff !important;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    min-height: 44px;
+}
+
+.phone-footer-link:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4);
+}
+
+.phone-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    flex-shrink: 0;
+}
+
 .footer-bottom {
     text-align: center;
     padding-top: 20px;

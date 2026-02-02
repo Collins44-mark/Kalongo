@@ -70,7 +70,7 @@ const HOTEL_DATA = {
         checkIn: '2:00 PM',
         checkOut: '11:00 AM',
         location: 'ibulla village, Kiwira, Tukuyu -Mbeya,Tanzania',
-        phone: '+255 714 706 101',
+        phone: '+255 798 924 280',
         email: 'info@kalongogroup.co.tz',
         whatsapp: '+255 653 626 410'
     },

@@ -377,7 +377,7 @@ def migrate_site_settings():
     print("Updating site settings...")
     settings_to_update = {
         "logo_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769261545/logo_xgfgcj.jpg",
-        "phone": "+255 714 706 101",
+        "phone": "+255 798 924 280",
         "whatsapp": "+255 653 626 410",
         "email": "info@kalongogroup.co.tz",
         "address": "ibulla village, Kiwira, Tukuyu -Mbeya, Tanzania",

@@ -148,7 +148,7 @@ def seed_site_settings():
     Session = sessionmaker(bind=engine)
     session = Session()
     defaults = [
-        ("phone", "+255 xxx xxx xxx"),
+        ("phone", "+255 798 924 280"),
         ("email", "info@kalongofarm.com"),
         ("address", "ibulla village, Kiwira, Tukuyu -Mbeya, Tanzania"),
         ("instagram", "https://instagram.com/kalongofarm"),
