@@ -378,12 +378,15 @@ table {
     overflow: hidden;
 }
 
-/* Laptop/desktop: full responsive hero, show images fully */
+/* Laptop/desktop: full-viewport hero, background covers properly */
 @media (min-width: 1025px) {
     .hero {
-        min-height: 70vh;
-        height: 70vh;
-        max-height: 90vh;
+        min-height: 100vh !important;
+        height: 100vh !important;
+        max-height: none !important;
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat;
     }
 }
 
@@ -1215,11 +1218,12 @@ section * {
 
 @media (min-width: 1025px) {
     .pricing-hero {
-        min-height: 50vh;
-        height: 50vh;
-        max-height: 70vh;
-        background-size: cover;
-        background-position: center center;
+        min-height: 100vh !important;
+        height: 100vh !important;
+        max-height: none !important;
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat;
     }
 }
 
@@ -2814,11 +2818,12 @@ section * {
 
 @media (min-width: 1025px) {
     .activities-hero {
-        min-height: 50vh;
-        height: 50vh;
-        max-height: 70vh;
-        background-size: cover;
-        background-position: center center;
+        min-height: 100vh !important;
+        height: 100vh !important;
+        max-height: none !important;
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat;
     }
 }
 
@@ -3259,11 +3264,12 @@ section * {
 
 @media (min-width: 1025px) {
     .booking-hero {
-        min-height: 50vh;
-        height: 50vh;
-        max-height: 70vh;
-        background-size: cover;
-        background-position: center center;
+        min-height: 100vh !important;
+        height: 100vh !important;
+        max-height: none !important;
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat;
     }
 }
 
@@ -6111,14 +6117,13 @@ input[type="phone"] {
 
 /* ===== Fix Hero Background Responsiveness on PC ===== */
 @media (min-width: 1025px) {
-    .hero {
-        background-size: cover !important;
-        background-position: center center !important;
-        background-attachment: scroll;
-        background-repeat: no-repeat;
+    .hero-slider {
+        min-height: 100%;
+        height: 100%;
     }
     
     .hero-slide {
+        min-height: 100%;
         background-size: cover !important;
         background-position: center center !important;
     }
