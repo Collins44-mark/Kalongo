@@ -90,7 +90,6 @@ body.eco-luxury {
 
 /* —— Section spacing —— */
 @media (max-width: 899px) {
-  #about.packages-page,
   #rooms.lux-rooms-section,
   #facilities.lux-facilities-section,
   #reviews.lux-reviews-section,
@@ -317,15 +316,11 @@ body.eco-luxury {
   }
 }
 
-/* —— About —— */
+/* —— About (mobile compact — details in eco-about-section.css) —— */
 @media (max-width: 899px) {
-  #about .about-luxury-stats {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-  }
-
-  #about .about-luxury-wrap {
-    padding: 1.25rem !important;
+  #about.packages-page {
+    padding-top: clamp(2rem, 5vw, 2.75rem) !important;
+    padding-bottom: clamp(2rem, 5vw, 2.75rem) !important;
   }
 }
 

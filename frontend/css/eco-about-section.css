@@ -318,20 +318,222 @@
   display: none !important;
 }
 
-/* Mobile: image on top */
+/* —— Mobile only (≤899px): compact stacked layout — desktop unchanged above —— */
 @media (max-width: 899px) {
+  #about.packages-page {
+    padding: clamp(2rem, 5vw, 2.75rem) 0 !important;
+    overflow-x: hidden;
+  }
+
+  #about .container {
+    padding-left: clamp(0.85rem, 4vw, 1.15rem);
+    padding-right: clamp(0.85rem, 4vw, 1.15rem);
+  }
+
+  #about .about-luxury-wrap {
+    padding: 0 !important;
+  }
+
   #about .about-luxury-grid {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: clamp(0.65rem, 2.5vw, 0.9rem);
+    width: 100%;
+    max-width: 100%;
   }
-  #about .about-lux-visual {
-    order: -1;
-    min-height: 320px;
+
+  /* Flatten card so children reorder: heading → image → text → stats */
+  #about .about-lux-card {
+    display: contents;
   }
-  #about .about-lux-visual img {
-    min-height: 320px;
+
+  #about .about-lux-label {
+    order: 1;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 0.35rem;
+    font-size: clamp(0.8rem, 2.6vw, 0.95rem);
   }
+
+  #about .about-lux-label-line {
+    max-width: 40px;
+  }
+
   #about .about-lux-title {
-    font-size: clamp(2rem, 9vw, 2.625rem);
+    order: 2;
+    align-items: center;
+    text-align: center;
+    font-size: clamp(1.25rem, 5vw, 1.65rem);
+    line-height: 1.12;
+    gap: 0.05em;
+  }
+
+  #about .about-lux-divider {
+    order: 3;
+    margin: 0.35rem auto 0;
+    max-width: min(180px, 55vw);
+  }
+
+  #about .about-lux-subtitle {
+    order: 4;
+    text-align: center;
+    margin: 0.35rem auto 0;
+    max-width: min(100%, 30ch);
+    font-size: clamp(0.78rem, 2.6vw, 0.92rem);
+    line-height: 1.45;
+  }
+
+  #about .about-lux-visual {
+    order: 5;
+    width: 100%;
+    max-width: 100%;
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+    max-height: clamp(160px, 42vw, 200px);
+    border-radius: 18px;
+    border: 1px solid rgba(159, 232, 112, 0.2);
+    box-shadow:
+      0 8px 24px rgba(0, 0, 0, 0.4),
+      0 0 18px rgba(159, 232, 112, 0.08);
+  }
+
+  #about .about-lux-visual img {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    max-height: clamp(160px, 42vw, 200px);
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: 18px;
+  }
+
+  #about .about-description-modern {
+    order: 6;
+    width: 100%;
+    max-width: min(100%, 34ch);
+    margin: 0.25rem auto 0;
+    padding: clamp(0.7rem, 3vw, 0.9rem) clamp(0.85rem, 3.5vw, 1rem) !important;
+    text-align: center;
+    border-radius: 16px !important;
+    border: 1px solid rgba(120, 255, 120, 0.14) !important;
+    box-shadow: 0 0 16px rgba(145, 255, 90, 0.06) !important;
+  }
+
+  #about .about-description-modern p {
+    font-size: clamp(0.76rem, 2.5vw, 0.86rem) !important;
+    line-height: 1.55 !important;
+    text-align: center !important;
+    max-width: 32ch;
+    margin: 0 auto;
+  }
+
+  #about .about-lux-stats {
+    order: 7;
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    margin: 0.5rem 0 0;
+    padding: 0.55rem !important;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(159, 232, 112, 0.1);
+  }
+
+  #about .about-lux-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 72px;
+    padding: 0.45rem 0.3rem;
+    border-radius: 14px;
+    background: rgba(10, 16, 12, 0.55);
+    border: 1px solid rgba(159, 232, 112, 0.1);
+  }
+
+  #about .about-lux-stat-item:not(:last-child) {
+    border-right: none !important;
+  }
+
+  #about .about-lux-stat-item:hover {
+    transform: none;
+  }
+
+  #about .about-lux-stat-icon {
+    font-size: 0.9rem;
+    margin-bottom: 0.15rem;
+  }
+
+  #about .about-lux-stat-num {
+    font-size: clamp(0.95rem, 3.2vw, 1.1rem);
+  }
+
+  #about .about-lux-stat-label {
+    font-size: clamp(0.52rem, 1.8vw, 0.6rem);
+    letter-spacing: 0.04em;
+    margin-top: 0.15rem;
+  }
+}
+
+/* Fine-tune common mobile widths */
+@media (max-width: 430px) {
+  #about .about-lux-visual,
+  #about .about-lux-visual img {
+    max-height: clamp(150px, 40vw, 185px);
+  }
+
+  #about .about-description-modern p {
+    -webkit-line-clamp: 7;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 390px) {
+  #about.packages-page {
+    padding: 1.85rem 0 !important;
+  }
+
+  #about .about-luxury-grid {
+    gap: 0.6rem;
+  }
+
+  #about .about-lux-stats {
+    gap: 8px !important;
+  }
+
+  #about .about-lux-stat-item {
+    min-height: 68px;
+  }
+}
+
+@media (max-width: 375px) {
+  #about .about-lux-title {
+    font-size: clamp(1.15rem, 4.8vw, 1.45rem);
+  }
+
+  #about .about-description-modern {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 320px) {
+  #about .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  #about .about-lux-visual,
+  #about .about-lux-visual img {
+    max-height: 150px;
+    border-radius: 14px;
+  }
+
+  #about .about-lux-stat-item {
+    min-height: 64px;
+    padding: 0.4rem 0.25rem;
   }
 }
