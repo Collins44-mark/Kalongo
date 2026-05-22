@@ -1128,6 +1128,14 @@ def restaurant_menu_category_edit(pk):
         if request.method == "POST":
             cat.name = request.form.get("name", "").strip() or cat.name
             cat.order = int(request.form.get("order") or 0)
+            cat.subtitle = request.form.get("subtitle", "").strip() or None
+            cat.icon_key = request.form.get("icon_key", "").strip() or None
+            image_url = request.form.get("image_url", "").strip()
+            f = request.files.get("image")
+            if f and f.filename:
+                image_url = upload_image(f, folder="kalongo/menu-categories")
+            if image_url:
+                cat.image_url = image_url
             s.commit()
             flash("Category updated.", "success")
             return redirect(url_for("admin.restaurant_menu_list"))

@@ -16,11 +16,13 @@
 <div class="card">
     <h3 style="margin-bottom: 1rem;">Categories</h3>
     <table>
-        <thead><tr><th>Name</th><th>Items</th><th>Order</th><th>Actions</th></tr></thead>
+        <thead><tr><th>Image</th><th>Name</th><th>Subtitle</th><th>Items</th><th>Order</th><th>Actions</th></tr></thead>
         <tbody>
             {% for c in categories %}
             <tr>
+                <td>{% if c.image_url %}<img src="{{ c.image_url }}" alt="" style="width:48px;height:36px;object-fit:cover;border-radius:6px;">{% else %}—{% endif %}</td>
                 <td>{{ c.name }}</td>
+                <td style="max-width:180px;font-size:0.85rem;color:var(--text-muted);">{{ c.subtitle or '—' }}</td>
                 <td>{{ c.items|length }}</td>
                 <td>{{ c.order }}</td>
                 <td class="actions">
@@ -32,7 +34,7 @@
                 </td>
             </tr>
             {% else %}
-            <tr><td colspan="4" style="color: var(--text-muted);">No categories yet.</td></tr>
+            <tr><td colspan="6" style="color: var(--text-muted);">No categories yet.</td></tr>
             {% endfor %}
         </tbody>
     </table>

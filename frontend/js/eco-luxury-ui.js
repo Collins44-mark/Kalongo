@@ -17,7 +17,7 @@
 
   function initScrollReveal() {
     const nodes = document.querySelectorAll(
-      '.packages-section-modern, .lux-svc-section, .lux-svc-card, .lux-svc-food-card, .lux-svc-menu-category, .lux-svc-charge-card, .lux-kalongo-reveal, .lux-kalongo-hero, .lux-kalongo-card, .lux-booking-reveal, .lux-booking-feature, .reviews, .room-card, .facility-item, .gallery-item-modern, .eco-video-card, .activity-card-modern, .accommodation-card-modern, .food-card-modern, .activities-group, .about-luxury-wrap, .pricing-hero-content, .activities-hero-content, .booking-hero-content'
+      '.packages-section-modern, .lux-menu-hero-inner, .lux-menu-section-head, .lux-menu-cat-card, .lux-svc-section, .lux-svc-block, .lux-svc-img-card, .lux-svc-charges-panel, .lux-svc-charge-row, .lux-svc-menu-category, .lux-svc-card, .lux-svc-food-card, .lux-svc-charge-card, .lux-kalongo-reveal, .lux-kalongo-hero, .lux-kalongo-card, .lux-booking-reveal, .lux-booking-feature, .reviews, .room-card, .facility-item, .gallery-item-modern, .eco-video-card, .activity-card-modern, .accommodation-card-modern, .food-card-modern, .activities-group, .about-luxury-wrap, .pricing-hero-content, .activities-hero-content, .booking-hero-content, .lux-svc-hero-inner'
     );
     nodes.forEach((el, i) => {
       el.classList.add('eco-reveal');
@@ -227,7 +227,7 @@
   }
 
   function observeDynamicContent() {
-    ['heroSlidesRendered', 'roomsRendered', 'reviewsRendered'].forEach((ev) => {
+    ['heroSlidesRendered', 'roomsRendered', 'reviewsRendered', 'servicesPageRendered'].forEach((ev) => {
       window.addEventListener(ev, () => {
         initAboutImage();
         initImageShimmer();

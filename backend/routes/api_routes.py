@@ -243,6 +243,9 @@ def get_restaurant_menu():
             result.append({
                 "id": cat.id,
                 "name": cat.name,
+                "subtitle": cat.subtitle or "",
+                "image_url": cat.image_url or "",
+                "icon_key": cat.icon_key or "",
                 "order": cat.order,
                 "items": sorted([{
                     "id": item.id,

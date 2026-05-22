@@ -15,8 +15,8 @@
 .eco-luxury .packages-page,
 .eco-luxury .reviews,
 .eco-luxury .activities-page,
-.eco-luxury section {
-  background: transparent !important;
+.eco-luxury section:not(.pricing-hero):not(.booking-hero):not(.activities-hero):not(.hero) {
+  background-color: transparent !important;
 }
 
 /* Kill invisible gradient titles from style.css */

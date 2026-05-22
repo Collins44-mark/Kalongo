@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
     <meta name="google-site-verification" content="YIvETtuTclTrb493UgS0TfH2lKfrJNxB37uHVJ-Nafs" />
-    <meta name="description" content="Our Services - KALONGO FARM accommodations, activities, restaurant menu and more">
+    <meta name="description" content="Our Services - KALONGO FARM restaurant menu, food and drinks">
     <title>Our Services - KALONGO FARM</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/eco-luxury.css">
     <link rel="stylesheet" href="css/eco-brand-logo.css">
     <link rel="stylesheet" href="css/eco-moodboard.css">
-    <link rel="stylesheet" href="css/eco-services-section.css">
+    <link rel="stylesheet" href="css/eco-menu-showcase.css">
     <link rel="stylesheet" href="css/eco-whatsapp-fab.css">
     <link rel="stylesheet" href="css/eco-footer-section.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/eco-responsive.css">
 </head>
-<body class="eco-luxury lux-services-page">
+<body class="eco-luxury lux-services-page lux-menu-page">
     <header class="header">
         <div class="container">
             <div class="logo-section">
@@ -45,134 +45,59 @@
         </div>
     </header>
 
-    <section class="pricing-hero lux-page-hero" style="background-image: url('https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247395/our-kalongo-hero-background_sedoxy.jpg');">
-        <div class="pricing-hero-content">
-            <h1 class="pricing-hero-title">Our Services</h1>
-            <p class="pricing-hero-subtitle">Services and amenities to complement your stay</p>
+    <section class="lux-menu-hero" aria-labelledby="lux-menu-hero-title">
+        <div class="lux-menu-hero-bg" aria-hidden="true"></div>
+        <div class="lux-menu-hero-glow" aria-hidden="true"></div>
+        <div class="lux-menu-hero-inner is-visible">
+            <p class="lux-menu-hero-eyebrow"><span aria-hidden="true">❋</span> Our Services <span aria-hidden="true">❋</span></p>
+            <h1 id="lux-menu-hero-title" class="lux-menu-hero-title">
+                <span class="lux-menu-hero-line lux-menu-hero-line--white">Experience Nature,</span>
+                <span class="lux-menu-hero-line lux-menu-hero-line--green">Comfort &amp; Hospitality</span>
+            </h1>
+            <p class="lux-menu-hero-sub">Discover a wide range of services designed to give you a memorable and authentic farm stay.</p>
+            <div class="lux-menu-hero-divider" aria-hidden="true"><span>❋</span></div>
         </div>
     </section>
 
-    <main class="lux-services-main packages-page" id="services">
-        <div class="lux-services-inner">
-            <header class="lux-svc-page-header lux-svc-page-header--below-hero">
-                <span class="lux-svc-eyebrow">Kalongo Farm</span>
-                <div class="lux-svc-divider" aria-hidden="true">
-                    <span class="lux-svc-divider-icon">❧</span>
-                </div>
+    <main class="lux-menu-main" id="services">
+        <div class="lux-menu-inner">
+            <header class="lux-menu-section-head is-visible">
+                <h2 class="lux-menu-section-title">Restaurant Menu</h2>
+                <p class="lux-menu-section-sub">Click on any category to explore our menu</p>
             </header>
 
-            <section class="lux-svc-section packages-section-modern" aria-labelledby="svc-acc-title">
-                <div class="lux-svc-section-head">
-                    <h2 id="svc-acc-title" class="lux-svc-section-title">Accommodation (Bed &amp; Breakfast)</h2>
-                    <div class="lux-svc-section-divider" aria-hidden="true"></div>
-                    <p class="lux-svc-section-desc">Comfortable rooms with breakfast included</p>
-                </div>
-                <div class="lux-svc-premium-grid accommodation-grid-modern" data-svc="accommodation"></div>
+            <section class="lux-menu-group" aria-labelledby="lux-menu-food-title">
+                <h3 id="lux-menu-food-title" class="lux-menu-group-title">Food Menu</h3>
+                <div class="lux-menu-cat-grid" id="luxMenuFoodGrid" data-menu-group="food"></div>
             </section>
 
-            <section class="lux-svc-section packages-section-modern" aria-labelledby="svc-act-title">
-                <div class="lux-svc-section-head">
-                    <h2 id="svc-act-title" class="lux-svc-section-title">Activities (Per Person)</h2>
-                    <div class="lux-svc-section-divider" aria-hidden="true"></div>
-                    <p class="lux-svc-section-desc">Exciting activities to enhance your farm experience</p>
-                </div>
-                <div class="lux-svc-premium-grid activities-grid-modern" data-svc="activities"></div>
+            <section class="lux-menu-group" aria-labelledby="lux-menu-drinks-title">
+                <h3 id="lux-menu-drinks-title" class="lux-menu-group-title">Drinks Menu</h3>
+                <div class="lux-menu-cat-grid" id="luxMenuDrinksGrid" data-menu-group="drinks"></div>
             </section>
 
-            <section class="lux-svc-section packages-section-modern" aria-labelledby="svc-menu-title">
-                <div class="lux-svc-section-head">
-                    <h2 id="svc-menu-title" class="lux-svc-section-title">Restaurant Menu</h2>
-                    <div class="lux-svc-section-divider" aria-hidden="true"></div>
-                    <p class="lux-svc-section-desc">Delicious meals and beverages for every taste</p>
-                </div>
-                <div class="lux-svc-menu-wrap menu-container"></div>
+            <section class="lux-menu-charges" id="svc-charges" aria-labelledby="svc-charges-title">
+                <h3 id="svc-charges-title" class="lux-menu-group-title">Other Charges</h3>
+                <div class="lux-svc-charges-panel" data-svc="charges"></div>
             </section>
-
-            <section class="lux-svc-section packages-section-modern" aria-labelledby="svc-charges-title">
-                <div class="lux-svc-section-head">
-                    <h2 id="svc-charges-title" class="lux-svc-section-title">Other Charges</h2>
-                    <div class="lux-svc-section-divider" aria-hidden="true"></div>
-                    <p class="lux-svc-section-desc">Additional services and amenities</p>
-                </div>
-                <div class="lux-svc-charges-grid charges-grid-modern">
-                    <div class="lux-svc-charge-card lux-svc-glass">
-                        <span class="lux-svc-charge-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8h16v12H4zM8 8V6a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></span>
-                        <div class="lux-svc-charge-body">
-                            <span class="lux-svc-charge-name">Room service</span>
-                            <span class="lux-svc-charge-price price-display">TZS 5,000</span>
-                        </div>
-                    </div>
-                    <div class="lux-svc-charge-card lux-svc-glass">
-                        <span class="lux-svc-charge-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6zM8 8h8M10 12h4"/></svg></span>
-                        <div class="lux-svc-charge-body">
-                            <span class="lux-svc-charge-name">Laundry (soft clothes)</span>
-                            <span class="lux-svc-charge-price price-display">TZS 2,000 per cloth</span>
-                        </div>
-                    </div>
-                    <div class="lux-svc-charge-card lux-svc-glass">
-                        <span class="lux-svc-charge-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6zM8 8h8M10 12h4"/></svg></span>
-                        <div class="lux-svc-charge-body">
-                            <span class="lux-svc-charge-name">Laundry (hard clothes)</span>
-                            <span class="lux-svc-charge-price price-display">TZS 4,000 per cloth</span>
-                        </div>
-                    </div>
-                    <div class="lux-svc-charge-card lux-svc-glass">
-                        <span class="lux-svc-charge-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M9 17h6M12 5l3 6"/></svg></span>
-                        <div class="lux-svc-charge-body">
-                            <span class="lux-svc-charge-name">Quad bike</span>
-                            <span class="lux-svc-charge-price price-display">TZS 1,000 per minute</span>
-                        </div>
-                    </div>
-                    <div class="lux-svc-charge-card lux-svc-glass">
-                        <span class="lux-svc-charge-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17l4-9 4 4 4-4"/></svg></span>
-                        <div class="lux-svc-charge-body">
-                            <span class="lux-svc-charge-name">Mountain bikes</span>
-                            <span class="lux-svc-charge-price price-display">TZS 20,000</span>
-                        </div>
-                    </div>
-                    <div class="lux-svc-charge-card lux-svc-glass">
-                        <span class="lux-svc-charge-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h4l2-2h4l2 2h4v12H4zM12 11a3 3 0 100 6 3 3 0 000-6z"/></svg></span>
-                        <div class="lux-svc-charge-body">
-                            <span class="lux-svc-charge-name">Photo shooting</span>
-                            <span class="lux-svc-charge-price price-display">TZS 10,000 per person</span>
-                        </div>
-                    </div>
-                    <div class="lux-svc-charge-card lux-svc-glass">
-                        <span class="lux-svc-charge-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h4l2-2h4l2 2h4v12H4zM12 11a3 3 0 100 6 3 3 0 000-6z"/></svg></span>
-                        <div class="lux-svc-charge-body">
-                            <span class="lux-svc-charge-name">Wedding photoshooting</span>
-                            <span class="lux-svc-charge-price price-display">TZS 100,000</span>
-                        </div>
-                    </div>
-                    <div class="lux-svc-charge-card lux-svc-glass">
-                        <span class="lux-svc-charge-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h4l2-2h4l2 2h4v12H4zM12 11a3 3 0 100 6 3 3 0 000-6z"/></svg></span>
-                        <div class="lux-svc-charge-body">
-                            <span class="lux-svc-charge-name">Prewedding photoshooting</span>
-                            <span class="lux-svc-charge-price price-display">TZS 50,000</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <div class="lux-svc-cta-wrap">
-            <div class="packages-cta-modern lux-svc-glass">
-                <h3>Ready to Book Your Stay?</h3>
-                <p>Contact us or book directly through our booking page</p>
-                <div class="packages-cta-buttons">
-                    <a href="/booking.html" class="btn-primary">Book Now</a>
-                    <a href="https://wa.me/255653626410" target="_blank" rel="noopener noreferrer" class="btn-cta-icon btn-cta-whatsapp">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884a11.88 11.88 0 01-5.683-1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 00-3.48-8.413z"/></svg>
-                        WhatsApp
-                    </a>
-                    <a href="tel:+255798924280" class="btn-cta-icon btn-cta-phone">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                        Call
-                    </a>
-                </div>
-            </div>
-            </div>
         </div>
     </main>
+
+    <div class="lux-menu-modal" id="luxMenuModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="luxMenuModalTitle">
+        <div class="lux-menu-modal-backdrop" data-menu-close></div>
+        <div class="lux-menu-modal-panel">
+            <button type="button" class="lux-menu-modal-close" data-menu-close aria-label="Close menu">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+            <button type="button" class="lux-menu-modal-nav lux-menu-modal-nav--prev" id="luxMenuModalPrev" aria-label="Previous category">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button type="button" class="lux-menu-modal-nav lux-menu-modal-nav--next" id="luxMenuModalNext" aria-label="Next category">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+            <div class="lux-menu-modal-body" id="luxMenuModalBody"></div>
+        </div>
+    </div>
 
     <footer class="footer lux-footer">
         <div class="lux-footer-inner">
@@ -245,6 +170,7 @@
     <script src="js/api.js"></script>
     <script src="js/script.js"></script>
     <script src="js/eco-luxury-ui.js"></script>
+    <script src="js/eco-menu-showcase.js"></script>
     <script src="js/eco-whatsapp-fab.js"></script>
 </body>
 </html>

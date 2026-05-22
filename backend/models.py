@@ -177,6 +177,9 @@ class RestaurantMenuCategory(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(150), nullable=False)
+    subtitle = Column(String(300), nullable=True)
+    image_url = Column(String(500), nullable=True)
+    icon_key = Column(String(50), nullable=True)
     order = Column(Integer, default=0)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

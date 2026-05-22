@@ -393,35 +393,21 @@ body.eco-luxury {
 
 /* —— Reviews: mobile compact styles in eco-reviews-section.css —— */
 
-/* —— Services page —— */
+/* —— Menu showcase page —— */
+@media (max-width: 700px) {
+  .lux-menu-page .lux-menu-inner {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .lux-menu-page .lux-menu-modal-panel {
+    border-radius: 18px;
+  }
+}
+
+/* —— Services page (legacy) —— */
 @media (max-width: 899px) {
-  .lux-services-page .lux-svc-premium-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 14px !important;
-  }
-
-  .lux-services-page .lux-svc-card {
-    max-width: none !important;
-    padding: 1.25rem 0.85rem !important;
-  }
-
-  .lux-services-page .lux-svc-card-icon {
-    width: 48px !important;
-    height: 48px !important;
-    margin-bottom: 0.75rem !important;
-  }
-
-  .lux-services-page .lux-svc-menu-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-  }
-
-  .lux-services-page .lux-svc-food-card {
-    max-width: none !important;
-    padding: 0.85rem 0.65rem !important;
-  }
-
-  .lux-services-page .lux-svc-charges-grid {
+  .lux-services-page .lux-svc-img-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 12px !important;
   }
@@ -431,11 +417,16 @@ body.eco-luxury {
     width: 100% !important;
     max-width: 100% !important;
   }
+
+  .lux-services-page .lux-svc-menu-panel {
+    padding: 1rem !important;
+  }
 }
 
 @media (max-width: 380px) {
-  .lux-services-page .lux-svc-menu-grid {
-    grid-template-columns: 1fr !important;
+  .lux-services-page .lux-services-inner {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
   }
 }
 

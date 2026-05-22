@@ -3,10 +3,32 @@
 {% block content %}
 <h2>Edit menu category</h2>
 <div class="card">
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <div class="form-row">
             <div><label>Name</label><input type="text" name="name" value="{{ category.name }}" required></div>
             <div><label>Order</label><input type="number" name="order" value="{{ category.order }}"></div>
+        </div>
+        <div class="form-row">
+            <div style="flex:1;"><label>Subtitle (shown on menu card)</label><input type="text" name="subtitle" value="{{ category.subtitle or '' }}" placeholder="e.g. Fresh farm breakfast selections"></div>
+            <div><label>Icon key</label>
+                <select name="icon_key">
+                    <option value="">— Auto —</option>
+                    {% for key in ['breakfast','main','burger','bbq','salad','other-dish','soft-drink','vodka','liquor','beer','gin','wine','whiskey','other-drink'] %}
+                    <option value="{{ key }}" {% if category.icon_key == key %}selected{% endif %}>{{ key }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div style="flex:1;"><label>Image URL (Cloudinary)</label><input type="url" name="image_url" value="{{ category.image_url or '' }}" placeholder="https://res.cloudinary.com/..."></div>
+        </div>
+        <div style="margin-bottom: 1rem;">
+            <label>Upload category image</label>
+            <input type="file" name="image" accept="image/*">
+            {% if category.image_url %}
+            <p style="margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">Current preview:</p>
+            <img src="{{ category.image_url }}" alt="" style="max-width:220px;border-radius:8px;margin-top:0.25rem;">
+            {% endif %}
         </div>
         <div class="actions">
             <button type="submit" class="btn btn-primary">Save</button>
