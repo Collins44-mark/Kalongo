@@ -211,26 +211,7 @@ html.eco-luxury-scroll { scroll-behavior: smooth; }
   -webkit-backdrop-filter: blur(18px);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
 }
-.eco-luxury .logo-section {
-  background: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  box-shadow: none !important;
-  border: none !important;
-  border-radius: 0 !important;
-}
-.eco-luxury .logo,
-.eco-luxury .logo--transparent {
-  height: 38px !important;
-  width: auto !important;
-  max-width: 110px !important;
-  object-fit: contain !important;
-  background: transparent !important;
-  border: none !important;
-  padding: 0 !important;
-  border-radius: 0 !important;
-  filter: drop-shadow(0 2px 12px rgba(103, 193, 94, 0.25));
-}
+/* Navbar brand: see eco-brand-logo.css */
 .eco-luxury .nav-link {
   color: var(--eco-muted) !important;
   font-weight: 500;

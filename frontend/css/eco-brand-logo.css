@@ -1,0 +1,120 @@
+/**
+ * KALONGO FARM — original PNG logo (white on dark navbar)
+ */
+
+.eco-luxury .logo-section {
+  position: relative;
+  flex: 0 1 auto;
+  min-width: 0;
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.eco-luxury .logo-section .logo-glow {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(182, 255, 92, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.eco-luxury .logo-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+  text-decoration: none;
+}
+
+/* Original logo — force crisp white, transparent, no dark box */
+.eco-luxury .logo,
+.eco-luxury .logo--transparent,
+.eco-luxury #logo {
+  position: relative;
+  z-index: 1;
+  display: block;
+  height: 42px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  object-position: left center;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  /* Dark artwork → clean white */
+  filter: brightness(0) invert(1) drop-shadow(0 2px 14px rgba(182, 255, 92, 0.32));
+  -webkit-filter: brightness(0) invert(1) drop-shadow(0 2px 14px rgba(182, 255, 92, 0.32));
+}
+
+.eco-luxury .logo-link:hover .logo,
+.eco-luxury .logo-link:hover #logo {
+  filter: brightness(0) invert(1) drop-shadow(0 2px 18px rgba(182, 255, 92, 0.48));
+  -webkit-filter: brightness(0) invert(1) drop-shadow(0 2px 18px rgba(182, 255, 92, 0.48));
+}
+
+/* Hide vector brand if present */
+.eco-luxury .lux-brand-logo {
+  display: none !important;
+}
+
+/* Navbar glass + soft green glow */
+.eco-luxury .header > .container {
+  border-color: rgba(182, 255, 92, 0.18) !important;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.38),
+    0 0 28px rgba(182, 255, 92, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+/* Tablet */
+@media (min-width: 600px) and (max-width: 1099px) {
+  .eco-luxury .logo,
+  .eco-luxury #logo {
+    height: 36px;
+    max-width: 120px;
+  }
+
+  .eco-luxury .logo-section .logo-glow {
+    width: 46px;
+    height: 46px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 599px) {
+  .eco-luxury .logo,
+  .eco-luxury #logo {
+    height: clamp(28px, 8vw, 34px);
+    max-width: min(110px, 42vw);
+  }
+
+  .eco-luxury .logo-section .logo-glow {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1100px) {
+  .eco-luxury .logo,
+  .eco-luxury #logo {
+    height: 42px;
+    max-width: 150px;
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .eco-luxury .logo,
+  .eco-luxury #logo {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}

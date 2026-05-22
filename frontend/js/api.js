@@ -959,12 +959,12 @@ const Render = {
     settings: (settings) => {
         console.log('🎨 Rendering settings...', settings);
         
-        // Update logo
-        const logos = document.querySelectorAll('#logo, .logo');
+        // Navbar + footer logos (CSS makes navbar logo white on dark background)
+        const logos = document.querySelectorAll('#logo, .lux-footer-logo');
         console.log('🔍 Found logo elements:', logos.length);
         if (logos.length > 0 && settings.logo_url) {
             const logoSrc = getTransparentLogoUrl(settings.logo_url);
-            logos.forEach(logo => {
+            logos.forEach((logo) => {
                 logo.src = logoSrc;
                 logo.classList.add('logo--transparent');
                 logo.onload = () => console.log('✅ Logo loaded:', settings.logo_url);

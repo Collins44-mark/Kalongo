@@ -152,12 +152,7 @@ body.eco-luxury {
   .eco-luxury .logo-section {
     flex: 0 1 auto;
     min-width: 0;
-  }
-
-  .eco-luxury .logo,
-  .eco-luxury .logo--transparent {
-    height: 32px !important;
-    max-width: 88px !important;
+    max-width: 52%;
   }
 
   .header-mobile-book {
