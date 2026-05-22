@@ -1,14 +1,39 @@
 /**
- * Our Services — interactive restaurant menu showcase
+ * Our Services — restaurant menu showcase (mobile-first cards)
  */
 (function () {
   'use strict';
 
   const SVC_CLOUD = 'https://res.cloudinary.com/dae3rpnmg/image/upload';
+  const CARD_IMG_W = 420;
+  const CARD_IMG_H = 420;
+  const MODAL_IMG_W = 900;
+  const MODAL_IMG_H = 520;
 
-  const DRINK_NAMES = new Set([
-    'soft drinks', 'vodka', 'liquor', 'beer', 'gin', 'wine', 'whiskey', 'other drinks',
-  ]);
+  const FOOD_ORDER = [
+    'breakfast',
+    'main course',
+    'main courses',
+    'burgers & pizza',
+    'burgers & pizzas',
+    'bbq',
+    'salads and juices',
+    'salads & juices',
+    'other dishes',
+  ];
+
+  const DRINKS_ORDER = [
+    'soft drinks',
+    'vodka',
+    'liquor',
+    'beer',
+    'gin',
+    'wine',
+    'whiskey',
+    'other drinks',
+  ];
+
+  const DRINK_NAMES = new Set(DRINKS_ORDER);
 
   const MENU_DEFAULTS = {
     breakfast: {
@@ -25,7 +50,7 @@
     },
     'burgers & pizza': {
       subtitle: 'Crispy, cheesy and delicious',
-      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247205/activities_im4edt.jpg`,
+      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247293/hero-slide3_photno.jpg`,
       icon: 'burger',
       group: 'food',
     },
@@ -37,31 +62,31 @@
     },
     'salads and juices': {
       subtitle: 'Fresh organic healthy choices',
-      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247200/farm-fresh-food_tkrtak.jpg`,
+      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247201/natural-farm_difqzg.jpg`,
       icon: 'salad',
       group: 'food',
     },
     'salads & juices': {
       subtitle: 'Fresh organic healthy choices',
-      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247200/farm-fresh-food_tkrtak.jpg`,
+      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247201/natural-farm_difqzg.jpg`,
       icon: 'salad',
       group: 'food',
     },
     'other dishes': {
       subtitle: 'Tasty side dishes and specials',
-      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247541/cottage-inside1_b6zcxz.jpg`,
+      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247286/hero-slide4_e7hiiy.jpg`,
       icon: 'other-dish',
       group: 'food',
     },
     'soft drinks': {
       subtitle: 'Refreshing chilled beverages',
-      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247489/customer1_expjr7.jpg`,
+      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247283/booking-hero-background_idfar7.jpg`,
       icon: 'soft-drink',
       group: 'drinks',
     },
     vodka: {
       subtitle: 'Premium vodka collection',
-      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247595/kalongo-surroundings1_iha0us.jpg`,
+      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247283/booking-hero-background_idfar7.jpg`,
       icon: 'vodka',
       group: 'drinks',
     },
@@ -73,7 +98,7 @@
     },
     beer: {
       subtitle: 'Local and imported beers',
-      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247489/customer1_expjr7.jpg`,
+      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247283/booking-hero-background_idfar7.jpg`,
       icon: 'beer',
       group: 'drinks',
     },
@@ -91,13 +116,13 @@
     },
     whiskey: {
       subtitle: 'Premium whiskey collection',
-      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247595/kalongo-surroundings1_iha0us.jpg`,
+      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247283/booking-hero-background_idfar7.jpg`,
       icon: 'whiskey',
       group: 'drinks',
     },
     'other drinks': {
       subtitle: 'Special drinks and collections',
-      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247283/booking-hero-background_idfar7.jpg`,
+      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247284/hero-slide2_f67kon.jpg`,
       icon: 'other-drink',
       group: 'drinks',
     },
@@ -130,10 +155,30 @@
     { title: 'Prewedding Photos', subtitle: 'Full session', price: 'TZS 50,000' },
   ];
 
+  const FALLBACK_NAMES = {
+    breakfast: 'Breakfast',
+    'main course': 'Main Course',
+    'burgers & pizza': 'Burgers & Pizza',
+    bbq: 'BBQ',
+    'salads and juices': 'Salads & Juices',
+    'other dishes': 'Other Dishes',
+    'soft drinks': 'Soft Drinks',
+    vodka: 'Vodka',
+    liquor: 'Liquor',
+    beer: 'Beer',
+    gin: 'Gin',
+    wine: 'Wine',
+    whiskey: 'Whiskey',
+    'other drinks': 'Other Drinks',
+  };
+
   let categories = [];
   let activeIndex = 0;
   let showPrices = true;
   let pollTimer = null;
+  let lastMenuHash = '';
+  let hasRendered = false;
+  let isLoading = false;
 
   function esc(text) {
     return String(text || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -141,6 +186,21 @@
 
   function normName(name) {
     return (name || '').trim().toLowerCase();
+  }
+
+  function orderRank(name, orderList) {
+    const key = normName(name);
+    let idx = orderList.indexOf(key);
+    if (idx >= 0) return idx;
+    if (key.includes('burger')) idx = orderList.indexOf('burgers & pizza');
+    if (idx < 0 && key.includes('salad')) idx = orderList.indexOf('salads & juices');
+    if (idx < 0 && key.includes('main')) idx = orderList.indexOf('main course');
+    return idx >= 0 ? idx : 999;
+  }
+
+  function sortByGroup(list, group) {
+    const order = group === 'drinks' ? DRINKS_ORDER : FOOD_ORDER;
+    return [...list].sort((a, b) => orderRank(a.name, order) - orderRank(b.name, order));
   }
 
   function catMeta(cat) {
@@ -160,28 +220,60 @@
     return `<span class="lux-menu-cat-icon" aria-hidden="true">${ICONS[key] || ICONS.main}</span>`;
   }
 
-  function optimizeImg(url) {
-    if (!url || typeof optimizeCloudinaryUrl !== 'function') return url;
-    return optimizeCloudinaryUrl(url, 900, 600, 'auto', 'auto');
+  function optimizeImg(url, w, h) {
+    if (!url) return url;
+    if (typeof optimizeCloudinaryUrl === 'function') {
+      return optimizeCloudinaryUrl(url, w, h, 'auto', 'auto');
+    }
+    return url;
+  }
+
+  function skeletonCardHtml() {
+    return `
+      <div class="lux-menu-cat-card lux-menu-cat-card--skeleton" aria-hidden="true">
+        <div class="lux-menu-cat-card-inner">
+          <div class="lux-menu-cat-card-content">
+            <span class="lux-menu-skel-line" style="width:22px;height:22px;border-radius:6px"></span>
+            <span class="lux-menu-skel-line lux-menu-skel-line--title"></span>
+            <span class="lux-menu-skel-line lux-menu-skel-line--sub"></span>
+            <span class="lux-menu-skel-line lux-menu-skel-line--cta"></span>
+          </div>
+          <div class="lux-menu-cat-card-media"></div>
+        </div>
+      </div>`;
+  }
+
+  function showSkeletons(foodEl, drinksEl) {
+    if (foodEl) foodEl.innerHTML = Array(6).fill(skeletonCardHtml()).join('');
+    if (drinksEl) drinksEl.innerHTML = Array(8).fill(skeletonCardHtml()).join('');
   }
 
   function cardHtml(cat, index) {
     const meta = catMeta(cat);
-    const img = esc(optimizeImg(meta.image));
+    const img = esc(optimizeImg(meta.image, CARD_IMG_W, CARD_IMG_H));
     const title = esc((cat.name || '').toUpperCase());
     return `
-      <button type="button" class="lux-menu-cat-card is-visible" data-menu-index="${index}" aria-label="View ${esc(cat.name)} menu">
-        <div class="lux-menu-cat-card-media">
-          <img src="${img}" alt="${esc(cat.name)}" loading="lazy" decoding="async">
-          <div class="lux-menu-cat-card-shade" aria-hidden="true"></div>
-        </div>
-        <div class="lux-menu-cat-card-body">
-          ${iconHtml(meta.icon)}
-          <h4 class="lux-menu-cat-name">${title}</h4>
-          <p class="lux-menu-cat-sub">${esc(meta.subtitle)}</p>
-          <span class="lux-menu-cat-cta">View Menu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      <button type="button" class="lux-menu-cat-card" data-menu-index="${index}" aria-label="View ${esc(cat.name)} menu">
+        <div class="lux-menu-cat-card-inner">
+          <div class="lux-menu-cat-card-content">
+            ${iconHtml(meta.icon)}
+            <h4 class="lux-menu-cat-name">${title}</h4>
+            <p class="lux-menu-cat-sub">${esc(meta.subtitle)}</p>
+            <span class="lux-menu-cat-cta">View Menu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+          <div class="lux-menu-cat-card-media">
+            <img src="${img}" alt="" width="${CARD_IMG_W}" height="${CARD_IMG_H}" loading="lazy" decoding="async">
+            <div class="lux-menu-cat-card-shade" aria-hidden="true"></div>
+          </div>
         </div>
       </button>`;
+  }
+
+  function bindGridClicks(root) {
+    if (!root) return;
+    root.querySelectorAll('[data-menu-index]').forEach((btn) => {
+      btn.addEventListener('click', () => openModal(parseInt(btn.dataset.menuIndex, 10)));
+    });
   }
 
   function renderGrids() {
@@ -197,34 +289,51 @@
       else food.push(enriched);
     });
 
-    foodEl.innerHTML = food.length
-      ? food.map((c) => cardHtml(c, c._index)).join('')
-      : '<p class="lux-menu-loading">No food categories yet.</p>';
-    drinksEl.innerHTML = drinks.length
-      ? drinks.map((c) => cardHtml(c, c._index)).join('')
-      : '<p class="lux-menu-loading">No drinks categories yet.</p>';
+    const sortedFood = sortByGroup(food, 'food');
+    const sortedDrinks = sortByGroup(drinks, 'drinks');
 
-    foodEl.querySelectorAll('[data-menu-index]').forEach((btn) => {
-      btn.addEventListener('click', () => openModal(parseInt(btn.dataset.menuIndex, 10)));
-    });
-    drinksEl.querySelectorAll('[data-menu-index]').forEach((btn) => {
-      btn.addEventListener('click', () => openModal(parseInt(btn.dataset.menuIndex, 10)));
-    });
+    foodEl.innerHTML = sortedFood.length
+      ? sortedFood.map((c) => cardHtml(c, c._index)).join('')
+      : '<p class="lux-menu-grid-empty">No food categories yet.</p>';
+    drinksEl.innerHTML = sortedDrinks.length
+      ? sortedDrinks.map((c) => cardHtml(c, c._index)).join('')
+      : '<p class="lux-menu-grid-empty">No drinks categories yet.</p>';
 
-    if (typeof initScrollReveal === 'function') {
-      window.dispatchEvent(new CustomEvent('servicesPageRendered'));
+    bindGridClicks(foodEl);
+    bindGridClicks(drinksEl);
+    hasRendered = true;
+  }
+
+  function menuHash(data) {
+    try {
+      return JSON.stringify(
+        data.map((c) => ({
+          id: c.id,
+          name: c.name,
+          subtitle: c.subtitle,
+          image_url: c.image_url,
+          icon_key: c.icon_key,
+          order: c.order,
+          items: (c.items || []).map((i) => [i.name, i.price]),
+        }))
+      );
+    } catch {
+      return '';
     }
   }
 
   function modalItemsHtml(cat) {
     const items = cat.items || [];
     if (!items.length) return '<p class="lux-menu-modal-sub">Menu items coming soon.</p>';
-    return `<div class="lux-menu-items">${items.map((item) => `
+    return `<div class="lux-menu-items">${items
+      .map(
+        (item) => `
       <div class="lux-menu-item">
         <span class="lux-menu-item-name">${esc(item.name)}</span>
         <span class="lux-menu-item-price price-display">${showPrices ? esc(item.price) : ''}</span>
-      </div>
-    `).join('')}</div>`;
+      </div>`
+      )
+      .join('')}</div>`;
   }
 
   function openModal(index) {
@@ -235,11 +344,12 @@
     activeIndex = index;
     const cat = categories[index];
     const meta = catMeta(cat);
-    const img = esc(optimizeImg(meta.image));
+    const img = esc(optimizeImg(meta.image, MODAL_IMG_W, MODAL_IMG_H));
 
     body.innerHTML = `
+      <span class="lux-menu-modal-handle" aria-hidden="true"></span>
       <div class="lux-menu-modal-media">
-        <img src="${img}" alt="${esc(cat.name)}" loading="lazy">
+        <img src="${img}" alt="${esc(cat.name)}" width="${MODAL_IMG_W}" height="${MODAL_IMG_H}" loading="lazy" decoding="async">
       </div>
       <div class="lux-menu-modal-content">
         <div class="lux-menu-modal-head">
@@ -296,33 +406,35 @@
     });
   }
 
-  const FALLBACK_NAMES = {
-    breakfast: 'Breakfast',
-    'main course': 'Main Courses',
-    'burgers & pizza': 'Burgers & Pizzas',
-    bbq: 'BBQ',
-    'salads and juices': 'Salads & Juices',
-    'other dishes': 'Other Dishes',
-    'soft drinks': 'Soft Drinks',
-    vodka: 'Vodka',
-    liquor: 'Liquor',
-    beer: 'Beer',
-    gin: 'Gin',
-    wine: 'Wine',
-    whiskey: 'Whiskey',
-    'other drinks': 'Other Drinks',
-  };
-
   function buildFallbackCategories() {
-    return Object.entries(MENU_DEFAULTS).map(([key, def], idx) => ({
-      id: idx + 1,
-      name: FALLBACK_NAMES[key] || key,
-      subtitle: def.subtitle,
-      image_url: def.image,
-      icon_key: def.icon,
-      order: idx,
-      items: [],
-    }));
+    const keys = [
+      'breakfast',
+      'main course',
+      'burgers & pizza',
+      'bbq',
+      'salads and juices',
+      'other dishes',
+      'soft drinks',
+      'vodka',
+      'liquor',
+      'beer',
+      'gin',
+      'wine',
+      'whiskey',
+      'other drinks',
+    ];
+    return keys.map((key, idx) => {
+      const def = MENU_DEFAULTS[key] || {};
+      return {
+        id: idx + 1,
+        name: FALLBACK_NAMES[key] || key,
+        subtitle: def.subtitle,
+        image_url: def.image,
+        icon_key: def.icon,
+        order: idx,
+        items: [],
+      };
+    });
   }
 
   async function fetchMenu() {
@@ -339,34 +451,56 @@
     return buildFallbackCategories();
   }
 
-  async function loadAndRender() {
+  async function loadAndRender(options = {}) {
+    const { force = false, silent = false } = options;
     const foodEl = document.getElementById('luxMenuFoodGrid');
     const drinksEl = document.getElementById('luxMenuDrinksGrid');
+    if (!foodEl || !drinksEl || isLoading) return;
+
+    const showSkeleton = !hasRendered && !silent;
+    if (showSkeleton) showSkeletons(foodEl, drinksEl);
+
+    isLoading = true;
     try {
-      if (foodEl) foodEl.innerHTML = '<p class="lux-menu-loading">Loading menu…</p>';
-      if (drinksEl) drinksEl.innerHTML = '';
-      categories = await fetchMenu();
+      const data = await fetchMenu();
+      const hash = menuHash(data);
+      if (!force && hash === lastMenuHash && hasRendered) {
+        isLoading = false;
+        return;
+      }
+      lastMenuHash = hash;
+      categories = data;
       renderGrids();
+
+      const modal = document.getElementById('luxMenuModal');
+      if (modal?.classList.contains('is-open')) {
+        openModal(activeIndex);
+      }
     } catch (e) {
       console.error('Menu showcase load error:', e);
-      categories = buildFallbackCategories();
-      renderGrids();
-      if (foodEl && !foodEl.querySelector('.lux-menu-cat-card')) {
-        foodEl.innerHTML = '<p class="lux-menu-loading">Unable to load menu. Please refresh the page.</p>';
+      if (!hasRendered) {
+        categories = buildFallbackCategories();
+        lastMenuHash = menuHash(categories);
+        renderGrids();
       }
+    } finally {
+      isLoading = false;
     }
   }
 
   function chargesListHtml(charges) {
-    const rows = charges.map((c) => `
+    const rows = charges
+      .map(
+        (c) => `
         <div class="lux-svc-charge-row">
             <div class="lux-svc-charge-col lux-svc-charge-col--name">
                 <span class="lux-svc-charge-name">${esc(c.title)}</span>
                 <span class="lux-svc-charge-note">${esc(c.subtitle)}</span>
             </div>
             <span class="lux-svc-charge-col lux-svc-charge-col--price price-display">${showPrices ? esc(c.price) : ''}</span>
-        </div>
-    `).join('');
+        </div>`
+      )
+      .join('');
     return `<div class="lux-svc-charges-list">${rows}</div>`;
   }
 
@@ -381,6 +515,10 @@
     if (!showPrices) document.body.classList.add('prices-hidden');
     else document.body.classList.remove('prices-hidden');
     renderOtherCharges();
+    const modal = document.getElementById('luxMenuModal');
+    if (modal?.classList.contains('is-open') && categories[activeIndex]) {
+      openModal(activeIndex);
+    }
   }
 
   function init() {
@@ -393,12 +531,11 @@
 
     window.addEventListener('siteSettingsReady', () => {
       applyPriceVisibility();
-      loadAndRender();
     });
 
-    pollTimer = setInterval(loadAndRender, 45000);
+    pollTimer = setInterval(() => loadAndRender({ silent: true }), 120000);
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') loadAndRender();
+      if (document.visibilityState === 'visible') loadAndRender({ silent: true });
     });
   }
 
@@ -416,5 +553,7 @@
     startWhenReady();
   }
 
-  window.LuxMenuShowcase = { refresh: loadAndRender };
+  window.LuxMenuShowcase = {
+    refresh: (opts) => loadAndRender({ force: !!opts?.force, silent: !!opts?.silent }),
+  };
 })();

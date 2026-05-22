@@ -1,12 +1,19 @@
 /**
- * Our Services — premium interactive restaurant menu showcase
+ * Our Services — restaurant menu showcase (mobile-first cards)
  */
+
+:root {
+  --lux-neon: #b6ff5c;
+  --lux-neon-soft: rgba(182, 255, 92, 0.35);
+  --lux-card-h-mobile: 168px;
+  --lux-card-h-tablet: 188px;
+  --lux-card-h-desktop: 200px;
+}
 
 body.lux-menu-page {
   background: #050505 !important;
 }
 
-/* Menu cards must stay visible (avoid scroll-reveal hiding content) */
 .lux-menu-page .lux-menu-cat-card,
 .lux-menu-page .lux-menu-hero-inner,
 .lux-menu-page .lux-menu-section-head {
@@ -18,11 +25,11 @@ body.lux-menu-page {
 /* —— Hero —— */
 .lux-menu-page .lux-menu-hero {
   position: relative;
-  min-height: clamp(320px, 52vh, 480px);
+  min-height: clamp(280px, 48vh, 420px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: calc(var(--eco-nav-h, 76px) + 2rem) 1.25rem 3rem;
+  padding: calc(var(--eco-nav-h, 76px) + 1.5rem) 1rem 2.25rem;
   overflow: hidden;
   text-align: center;
 }
@@ -33,7 +40,6 @@ body.lux-menu-page {
   background-image: url('https://res.cloudinary.com/dae3rpnmg/image/upload/e_blur:800,q_auto/v1769247283/booking-hero-background_idfar7.jpg');
   background-size: cover;
   background-position: center;
-  transform: scale(1.05);
 }
 
 .lux-menu-page .lux-menu-hero-bg::after {
@@ -41,80 +47,74 @@ body.lux-menu-page {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(5, 8, 5, 0.55) 0%, rgba(5, 8, 5, 0.88) 70%, #050505 100%),
-    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(90, 160, 60, 0.2), transparent 55%);
+    linear-gradient(180deg, rgba(5, 8, 5, 0.55) 0%, rgba(5, 8, 5, 0.9) 75%, #050505 100%),
+    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(90, 160, 60, 0.18), transparent 55%);
 }
 
 .lux-menu-page .lux-menu-hero-glow {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(182, 255, 92, 0.08), transparent 40%),
-    radial-gradient(circle at 80% 60%, rgba(159, 232, 112, 0.06), transparent 35%);
-  animation: lux-menu-glow-pulse 8s ease-in-out infinite alternate;
-}
-
-@keyframes lux-menu-glow-pulse {
-  from { opacity: 0.6; }
-  to { opacity: 1; }
+  background: radial-gradient(circle at 50% 40%, rgba(182, 255, 92, 0.07), transparent 50%);
 }
 
 .lux-menu-page .lux-menu-hero-inner {
   position: relative;
   z-index: 2;
   max-width: 44rem;
+  padding: 0 0.5rem;
 }
 
 .lux-menu-page .lux-menu-hero-eyebrow {
-  margin: 0 0 0.85rem;
+  margin: 0 0 0.75rem;
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.68rem, 2vw, 0.78rem);
+  font-size: clamp(0.65rem, 2vw, 0.78rem);
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #b6ff5c;
+  color: var(--lux-neon);
 }
 
 .lux-menu-page .lux-menu-hero-title {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.15em;
+  gap: 0.12em;
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 600;
-  font-size: clamp(1.75rem, 5.5vw, 2.85rem);
+  font-size: clamp(1.5rem, 5vw, 2.75rem);
   line-height: 1.1;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
 .lux-menu-page .lux-menu-hero-line--white { color: #fff; }
 .lux-menu-page .lux-menu-hero-line--green {
-  color: #b6ff5c;
-  text-shadow: 0 0 36px rgba(182, 255, 92, 0.35);
+  color: var(--lux-neon);
+  text-shadow: 0 0 28px var(--lux-neon-soft);
 }
 
 .lux-menu-page .lux-menu-hero-sub {
-  margin: 1rem auto 0;
+  margin: 0.85rem auto 0;
   max-width: 34rem;
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.88rem, 2.2vw, 1.05rem);
-  line-height: 1.65;
-  color: rgba(255, 255, 255, 0.78);
+  font-size: clamp(0.82rem, 2.2vw, 1rem);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .lux-menu-page .lux-menu-hero-divider {
-  margin: 1.1rem auto 0;
+  margin: 0.85rem auto 0;
   color: #9fe870;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
 }
 
-/* —— Main menu —— */
+/* —— Main —— */
 .lux-menu-page .lux-menu-main {
   position: relative;
-  padding: 0 0 4rem;
+  padding: 0 0 3rem;
   background: #050505;
+  overflow-x: hidden;
 }
 
 .lux-menu-page .lux-menu-main::before {
@@ -122,28 +122,29 @@ body.lux-menu-page {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(90, 160, 60, 0.08), transparent 50%);
+  background: radial-gradient(ellipse 70% 45% at 50% 0%, rgba(90, 160, 60, 0.07), transparent 50%);
 }
 
 .lux-menu-page .lux-menu-inner {
   position: relative;
   z-index: 1;
-  width: min(1280px, 100%);
+  width: min(1200px, 100%);
   margin: 0 auto;
-  padding: 0 clamp(1rem, 4vw, 1.5rem);
+  padding: 0 16px;
 }
 
 .lux-menu-page .lux-menu-section-head {
   text-align: center;
-  margin-bottom: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 1.35rem;
+  padding: 0 0.25rem;
 }
 
 .lux-menu-page .lux-menu-section-title {
   margin: 0;
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+  font-size: clamp(1.45rem, 4.5vw, 2.35rem);
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #fff;
 }
@@ -152,125 +153,178 @@ body.lux-menu-page {
 .lux-menu-page .lux-menu-section-title::after {
   content: ' ❋ ';
   color: #9fe870;
-  font-size: 0.65em;
+  font-size: 0.6em;
 }
 
 .lux-menu-page .lux-menu-section-sub {
-  margin: 0.65rem 0 0;
+  margin: 0.5rem 0 0;
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.85rem, 2vw, 1rem);
-  color: rgba(255, 255, 255, 0.65);
+  font-size: clamp(0.78rem, 2vw, 0.95rem);
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.45;
 }
 
 .lux-menu-page .lux-menu-group {
-  margin-bottom: clamp(2.5rem, 6vw, 3.5rem);
+  margin-bottom: 1.75rem;
 }
 
 .lux-menu-page .lux-menu-group-title {
-  margin: 0 0 1.15rem;
+  margin: 0 0 0.75rem;
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.72rem, 2vw, 0.82rem);
+  font-size: 0.68rem;
   font-weight: 600;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #b6ff5c;
+  color: var(--lux-neon);
 }
 
-/* Category grid: 5 / 3 / 2 / 1 */
+/* Grid: 2 mobile → 3 tablet → 4 desktop */
 .lux-menu-page .lux-menu-cat-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: clamp(0.75rem, 2vw, 1.1rem);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  contain: layout style;
 }
 
-@media (max-width: 1100px) {
+@media (min-width: 640px) {
   .lux-menu-page .lux-menu-cat-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 700px) {
-  .lux-menu-page .lux-menu-cat-grid {
-    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
 }
 
-@media (max-width: 400px) {
+@media (min-width: 768px) {
   .lux-menu-page .lux-menu-cat-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
   }
 }
 
-/* Category card */
+@media (min-width: 1100px) {
+  .lux-menu-page .lux-menu-cat-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .lux-menu-page .lux-menu-inner {
+    padding: 0 clamp(1rem, 3vw, 1.5rem);
+  }
+}
+
+/* —— Category card (horizontal split) —— */
 .lux-menu-page .lux-menu-cat-card {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  text-align: center;
+  display: block;
+  width: 100%;
+  height: var(--lux-card-h-mobile);
+  min-height: var(--lux-card-h-mobile);
   padding: 0;
   border: none;
   border-radius: 20px;
   overflow: hidden;
   cursor: pointer;
-  background: rgba(12, 18, 12, 0.75);
-  border: 1px solid rgba(159, 232, 112, 0.18);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
-  transition:
-    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.35s ease,
-    box-shadow 0.35s ease;
-  -webkit-tap-highlight-color: transparent;
+  text-align: left;
   font-family: inherit;
   color: inherit;
+  background: rgba(8, 12, 8, 0.92);
+  box-shadow:
+    0 0 0 1px rgba(182, 255, 92, 0.22),
+    0 8px 24px rgba(0, 0, 0, 0.45),
+    inset 0 0 24px rgba(182, 255, 92, 0.03);
+  transition:
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.28s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
-.lux-menu-page .lux-menu-cat-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  border-color: rgba(182, 255, 92, 0.5);
-  box-shadow:
-    0 20px 44px rgba(0, 0, 0, 0.55),
-    0 0 28px rgba(182, 255, 92, 0.12);
+@media (min-width: 768px) {
+  .lux-menu-page .lux-menu-cat-card {
+    height: var(--lux-card-h-tablet);
+    min-height: var(--lux-card-h-tablet);
+    border-radius: 22px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .lux-menu-page .lux-menu-cat-card {
+    height: var(--lux-card-h-desktop);
+    min-height: var(--lux-card-h-desktop);
+  }
+}
+
+.lux-menu-page .lux-menu-cat-card:active {
+  transform: scale(0.98);
+}
+
+@media (hover: hover) {
+  .lux-menu-page .lux-menu-cat-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 0 0 1px rgba(182, 255, 92, 0.45),
+      0 14px 32px rgba(0, 0, 0, 0.5),
+      0 0 20px rgba(182, 255, 92, 0.1);
+  }
+}
+
+.lux-menu-page .lux-menu-cat-card-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: 100%;
+  width: 100%;
+}
+
+.lux-menu-page .lux-menu-cat-card-content {
+  flex: 1 1 52%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: 0.65rem 0.45rem 0.65rem 0.65rem;
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(90deg, rgba(5, 8, 5, 0.92) 0%, rgba(5, 8, 5, 0.55) 85%, transparent 100%);
 }
 
 .lux-menu-page .lux-menu-cat-card-media {
+  flex: 0 0 42%;
+  max-width: 42%;
   position: relative;
-  aspect-ratio: 4 / 3;
   overflow: hidden;
+  background: #0a100a;
 }
 
 .lux-menu-page .lux-menu-cat-card-media img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.lux-menu-page .lux-menu-cat-card:hover .lux-menu-cat-card-media img {
-  transform: scale(1.08);
+@media (hover: hover) {
+  .lux-menu-page .lux-menu-cat-card:hover .lux-menu-cat-card-media img {
+    transform: scale(1.06);
+  }
 }
 
 .lux-menu-page .lux-menu-cat-card-shade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(5, 8, 5, 0.1) 0%, rgba(5, 8, 5, 0.75) 100%);
+  background: linear-gradient(90deg, rgba(5, 8, 5, 0.35) 0%, transparent 55%);
   pointer-events: none;
-}
-
-.lux-menu-page .lux-menu-cat-card-body {
-  padding: 0.85rem 0.65rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
+  z-index: 1;
 }
 
 .lux-menu-page .lux-menu-cat-icon {
-  width: 28px;
-  height: 28px;
-  color: #b6ff5c;
-  filter: drop-shadow(0 0 8px rgba(182, 255, 92, 0.35));
+  width: 22px;
+  height: 22px;
+  color: var(--lux-neon);
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 6px var(--lux-neon-soft));
 }
 
 .lux-menu-page .lux-menu-cat-icon svg {
@@ -278,55 +332,116 @@ body.lux-menu-page {
   height: 100%;
   stroke: currentColor;
   fill: none;
-  stroke-width: 1.6;
+  stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 .lux-menu-page .lux-menu-cat-name {
   margin: 0;
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.68rem, 1.8vw, 0.78rem);
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(0.82rem, 3.2vw, 1.05rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: #fff;
-  line-height: 1.2;
+  line-height: 1.15;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .lux-menu-page .lux-menu-cat-sub {
   margin: 0;
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.58rem, 1.6vw, 0.68rem);
-  color: #b6ff5c;
-  line-height: 1.35;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: clamp(0.52rem, 2vw, 0.65rem);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.3;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .lux-menu-page .lux-menu-cat-cta {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  margin-top: 0.25rem;
+  gap: 0.3rem;
+  margin-top: 0.15rem;
   font-family: 'Outfit', sans-serif;
-  font-size: 0.62rem;
+  font-size: clamp(0.52rem, 1.8vw, 0.62rem);
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #b6ff5c;
+  color: var(--lux-neon);
 }
 
 .lux-menu-page .lux-menu-cat-cta svg {
-  width: 14px;
-  height: 14px;
-  border: 1px solid rgba(182, 255, 92, 0.5);
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  border: 1px solid rgba(182, 255, 92, 0.45);
   border-radius: 50%;
   padding: 2px;
+}
+
+/* Skeleton */
+.lux-menu-page .lux-menu-cat-card--skeleton {
+  pointer-events: none;
+  cursor: default;
+}
+
+.lux-menu-page .lux-menu-cat-card--skeleton .lux-menu-cat-card-content {
+  background: rgba(12, 18, 12, 0.9);
+}
+
+.lux-menu-page .lux-menu-skel-line {
+  display: block;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.lux-menu-page .lux-menu-skel-line--title {
+  width: 72%;
+  height: 12px;
+  margin-top: 4px;
+}
+
+.lux-menu-page .lux-menu-skel-line--sub {
+  width: 55%;
+  margin-top: 6px;
+}
+
+.lux-menu-page .lux-menu-skel-line--cta {
+  width: 40%;
+  margin-top: 8px;
+}
+
+.lux-menu-page .lux-menu-cat-card--skeleton .lux-menu-cat-card-media {
+  background: linear-gradient(
+    110deg,
+    rgba(20, 30, 20, 0.9) 0%,
+    rgba(40, 55, 38, 0.5) 45%,
+    rgba(20, 30, 20, 0.9) 90%
+  );
+  background-size: 200% 100%;
+  animation: lux-menu-shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes lux-menu-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.lux-menu-page .lux-menu-grid-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 1.5rem 0.5rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.45);
 }
 
 /* —— Modal —— */
@@ -335,13 +450,20 @@ body.lux-menu-page {
   inset: 0;
   z-index: 10000;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  padding: 1rem;
+  padding: 0;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.35s ease, visibility 0.35s ease;
+  transition: opacity 0.32s ease, visibility 0.32s ease;
+}
+
+@media (min-width: 768px) {
+  .lux-menu-page .lux-menu-modal {
+    align-items: center;
+    padding: 1rem;
+  }
 }
 
 .lux-menu-page .lux-menu-modal.is-open {
@@ -353,104 +475,114 @@ body.lux-menu-page {
 .lux-menu-page .lux-menu-modal-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .lux-menu-page .lux-menu-modal-panel {
   position: relative;
   z-index: 2;
-  width: min(1100px, 100%);
-  max-height: min(90vh, 720px);
-  border-radius: 24px;
-  border: 1px solid rgba(159, 232, 112, 0.25);
-  background: rgba(10, 16, 10, 0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), 0 0 40px rgba(182, 255, 92, 0.08);
+  width: 100%;
+  max-height: 92vh;
+  max-height: 92dvh;
+  border-radius: 22px 22px 0 0;
+  border: 1px solid rgba(182, 255, 92, 0.28);
+  border-bottom: none;
+  background: rgba(8, 12, 8, 0.97);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.55), 0 0 32px rgba(182, 255, 92, 0.08);
   overflow: hidden;
-  transform: translateY(16px) scale(0.98);
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(100%);
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+@media (min-width: 768px) {
+  .lux-menu-page .lux-menu-modal-panel {
+    width: min(720px, 100%);
+    max-height: min(88vh, 720px);
+    border-radius: 22px;
+    border-bottom: 1px solid rgba(182, 255, 92, 0.28);
+    transform: translateY(24px) scale(0.98);
+  }
 }
 
 .lux-menu-page .lux-menu-modal.is-open .lux-menu-modal-panel {
-  transform: translateY(0) scale(1);
+  transform: translateY(0);
+}
+
+@media (min-width: 768px) {
+  .lux-menu-page .lux-menu-modal.is-open .lux-menu-modal-panel {
+    transform: translateY(0) scale(1);
+  }
+}
+
+.lux-menu-page .lux-menu-modal-handle {
+  display: block;
+  width: 40px;
+  height: 4px;
+  margin: 10px auto 4px;
+  border-radius: 99px;
+  background: rgba(182, 255, 92, 0.35);
+}
+
+@media (min-width: 768px) {
+  .lux-menu-page .lux-menu-modal-handle {
+    display: none;
+  }
 }
 
 .lux-menu-page .lux-menu-modal-close {
   position: absolute;
-  top: 0.85rem;
-  right: 0.85rem;
-  z-index: 5;
-  width: 40px;
-  height: 40px;
-  border: 1px solid rgba(159, 232, 112, 0.3);
+  top: 0.65rem;
+  right: 0.65rem;
+  z-index: 6;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(182, 255, 92, 0.35);
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
   color: #fff;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.25s ease, border-color 0.25s ease;
-}
-
-.lux-menu-page .lux-menu-modal-close:hover {
-  background: rgba(182, 255, 92, 0.15);
-  border-color: #b6ff5c;
-  color: #b6ff5c;
 }
 
 .lux-menu-page .lux-menu-modal-nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 5;
-  width: 44px;
-  height: 44px;
+  z-index: 6;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border: 1px solid rgba(159, 232, 112, 0.35);
-  background: rgba(5, 8, 5, 0.85);
-  color: #b6ff5c;
+  border: 1px solid rgba(182, 255, 92, 0.35);
+  background: rgba(5, 8, 5, 0.88);
+  color: var(--lux-neon);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.25s ease, transform 0.25s ease;
 }
 
-.lux-menu-page .lux-menu-modal-nav:hover {
-  background: rgba(182, 255, 92, 0.12);
-  transform: translateY(-50%) scale(1.05);
-}
-
-.lux-menu-page .lux-menu-modal-nav--prev { left: -1.25rem; }
-.lux-menu-page .lux-menu-modal-nav--next { right: -1.25rem; }
-
-@media (max-width: 900px) {
-  .lux-menu-page .lux-menu-modal-nav--prev { left: 0.35rem; }
-  .lux-menu-page .lux-menu-modal-nav--next { right: 0.35rem; }
-}
+.lux-menu-page .lux-menu-modal-nav--prev { left: 0.4rem; }
+.lux-menu-page .lux-menu-modal-nav--next { right: 0.4rem; }
 
 .lux-menu-page .lux-menu-modal-body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-  max-height: min(90vh, 720px);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(92vh - 20px);
+  max-height: calc(92dvh - 20px);
   overflow: hidden;
-}
-
-@media (max-width: 768px) {
-  .lux-menu-page .lux-menu-modal-body {
-    grid-template-columns: 1fr;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
 }
 
 .lux-menu-page .lux-menu-modal-media {
   position: relative;
-  min-height: 280px;
+  flex: 0 0 auto;
+  height: clamp(140px, 28vh, 200px);
   background: #0a100a;
 }
 
@@ -459,56 +591,56 @@ body.lux-menu-page {
   height: 100%;
   object-fit: cover;
   display: block;
-  min-height: 280px;
 }
 
 .lux-menu-page .lux-menu-modal-content {
-  padding: clamp(1.25rem, 3vw, 2rem);
+  flex: 1 1 auto;
   overflow-y: auto;
-  max-height: min(90vh, 720px);
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 1rem 1rem 1.25rem;
 }
 
 .lux-menu-page .lux-menu-modal-head {
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
   padding-right: 2rem;
 }
 
 .lux-menu-page .lux-menu-modal-head .lux-menu-cat-icon {
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
 }
 
 .lux-menu-page .lux-menu-modal-title {
   margin: 0;
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-size: clamp(1.35rem, 4vw, 1.75rem);
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #fff;
 }
 
 .lux-menu-page .lux-menu-modal-sub {
-  margin: 0.25rem 0 0;
+  margin: 0.2rem 0 0;
   font-family: 'Outfit', sans-serif;
-  font-size: 0.88rem;
-  color: #b6ff5c;
+  font-size: 0.8rem;
+  color: var(--lux-neon);
 }
 
 .lux-menu-page .lux-menu-items {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0 1.5rem;
-  column-gap: clamp(1rem, 3vw, 2rem);
+  grid-template-columns: 1fr;
+  gap: 0;
 }
 
-@media (max-width: 520px) {
+@media (min-width: 520px) {
   .lux-menu-page .lux-menu-items {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1.25rem;
   }
 }
 
@@ -517,18 +649,18 @@ body.lux-menu-page {
   justify-content: space-between;
   align-items: baseline;
   gap: 0.5rem;
-  padding: 0.5rem 0;
-  border-bottom: 1px dotted rgba(159, 232, 112, 0.25);
+  padding: 0.45rem 0;
+  border-bottom: 1px dotted rgba(159, 232, 112, 0.22);
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  font-size: clamp(0.78rem, 2vw, 0.88rem);
 }
 
 .lux-menu-page .lux-menu-item-name {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .lux-menu-page .lux-menu-item-price {
-  color: #b6ff5c;
+  color: var(--lux-neon);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -538,50 +670,39 @@ body.prices-hidden .lux-menu-page .lux-menu-item-price {
 }
 
 .lux-menu-page .lux-menu-modal-foot {
-  margin-top: 1.25rem;
+  margin-top: 1rem;
+  padding-top: 0.25rem;
 }
 
 .lux-menu-page .lux-menu-modal-close-btn {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.65rem 1.5rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.7rem 1rem;
   border-radius: 999px;
-  border: 1px solid rgba(159, 232, 112, 0.4);
-  background: transparent;
-  color: #b6ff5c;
+  border: 1px solid rgba(182, 255, 92, 0.4);
+  background: rgba(182, 255, 92, 0.08);
+  color: var(--lux-neon);
   font-family: 'Outfit', sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.25s ease, color 0.25s ease;
 }
 
-.lux-menu-page .lux-menu-modal-close-btn:hover {
-  background: rgba(182, 255, 92, 0.12);
-  color: #d4ff8a;
-}
-
-.lux-menu-page .lux-menu-loading {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 2rem;
-  color: rgba(255, 255, 255, 0.5);
-  font-family: 'Outfit', sans-serif;
-}
-
-/* —— Other charges (column list) —— */
+/* —— Other charges —— */
 .lux-menu-page .lux-menu-charges {
-  margin-top: clamp(2rem, 5vw, 3rem);
-  padding-top: clamp(2rem, 5vw, 2.5rem);
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
   border-top: 1px solid rgba(159, 232, 112, 0.1);
 }
 
 .lux-menu-page .lux-svc-charges-panel {
-  padding: clamp(1.25rem, 3vw, 1.75rem);
-  border-radius: 22px;
+  padding: 1.15rem;
+  border-radius: 20px;
   background: rgba(10, 16, 10, 0.65);
   border: 1px solid rgba(159, 232, 112, 0.14);
   backdrop-filter: blur(14px);
@@ -591,16 +712,15 @@ body.prices-hidden .lux-menu-page .lux-menu-item-price {
 .lux-menu-page .lux-svc-charges-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  column-gap: clamp(1.5rem, 4vw, 2.5rem);
-  row-gap: 0;
+  column-gap: 1rem;
 }
 
 .lux-menu-page .lux-svc-charge-row {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  gap: 0.75rem 1rem;
-  padding: 0.7rem 0;
+  gap: 0.5rem 0.75rem;
+  padding: 0.55rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   font-family: 'Outfit', sans-serif;
 }
@@ -608,39 +728,46 @@ body.prices-hidden .lux-menu-page .lux-menu-item-price {
 .lux-menu-page .lux-svc-charge-col--name {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.1rem;
   min-width: 0;
 }
 
 .lux-menu-page .lux-svc-charge-name {
-  font-size: clamp(0.82rem, 2.2vw, 0.95rem);
+  font-size: clamp(0.78rem, 2.2vw, 0.9rem);
   font-weight: 600;
-  color: #ffffff;
-  line-height: 1.3;
+  color: #fff;
 }
 
 .lux-menu-page .lux-svc-charge-note {
-  font-size: clamp(0.68rem, 1.8vw, 0.78rem);
-  font-weight: 500;
-  color: #b6ff5c;
-  line-height: 1.3;
+  font-size: clamp(0.62rem, 1.8vw, 0.72rem);
+  color: var(--lux-neon);
 }
 
 .lux-menu-page .lux-svc-charge-col--price {
-  font-size: clamp(0.78rem, 2vw, 0.88rem);
+  font-size: clamp(0.72rem, 2vw, 0.82rem);
   font-weight: 600;
-  color: #b6ff5c;
+  color: var(--lux-neon);
   white-space: nowrap;
-  text-align: right;
 }
 
 body.prices-hidden .lux-menu-page .lux-svc-charge-col--price {
   display: none !important;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 639px) {
   .lux-menu-page .lux-svc-charges-list {
     grid-template-columns: 1fr;
-    column-gap: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lux-menu-page .lux-menu-cat-card,
+  .lux-menu-page .lux-menu-modal-panel,
+  .lux-menu-page .lux-menu-cat-card-media img {
+    transition: none;
+  }
+
+  .lux-menu-page .lux-menu-cat-card--skeleton .lux-menu-cat-card-media {
+    animation: none;
   }
 }

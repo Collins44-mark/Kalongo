@@ -401,7 +401,7 @@ body.eco-luxury {
   }
 
   .lux-menu-page .lux-menu-modal-panel {
-    border-radius: 18px;
+    border-radius: 22px 22px 0 0;
   }
 }
 

@@ -1335,12 +1335,7 @@ async function initializeDataLoading() {
         document.querySelectorAll('.nav-link[href*="packages"]').forEach((link) => {
             link.classList.add('is-active');
         });
-        const refreshMenu = () => {
-            if (window.LuxMenuShowcase?.refresh) window.LuxMenuShowcase.refresh();
-        };
-        refreshMenu();
-        setTimeout(refreshMenu, 500);
-        setTimeout(refreshMenu, 2000);
+        /* Menu showcase loads once via eco-menu-showcase.js — avoid duplicate refresh flicker */
     }
     
     if (path.includes('our-kalongo.html')) {
