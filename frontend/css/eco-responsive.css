@@ -324,43 +324,11 @@ body.eco-luxury {
   }
 }
 
-/* —— Rooms: 2 compact columns on mobile —— */
+/* —— Rooms: 2 columns on mobile (card preview styles in eco-rooms-section.css) —— */
 @media (max-width: 899px) {
   #rooms .rooms-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 14px !important;
-  }
-
-  #rooms .lux-room-card.room-card {
-    min-height: 0 !important;
-    max-height: none !important;
-    border-radius: 20px !important;
-  }
-
-  #rooms .lux-room-media,
-  #rooms .lux-room-visual {
-    min-height: 0 !important;
-  }
-
-  #rooms .lux-room-slide-wrap,
-  #rooms .lux-room-visual-inner {
-    aspect-ratio: 4 / 3 !important;
-    min-height: 0 !important;
-    height: auto !important;
-    padding-bottom: 0 !important;
-  }
-
-  #rooms .lux-room-title {
-    font-size: clamp(0.85rem, 3.5vw, 1rem) !important;
-  }
-
-  #rooms .lux-room-desc {
-    font-size: 0.72rem !important;
-    -webkit-line-clamp: 2;
-  }
-
-  #rooms .lux-room-body {
-    padding: 0.75rem !important;
   }
 }
 

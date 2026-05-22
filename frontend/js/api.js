@@ -429,8 +429,11 @@ const Render = {
             </div>
             <div class="lux-room-body">
                 <h3 class="lux-room-title">${room.name}</h3>
-                ${room.capacity ? `<p class="lux-room-capacity">${room.capacity}</p>` : ''}
-                <ul class="lux-room-amenities">${featuresHtml}</ul>
+                <div class="lux-room-mobile-row">
+                    ${room.capacity ? `<p class="lux-room-capacity">${room.capacity}</p>` : '<p class="lux-room-capacity">View details</p>'}
+                    <span class="lux-room-chevron" aria-hidden="true">→</span>
+                </div>
+                <ul class="lux-room-amenities" aria-label="Room features">${featuresHtml}</ul>
                 <div class="lux-room-footer">
                     <p class="lux-room-price">${priceHtml}</p>
                     <button type="button" class="lux-room-view-btn" aria-label="View ${room.name} details">View Details</button>
