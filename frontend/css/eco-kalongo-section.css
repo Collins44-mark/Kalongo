@@ -1,0 +1,351 @@
+/**
+ * Our Kalongo — videos top, gallery bottom
+ */
+
+body.lux-kalongo-page {
+  background: #050505 !important;
+}
+
+body.lux-kalongo-page .pricing-hero {
+  display: none !important;
+}
+
+.lux-kalongo-page .lux-kalongo-main {
+  position: relative;
+  padding: clamp(5.5rem, 10vw, 7rem) 0 clamp(4rem, 8vw, 6rem);
+  overflow-x: hidden;
+}
+
+.lux-kalongo-page .lux-kalongo-main::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(80, 140, 50, 0.12), transparent 55%),
+    radial-gradient(ellipse 45% 40% at 15% 70%, rgba(50, 90, 40, 0.06), transparent 50%);
+  z-index: 0;
+}
+
+.lux-kalongo-page .lux-kalongo-inner {
+  position: relative;
+  z-index: 1;
+  width: min(1200px, 92%);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 1.5rem);
+}
+
+/* —— Page header —— */
+.lux-kalongo-page .lux-kalongo-header {
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.lux-kalongo-page .lux-kalongo-eyebrow {
+  display: block;
+  margin: 0 auto 0.85rem;
+  max-width: 36rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.lux-kalongo-page .lux-kalongo-title {
+  margin: 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 1.08;
+}
+
+.lux-kalongo-page .lux-kalongo-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 1.25rem auto 0;
+  width: min(320px, 78%);
+}
+
+.lux-kalongo-page .lux-kalongo-divider::before,
+.lux-kalongo-page .lux-kalongo-divider::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(182, 255, 92, 0.85), transparent);
+  box-shadow: 0 0 14px rgba(182, 255, 92, 0.22);
+}
+
+.lux-kalongo-page .lux-kalongo-divider-gem {
+  color: #b6ff5c;
+  font-size: 0.65rem;
+}
+
+.lux-kalongo-page .lux-kalongo-section-label {
+  margin: 0 0 0.5rem;
+  text-align: center;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.35rem, 3.5vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.lux-kalongo-page .lux-kalongo-section-desc {
+  margin: 0 auto 1.75rem;
+  text-align: center;
+  max-width: 32rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.55;
+}
+
+/* —— Videos —— */
+.lux-kalongo-page .lux-kalongo-videos {
+  margin-bottom: clamp(3.5rem, 7vw, 5rem);
+}
+
+.lux-kalongo-page .lux-kalongo-videos-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+.lux-kalongo-page .lux-kalongo-video-featured {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: clamp(220px, 50vw, 520px);
+  border-radius: 32px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(182, 255, 92, 0.25);
+  background: linear-gradient(180deg, rgba(20, 20, 20, 0.95), rgba(8, 8, 8, 0.98));
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45), 0 0 32px rgba(182, 255, 92, 0.06);
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.lux-kalongo-page .lux-kalongo-video-featured:hover {
+  transform: translateY(-6px);
+  border-color: rgba(182, 255, 92, 0.45);
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.5), 0 0 40px rgba(182, 255, 92, 0.12);
+}
+
+.lux-kalongo-page .lux-kalongo-video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.lux-kalongo-page .lux-kalongo-video-card {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  min-height: 180px;
+  border-radius: 26px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(182, 255, 92, 0.25);
+  background: linear-gradient(180deg, rgba(20, 20, 20, 0.95), rgba(8, 8, 8, 0.98));
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.4);
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.lux-kalongo-page .lux-kalongo-video-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(182, 255, 92, 0.42);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.48), 0 0 28px rgba(182, 255, 92, 0.1);
+}
+
+.lux-kalongo-page .lux-kalongo-video-media {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.55s ease;
+}
+
+.lux-kalongo-page .lux-kalongo-video-featured:hover .lux-kalongo-video-media,
+.lux-kalongo-page .lux-kalongo-video-card:hover .lux-kalongo-video-media {
+  transform: scale(1.06);
+}
+
+.lux-kalongo-page .lux-kalongo-video-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.25) 100%);
+  pointer-events: none;
+}
+
+.lux-kalongo-page .lux-kalongo-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: clamp(56px, 12vw, 88px);
+  height: clamp(56px, 12vw, 88px);
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  background: rgba(12, 12, 12, 0.55);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 0.15em;
+  pointer-events: none;
+  box-shadow: 0 0 24px rgba(182, 255, 92, 0.2);
+}
+
+.lux-kalongo-page .lux-kalongo-video-featured .lux-kalongo-play {
+  animation: lux-kalongo-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes lux-kalongo-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(182, 255, 92, 0.2); }
+  50% { box-shadow: 0 0 36px rgba(182, 255, 92, 0.45); }
+}
+
+.lux-kalongo-page .lux-kalongo-video-caption {
+  position: absolute;
+  left: clamp(1rem, 2.5vw, 1.5rem);
+  right: clamp(1rem, 2.5vw, 1.5rem);
+  bottom: clamp(1rem, 2.5vw, 1.5rem);
+  z-index: 2;
+  margin: 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+.lux-kalongo-page .lux-kalongo-video-card .lux-kalongo-play {
+  width: 52px;
+  height: 52px;
+  font-size: 1.15rem;
+}
+
+.lux-kalongo-page .lux-kalongo-videos-empty {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: 'Outfit', sans-serif;
+  border-radius: 26px;
+  border: 1px solid rgba(182, 255, 92, 0.15);
+  background: linear-gradient(180deg, rgba(20, 20, 20, 0.95), rgba(8, 8, 8, 0.98));
+}
+
+/* —— Gallery —— */
+.lux-kalongo-page .lux-kalongo-gallery {
+  padding-top: clamp(1rem, 3vw, 2rem);
+  border-top: 1px solid rgba(182, 255, 92, 0.12);
+}
+
+.lux-kalongo-page .lux-kalongo-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.lux-kalongo-page .lux-kalongo-gallery-thumb {
+  position: relative;
+  border-radius: 26px;
+  overflow: hidden;
+  border: 1px solid rgba(182, 255, 92, 0.25);
+  background: linear-gradient(180deg, rgba(20, 20, 20, 0.95), rgba(8, 8, 8, 0.98));
+  cursor: pointer;
+  aspect-ratio: 4 / 3;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.lux-kalongo-page .lux-kalongo-gallery-thumb:hover {
+  transform: translateY(-6px);
+  border-color: rgba(182, 255, 92, 0.4);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45), 0 0 24px rgba(182, 255, 92, 0.1);
+}
+
+.lux-kalongo-page .lux-kalongo-gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.lux-kalongo-page .lux-kalongo-gallery-thumb:hover img {
+  transform: scale(1.06);
+}
+
+.lux-kalongo-page .lux-kalongo-gallery-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1rem 1.1rem;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.85), transparent);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.lux-kalongo-page .packages-page {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+.lux-kalongo-page .lux-kalongo-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.lux-kalongo-page .lux-kalongo-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .lux-kalongo-page .lux-kalongo-gallery-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .lux-kalongo-page .lux-kalongo-video-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .lux-kalongo-page .lux-kalongo-video-grid {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+    scrollbar-width: none;
+  }
+
+  .lux-kalongo-page .lux-kalongo-video-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lux-kalongo-page .lux-kalongo-video-grid .lux-kalongo-video-card {
+    flex: 0 0 min(85vw, 320px);
+    scroll-snap-align: center;
+  }
+}

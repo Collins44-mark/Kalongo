@@ -71,7 +71,7 @@ if (menuOverlay) {
 const navLinks = document.querySelectorAll('.nav-link');
 navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 899) {
             setTimeout(closeMobileMenu, 200);
         }
         
@@ -112,7 +112,7 @@ navLinks.forEach(link => {
 
 // Close menu on window resize if desktop
 window.addEventListener('resize', () => {
-    if (window.innerWidth > 768 && navMenu && navMenu.classList.contains('active')) {
+    if (window.innerWidth > 899 && navMenu && navMenu.classList.contains('active')) {
         closeMobileMenu();
     }
 });
@@ -166,7 +166,7 @@ function createSwipeSlider(sliderContainer, options = {}) {
     
     function startAutoAdvance() {
         stopAutoAdvance();
-        if (slides.length > 1) {
+        if (slides.length > 1 && autoAdvanceMs > 0) {
             autoAdvanceInterval = setInterval(next, autoAdvanceMs);
         }
     }
@@ -297,6 +297,9 @@ window.addEventListener('roomsRendered', (event) => {
 // Listen for reviews being rendered
 let reviewSliderInitialized = false;
 window.addEventListener('reviewsRendered', () => {
+    if (document.querySelector('#reviews.lux-reviews-section')) {
+        return;
+    }
     if (reviewSliderInitialized) {
         console.log('⚠️ Review slider already initialized, skipping...');
         return;

@@ -244,12 +244,18 @@
         if (els.costGuests) els.costGuests.textContent = totalGuests;
         els.costNights.textContent = nights;
 
+        const nightsDisplay = document.getElementById('nightsDisplay');
+        if (nightsDisplay) nightsDisplay.value = String(nights);
+
         if (roomType && roomType !== 'None') {
-            els.costPerNight.textContent = formatAmount(convertFromTZS(pricePerNightTZS, currency), currency);
-            els.costTotal.textContent = formatAmount(convertFromTZS(totalTZS, currency), currency);
+            const perNight = formatAmount(convertFromTZS(pricePerNightTZS, currency), currency);
+            const total = formatAmount(convertFromTZS(totalTZS, currency), currency);
+            els.costPerNight.textContent = perNight;
+            els.costTotal.textContent = total;
         } else {
             els.costPerNight.textContent = '—';
-            els.costTotal.textContent = '—';
+            const zero = formatAmount(0, currency);
+            els.costTotal.textContent = zero;
         }
     }
 

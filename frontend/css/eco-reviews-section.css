@@ -1,0 +1,470 @@
+/**
+ * Guest Reviews — premium testimonial (#reviews only)
+ */
+
+#reviews.lux-reviews-section {
+  padding: clamp(4.5rem, 9vw, 6rem) 0 !important;
+  background: linear-gradient(180deg, #050805 0%, #07110a 50%, #0b120b 100%) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+#reviews.lux-reviews-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 35%, rgba(159, 232, 112, 0.07), transparent 58%);
+  z-index: 0;
+  display: block !important;
+}
+
+#reviews .container {
+  position: relative;
+  z-index: 1;
+  max-width: 100% !important;
+  padding: 0 clamp(1rem, 3vw, 2rem) !important;
+}
+
+#reviews .section-header-modern {
+  display: none !important;
+}
+
+#reviews .lux-reviews-wrap {
+  width: 88%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* —— Header —— */
+#reviews .lux-reviews-header {
+  text-align: center;
+  margin-bottom: clamp(2rem, 4vw, 2.75rem);
+}
+
+#reviews .lux-reviews-script {
+  display: block;
+  margin: 0 0 0.6rem;
+  font-family: 'Cormorant Garamond', 'Brush Script MT', cursive;
+  font-size: clamp(1.05rem, 2.2vw, 22px);
+  font-style: italic;
+  font-weight: 500;
+  color: #9FE870;
+}
+
+#reviews .lux-reviews-heading {
+  margin: 0;
+  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 6.5vw, 3.75rem);
+  line-height: 1.08;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.05em;
+}
+
+#reviews .lux-reviews-heading-white {
+  color: #ffffff;
+}
+
+#reviews .lux-reviews-heading-green {
+  color: #9FE870;
+}
+
+#reviews .lux-reviews-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  margin: 1rem auto 0;
+  width: min(280px, 65%);
+}
+
+#reviews .lux-reviews-divider::before,
+#reviews .lux-reviews-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(159, 232, 112, 0.7), transparent);
+}
+
+#reviews .lux-reviews-divider-leaf {
+  color: #9FE870;
+  font-size: 0.65rem;
+}
+
+#reviews .lux-reviews-sub {
+  margin: 1.15rem auto 0;
+  max-width: 640px;
+  font-family: 'Inter', 'Outfit', sans-serif;
+  font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.82);
+  text-align: center;
+}
+
+#reviews .lux-reviews-sub-accent {
+  color: #9FE870;
+  font-weight: 500;
+}
+
+/* —— Stage + viewport (single visible slide) —— */
+#reviews .lux-reviews-stage {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 52px;
+}
+
+#reviews .lux-reviews-slider-container,
+#reviews .reviews-slider-container {
+  position: relative;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border-radius: 32px !important;
+  border: 1px solid rgba(159, 232, 112, 0.35) !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.45),
+    0 0 28px rgba(159, 232, 112, 0.1) !important;
+  cursor: grab;
+  touch-action: pan-y;
+  min-height: 0 !important;
+}
+
+#reviews .lux-reviews-slider-container:active,
+#reviews .reviews-slider-container:active {
+  cursor: grabbing;
+}
+
+#reviews .reviews-slider {
+  display: flex !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  transition: transform 0.45s ease;
+  will-change: transform;
+}
+
+#reviews .reviews-slider.dragging {
+  transition: none;
+}
+
+#reviews .lux-review-slide,
+#reviews .review-slide.lux-review-slide {
+  flex: 0 0 100% !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box;
+}
+
+/* —— Inner card —— */
+#reviews .lux-review-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+  align-items: stretch;
+  box-sizing: border-box;
+  min-height: 420px;
+  padding: clamp(1.25rem, 3vw, 2.25rem) clamp(1.25rem, 3vw, 2.5rem);
+  background: linear-gradient(145deg, rgba(7, 12, 7, 0.95), rgba(3, 6, 3, 0.98)) !important;
+}
+
+@media (min-width: 900px) {
+  #reviews .lux-review-card {
+    grid-template-columns: 48% 52%;
+    gap: 2.25rem;
+    height: 500px;
+    min-height: 500px;
+    max-height: 500px;
+    padding: 2rem 2.5rem;
+  }
+}
+
+/* Left — image */
+#reviews .lux-review-visual {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #0a100a;
+}
+
+@media (min-width: 900px) {
+  #reviews .lux-review-visual {
+    min-height: 0;
+  }
+}
+
+#reviews .lux-review-photo {
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  border-radius: 24px;
+  filter: brightness(1) contrast(1.04) saturate(1.05);
+}
+
+@media (min-width: 900px) {
+  #reviews .lux-review-photo {
+    min-height: 100%;
+    height: 100%;
+  }
+}
+
+#reviews .lux-review-photo--empty {
+  min-height: 240px;
+  background: linear-gradient(160deg, #101810, #1a241a);
+}
+
+/* Right — content */
+#reviews .lux-review-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+  height: 100%;
+  padding: 0.25rem 0;
+}
+
+#reviews .lux-review-stars {
+  display: flex;
+  gap: 0.3rem;
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+#reviews .lux-review-star {
+  color: #e8c547;
+}
+
+#reviews .lux-review-quote-wrap {
+  position: relative;
+  flex: 1;
+  margin: 0 0 1.25rem;
+  padding: 0 0.25rem;
+  max-width: 100%;
+}
+
+#reviews .lux-review-q-mark {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.75rem, 6vw, 4.25rem);
+  line-height: 0.8;
+  color: #9FE870;
+  user-select: none;
+  pointer-events: none;
+}
+
+#reviews .lux-review-q-open {
+  position: absolute;
+  top: -0.1em;
+  left: 0;
+}
+
+#reviews .lux-review-quote {
+  margin: 0 !important;
+  padding: 1.25rem 1.5rem 1rem 1.75rem !important;
+  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif !important;
+  font-size: clamp(1.05rem, 2vw, 1.45rem) !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  line-height: 1.7 !important;
+  color: rgba(255, 255, 255, 0.94) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.94) !important;
+}
+
+#reviews .lux-review-q-close {
+  display: block;
+  text-align: right;
+  margin-top: -0.35rem;
+  padding-right: 0.5rem;
+}
+
+#reviews .lux-review-author-divider {
+  width: 100%;
+  text-align: center;
+  color: #9FE870;
+  font-size: 0.55rem;
+  opacity: 0.65;
+  margin: 0 0 0.85rem;
+  letter-spacing: 0.35em;
+}
+
+#reviews .lux-review-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(159, 232, 112, 0.12);
+}
+
+#reviews .lux-review-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid rgba(159, 232, 112, 0.3);
+}
+
+#reviews .lux-review-avatar--placeholder {
+  display: block;
+  background: linear-gradient(145deg, #1a2a1c, #0e160e);
+}
+
+#reviews .lux-review-name {
+  margin: 0 0 0.2rem !important;
+  padding: 0 !important;
+  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif !important;
+  font-size: clamp(1.2rem, 2.2vw, 1.65rem) !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+#reviews .lux-review-location {
+  margin: 0 0 0.15rem !important;
+  font-family: 'Inter', 'Outfit', sans-serif !important;
+  font-size: 0.9rem !important;
+  color: #9FE870 !important;
+  -webkit-text-fill-color: #9FE870 !important;
+}
+
+#reviews .lux-review-date {
+  margin: 0 !important;
+  font-size: 0.78rem !important;
+  color: rgba(255, 255, 255, 0.42) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.42) !important;
+}
+
+/* Nav arrows */
+#reviews .lux-review-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 6;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(159, 232, 112, 0.45);
+  background: rgba(5, 8, 5, 0.82);
+  color: #9FE870;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+#reviews .lux-review-nav:hover {
+  border-color: #9FE870;
+  box-shadow: 0 0 20px rgba(159, 232, 112, 0.28);
+  background: rgba(12, 20, 12, 0.92);
+}
+
+#reviews .lux-review-nav--prev {
+  left: 0;
+}
+
+#reviews .lux-review-nav--next {
+  right: 0;
+}
+
+/* Dots */
+#reviews .lux-reviews-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-top: 1.75rem;
+}
+
+#reviews .lux-reviews-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: background 0.3s ease, width 0.3s ease, box-shadow 0.3s ease;
+}
+
+#reviews .lux-reviews-dot.is-active {
+  width: 28px;
+  border-radius: 999px;
+  background: #9FE870;
+  box-shadow: 0 0 14px rgba(159, 232, 112, 0.5);
+}
+
+/* Global overrides */
+.eco-luxury #reviews.lux-reviews-section {
+  background: linear-gradient(180deg, #050805 0%, #07110a 50%, #0b120b 100%) !important;
+}
+
+.eco-luxury #reviews .reviews-slider-container {
+  max-width: none !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.eco-luxury #reviews .lux-review-name {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.eco-luxury #reviews .lux-review-location {
+  color: #9FE870 !important;
+  -webkit-text-fill-color: #9FE870 !important;
+}
+
+.eco-luxury #reviews .review-slide .review-content {
+  display: none !important;
+}
+
+@media (max-width: 899px) {
+  #reviews .lux-reviews-wrap {
+    width: 94%;
+  }
+
+  #reviews .lux-reviews-stage {
+    padding: 0 40px;
+  }
+
+  #reviews .lux-review-card {
+    height: auto;
+    max-height: none;
+  }
+
+  #reviews .lux-review-nav {
+    width: 38px;
+    height: 38px;
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 520px) {
+  #reviews .lux-reviews-stage {
+    padding: 0 32px;
+  }
+}

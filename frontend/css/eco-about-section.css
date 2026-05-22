@@ -1,0 +1,337 @@
+/**
+ * About KALONGO FARM — premium section (reference design)
+ * Scoped to #about only
+ */
+
+#about.packages-page {
+  padding: clamp(4rem, 10vw, 7.5rem) 0 !important;
+  background: linear-gradient(180deg, #050805 0%, #071107 100%) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+#about.packages-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at top left, rgba(120, 255, 120, 0.08), transparent 45%),
+    radial-gradient(ellipse 55% 45% at 18% 50%, rgba(159, 232, 112, 0.06), transparent 55%),
+    radial-gradient(ellipse 40% 35% at 85% 30%, rgba(107, 160, 67, 0.05), transparent 50%);
+  z-index: 0;
+}
+
+#about .container {
+  position: relative;
+  z-index: 1;
+  max-width: min(1280px, 94vw);
+}
+
+#about .about-luxury-wrap {
+  margin: 0;
+}
+
+#about .about-luxury-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: stretch;
+}
+
+@media (min-width: 900px) {
+  #about .about-luxury-grid {
+    grid-template-columns: 55fr 45fr;
+    gap: 40px;
+  }
+}
+
+/* —— Left glass card —— */
+#about .about-lux-card {
+  position: relative;
+  padding: clamp(2rem, 5vw, 48px);
+  border-radius: 32px;
+  background: rgba(10, 16, 12, 0.78);
+  border: 1px solid rgba(159, 232, 112, 0.15);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+#about .about-lux-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 32px;
+  background: radial-gradient(ellipse 80% 60% at 20% 20%, rgba(159, 232, 112, 0.14), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#about .about-lux-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+#about .about-lux-label {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
+  font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: #9FE870;
+  font-weight: 500;
+}
+
+#about .about-lux-label-line {
+  flex: 1;
+  max-width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(159, 232, 112, 0.5), transparent);
+}
+
+#about .about-lux-label-icon {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+#about .about-lux-title {
+  margin: 0;
+  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1em;
+}
+
+#about .about-lux-title-white {
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  background: none;
+}
+
+#about .about-lux-title-green {
+  color: #A6FF4D;
+  -webkit-text-fill-color: #A6FF4D;
+  background: none;
+  text-shadow: 0 0 40px rgba(166, 255, 77, 0.25);
+}
+
+#about .about-lux-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem 0 0;
+  width: 100%;
+  max-width: 280px;
+}
+
+#about .about-lux-divider::before,
+#about .about-lux-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #9FE870, transparent);
+}
+
+#about .about-lux-divider-leaf {
+  color: #9FE870;
+  font-size: 0.75rem;
+  opacity: 0.85;
+  flex-shrink: 0;
+}
+
+#about .about-lux-subtitle {
+  margin: 1.75rem 0 0;
+  font-family: 'Inter', 'Outfit', sans-serif;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 400;
+  color: #bfc7bf;
+  line-height: 1.5;
+}
+
+/* Paragraph content box — dark glass (overrides style.css white slab) */
+#about .about-description-modern {
+  margin-top: 1.25rem;
+  max-width: 52ch;
+  width: 100%;
+  padding: 32px !important;
+  text-align: left;
+  background: rgba(15, 25, 15, 0.55) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(120, 255, 120, 0.12) !important;
+  border-radius: 28px !important;
+  box-shadow: 0 0 25px rgba(145, 255, 90, 0.08) !important;
+}
+
+#about .about-description-modern p {
+  margin: 0;
+  font-family: 'Inter', 'Outfit', sans-serif;
+  font-size: 16px !important;
+  line-height: 1.9 !important;
+  font-weight: 400 !important;
+  color: rgba(255, 255, 255, 0.78) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.78) !important;
+  text-align: left !important;
+}
+
+@media (max-width: 768px) {
+  #about .about-description-modern {
+    padding: 32px !important;
+  }
+
+  #about .about-description-modern p {
+    font-size: 16px !important;
+    line-height: 1.9 !important;
+  }
+}
+
+/* Stats inside card */
+#about .about-lux-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 1.25rem 0.5rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(159, 232, 112, 0.08);
+}
+
+@media (min-width: 640px) {
+  #about .about-lux-stats {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    padding: 1.35rem 0;
+  }
+  #about .about-lux-stat-item:not(:last-child) {
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+#about .about-lux-stat-item {
+  text-align: center;
+  padding: 0.5rem 0.35rem;
+  border-radius: 20px;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background 0.35s;
+}
+
+#about .about-lux-stat-item:hover {
+  transform: translateY(-4px);
+  background: rgba(159, 232, 112, 0.06);
+}
+
+#about .about-lux-stat-icon {
+  display: block;
+  font-size: 1.25rem;
+  color: #9FE870;
+  margin-bottom: 0.35rem;
+  line-height: 1;
+}
+
+#about .about-lux-stat-num {
+  display: block;
+  font-family: 'Inter', 'Outfit', sans-serif;
+  font-size: clamp(1.35rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+#about .about-lux-stat-label {
+  display: block;
+  margin-top: 0.25rem;
+  font-family: 'Inter', 'Outfit', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(191, 199, 191, 0.85);
+  line-height: 1.3;
+}
+
+/* —— Right image —— */
+#about .about-lux-visual {
+  position: relative;
+  border-radius: 30px;
+  overflow: hidden;
+  min-height: 420px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(159, 232, 112, 0.1);
+}
+
+@media (min-width: 900px) {
+  #about .about-lux-visual {
+    min-height: 100%;
+    height: 100%;
+  }
+}
+
+#about .about-lux-visual img {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+  transition: transform 8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#about .about-lux-visual:hover img {
+  transform: scale(1.05);
+}
+
+#about .about-lux-visual-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(5, 5, 5, 0.15) 0%,
+    rgba(5, 5, 5, 0.25) 50%,
+    rgba(5, 5, 5, 0.55) 100%
+  );
+  z-index: 1;
+}
+
+/* Hide legacy about wrappers */
+#about .eco-about-wrap,
+#about .eco-about-grid,
+#about .eco-about-copy,
+#about .eco-about-visual,
+#about .eco-stats-bar,
+#about .section-header-modern {
+  display: none !important;
+}
+
+/* Mobile: image on top */
+@media (max-width: 899px) {
+  #about .about-luxury-grid {
+    display: flex;
+    flex-direction: column;
+  }
+  #about .about-lux-visual {
+    order: -1;
+    min-height: 320px;
+  }
+  #about .about-lux-visual img {
+    min-height: 320px;
+  }
+  #about .about-lux-title {
+    font-size: clamp(2rem, 9vw, 2.625rem);
+  }
+}

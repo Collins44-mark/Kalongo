@@ -37,6 +37,77 @@ const optimizeCloudinaryUrl = (url, width = null, height = null, quality = 'auto
     return url;
 };
 
+/** Transparent PNG logo for dark navbar (no white box) */
+const getTransparentLogoUrl = (url) => {
+    if (!url || !url.includes('cloudinary.com')) return url;
+    if (url.includes('e_background_removal')) return url.replace(/\.(jpg|jpeg|webp)$/i, '.png');
+    return url.replace('/upload/', '/upload/e_background_removal,f_png,q_auto/').replace(/\.(jpg|jpeg|webp)$/i, '.png');
+};
+
+/** Premium facilities catalog (order + copy); merged with API images */
+const FACILITY_CATALOG = [
+    { key: 'pool', name: 'Swimming Pool', description: 'Relax and cool off in our refreshing swimming pool surrounded by nature.' },
+    { key: 'farm', name: 'Natural Farm', description: 'Experience authentic farm life with our natural farming practices and organic produce.' },
+    { key: 'animals', name: 'Domestic Animals', description: 'Interact with our friendly domestic animals including cows, goats, chickens, and more.' },
+    { key: 'food', name: 'Farm-Fresh Food', description: 'Enjoy delicious meals made from fresh, locally sourced ingredients from our farm.' },
+    { key: 'trails', name: 'Nature Trails', description: 'Explore our beautiful surroundings through guided nature walks and trails.' },
+    { key: 'activities', name: 'Activities', description: 'Participate in various farm activities, animal feeding, and educational programs.' },
+];
+
+const normalizeFacilityName = (name) => (name || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+
+const mergeFacilitiesList = (apiList) => {
+    const apiByName = {};
+    (apiList || []).forEach((f) => {
+        apiByName[normalizeFacilityName(f.name)] = f;
+    });
+    return FACILITY_CATALOG.map((def) => {
+        const api = apiByName[normalizeFacilityName(def.name)];
+        const image_url = api?.image_url || def.image_url || '';
+        return {
+            name: def.name,
+            description: api?.description || def.description,
+            image_url,
+            iconKey: def.key,
+        };
+    });
+};
+
+const facilityLuxIconSvg = (key) => {
+    const icons = {
+        pool: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12c2-4 4-4 6 0s4 4 6 0 4-4 6 0"/><path d="M2 16c2-4 4-4 6 0s4 4 6 0 4-4 6 0"/><circle cx="18" cy="6" r="2"/></svg>',
+        farm: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c-4 4-6 8-6 12a6 6 0 0 0 12 0c0-4-2-8-6-12z"/><path d="M12 10v8"/></svg>',
+        animals: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="2"/><circle cx="16" cy="8" r="2"/><path d="M5 14c1.5 3 4 4 7 4s5.5-1 7-4"/><path d="M9 12h6"/></svg>',
+        food: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h16v2H4z"/><path d="M8 7v10M16 7v10"/><path d="M6 4h12v3H6z"/></svg>',
+        trails: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20L10 8l4 4 6-12"/></svg>',
+        activities: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M9 17h6M6 14l3-7h6l3 7"/></svg>',
+    };
+    return icons[key] || icons.farm;
+};
+
+const ecoFeatureIcon = (text) => {
+    const t = (text || '').toLowerCase();
+    let icon = '◆';
+    if (t.includes('wifi') || t.includes('wi-fi') || t.includes('internet')) icon = '⌁';
+    else if (t.includes('bath') || t.includes('shower')) icon = '◇';
+    else if (t.includes('bed') || t.includes('sleep')) icon = '☾';
+    else if (t.includes('view') || t.includes('garden') || t.includes('farm')) icon = '❋';
+    else if (t.includes('food') || t.includes('dining') || t.includes('kitchen')) icon = '◎';
+    else if (t.includes('air') || t.includes('ac')) icon = '◈';
+    return icon;
+};
+
+/** Cloudinary video → poster frame JPG */
+const cloudinaryVideoPoster = (url) => {
+    if (!url || !url.includes('cloudinary.com')) return url;
+    if (url.includes('/video/upload/')) {
+        return url
+            .replace('/video/upload/', '/video/upload/so_0,w_800,h_500,c_fill/')
+            .replace(/\.(mp4|webm|mov|m4v)$/i, '.jpg');
+    }
+    return url;
+};
+
 const preloadImage = (url, optimize = true) => {
     const optimizedUrl = optimize ? optimizeCloudinaryUrl(url, 1200, null, 'auto', 'auto') : url;
     
@@ -133,6 +204,136 @@ const API = {
     getHomepageData: () => fetchAPI('/homepage-data'),
 };
 
+/** Our Services page — premium card markup */
+const SVC_ACC_PRIORITY = ['A-Cabin', 'Cottage', 'Family'];
+const SVC_ACT_PRIORITY = ['Quad Bike', 'Sports Bike', 'Bonfire'];
+
+const svcIconBed = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10v8M3 10h4v8M7 10V7a2 2 0 012-2h6a2 2 0 012 2v3M17 10v8M21 10v8M21 10h-4"/></svg>';
+const svcIconHome = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5L12 4l8 7.5M6 10.5V20h12V10.5"/></svg>';
+const svcIconUsers = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 20v-1a4 4 0 00-4-4H7a4 4 0 00-4 4v1M12 12a4 4 0 100-8 4 4 0 000 8zM23 20v-1a3 3 0 00-2-2.8M16 4.2a3 3 0 010 5.6"/></svg>';
+const svcIconBike = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M9 17h6M12 5l3 6M9 11l3-6 3 6"/></svg>';
+const svcIconSport = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17l4-9 4 4 4-4"/></svg>';
+const svcIconFire = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1 3 4 5 4 9a4 4 0 01-8 0c0-2 1.5-3.5 2-5.5C9 8 8 10 6 12a6 6 0 0012 0c0-3-2-5-3-7z"/></svg>';
+const svcIconClock = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+const svcIconFood = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C9 8 6 9 6 14a6 6 0 1012 0c0-5-3-6-6-11z"/><path d="M9 17h6"/></svg>';
+const svcIconDefault = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2 4h4l-3 3 1 5-4-2-4 2 1-5-3-3h4z"/></svg>';
+
+const SVC_ACC_DESC = {
+    'A-Cabin': 'A cozy cabin surrounded by nature — ideal for couples and solo travelers.',
+    'Cottage': 'A spacious cottage with serene farm views and premium comfort.',
+    'Family': 'Generous space for families with breakfast and farm hospitality included.',
+    'Kikota': 'Traditional kikota lodging with an authentic eco-lodge experience.',
+    'Tents': 'Glamping-style tents for an immersive outdoor stay under the stars.',
+};
+
+const SVC_ACT_DESC = {
+    'Quad Bike': 'Explore the farm trails on a thrilling quad bike adventure.',
+    'Sports Bike': 'Cycle through scenic paths at your own pace.',
+    'Bonfire': 'Unwind with an evening bonfire under the open sky.',
+    'Farm Tour': 'Guided tour of our sustainable farm and ecosystems.',
+};
+
+function svcAccIcon(name) {
+    const n = (name || '').toLowerCase();
+    if (n.includes('family')) return svcIconUsers;
+    if (n.includes('cottage') || n.includes('kikota')) return svcIconHome;
+    return svcIconBed;
+}
+
+function svcActIcon(name) {
+    const n = (name || '').toLowerCase();
+    if (n.includes('quad')) return svcIconBike;
+    if (n.includes('sport') || n.includes('mountain')) return svcIconSport;
+    if (n.includes('bonfire') || n.includes('fire')) return svcIconFire;
+    if (n.includes('farm') || n.includes('tour')) return svcIconHome;
+    return svcIconBike;
+}
+
+function svcChargeIcon(name) {
+    const n = (name || '').toLowerCase();
+    if (n.includes('laundry')) return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v16H6zM8 8h8M10 12h4"/></svg>';
+    if (n.includes('room')) return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16v12H4zM8 8V6a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>';
+    if (n.includes('bike') || n.includes('quad')) return svcIconBike;
+    if (n.includes('photo') || n.includes('wedding')) return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h4l2-2h4l2 2h4v12H4zM12 11a3 3 0 100 6 3 3 0 000-6z"/></svg>';
+    return svcIconDefault;
+}
+
+function svcEscape(text) {
+    return String(text || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function svcAccDescription(name) {
+    return SVC_ACC_DESC[name] || 'Comfortable accommodation with breakfast included at Kalongo Farm.';
+}
+
+function svcActDescription(name) {
+    return SVC_ACT_DESC[name] || 'An unforgettable farm experience tailored for our guests.';
+}
+
+function svcFoodIcon(categoryName, itemName) {
+    const c = (categoryName || '').toLowerCase();
+    const n = (itemName || '').toLowerCase();
+    if (c.includes('drink') || c.includes('beer') || c.includes('wine') || c.includes('vodka') || n.includes('soda') || n.includes('juice')) {
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8v3l-2 14H10L8 6V3z"/></svg>';
+    }
+    if (c.includes('breakfast') || n.includes('egg') || n.includes('bread')) {
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="14" r="4"/><path d="M8 6h8M10 4h4"/></svg>';
+    }
+    return svcIconFood;
+}
+
+function svcAccommodationCardHtml(name, items, showPrices) {
+    const pricesHtml = showPrices && items.length
+        ? `<div class="lux-svc-prices">${items.map((item) => `
+            <div class="lux-svc-price-row">
+              <span>${svcEscape(item.price_label || '')}</span>
+              <strong class="price-display">${svcEscape(item.price_value || '')}</strong>
+            </div>`).join('')}</div>`
+        : '';
+    return `
+        <article class="lux-svc-card lux-svc-glass">
+            <div class="lux-svc-card-icon">${svcAccIcon(name)}</div>
+            <h3 class="lux-svc-card-title">${svcEscape(name)}</h3>
+            <p class="lux-svc-card-desc">${svcEscape(svcAccDescription(name))}</p>
+            <ul class="lux-svc-features">
+                <li><span class="lux-svc-check" aria-hidden="true">✓</span> Comfortable bed</li>
+                <li><span class="lux-svc-check" aria-hidden="true">✓</span> Breakfast included</li>
+            </ul>
+            ${pricesHtml}
+        </article>`;
+}
+
+function svcActivityCardHtml(item, showPrices) {
+    const duration = item.price_label || '';
+    const features = [
+        duration ? `<li><span class="lux-svc-check" aria-hidden="true">◎</span> ${svcEscape(duration)}</li>` : '',
+        '<li><span class="lux-svc-check" aria-hidden="true">✓</span> Farm experience included</li>',
+    ].filter(Boolean).join('');
+    const priceHtml = showPrices && item.price_value
+        ? `<div class="lux-svc-prices"><div class="lux-svc-price-row"><span>From</span><strong class="price-display">${svcEscape(item.price_value)}</strong></div></div>`
+        : '';
+    return `
+        <article class="lux-svc-card lux-svc-glass">
+            <div class="lux-svc-card-icon">${svcActIcon(item.name)}</div>
+            <h3 class="lux-svc-card-title">${svcEscape(item.name)}</h3>
+            <p class="lux-svc-card-desc">${svcEscape(svcActDescription(item.name))}</p>
+            <ul class="lux-svc-features">${features}</ul>
+            ${priceHtml}
+        </article>`;
+}
+
+function svcFilterByPriority(entries, priority) {
+    const ordered = [];
+    priority.forEach((key) => {
+        const match = entries.find(([name]) => name.toLowerCase() === key.toLowerCase());
+        if (match) ordered.push(match);
+    });
+    entries.forEach((entry) => {
+        if (!ordered.some(([n]) => n === entry[0])) ordered.push(entry);
+    });
+    return ordered;
+}
+
 // Render functions
 const Render = {
     heroSlides: (slides) => {
@@ -168,8 +369,14 @@ const Render = {
         // Update hero content from first slide
         if (slides[0]) {
             if (slides[0].title) {
-                const titleEl = document.querySelector('.hero-title');
-                if (titleEl) titleEl.textContent = slides[0].title;
+                const lineWhite = document.querySelector('.eco-hero-line:not(.eco-hero-line--green)');
+                const lineGreen = document.querySelector('.eco-hero-line--green');
+                const t = slides[0].title.replace(/^welcome\s+to\s+/i, '').trim();
+                if (lineWhite && lineGreen && /kalongo/i.test(t)) {
+                    const parts = t.split(/\s+farm/i);
+                    lineWhite.textContent = (parts[0] || 'KALONGO').trim().toUpperCase();
+                    lineGreen.textContent = 'FARM';
+                }
             }
             if (slides[0].subtitle) {
                 const subtitleEl = document.querySelector('.hero-subtitle');
@@ -188,7 +395,7 @@ const Render = {
         }, 100);
     },
     
-    /** Build HTML for one room card (modern swipe slideshow, no arrows/dots) */
+    /** Build HTML for one luxury accommodation card (swipe gallery + detail modal) */
     roomCardHtml: (room) => {
         const validImages = (room.images || []).filter(img => img.image_url && img.image_url.trim());
         const imagesHtml = validImages.length > 0 ? validImages.map((img, idx) => {
@@ -196,24 +403,46 @@ const Render = {
             return `<div class="room-slide" data-slide-index="${idx}">
                 <img src="${optimizedUrl}" alt="${(img.caption || room.name).replace(/"/g, '&quot;')}" class="room-slide-image" loading="${idx === 0 ? 'eager' : 'lazy'}">
             </div>`;
-        }).join('') : `<div class="room-slide" style="background:#f0f0f0;display:flex;align-items:center;justify-content:center;"><p style="color:#999;text-align:center;">No image available</p></div>`;
-        const featuresHtml = (room.features || []).map(f => `<li>✓ ${f}</li>`).join('');
-        return `<div class="room-card">
-            <div class="room-slider-container" data-room="${room.slug}">
-                <div class="room-slider" data-room="${room.slug}">${imagesHtml}</div>
+        }).join('') : `<div class="room-slide eco-room-slide--empty"><p>No image available</p></div>`;
+        const defaultAmenities = ['Comfortable beds', 'Private bathroom', 'Farm view', 'Free WiFi'];
+        const amenityList = (room.features && room.features.length) ? room.features.slice(0, 4) : defaultAmenities;
+        const featuresHtml = amenityList.map(f =>
+            `<li><span class="lux-amenity-icon" aria-hidden="true">${ecoFeatureIcon(f)}</span><span>${f}</span></li>`
+        ).join('');
+        const priceMap = {
+            'a-cabin': { amount: 180000, label: '/ night' },
+            cottage: { amount: 180000, label: '/ night' },
+            kikota: { amount: 400000, label: ' / stay' },
+            'family-house': { amount: 250000, label: '/ night' },
+        };
+        const priceEntry = priceMap[room.slug];
+        const priceHtml = priceEntry
+            ? `<strong>From TZS ${Number(priceEntry.amount).toLocaleString('en-US')}</strong> ${priceEntry.label}`
+            : '<strong>Contact for rates</strong>';
+        return `<article class="room-card lux-room-card" data-room-slug="${room.slug || ''}" tabindex="0" role="button" aria-label="View ${room.name} details">
+            <div class="lux-room-media">
+                <div class="room-slider-container" data-room="${room.slug}">
+                    <div class="room-slider" data-room="${room.slug}">${imagesHtml}</div>
+                </div>
+                <div class="lux-room-shade" aria-hidden="true"></div>
+                <span class="lux-room-badge">LUXURY STAY</span>
             </div>
-            <div class="room-content">
-                <h3 class="room-name">${room.name}</h3>
-                ${room.capacity ? `<p class="room-capacity">Guest Capacity: ${room.capacity}</p>` : ''}
-                ${room.description ? `<p class="room-description">${room.description}</p>` : ''}
-                ${featuresHtml ? `<ul class="room-features">${featuresHtml}</ul>` : ''}
+            <div class="lux-room-body">
+                <h3 class="lux-room-title">${room.name}</h3>
+                ${room.capacity ? `<p class="lux-room-capacity">${room.capacity}</p>` : ''}
+                <ul class="lux-room-amenities">${featuresHtml}</ul>
+                <div class="lux-room-footer">
+                    <p class="lux-room-price">${priceHtml}</p>
+                    <button type="button" class="lux-room-view-btn" aria-label="View ${room.name} details">View Details</button>
+                </div>
             </div>
-        </div>`;
+        </article>`;
     },
 
     /** Render rooms into a specific container (for Rooms and Family Houses sections) */
     roomsInto: (container, rooms) => {
         if (!container || !rooms || rooms.length === 0) return;
+        window.roomsCatalog = rooms;
         container.innerHTML = rooms.map(room => Render.roomCardHtml(room)).join('');
     },
 
@@ -238,26 +467,36 @@ const Render = {
         console.log(`✅ Rendered ${rooms.length} rooms`);
     },
     
+    facilityCardHtml: (fac) => {
+        const imgUrl = fac.image_url ? optimizeCloudinaryUrl(fac.image_url, 640, 620, 'auto', 'auto') : '';
+        const safeName = (fac.name || '').replace(/"/g, '&quot;');
+        const safeDesc = (fac.description || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const iconSvg = facilityLuxIconSvg(fac.iconKey);
+        const mediaInner = imgUrl
+            ? `<img class="lux-facility-img" src="${imgUrl}" alt="${safeName}" loading="lazy">`
+            : '<div class="lux-facility-img-placeholder" aria-hidden="true"></div>';
+        return `<article class="facility-item lux-facility-card">
+            <div class="lux-facility-media${imgUrl ? '' : ' lux-facility-media--empty'}">
+                ${mediaInner}
+                <div class="lux-facility-img-overlay" aria-hidden="true"></div>
+                <div class="lux-facility-icon-badge" aria-hidden="true">${iconSvg}</div>
+            </div>
+            <div class="lux-facility-body">
+                <h3 class="lux-facility-title">${fac.name}</h3>
+                <p class="lux-facility-desc">${safeDesc}</p>
+            </div>
+        </article>`;
+    },
+
     facilities: (facilities) => {
-        const container = document.querySelector('.facilities-grid');
+        const container = document.querySelector('.facilities-grid') || document.querySelector('#facilities .facilities-grid');
         if (!container) {
             console.warn('Facilities: No container found');
             return;
         }
-        if (!facilities || facilities.length === 0) {
-            console.warn('Facilities: No facilities data');
-            return;
-        }
-        
-        container.innerHTML = facilities.map(fac => `
-            <div class="facility-item">
-                ${fac.image_url ? `<div class="facility-image" style="background-image: url('${fac.image_url}'); background-size: cover; background-position: center;" loading="lazy"></div>` : ''}
-                <h3>${fac.name}</h3>
-                ${fac.description ? `<p>${fac.description}</p>` : ''}
-            </div>
-        `).join('');
-        
-        console.log(`✅ Rendered ${facilities.length} facilities`);
+        const merged = mergeFacilitiesList(facilities || []);
+        container.innerHTML = merged.map((fac) => Render.facilityCardHtml(fac)).join('');
+        console.log(`✅ Rendered ${merged.length} facilities`);
     },
     
     activities: (activities) => {
@@ -275,18 +514,19 @@ const Render = {
                 if (!act.name) return ''; // Skip activities without names
                 const optimizedImageUrl = act.image_url ? optimizeCloudinaryUrl(act.image_url, 800, 600, 'auto', 'auto') : null;
                 return `
-                <div class="activities-group" style="margin-bottom: 2rem; padding: 1.5rem; background: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-                    <h3 class="activities-group-title" style="color: var(--primary-color); margin-bottom: 0.5rem;">${act.name}</h3>
-                    ${act.description ? `<p style="color: var(--text-light); margin-top: 0.5rem; line-height: 1.6;">${act.description}</p>` : ''}
-                    ${optimizedImageUrl ? `
-                        <div style="margin-top: 1rem;">
-                            <img src="${optimizedImageUrl}" 
-                                 alt="${act.name}" 
-                                 style="width:100%;max-width:500px;height:300px;object-fit:cover;border-radius:10px;display:block;margin:1rem auto;"
-                                 loading="lazy"
-                                 onerror="this.style.display='none';">
+                <div class="activities-group eco-activity-block">
+                    <div class="eco-activity-layout">
+                        ${optimizedImageUrl ? `
+                            <div class="eco-activity-media">
+                                <img src="${optimizedImageUrl}" alt="${act.name}" loading="lazy" onerror="this.parentElement.classList.add('eco-activity-media--hidden');">
+                                <div class="eco-activity-shade" aria-hidden="true"></div>
+                            </div>
+                        ` : ''}
+                        <div class="eco-activity-text">
+                            <h3 class="activities-group-title">${act.name}</h3>
+                            ${act.description ? `<p class="eco-activity-desc">${act.description}</p>` : ''}
                         </div>
-                    ` : ''}
+                    </div>
                 </div>
             `;
             }).filter(html => html).join('');
@@ -324,22 +564,24 @@ const Render = {
         pricing.forEach(category => {
             console.log(`  📦 Processing category: ${category.name} (${category.category_type}) with ${category.items?.length || 0} items`);
             if (category.category_type === 'accommodation') {
-                let container = document.querySelector('.accommodation-grid-modern');
+                let container = document.querySelector('.lux-svc-premium-grid[data-svc="accommodation"]')
+                    || document.querySelector('.accommodation-grid-modern');
                 if (!container) {
                     container = document.querySelector('.packages-section-modern .accommodation-grid-modern');
                 }
                 console.log('  🔍 Accommodation container found:', !!container);
                 if (container) {
-                    // Group items by name to handle multiple prices per accommodation
                     const grouped = {};
                     category.items.forEach(item => {
-                        if (!grouped[item.name]) {
-                            grouped[item.name] = [];
-                        }
+                        if (!grouped[item.name]) grouped[item.name] = [];
                         grouped[item.name].push(item);
                     });
-                    
-                    container.innerHTML = Object.entries(grouped).map(([name, items]) => {
+                    const entries = svcFilterByPriority(Object.entries(grouped), SVC_ACC_PRIORITY);
+                    const onServicesPage = document.body.classList.contains('lux-services-page');
+                    const displayEntries = entries;
+
+                    container.innerHTML = displayEntries.map(([name, items]) => {
+                        if (onServicesPage) return svcAccommodationCardHtml(name, items, showPrices);
                         const hasFeatured = items.some(i => i.featured);
                         return `
                             <div class="accommodation-card-modern ${hasFeatured ? 'featured-accommodation-modern' : ''}">
@@ -355,15 +597,15 @@ const Render = {
                                         </div>
                                     `).join('')}
                                 </div>
-                            </div>
-                        `;
+                            </div>`;
                     }).join('');
-                    console.log(`  ✅ Rendered ${Object.keys(grouped).length} accommodation items`);
+                    console.log(`  ✅ Rendered ${displayEntries.length} accommodation items`);
                 } else {
                     console.error('  ❌ Accommodation container not found!');
                 }
             } else if (category.category_type === 'activity') {
-                let container = document.querySelector('.activities-grid-modern');
+                let container = document.querySelector('.lux-svc-premium-grid[data-svc="activities"]')
+                    || document.querySelector('.activities-grid-modern');
                 if (!container) {
                     container = document.querySelector('.packages-section-modern .activities-grid-modern');
                 }
@@ -391,8 +633,20 @@ const Render = {
                 }
                 console.log('  🔍 Activities container found:', !!container);
                 if (container && category.items && category.items.length > 0) {
-                    console.log(`  📝 Rendering ${category.items.length} activity items`);
-                    container.innerHTML = category.items.map(item => {
+                    const onServicesPage = document.body.classList.contains('lux-services-page');
+                    let items = [...category.items];
+                    if (onServicesPage) {
+                        const priority = items.filter((i) =>
+                            SVC_ACT_PRIORITY.some((p) => p.toLowerCase() === (i.name || '').toLowerCase())
+                        );
+                        const rest = items.filter((i) =>
+                            !SVC_ACT_PRIORITY.some((p) => p.toLowerCase() === (i.name || '').toLowerCase())
+                        );
+                        items = [...priority, ...rest];
+                    }
+                    console.log(`  📝 Rendering ${items.length} activity items`);
+                    container.innerHTML = items.map(item => {
+                        if (onServicesPage) return svcActivityCardHtml(item, showPrices);
                         const isFree = (item.price_value || '').toLowerCase().includes('free');
                         return `
                             <div class="activity-card-modern ${isFree ? 'free-activity-modern' : ''}">
@@ -402,7 +656,7 @@ const Render = {
                             </div>
                         `;
                     }).join('');
-                    console.log(`  ✅ Rendered ${category.items.length} activity items`);
+                    console.log(`  ✅ Rendered ${items.length} activity items`);
                 } else {
                     console.error('  ❌ Activities container not found or no items!', {
                         container: !!container,
@@ -461,10 +715,59 @@ const Render = {
         console.log(`✅ Rendered ${food.length} food items`);
     },
     
+    reviewSlideHtml: (review, idx) => {
+        const metaDefaults = [
+            { name: 'Michael T.', location: 'Dar es Salaam, Tanzania', date: 'April 15, 2024' },
+            { name: 'Sarah M.', location: 'Arusha, Tanzania', date: 'March 8, 2024' },
+            { name: 'Grace T.', location: 'Mbeya, Tanzania', date: 'February 22, 2024' },
+            { name: 'John K.', location: 'Dodoma, Tanzania', date: 'January 10, 2024' },
+        ];
+        const meta = metaDefaults[idx % metaDefaults.length];
+        const rating = Math.min(5, Math.max(1, review.rating || 5));
+        const starsHtml = Array.from({ length: 5 }, (_, i) =>
+            `<span class="lux-review-star" aria-hidden="true">${i < rating ? '★' : '☆'}</span>`
+        ).join('');
+        const quote = (review.quote || 'An unforgettable stay surrounded by nature, comfort, and warm hospitality. Kalongo Farm exceeded every expectation.').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const customerName = (review.customer_name || meta.name).replace(/</g, '&lt;');
+        const location = meta.location;
+        const dateStr = meta.date;
+        const photoUrl = review.image_url ? optimizeCloudinaryUrl(review.image_url, 720, 520, 'auto', 'auto') : '';
+        const avatarUrl = review.image_url ? optimizeCloudinaryUrl(review.image_url, 112, 112, 'auto', 'auto') : '';
+        const safeName = customerName.replace(/"/g, '&quot;');
+        const visualHtml = photoUrl
+            ? `<div class="lux-review-visual"><img class="lux-review-photo" src="${photoUrl}" alt="${safeName}" loading="${idx === 0 ? 'eager' : 'lazy'}"></div>`
+            : `<div class="lux-review-visual"><div class="lux-review-photo lux-review-photo--empty" aria-hidden="true"></div></div>`;
+        const avatarHtml = avatarUrl
+            ? `<img class="lux-review-avatar" src="${avatarUrl}" alt="" loading="lazy">`
+            : `<span class="lux-review-avatar lux-review-avatar--placeholder" aria-hidden="true"></span>`;
+
+        return `<div class="review-slide lux-review-slide" data-review-index="${idx}">
+            <div class="lux-review-card">
+                ${visualHtml}
+                <div class="lux-review-panel">
+                    <div class="lux-review-stars" aria-label="Rating: ${rating} out of 5 stars">${starsHtml}</div>
+                    <div class="lux-review-quote-wrap">
+                        <span class="lux-review-q-mark lux-review-q-open" aria-hidden="true">"</span>
+                        <p class="lux-review-quote">${quote}</p>
+                        <span class="lux-review-q-mark lux-review-q-close" aria-hidden="true">"</span>
+                    </div>
+                    <div class="lux-review-author-divider" aria-hidden="true">❋</div>
+                    <div class="lux-review-author">
+                        ${avatarHtml}
+                        <div>
+                            <h4 class="lux-review-name">${customerName}</h4>
+                            <p class="lux-review-location">${location}</p>
+                            <p class="lux-review-date">${dateStr}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    },
+
     reviews: (reviews) => {
-        console.log('🎨 Rendering reviews (modern swipe)...', reviews?.length || 0);
+        console.log('🎨 Rendering reviews (luxury slider)...', reviews?.length || 0);
         const slider = document.querySelector('#reviewsSlider, .reviews-slider');
-        console.log('🔍 Reviews slider found:', !!slider);
         if (!slider) {
             console.error('❌ Reviews: No slider element found');
             return;
@@ -473,44 +776,12 @@ const Render = {
             console.warn('⚠️ Reviews: No reviews data');
             return;
         }
-        
-        // Render reviews as flex items for swipe (no dots/arrows)
-        slider.innerHTML = reviews.map((review, idx) => {
-            const optimizedImageUrl = review.image_url ? optimizeCloudinaryUrl(review.image_url, 400, 400, 'auto', 'auto') : null;
-            const rating = review.rating || 5;
-            const stars = '★'.repeat(Math.min(rating, 5)) + '☆'.repeat(Math.max(0, 5 - rating));
-            const quote = review.quote || 'Great experience at Kalongo Farm!';
-            const customerName = review.customer_name || 'Happy Guest';
-            
-            return `
-            <div class="review-slide" data-review-index="${idx}">
-                <div class="review-content">
-                    ${optimizedImageUrl ? `
-                        <div class="review-image-container">
-                            <img src="${optimizedImageUrl}" 
-                                 alt="${customerName}'s Review" 
-                                 class="review-image" 
-                                 loading="${idx === 0 ? 'eager' : 'lazy'}"
-                                 style="display: block; width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                    ` : ''}
-                    <div class="review-text">
-                        <div class="review-stars" aria-label="Rating: ${rating} out of 5 stars">${stars}</div>
-                        <p class="review-quote">"${quote}"</p>
-                        <h4 class="review-name">${customerName}</h4>
-                    </div>
-                </div>
-            </div>
-            `;
-        }).join('');
-        
-        console.log(`✅ Created ${reviews.length} review slide elements`);
-        
-        // Dispatch event to initialize swipe slider
+
+        slider.innerHTML = reviews.map((review, idx) => Render.reviewSlideHtml(review, idx)).join('');
+        console.log(`✅ Created ${reviews.length} luxury review slides`);
+
         setTimeout(() => {
-            const event = new CustomEvent('reviewsRendered', { detail: { reviews } });
-            window.dispatchEvent(event);
-            console.log('📢 Dispatched reviewsRendered event');
+            window.dispatchEvent(new CustomEvent('reviewsRendered', { detail: { reviews } }));
         }, 100);
     },
     
@@ -520,8 +791,7 @@ const Render = {
             return;
         }
         
-        // Find restaurant menu container
-        const menuContainer = document.querySelector('.menu-container');
+        const menuContainer = document.querySelector('.lux-svc-menu-wrap, .menu-container');
         if (!menuContainer) {
             // Try finding by section header
             const headers = Array.from(document.querySelectorAll('.section-title-modern'));
@@ -549,14 +819,31 @@ const Render = {
             }
         }
         
-        const container = document.querySelector('.menu-container');
+        const container = document.querySelector('.lux-svc-menu-wrap, .menu-container');
         if (!container) {
             console.warn('Restaurant menu: No container found');
             return;
         }
         
-        // Clear and render all categories
-        container.innerHTML = menu.map(category => `
+        const onServicesPage = document.body.classList.contains('lux-services-page');
+        container.innerHTML = menu.map(category => {
+            if (onServicesPage) {
+                return `
+            <div class="lux-svc-menu-category lux-svc-glass">
+                <h3 class="lux-svc-menu-cat-title">${svcEscape(category.name)}</h3>
+                <div class="lux-svc-menu-cat-rule" aria-hidden="true"></div>
+                <div class="lux-svc-menu-grid">
+                    ${(category.items || []).map(item => `
+                        <article class="lux-svc-food-card lux-svc-glass">
+                            <span class="lux-svc-food-icon">${svcFoodIcon(category.name, item.name)}</span>
+                            <span class="lux-svc-food-name">${svcEscape(item.name)}</span>
+                            <span class="lux-svc-food-price price-display">${svcEscape(item.price)}</span>
+                        </article>
+                    `).join('')}
+                </div>
+            </div>`;
+            }
+            return `
             <div class="menu-category-modern">
                 <h3 class="menu-category-title-modern">${category.name}</h3>
                 <div class="menu-grid-modern">
@@ -567,8 +854,8 @@ const Render = {
                         </div>
                     `).join('')}
                 </div>
-            </div>
-        `).join('');
+            </div>`;
+        }).join('');
         
         console.log(`✅ Rendered ${menu.length} restaurant menu categories`);
     },
@@ -613,20 +900,56 @@ const Render = {
         
         container.innerHTML = kalongoVideos.map(v => {
             const optimizedUrl = optimizeCloudinaryUrl(v.url, 800, 600, 'auto', 'auto');
+            const poster = cloudinaryVideoPoster(optimizedUrl);
             return `
-            <div class="gallery-item-modern video-item-modern">
-                <video class="gallery-media-modern" controls preload="metadata" loading="lazy">
-                    <source src="${optimizedUrl}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                ${v.caption ? `
-                    <div class="gallery-overlay-modern">
-                        <p class="gallery-caption-modern">${v.caption}</p>
-                    </div>
-                ` : ''}
+            <div class="gallery-item-modern video-item-modern eco-video-card" data-video-url="${optimizedUrl}" role="button" tabindex="0" aria-label="Play video${v.caption ? ': ' + v.caption : ''}">
+                <div class="eco-video-thumb" style="background-image:url('${poster}')"></div>
+                <span class="eco-play-btn" aria-hidden="true">▶</span>
+                <div class="eco-video-overlay">
+                    ${v.caption ? `<p class="eco-video-caption">${v.caption}</p>` : ''}
+                </div>
             </div>
         `;
         }).join('');
+    },
+
+    kalongoVideoCardHtml: (video, featured = false) => {
+        const url = video.url || '';
+        const caption = (video.caption || 'Kalongo Farm').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const poster = cloudinaryVideoPoster(url);
+        const safeUrl = url.replace(/"/g, '&quot;');
+        const cls = featured ? 'lux-kalongo-video-featured eco-video-card' : 'lux-kalongo-video-card eco-video-card';
+        return `
+            <article class="${cls}" data-video-url="${safeUrl}" role="button" tabindex="0" aria-label="Play video: ${caption}">
+                <div class="lux-kalongo-video-media" style="background-image:url('${poster}')"></div>
+                <div class="lux-kalongo-video-shade" aria-hidden="true"></div>
+                <span class="lux-kalongo-play" aria-hidden="true">▶</span>
+                <p class="lux-kalongo-video-caption">${caption}</p>
+            </article>`;
+    },
+
+    kalongoPage: (videos) => {
+        if (!document.body.classList.contains('lux-kalongo-page')) return;
+
+        const container = document.getElementById('luxKalongoVideos');
+        if (!container) return;
+
+        const list = (videos || []).filter((v) => v.section === 'our-kalongo' || !v.section);
+        if (!list.length) {
+            container.innerHTML = '<p class="lux-kalongo-videos-empty">No videos available at this time.</p>';
+            window.dispatchEvent(new CustomEvent('kalongoRendered', { detail: { videos: list } }));
+            return;
+        }
+
+        const [first, ...rest] = list;
+        const featuredHtml = Render.kalongoVideoCardHtml(first, true);
+        const gridHtml = rest.length
+            ? `<div class="lux-kalongo-video-grid">${rest.map((v) => Render.kalongoVideoCardHtml(v, false)).join('')}</div>`
+            : '';
+
+        container.innerHTML = featuredHtml + gridHtml;
+        console.log(`✅ Rendered ${list.length} Kalongo videos`);
+        window.dispatchEvent(new CustomEvent('kalongoRendered', { detail: { videos: list } }));
     },
     
     
@@ -637,8 +960,10 @@ const Render = {
         const logos = document.querySelectorAll('#logo, .logo');
         console.log('🔍 Found logo elements:', logos.length);
         if (logos.length > 0 && settings.logo_url) {
+            const logoSrc = getTransparentLogoUrl(settings.logo_url);
             logos.forEach(logo => {
-                logo.src = settings.logo_url;
+                logo.src = logoSrc;
+                logo.classList.add('logo--transparent');
                 logo.onload = () => console.log('✅ Logo loaded:', settings.logo_url);
                 logo.onerror = () => console.error('❌ Failed to load logo:', settings.logo_url);
             });
@@ -821,11 +1146,9 @@ async function initializeDataLoading() {
                     console.warn('⚠️ No rooms to display');
                 }
                 
-                if (facilitiesData && facilitiesData.length > 0) {
+                if (document.querySelector('.facilities-grid') || document.querySelector('#facilities .facilities-grid')) {
                     console.log('🏊 Calling Render.facilities()...');
-                    renderPromises.push(Promise.resolve(Render.facilities(facilitiesData)));
-                } else {
-                    console.warn('⚠️ No facilities to display');
+                    renderPromises.push(Promise.resolve(Render.facilities(facilitiesData || [])));
                 }
                 
                 if (reviewsData && reviewsData.length > 0) {
@@ -854,38 +1177,28 @@ async function initializeDataLoading() {
     
     if (path.includes('packages.html')) {
         console.log('📦 Loading packages page data...');
+        document.querySelectorAll('.nav-link[href*="packages"]').forEach((link) => {
+            link.classList.add('is-active');
+        });
         try {
-            const [pricing, food, menu] = await Promise.all([
+            const [pricing, menu] = await Promise.all([
                 API.getPricing(),
-                API.getFood(),
                 API.getRestaurantMenu(),
             ]);
             const showPrices = (window.siteSettings?.show_prices || '').toLowerCase() === 'true';
             console.log('📊 Packages data loaded:', {
                 pricing: pricing?.length || 0,
-                food: food?.length || 0,
                 menu: menu?.length || 0,
                 showPrices
             });
-            
-            // Render with retry logic to ensure DOM is ready
+
             const renderPackages = () => {
                 if (pricing && pricing.length > 0) {
-                    console.log('📦 Calling Render.pricing()...');
                     Render.pricing(pricing, showPrices);
                 } else {
                     console.warn('⚠️ No pricing data to display');
                 }
-                
-                if (food && food.length > 0) {
-                    console.log('🍽️ Calling Render.food()...');
-                    Render.food(food);
-                } else {
-                    console.warn('⚠️ No food items to display');
-                }
-                
                 if (menu && menu.length > 0) {
-                    console.log('🍴 Calling Render.restaurantMenu()...');
                     Render.restaurantMenu(menu);
                 } else {
                     console.warn('⚠️ No restaurant menu to display');
@@ -896,8 +1209,7 @@ async function initializeDataLoading() {
                     document.body.classList.remove('prices-hidden');
                 }
             };
-            
-            // Try immediately, then retry if needed
+
             if (document.readyState === 'complete') {
                 setTimeout(renderPackages, 50);
             } else {
@@ -907,41 +1219,24 @@ async function initializeDataLoading() {
         } catch (error) {
             console.error('❌ Error loading packages data:', error);
         }
-        
-        // Also render activities pricing if available
-        if (pricing) {
-            const actCategory = pricing.find(c => c.category_type === 'activity');
-            const showPrices = (window.siteSettings?.show_prices || '').toLowerCase() === 'true';
-            if (actCategory) {
-                const container = document.querySelector('.activities-grid-modern');
-                if (container) {
-                    container.innerHTML = actCategory.items.map(item => {
-                        const isFree = (item.price_value || '').toLowerCase().includes('free');
-                        return `
-                            <div class="activity-card-modern ${isFree ? 'free-activity-modern' : ''}">
-                                <h3 class="activity-name-modern">${item.name}</h3>
-                                <p class="activity-duration-modern">${item.price_label || ''}</p>
-                                <div class="activity-price-modern price-display">${item.price_value || ''}</div>
-                            </div>
-                        `;
-                    }).join('');
-                }
-            }
-        }
     }
     
     if (path.includes('our-kalongo.html')) {
-        console.log('🎥 Loading videos...');
+        console.log('🎥 Loading Our Kalongo media...');
+        document.querySelectorAll('.nav-link[href*="our-kalongo"]').forEach((link) => {
+            link.classList.add('is-active');
+        });
         try {
             const videos = await API.getVideos();
             console.log('📊 Videos loaded:', videos?.length || 0);
-            setTimeout(() => {
-                // Always try to render videos (even if empty, to show message)
-                console.log('🎥 Calling Render.videos()...');
-                Render.videos(videos || []);
-            }, 200);
+            const apply = () => Render.kalongoPage(videos || []);
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => setTimeout(apply, 50));
+            } else {
+                setTimeout(apply, 50);
+            }
         } catch (error) {
-            console.error('❌ Error loading videos:', error);
+            console.error('❌ Error loading Our Kalongo videos:', error);
         }
     }
     

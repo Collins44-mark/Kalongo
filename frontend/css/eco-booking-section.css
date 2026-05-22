@@ -1,0 +1,513 @@
+/**
+ * Booking page — premium eco-luxury two-column layout
+ */
+
+body.lux-booking-page {
+  background: #050505 !important;
+}
+
+.lux-booking-page .lux-booking-main {
+  position: relative;
+  padding: clamp(2.5rem, 5vw, 3.5rem) 0 clamp(3.5rem, 7vw, 5rem);
+  overflow-x: hidden;
+}
+
+.lux-booking-page .lux-booking-main::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 55% at 20% 15%, rgba(182, 255, 92, 0.08), transparent 50%),
+    radial-gradient(ellipse 60% 50% at 85% 60%, rgba(80, 140, 50, 0.06), transparent 45%);
+  z-index: 0;
+  animation: lux-booking-glow 8s ease-in-out infinite alternate;
+}
+
+@keyframes lux-booking-glow {
+  0% { opacity: 0.85; }
+  100% { opacity: 1; }
+}
+
+.lux-booking-page .lux-booking-shell {
+  position: relative;
+  z-index: 1;
+  max-width: 1450px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 40px);
+}
+
+.lux-booking-page .lux-booking-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: clamp(1.5rem, 4vw, 40px);
+  align-items: start;
+}
+
+/* —— Left showcase —— */
+.lux-booking-page .lux-booking-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vw, 2rem);
+}
+
+.lux-booking-page .lux-booking-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #b6ff5c;
+}
+
+.lux-booking-page .lux-booking-label-gem {
+  font-size: 0.55rem;
+}
+
+.lux-booking-page .lux-booking-heading {
+  margin: 0.5rem 0 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(2.25rem, 5.5vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+}
+
+.lux-booking-page .lux-booking-heading-accent {
+  display: block;
+  color: #b6ff5c;
+  text-shadow: 0 0 40px rgba(182, 255, 92, 0.2);
+}
+
+.lux-booking-page .lux-booking-intro {
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.92rem, 2vw, 1.05rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 34rem;
+}
+
+.lux-booking-page .lux-booking-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+.lux-booking-page .lux-booking-feature {
+  padding: 1.1rem 1rem;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0.96), rgba(8, 8, 8, 0.98));
+  border: 1px solid rgba(182, 255, 92, 0.18);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+  transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.lux-booking-page .lux-booking-feature:hover {
+  transform: translateY(-6px);
+  border-color: rgba(182, 255, 92, 0.38);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45), 0 0 24px rgba(182, 255, 92, 0.08);
+}
+
+.lux-booking-page .lux-booking-feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 0.65rem;
+  border-radius: 50%;
+  background: rgba(182, 255, 92, 0.1);
+  border: 1px solid rgba(182, 255, 92, 0.25);
+  color: #b6ff5c;
+}
+
+.lux-booking-page .lux-booking-feature-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.7;
+}
+
+.lux-booking-page .lux-booking-feature-title {
+  margin: 0 0 0.2rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.lux-booking-page .lux-booking-feature-sub {
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.4;
+}
+
+.lux-booking-page .lux-booking-visual {
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  min-height: 200px;
+  border: 1px solid rgba(182, 255, 92, 0.2);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+}
+
+.lux-booking-page .lux-booking-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.lux-booking-page .lux-booking-visual:hover img {
+  transform: scale(1.05);
+}
+
+.lux-booking-page .lux-booking-visual-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.65), transparent 50%);
+  pointer-events: none;
+}
+
+/* —— Form card —— */
+.lux-booking-page .lux-booking-form-card {
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  border-radius: 32px;
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0.96), rgba(8, 8, 8, 0.98));
+  border: 1px solid rgba(182, 255, 92, 0.18);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow:
+    0 20px 56px rgba(0, 0, 0, 0.45),
+    0 0 40px rgba(182, 255, 92, 0.05);
+}
+
+.lux-booking-page .lux-booking-form-head {
+  text-align: center;
+  margin-bottom: clamp(1.5rem, 3vw, 2rem);
+}
+
+.lux-booking-page .lux-booking-form-title {
+  margin: 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.35rem, 3vw, 1.65rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.lux-booking-page .lux-booking-form-divider {
+  width: min(180px, 45%);
+  height: 2px;
+  margin: 0.85rem auto 0;
+  background: linear-gradient(90deg, transparent, rgba(182, 255, 92, 0.7), transparent);
+  box-shadow: 0 0 12px rgba(182, 255, 92, 0.2);
+}
+
+.lux-booking-page .booking-form-modern {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.lux-booking-page .lux-booking-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.lux-booking-page .lux-booking-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.lux-booking-page .lux-booking-field--full {
+  grid-column: 1 / -1;
+}
+
+.lux-booking-page .lux-booking-field label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.lux-booking-page .lux-booking-field input,
+.lux-booking-page .lux-booking-field select,
+.lux-booking-page .lux-booking-field textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 18px;
+  border: 1px solid rgba(182, 255, 92, 0.18);
+  background: rgba(12, 12, 12, 0.75);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.92rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.lux-booking-page .lux-booking-field input::placeholder,
+.lux-booking-page .lux-booking-field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.lux-booking-page .lux-booking-field input:focus,
+.lux-booking-page .lux-booking-field select:focus,
+.lux-booking-page .lux-booking-field textarea:focus {
+  outline: none;
+  border-color: rgba(182, 255, 92, 0.5);
+  box-shadow: 0 0 0 3px rgba(182, 255, 92, 0.12), 0 0 20px rgba(182, 255, 92, 0.08);
+}
+
+.lux-booking-page .lux-booking-field select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23B6FF5C' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+.lux-booking-page .lux-booking-field select option {
+  background: #121212;
+  color: #fff;
+}
+
+.lux-booking-page .lux-booking-field textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.lux-booking-page .lux-booking-section-label {
+  margin: 0.5rem 0 0;
+  grid-column: 1 / -1;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(182, 255, 92, 0.85);
+}
+
+/* Cost / estimate */
+.lux-booking-page .lux-booking-estimate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  padding: 1.15rem 1.25rem;
+  border-radius: 22px;
+  background: rgba(12, 12, 12, 0.6);
+  border: 1px solid rgba(182, 255, 92, 0.15);
+}
+
+.lux-booking-page .lux-booking-estimate-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lux-booking-page .lux-booking-estimate-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(182, 255, 92, 0.1);
+  border: 1px solid rgba(182, 255, 92, 0.22);
+  color: #b6ff5c;
+  font-size: 1.1rem;
+}
+
+.lux-booking-page .lux-booking-estimate-title {
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.lux-booking-page .lux-booking-estimate-amount {
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-weight: 700;
+  color: #b6ff5c;
+  text-shadow: 0 0 24px rgba(182, 255, 92, 0.25);
+  white-space: nowrap;
+}
+
+.lux-booking-page .lux-booking-cost-details {
+  display: none;
+}
+
+.lux-booking-page .lux-booking-submit-wrap {
+  margin-top: 0.25rem;
+}
+
+.lux-booking-page .lux-booking-submit {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #c8ff6e 0%, #b6ff5c 45%, #9fe870 100%);
+  color: #0a0a0a;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 8px 32px rgba(182, 255, 92, 0.35);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.lux-booking-page .lux-booking-submit:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(182, 255, 92, 0.45);
+}
+
+.lux-booking-page .lux-booking-submit-note {
+  margin: 0.75rem 0 0;
+  text-align: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Trust bar */
+.lux-booking-page .lux-booking-trust {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding: 1.35rem 1.5rem;
+  border-radius: 26px;
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0.96), rgba(8, 8, 8, 0.98));
+  border: 1px solid rgba(182, 255, 92, 0.12);
+}
+
+.lux-booking-page .lux-booking-trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.45rem;
+  padding: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.lux-booking-page .lux-booking-trust-item:not(:last-child) {
+  border-right: 1px solid rgba(182, 255, 92, 0.1);
+}
+
+.lux-booking-page .lux-booking-trust-item:hover {
+  color: #b6ff5c;
+}
+
+.lux-booking-page .lux-booking-trust-icon {
+  color: #b6ff5c;
+  font-size: 1.25rem;
+}
+
+.lux-booking-page .lux-booking-trust-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.35;
+}
+
+.lux-booking-page .booking-page {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+.lux-booking-page .lux-booking-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.lux-booking-page .lux-booking-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Override legacy white */
+.lux-booking-page .booking-info-card,
+.lux-booking-page .booking-form-container,
+.lux-booking-page .form-group input,
+.lux-booking-page .form-group select,
+.lux-booking-page .form-group textarea {
+  background: transparent !important;
+}
+
+@media (max-width: 1024px) {
+  .lux-booking-page .lux-booking-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lux-booking-page .lux-booking-trust {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .lux-booking-page .lux-booking-trust-item:nth-child(2) {
+    border-right: none;
+  }
+
+  .lux-booking-page .lux-booking-trust-item {
+    border-right: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .lux-booking-page .lux-booking-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lux-booking-page .lux-booking-features {
+    grid-template-columns: 1fr;
+  }
+
+  .lux-booking-page .lux-booking-trust {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .lux-booking-page .lux-booking-estimate {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .lux-booking-page .lux-booking-submit {
+    position: sticky;
+    bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    z-index: 10;
+  }
+}

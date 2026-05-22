@@ -1,0 +1,612 @@
+/**
+ * Our Accommodations — premium resort cards (#rooms only)
+ * Uses site tokens: #A6FF4D accent, dark green glass
+ */
+
+#rooms.lux-rooms-section {
+  padding: clamp(4rem, 9vw, 6.5rem) 0 !important;
+  background: #050505 !important;
+  position: relative;
+  overflow: hidden;
+}
+
+#rooms.lux-rooms-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 50% 40% at 50% 0%, rgba(166, 255, 77, 0.08), transparent 55%),
+    radial-gradient(ellipse 40% 30% at 80% 80%, rgba(107, 160, 67, 0.06), transparent 50%);
+}
+
+#rooms .lux-rooms-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 1.5rem);
+}
+
+#rooms .lux-rooms-header {
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+#rooms .lux-rooms-heading {
+  margin: 0;
+  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+#rooms .lux-rooms-heading-accent {
+  color: #A6FF4D;
+}
+
+#rooms .lux-rooms-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 1rem auto 0;
+  max-width: 200px;
+}
+
+#rooms .lux-rooms-divider::before,
+#rooms .lux-rooms-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(166, 255, 77, 0.6), transparent);
+}
+
+#rooms .lux-rooms-divider-leaf {
+  color: #A6FF4D;
+  font-size: 0.7rem;
+}
+
+#rooms .lux-rooms-sub {
+  margin: 1.25rem auto 0;
+  max-width: 620px;
+  font-family: 'Inter', 'Outfit', sans-serif;
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+#rooms .packages-section-modern {
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+#rooms .section-header-modern {
+  display: none !important;
+}
+
+/* Grid */
+#rooms .rooms-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 1.75rem !important;
+  align-items: stretch !important;
+}
+
+@media (min-width: 640px) {
+  #rooms .rooms-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (min-width: 1100px) {
+  #rooms .rooms-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 1.35rem !important;
+  }
+}
+
+/* Card */
+#rooms .lux-room-card.room-card {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  min-height: 480px;
+  max-height: 540px;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 28px !important;
+  overflow: hidden !important;
+  background: rgba(12, 22, 14, 0.72) !important;
+  border: 1px solid rgba(166, 255, 77, 0.14) !important;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(166, 255, 77, 0.05),
+    0 0 32px rgba(166, 255, 77, 0.06) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  cursor: pointer;
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s;
+}
+
+@media (min-width: 1100px) {
+  #rooms .lux-room-card {
+    min-height: 520px;
+    max-height: 520px;
+  }
+}
+
+#rooms .lux-room-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(166, 255, 77, 0.28) !important;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(166, 255, 77, 0.12) !important;
+}
+
+/* Image 65% */
+#rooms .lux-room-media {
+  position: relative;
+  flex: 0 0 65%;
+  min-height: 0;
+  overflow: hidden;
+  background: #0a120c;
+}
+
+#rooms .lux-room-media .room-slider-container {
+  position: absolute !important;
+  inset: 0 !important;
+  height: 100% !important;
+  width: 100% !important;
+  cursor: grab;
+}
+
+#rooms .lux-room-media .room-slider-container:active {
+  cursor: grabbing;
+}
+
+#rooms .lux-room-media .room-slider,
+#rooms .lux-room-media .room-slide {
+  height: 100% !important;
+}
+
+#rooms .lux-room-media .room-slide-image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#rooms .lux-room-card:hover .lux-room-media .room-slide-image {
+  transform: scale(1.06);
+}
+
+#rooms .lux-room-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(5, 8, 5, 0.1) 0%, rgba(5, 8, 5, 0.75) 100%);
+}
+
+#rooms .lux-room-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 3;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #e8ffe0;
+  background: rgba(8, 14, 8, 0.65);
+  border: 1px solid rgba(166, 255, 77, 0.25);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+/* Body */
+#rooms .lux-room-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.15rem 1.2rem 1.25rem !important;
+  background: rgba(8, 14, 8, 0.55) !important;
+  min-height: 0;
+}
+
+#rooms .lux-room-title {
+  margin: 0 0 0.35rem !important;
+  font-family: 'Playfair Display', 'Cormorant Garamond', serif !important;
+  font-size: clamp(1.35rem, 2.2vw, 1.55rem) !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.15 !important;
+}
+
+#rooms .lux-room-capacity {
+  margin: 0 0 0.65rem !important;
+  font-family: 'Inter', 'Outfit', sans-serif !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  color: #A6FF4D !important;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+#rooms .lux-room-capacity::before {
+  content: '◈';
+  font-size: 0.65rem;
+  opacity: 0.9;
+}
+
+#rooms .lux-room-amenities {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+#rooms .lux-room-amenities li {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: 'Inter', 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.78) !important;
+  line-height: 1.3;
+}
+
+#rooms .lux-room-amenities .lux-amenity-icon {
+  color: #A6FF4D;
+  font-size: 0.65rem;
+  width: 1rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+#rooms .lux-room-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(166, 255, 77, 0.1);
+}
+
+@media (max-width: 400px) {
+  #rooms .lux-room-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #rooms .lux-room-view-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+#rooms .lux-room-price {
+  font-family: 'Inter', 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.35;
+}
+
+#rooms .lux-room-price strong {
+  display: block;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+#rooms .lux-room-view-btn {
+  flex-shrink: 0;
+  padding: 0.55rem 1rem;
+  border: none;
+  border-radius: 999px;
+  font-family: 'Inter', 'Outfit', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #050805;
+  background: linear-gradient(135deg, #A6FF4D, #6bae3d);
+  box-shadow: 0 4px 20px rgba(166, 255, 77, 0.35);
+  cursor: pointer;
+  transition: transform 0.35s, box-shadow 0.35s;
+  pointer-events: auto;
+  animation: lux-btn-glow 3s ease-in-out infinite;
+}
+
+@keyframes lux-btn-glow {
+  0%, 100% { box-shadow: 0 4px 20px rgba(166, 255, 77, 0.35); }
+  50% { box-shadow: 0 6px 28px rgba(166, 255, 77, 0.55); }
+}
+
+#rooms .lux-room-view-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 32px rgba(166, 255, 77, 0.55);
+  animation: none;
+}
+
+/* ========== Room detail modal ========== */
+.lux-room-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 11000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s;
+}
+
+.lux-room-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lux-room-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.lux-room-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(1100px, 96vw);
+  max-height: 92vh;
+  overflow-y: auto;
+  border-radius: 30px;
+  background: rgba(10, 18, 12, 0.92);
+  border: 1px solid rgba(166, 255, 77, 0.18);
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.6),
+    0 0 48px rgba(166, 255, 77, 0.1);
+  transform: scale(0.94) translateY(12px);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lux-room-modal.is-open .lux-room-modal-panel {
+  transform: scale(1) translateY(0);
+}
+
+.lux-room-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.lux-room-modal-close:hover {
+  background: rgba(166, 255, 77, 0.2);
+  border-color: #A6FF4D;
+}
+
+.lux-room-modal-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+@media (min-width: 900px) {
+  .lux-room-modal-inner {
+    grid-template-columns: 1fr 1.05fr;
+  }
+}
+
+.lux-room-modal-info {
+  padding: clamp(1.5rem, 3vw, 2rem);
+  order: 2;
+}
+
+@media (min-width: 900px) {
+  .lux-room-modal-info {
+    order: 1;
+  }
+}
+
+.lux-room-modal-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: 'Inter', 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.lux-room-modal-back:hover {
+  color: #A6FF4D;
+}
+
+.lux-room-modal-title {
+  margin: 0 0 0.35rem;
+  font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.lux-room-modal-capacity {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #A6FF4D;
+}
+
+.lux-room-modal-desc {
+  margin: 0 0 1.5rem;
+  font-family: 'Inter', 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.lux-room-modal-specs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65rem 1rem;
+  list-style: none;
+  margin: 0 0 1.75rem;
+  padding: 0;
+}
+
+.lux-room-modal-specs li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.lux-room-modal-specs .spec-icon {
+  color: #A6FF4D;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.lux-room-modal-book-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.lux-room-modal-price-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.lux-room-modal-price-label strong {
+  display: block;
+  font-size: 1.15rem;
+  color: #fff;
+  margin-top: 0.15rem;
+}
+
+.lux-room-modal-book-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1.75rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #050805 !important;
+  text-decoration: none;
+  background: linear-gradient(135deg, #A6FF4D, #6bae3d) !important;
+  border: none;
+  box-shadow: 0 6px 28px rgba(166, 255, 77, 0.35);
+  transition: transform 0.35s, box-shadow 0.35s;
+}
+
+.lux-room-modal-book-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 36px rgba(166, 255, 77, 0.45);
+}
+
+/* Gallery column */
+.lux-room-modal-gallery {
+  padding: clamp(1rem, 2vw, 1.25rem);
+  order: 1;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+@media (min-width: 900px) {
+  .lux-room-modal-gallery {
+    order: 2;
+  }
+}
+
+.lux-room-modal-main-img-wrap {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  background: #0a120c;
+  margin-bottom: 0.75rem;
+}
+
+.lux-room-modal-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.lux-room-modal-thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.lux-room-modal-thumb {
+  border: 2px solid transparent;
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 1;
+  padding: 0;
+  cursor: pointer;
+  background: #0a120c;
+  transition: border-color 0.3s, transform 0.3s;
+}
+
+.lux-room-modal-thumb.is-active,
+.lux-room-modal-thumb:hover {
+  border-color: #A6FF4D;
+  transform: scale(1.03);
+}
+
+.lux-room-modal-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+body.lux-room-modal-open {
+  overflow: hidden;
+}

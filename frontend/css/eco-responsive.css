@@ -1,0 +1,803 @@
+/**
+ * KALONGO FARM — Global responsive (all pages, load last)
+ */
+
+:root {
+  --eco-r-container: min(1400px, 92vw);
+  --eco-r-pad-x: clamp(1rem, 4vw, 2.5rem);
+  --eco-r-section-y: clamp(3.75rem, 8vw, 6rem);
+  --eco-r-gap: clamp(0.75rem, 2vw, 1.5rem);
+  --eco-r-nav-break: 900px;
+}
+
+/* —— Global shell —— */
+html {
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+body.eco-luxury {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+.eco-luxury img,
+.eco-luxury video {
+  max-width: 100%;
+  height: auto;
+}
+
+.eco-luxury .container {
+  max-width: var(--eco-r-container);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--eco-r-pad-x);
+  padding-right: var(--eco-r-pad-x);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* —— Typography —— */
+.eco-luxury .hero-title,
+.eco-luxury .eco-hero-brand,
+.eco-luxury .pricing-hero-title,
+.eco-luxury .booking-hero-title,
+.eco-luxury .activities-hero-title {
+  font-size: clamp(2rem, 5vw, 4.5rem) !important;
+  line-height: 1.08 !important;
+}
+
+.eco-luxury .hero-subtitle,
+.eco-luxury .pricing-hero-subtitle,
+.eco-luxury .booking-hero-subtitle {
+  font-size: clamp(0.9rem, 1.5vw, 1.15rem) !important;
+}
+
+.eco-luxury h2,
+.eco-luxury .section-title-modern,
+.eco-luxury .lux-rooms-heading,
+.eco-luxury .lux-facilities-heading,
+.eco-luxury .lux-svc-page-title,
+.eco-luxury .lux-kalongo-title,
+.eco-luxury .lux-booking-heading {
+  font-size: clamp(1.6rem, 3vw, 3rem);
+}
+
+.eco-luxury p,
+.eco-luxury .section-description-modern,
+.eco-luxury .lux-rooms-sub,
+.eco-luxury .lux-facilities-sub {
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+}
+
+.eco-luxury .btn-primary,
+.eco-luxury .lux-booking-submit,
+.eco-luxury .nav-link.btn-booking {
+  font-size: clamp(0.85rem, 1.3vw, 1rem);
+}
+
+/* iOS input zoom fix */
+@media (max-width: 899px) {
+  .eco-luxury input,
+  .eco-luxury select,
+  .eco-luxury textarea,
+  .lux-booking-page .lux-booking-field input,
+  .lux-booking-page .lux-booking-field select,
+  .lux-booking-page .lux-booking-field textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* —— Section spacing —— */
+@media (max-width: 899px) {
+  #about.packages-page,
+  #rooms.lux-rooms-section,
+  #facilities.lux-facilities-section,
+  #reviews.lux-reviews-section,
+  .lux-services-page .lux-svc-section,
+  .lux-kalongo-page .lux-kalongo-videos,
+  .lux-kalongo-page .lux-kalongo-gallery,
+  .lux-booking-page .lux-booking-main {
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+  }
+
+  .eco-luxury .packages-section-modern {
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+  }
+}
+
+/* —— Performance: lighter motion on small screens —— */
+@media (max-width: 899px) {
+  .eco-reveal {
+    filter: none !important;
+    transform: translateY(18px);
+  }
+
+  .eco-orb {
+    opacity: 0.5;
+    filter: blur(60px);
+  }
+
+  .eco-luxury .hero-slide {
+    animation: none;
+  }
+}
+
+/* —— Header: mobile Book Now + hamburger —— */
+.header-mobile-book {
+  display: none;
+}
+
+/* Override legacy style.css side drawer (768px) */
+@media (max-width: 899px) {
+  .eco-luxury .nav-menu,
+  .eco-luxury .nav-menu.active {
+    right: auto !important;
+    left: var(--eco-r-pad-x) !important;
+    width: auto !important;
+    height: auto !important;
+    background: rgba(10, 16, 10, 0.94) !important;
+  }
+}
+
+@media (max-width: 899px) {
+  .eco-luxury .header > .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.5rem 0.85rem !important;
+  }
+
+  .eco-luxury .logo-section {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .eco-luxury .logo,
+  .eco-luxury .logo--transparent {
+    height: 32px !important;
+    max-width: 88px !important;
+  }
+
+  .header-mobile-book {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: 0.35rem;
+    padding: 0.5rem 0.9rem !important;
+    border-radius: 999px !important;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    color: #07140d !important;
+    background: linear-gradient(135deg, #c8ff6e, #b6ff5c) !important;
+    box-shadow: 0 4px 20px rgba(182, 255, 92, 0.35) !important;
+    text-decoration: none !important;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .eco-luxury .mobile-menu-toggle {
+    display: flex !important;
+    flex-shrink: 0;
+    order: 3;
+  }
+
+  /* Premium slide-down menu */
+  .eco-luxury .nav-menu {
+    position: fixed !important;
+    top: calc(var(--eco-nav-h, 76px) + 0.35rem) !important;
+    left: var(--eco-r-pad-x) !important;
+    right: var(--eco-r-pad-x) !important;
+    width: auto !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: min(70dvh, 520px) !important;
+    margin: 0 !important;
+    padding: 0.85rem !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.25rem !important;
+    background: rgba(10, 16, 10, 0.94) !important;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(182, 255, 92, 0.22) !important;
+    border-radius: 22px !important;
+    box-shadow:
+      0 20px 50px rgba(0, 0, 0, 0.55),
+      0 0 40px rgba(182, 255, 92, 0.08) !important;
+    overflow-y: auto !important;
+    z-index: 1001 !important;
+    transform: translateY(-12px) scale(0.98);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.35s ease,
+      visibility 0.35s;
+    right: auto !important;
+  }
+
+  .eco-luxury .nav-menu.active {
+    transform: translateY(0) scale(1) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    right: auto !important;
+  }
+
+  .eco-luxury .nav-menu .nav-link {
+    padding: 0.75rem 1rem !important;
+    margin: 0 !important;
+    border-radius: 14px !important;
+    border-left: none !important;
+    font-size: 0.95rem !important;
+    color: rgba(255, 255, 255, 0.88) !important;
+    background: transparent !important;
+  }
+
+  .eco-luxury .nav-menu .nav-link:hover,
+  .eco-luxury .nav-menu .nav-link.is-active {
+    background: rgba(182, 255, 92, 0.12) !important;
+    color: #b6ff5c !important;
+  }
+
+  .eco-luxury .nav-menu .nav-link.btn-booking {
+    display: none !important;
+  }
+
+  .eco-luxury .nav-menu-overlay {
+    top: 0 !important;
+    background: rgba(5, 8, 5, 0.72) !important;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+
+  .eco-fab-book {
+    display: none !important;
+  }
+
+  .eco-mobile-nav,
+  .eco-mobile-nav--kalongo {
+    display: none !important;
+  }
+
+  .eco-luxury {
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+@media (min-width: 900px) {
+  .header-mobile-book {
+    display: none !important;
+  }
+}
+
+/* Tablet nav spacing */
+@media (min-width: 900px) and (max-width: 1100px) {
+  .eco-luxury .nav-link {
+    font-size: 0.8rem !important;
+    padding-inline: 0.35rem !important;
+  }
+
+  .eco-luxury .header > .container {
+    padding: 0.5rem 0.9rem !important;
+  }
+}
+
+/* —— Hero —— */
+@media (max-width: 899px) {
+  .eco-luxury .hero-content {
+    align-items: center !important;
+    text-align: center !important;
+    padding-bottom: clamp(3rem, 12vw, 5rem) !important;
+  }
+
+  .eco-luxury .eco-hero-actions {
+    flex-direction: column;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .eco-luxury .eco-hero-actions .btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .eco-luxury .eco-hero-badges {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+}
+
+/* —— About —— */
+@media (max-width: 899px) {
+  #about .about-luxury-stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  #about .about-luxury-wrap {
+    padding: 1.25rem !important;
+  }
+}
+
+/* —— Rooms: 2 compact columns on mobile —— */
+@media (max-width: 899px) {
+  #rooms .rooms-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+
+  #rooms .lux-room-card.room-card {
+    min-height: 0 !important;
+    max-height: none !important;
+    border-radius: 20px !important;
+  }
+
+  #rooms .lux-room-media,
+  #rooms .lux-room-visual {
+    min-height: 0 !important;
+  }
+
+  #rooms .lux-room-slide-wrap,
+  #rooms .lux-room-visual-inner {
+    aspect-ratio: 4 / 3 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding-bottom: 0 !important;
+  }
+
+  #rooms .lux-room-title {
+    font-size: clamp(0.85rem, 3.5vw, 1rem) !important;
+  }
+
+  #rooms .lux-room-desc {
+    font-size: 0.72rem !important;
+    -webkit-line-clamp: 2;
+  }
+
+  #rooms .lux-room-body {
+    padding: 0.75rem !important;
+  }
+}
+
+@media (max-width: 380px) {
+  #rooms .rooms-grid {
+    gap: 12px !important;
+  }
+}
+
+/* Tablet rooms: 2 columns */
+@media (min-width: 900px) and (max-width: 1099px) {
+  #rooms .rooms-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.25rem !important;
+  }
+
+  #rooms .lux-room-card {
+    min-height: 460px !important;
+    max-height: 500px !important;
+  }
+}
+
+/* —— Facilities: 2 columns, compact —— */
+@media (max-width: 899px) {
+  #facilities .facilities-grid,
+  .eco-luxury #facilities .facilities-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+
+  #facilities .lux-facility-card:nth-child(n) {
+    grid-column: auto !important;
+  }
+
+  #facilities .lux-facility-media {
+    padding-bottom: 58% !important;
+  }
+
+  #facilities .lux-facility-title {
+    font-size: clamp(0.9rem, 3.2vw, 1.1rem) !important;
+  }
+
+  #facilities .lux-facility-desc {
+    font-size: clamp(0.72rem, 2.5vw, 0.85rem) !important;
+    line-height: 1.45 !important;
+  }
+
+  #facilities .lux-facility-body {
+    padding: 0.75rem 0.65rem 1rem !important;
+  }
+
+  #facilities .lux-facility-icon-badge {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 0.95rem !important;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1023px) {
+  #facilities .facilities-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  #facilities .lux-facility-card:nth-child(n) {
+    grid-column: auto !important;
+  }
+}
+
+/* —— Reviews —— */
+@media (max-width: 899px) {
+  #reviews .lux-review-card {
+    flex-direction: column !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+
+  #reviews .lux-review-visual {
+    width: 100% !important;
+    min-height: 200px !important;
+    flex: 0 0 auto !important;
+  }
+
+  #reviews .lux-review-panel {
+    padding: 1.25rem !important;
+  }
+}
+
+/* —— Services page —— */
+@media (max-width: 899px) {
+  .lux-services-page .lux-svc-premium-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+
+  .lux-services-page .lux-svc-card {
+    max-width: none !important;
+    padding: 1.25rem 0.85rem !important;
+  }
+
+  .lux-services-page .lux-svc-card-icon {
+    width: 48px !important;
+    height: 48px !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .lux-services-page .lux-svc-menu-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .lux-services-page .lux-svc-food-card {
+    max-width: none !important;
+    padding: 0.85rem 0.65rem !important;
+  }
+
+  .lux-services-page .lux-svc-charges-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .lux-services-page .lux-services-inner,
+  .lux-services-page .lux-services-main {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .lux-services-page .lux-svc-menu-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* —— Kalongo —— */
+@media (max-width: 899px) {
+  .lux-kalongo-page .lux-kalongo-video-featured {
+    height: clamp(200px, 52vw, 280px) !important;
+    border-radius: 22px !important;
+  }
+
+  .lux-kalongo-page .lux-kalongo-video-grid .lux-kalongo-video-card {
+    flex: 0 0 min(78vw, 280px);
+  }
+
+  .lux-kalongo-page .lux-kalongo-gallery-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  .lux-kalongo-page .lux-kalongo-gallery-thumb:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: calc(50% - 7px);
+    justify-self: center;
+  }
+}
+
+/* —— Booking —— */
+@media (max-width: 1024px) {
+  .lux-booking-page .lux-booking-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  .lux-booking-page .lux-booking-shell {
+    padding: clamp(1rem, 3vw, 1.5rem) !important;
+  }
+}
+
+@media (max-width: 899px) {
+  .lux-booking-page .lux-booking-features {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .lux-booking-page .lux-booking-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .lux-booking-page .lux-booking-trust {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+  }
+
+  .lux-booking-page .lux-booking-trust-item {
+    border-right: none !important;
+  }
+
+  .lux-booking-page .lux-booking-submit-wrap {
+    position: sticky;
+    bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    z-index: 50;
+    padding-top: 0.5rem;
+    background: linear-gradient(0deg, rgba(5, 5, 5, 0.95) 70%, transparent);
+  }
+}
+
+@media (max-width: 520px) {
+  .lux-booking-page .lux-booking-features {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* —— Activities page —— */
+@media (max-width: 899px) {
+  .eco-luxury .activities-page {
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+  }
+
+  .eco-luxury .eco-activity-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .eco-luxury .eco-activity-media {
+    min-height: 0 !important;
+    aspect-ratio: 16 / 9 !important;
+    max-height: 200px;
+  }
+
+  .eco-luxury .eco-activity-text {
+    padding: 1rem 1.1rem !important;
+  }
+
+  .eco-luxury .activities-group-title {
+    font-size: clamp(1rem, 4vw, 1.25rem) !important;
+  }
+
+  .eco-luxury .eco-activity-desc {
+    font-size: clamp(0.8rem, 2.5vw, 0.95rem) !important;
+  }
+
+  .eco-luxury .activities-grid-modern {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+
+  .eco-luxury .activity-card-modern {
+    padding: 1rem 0.75rem !important;
+    min-height: 0 !important;
+  }
+
+  .eco-luxury .activity-card-modern img {
+    height: clamp(100px, 28vw, 140px) !important;
+    border-radius: 14px !important;
+    margin-bottom: 0.65rem !important;
+  }
+}
+
+/* —— Pricing page —— */
+@media (max-width: 899px) {
+  .eco-luxury .pricing-page {
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+  }
+
+  .eco-luxury .pricing-section {
+    margin-bottom: 2.5rem !important;
+  }
+
+  .eco-luxury .pricing-section-title {
+    font-size: clamp(1.35rem, 4vw, 1.85rem) !important;
+    text-align: center;
+  }
+
+  .eco-luxury .pricing-section-description {
+    font-size: clamp(0.85rem, 2.5vw, 1rem) !important;
+    text-align: center;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .eco-luxury .pricing-grid,
+  .eco-luxury .packages-pricing-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+
+  .eco-luxury .pricing-card {
+    padding: 1rem 0.75rem !important;
+    border-radius: 20px !important;
+    background: rgba(12, 22, 14, 0.78) !important;
+    border: 1px solid rgba(182, 255, 92, 0.14) !important;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35) !important;
+  }
+
+  .eco-luxury .pricing-card-title,
+  .eco-luxury .pricing-amount,
+  .eco-luxury .pricing-note,
+  .eco-luxury .pricing-features li {
+    color: rgba(255, 255, 255, 0.88) !important;
+  }
+
+  .eco-luxury .pricing-amount {
+    color: #b6ff5c !important;
+  }
+
+  .eco-luxury .pricing-card-title {
+    font-size: clamp(0.95rem, 3.5vw, 1.15rem) !important;
+  }
+
+  .eco-luxury .pricing-amount {
+    font-size: clamp(1.1rem, 4vw, 1.5rem) !important;
+  }
+
+  .eco-luxury .pricing-features {
+    font-size: 0.75rem !important;
+  }
+
+  .eco-luxury .pricing-features li {
+    padding: 0.35rem 0 !important;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1099px) {
+  .eco-luxury .pricing-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.25rem !important;
+  }
+}
+
+@media (min-width: 1100px) {
+  .eco-luxury .pricing-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+/* —— Homepage hero —— */
+@media (max-width: 899px) {
+  .eco-luxury .hero {
+    min-height: 85vh !important;
+    min-height: 85dvh !important;
+  }
+
+  .eco-luxury .hero-background,
+  .eco-luxury .hero-slide {
+    object-fit: cover !important;
+  }
+}
+
+/* —— Sub-page heroes —— */
+@media (max-width: 899px) {
+  .eco-luxury .pricing-hero,
+  .eco-luxury .booking-hero,
+  .eco-luxury .activities-hero {
+    min-height: 36vh !important;
+    min-height: 36dvh !important;
+  }
+
+  .eco-luxury .pricing-hero-content,
+  .eco-luxury .booking-hero-content,
+  .eco-luxury .activities-hero-content {
+    padding: 1.25rem !important;
+  }
+}
+
+/* —— Footer —— */
+@media (max-width: 899px) {
+  .lux-footer-inner {
+    width: 92% !important;
+  }
+
+  .lux-footer-grid {
+    gap: 2rem !important;
+  }
+
+  .lux-footer-col,
+  .lux-footer-col-brand {
+    text-align: center;
+  }
+
+  .lux-footer-brand-row {
+    justify-content: center;
+  }
+
+  .lux-footer-social {
+    justify-content: center;
+  }
+
+  .lux-footer-links {
+    align-items: center;
+  }
+
+  .lux-footer-location-card {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+
+  .lux-footer-contact-list {
+    align-items: center;
+  }
+
+  .lux-footer-contact-card {
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
+  .lux-footer-bottom {
+    text-align: center;
+  }
+}
+
+/* —— Ultra-wide —— */
+@media (min-width: 1600px) {
+  :root {
+    --eco-r-container: 1400px;
+  }
+
+  .eco-luxury .hero-content {
+    max-width: 1400px;
+  }
+}
+
+/* —— Touch targets —— */
+@media (hover: none) and (pointer: coarse) {
+  .eco-luxury .nav-link,
+  .eco-luxury .btn-primary,
+  .header-mobile-book,
+  .eco-luxury .mobile-menu-toggle {
+    min-height: 44px;
+  }
+
+  #facilities .lux-facility-card:hover,
+  #rooms .lux-room-card:hover {
+    transform: none !important;
+  }
+}
+
+/* Prevent overflow from wide children */
+.eco-luxury pre,
+.eco-luxury table,
+.eco-luxury .lux-review-quote {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}

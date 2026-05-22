@@ -1,0 +1,447 @@
+/**
+ * Moodboard match + text visibility fixes (loads last)
+ * Overrides style.css dark text / transparent gradient titles on dark UI
+ */
+
+/* ========== GLOBAL: dark site, readable text ========== */
+.eco-luxury {
+  background:
+    radial-gradient(ellipse 80% 50% at 15% 0%, rgba(103, 193, 94, 0.14), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(18, 53, 36, 0.45), transparent 45%),
+    linear-gradient(180deg, #07140D 0%, #0D1F17 50%, #07140D 100%) !important;
+  color: #ffffff !important;
+}
+
+.eco-luxury .packages-page,
+.eco-luxury .reviews,
+.eco-luxury .activities-page,
+.eco-luxury section {
+  background: transparent !important;
+}
+
+/* Kill invisible gradient titles from style.css */
+.eco-luxury .section-title-modern,
+.eco-luxury .section-title,
+.eco-luxury .pricing-hero-title,
+.eco-luxury .activities-hero-title,
+.eco-luxury .booking-hero-title,
+.eco-luxury .rate-category-title {
+  font-family: var(--eco-font-display), 'Cormorant Garamond', serif !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+}
+
+.eco-luxury .section-description,
+.eco-luxury .section-description-modern,
+.eco-luxury .about-description-modern p,
+.eco-luxury .about-description p,
+.eco-luxury .hero-subtitle,
+.eco-luxury .pricing-hero-subtitle,
+.eco-luxury .activities-hero-subtitle,
+.eco-luxury .room-description,
+.eco-luxury .room-features li,
+.eco-luxury .room-features li span,
+.eco-luxury .review-quote,
+.eco-luxury .review-text,
+.eco-luxury .review-text p,
+.eco-luxury .eco-activity-desc,
+.eco-luxury .activity-duration-modern,
+.eco-luxury .food-description-modern,
+.eco-luxury .price-label-modern,
+.eco-luxury .menu-item-name-modern,
+.eco-luxury .charge-name-modern,
+.eco-luxury p {
+  color: rgba(255, 255, 255, 0.82) !important;
+  -webkit-text-fill-color: unset !important;
+}
+
+.eco-luxury .room-name,
+.eco-luxury .eco-room-body .room-name,
+.eco-luxury .review-name,
+.eco-luxury .activity-name-modern,
+.eco-luxury .accommodation-name-modern,
+.eco-luxury .food-name-modern,
+.eco-luxury .activities-group-title,
+.eco-luxury .eco-facility-copy h3,
+.eco-luxury .footer-section h3,
+.eco-luxury .footer-section h4,
+.eco-luxury h1, .eco-luxury h2, .eco-luxury h3, .eco-luxury h4 {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+}
+
+.eco-luxury .room-capacity,
+.eco-luxury .activity-price-modern,
+.eco-luxury .price-value-modern,
+.eco-luxury .food-price-modern,
+.eco-luxury .charge-price-modern,
+.eco-luxury .menu-item-price-modern,
+.eco-luxury .eco-about-tagline,
+.eco-luxury .eco-stat-num,
+.eco-luxury .footer-brand h3 {
+  color: #A3FF9D !important;
+  -webkit-text-fill-color: #A3FF9D !important;
+}
+
+/* ========== HERO — moodboard cinematic ========== */
+.eco-luxury .hero {
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  height: auto !important;
+  max-height: none !important;
+  display: block !important;
+  text-align: left !important;
+}
+
+.eco-luxury .hero::before {
+  background:
+    linear-gradient(90deg, rgba(7, 20, 13, 0.92) 0%, rgba(7, 20, 13, 0.72) 42%, rgba(7, 20, 13, 0.35) 68%, rgba(7, 20, 13, 0.5) 100%),
+    linear-gradient(0deg, rgba(7, 20, 13, 0.88) 0%, transparent 42%) !important;
+  z-index: 2 !important;
+}
+
+.eco-luxury .hero-slider {
+  z-index: 1 !important;
+}
+
+.eco-luxury .hero-slide {
+  filter: brightness(0.88) saturate(1.05);
+}
+
+.eco-luxury .hero-content {
+  position: relative !important;
+  z-index: 4 !important;
+  text-align: left !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  max-width: 680px !important;
+  margin: 0 !important;
+  margin-left: clamp(1rem, 5vw, 4rem) !important;
+  padding: calc(88px + 2rem) 1.5rem 3rem !important;
+  opacity: 1 !important;
+  transform: none !important;
+  box-sizing: border-box;
+}
+
+.eco-hero-eyebrow {
+  font-family: var(--eco-font-body), 'Outfit', sans-serif !important;
+  font-size: clamp(0.75rem, 1.8vw, 0.95rem) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.42em !important;
+  text-transform: uppercase !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  margin: 0 0 0.6rem !important;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+}
+
+.eco-luxury .hero-title {
+  font-family: var(--eco-font-display), 'Cormorant Garamond', serif !important;
+  font-size: clamp(2.5rem, 8.5vw, 4.5rem) !important;
+  font-weight: 600 !important;
+  line-height: 1.05 !important;
+  margin: 0 0 1rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-shadow: 0 4px 32px rgba(0, 0, 0, 0.55) !important;
+}
+
+.eco-hero-brand {
+  display: block;
+  background: none !important;
+  -webkit-text-fill-color: unset !important;
+}
+
+.eco-hero-line {
+  display: inline;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.eco-hero-line--green {
+  color: #67C15E !important;
+  -webkit-text-fill-color: #67C15E !important;
+}
+
+.eco-luxury .hero-subtitle {
+  font-size: clamp(1rem, 2.2vw, 1.25rem) !important;
+  color: rgba(255, 255, 255, 0.88) !important;
+  max-width: 480px;
+  margin-bottom: 1.5rem !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+}
+
+.eco-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #ffffff !important;
+  background: rgba(7, 20, 13, 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  backdrop-filter: blur(12px);
+  text-shadow: none;
+}
+
+.eco-badge-icon {
+  color: #67C15E !important;
+}
+
+.eco-luxury .eco-btn-play {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Trust card — right side, moodboard */
+.eco-hero-trust {
+  display: block !important;
+  position: absolute;
+  right: clamp(1rem, 4vw, 3rem);
+  top: 50%;
+  transform: translateY(-40%);
+  bottom: auto;
+  z-index: 5;
+  width: min(270px, 42vw);
+  padding: 1.5rem !important;
+  background: rgba(7, 20, 13, 0.72) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.45) !important;
+}
+
+.eco-hero-trust h4 {
+  color: #A3FF9D !important;
+  font-family: var(--eco-font-display), serif;
+  margin-bottom: 1rem !important;
+}
+
+.eco-hero-trust-stats li {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.eco-hero-trust-stats strong {
+  color: #ffffff !important;
+  font-size: 1.35rem !important;
+}
+
+@media (max-width: 900px) {
+  .eco-hero-trust {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 clamp(1rem, 5vw, 4rem) 2rem;
+  }
+  .eco-luxury .hero-content {
+    min-height: auto !important;
+    padding-bottom: 1rem !important;
+  }
+  .eco-luxury .hero {
+    min-height: auto !important;
+  }
+}
+
+/* ========== NAVBAR ========== */
+@media (min-width: 992px) {
+  .eco-luxury .header > .container {
+    display: grid !important;
+    grid-template-columns: 120px 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 1.5rem !important;
+    background: rgba(7, 20, 13, 0.65) !important;
+  }
+  .eco-luxury .nav-menu {
+    justify-self: center;
+    justify-content: center;
+    gap: 1.5rem !important;
+  }
+  .eco-luxury .mobile-menu-toggle { justify-self: end; }
+}
+
+.eco-luxury .nav-link {
+  color: rgba(255, 255, 255, 0.85) !important;
+  -webkit-text-fill-color: unset !important;
+}
+
+.eco-luxury .nav-menu.active .nav-link {
+  color: #ffffff !important;
+}
+
+/* ========== ABOUT ========== */
+.eco-about-tagline {
+  color: #A3FF9D !important;
+  font-weight: 500;
+}
+
+.eco-luxury .eco-about-copy .section-title-modern {
+  text-align: left !important;
+}
+
+.eco-luxury .eco-about-copy .section-title-modern .eco-title-accent,
+.eco-luxury .section-title-modern .eco-title-accent {
+  color: #67C15E !important;
+  -webkit-text-fill-color: #67C15E !important;
+}
+
+.eco-stats-bar {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .eco-stats-bar { grid-template-columns: repeat(4, 1fr); }
+}
+
+.eco-stats-bar .eco-stat-card {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.eco-stat-label {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+/* ========== ROOMS ========== */
+@media (min-width: 1100px) {
+  .eco-luxury .rooms-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+.eco-luxury .eco-room-body {
+  background: rgba(7, 20, 13, 0.85) !important;
+}
+
+.eco-luxury .eco-room-features li {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+/* ========== REVIEWS — no white slab ========== */
+.eco-luxury .reviews {
+  background: transparent !important;
+}
+
+.eco-luxury .reviews::before {
+  display: none !important;
+}
+
+.eco-luxury .review-slide .review-content {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  min-height: auto !important;
+  padding: 2rem !important;
+}
+
+.eco-luxury .review-quote::before {
+  color: rgba(103, 193, 94, 0.35) !important;
+  opacity: 1 !important;
+}
+
+.eco-luxury .review-quote {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.eco-luxury .review-name {
+  color: #67C15E !important;
+}
+
+/* ========== FOOTER (3 columns — brand, links, contact) ========== */
+.eco-luxury .footer {
+  background: linear-gradient(180deg, transparent, #050d08 100%) !important;
+}
+
+.eco-luxury .quick-link-item,
+.eco-luxury .footer-section p,
+.eco-luxury .footer-bottom p {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+.eco-luxury .footer-content {
+  display: grid !important;
+  gap: 2rem !important;
+}
+
+@media (min-width: 768px) {
+  .eco-luxury .footer-content {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* ========== Remove white backgrounds (style.css overrides) ========== */
+.eco-luxury .packages-page,
+.eco-luxury .reviews,
+.eco-luxury .about,
+.eco-luxury .packages-cta-modern,
+.eco-luxury .room-card,
+.eco-luxury .facility-item,
+.eco-luxury .about-card,
+.eco-luxury .package-card-modern,
+.eco-luxury .activities-group,
+.eco-luxury .booking-page,
+.eco-luxury .booking-form-wrapper,
+.eco-luxury .booking-summary-card,
+.eco-luxury .charge-item-modern,
+.eco-luxury .menu-category-modern,
+.eco-luxury .footer {
+  background: transparent !important;
+}
+
+.eco-luxury .review-content,
+.eco-luxury .reviews-slider-container,
+.eco-luxury .review-slide .review-content {
+  background: rgba(7, 20, 13, 0.5) !important;
+}
+
+.eco-luxury .room-card,
+.eco-luxury .facility-item:not(.eco-facility-card) {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.eco-luxury .nav-menu.active {
+  background: rgba(7, 20, 13, 0.97) !important;
+}
+
+.eco-luxury .mobile-menu-toggle span {
+  background: #ffffff !important;
+}
+
+/* Hidden removed UI */
+.eco-footer-social,
+.eco-footer-newsletter,
+.eco-footer-map,
+.eco-btn-read {
+  display: none !important;
+}
+
+/* Section underline */
+.eco-luxury .section-header-modern::after {
+  content: '';
+  display: block;
+  width: 56px;
+  height: 3px;
+  margin: 0.75rem auto 0;
+  background: linear-gradient(90deg, #67C15E, transparent);
+  border-radius: 2px;
+}
+
+/* Facilities 4-col */
+@media (min-width: 1024px) {
+  .eco-luxury .facilities-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}

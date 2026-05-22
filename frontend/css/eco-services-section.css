@@ -1,0 +1,634 @@
+/**
+ * Our Services — premium dark glass luxury (.lux-services-page)
+ */
+
+body.lux-services-page {
+  background: #050505 !important;
+}
+
+/* Kill legacy white card styles from style.css */
+.lux-services-page .accommodation-card-modern,
+.lux-services-page .activity-card-modern,
+.lux-services-page .food-card-modern,
+.lux-services-page .menu-category-modern,
+.lux-services-page .menu-item-modern,
+.lux-services-page .charge-item-modern {
+  background: rgba(15, 15, 15, 0.75) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(160, 255, 90, 0.25) !important;
+  box-shadow: none !important;
+}
+
+body.lux-services-page .pricing-hero {
+  display: none !important;
+}
+
+.lux-services-page .lux-services-main {
+  position: relative;
+  padding: clamp(5rem, 9vw, 6.5rem) 0 0;
+  background: #050505;
+  overflow-x: hidden;
+}
+
+.lux-services-page .lux-services-main::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 75% 50% at 50% 0%, rgba(90, 160, 60, 0.12), transparent 55%),
+    radial-gradient(ellipse 40% 35% at 10% 60%, rgba(60, 100, 50, 0.06), transparent 50%),
+    radial-gradient(ellipse 40% 35% at 90% 80%, rgba(60, 100, 50, 0.05), transparent 45%);
+  z-index: 0;
+}
+
+.lux-services-page .lux-services-inner {
+  position: relative;
+  z-index: 1;
+  width: min(1200px, 92%);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 1.5rem);
+}
+
+/* —— Page header —— */
+.lux-services-page .lux-svc-page-header {
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.lux-services-page .lux-svc-eyebrow {
+  display: block;
+  margin: 0 0 0.75rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  font-style: italic;
+  font-weight: 500;
+  color: #9fe870;
+}
+
+.lux-services-page .lux-svc-page-title {
+  margin: 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  line-height: 1.08;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.lux-services-page .lux-svc-page-title span {
+  color: #a6ff4d;
+  text-shadow: 0 0 40px rgba(166, 255, 77, 0.2);
+}
+
+.lux-services-page .lux-svc-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 1.25rem auto 0;
+  width: min(320px, 78%);
+}
+
+.lux-services-page .lux-svc-divider::before,
+.lux-services-page .lux-svc-divider::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(160, 255, 90, 0.85), transparent);
+  box-shadow: 0 0 12px rgba(160, 255, 90, 0.25);
+}
+
+.lux-services-page .lux-svc-divider-icon {
+  color: #a6ff4d;
+  font-size: 0.75rem;
+  filter: drop-shadow(0 0 10px rgba(166, 255, 77, 0.5));
+}
+
+.lux-services-page .lux-svc-page-desc {
+  margin: 1.25rem auto 0;
+  max-width: 40rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* —— Sections —— */
+.lux-services-page .lux-svc-section {
+  padding-top: clamp(4rem, 10vw, 120px);
+  padding-bottom: clamp(4rem, 10vw, 120px);
+  text-align: center;
+}
+
+.lux-services-page .lux-svc-section-head {
+  margin: 0 auto clamp(2.5rem, 5vw, 3.5rem);
+  max-width: 42rem;
+}
+
+.lux-services-page .lux-svc-section-title {
+  margin: 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 1.15;
+}
+
+.lux-services-page .lux-svc-section-divider {
+  width: min(240px, 55%);
+  height: 2px;
+  margin: 1rem auto 0;
+  background: linear-gradient(90deg, transparent, rgba(160, 255, 90, 0.85), transparent);
+  box-shadow: 0 0 14px rgba(160, 255, 90, 0.22);
+}
+
+.lux-services-page .lux-svc-section-desc {
+  margin: 1rem auto 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.lux-services-page .packages-section-modern {
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+}
+
+.lux-services-page .section-header-modern {
+  display: none !important;
+}
+
+.lux-services-page .packages-page {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* —— Shared glass card —— */
+.lux-services-page .lux-svc-glass {
+  background: rgba(15, 15, 15, 0.75);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(160, 255, 90, 0.25);
+  border-radius: 28px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* —— Accommodation + Activities grid —— */
+.lux-services-page .lux-svc-premium-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(1.25rem, 3vw, 2rem);
+  justify-items: center;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.lux-services-page .lux-svc-card {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  padding: 2.25rem 1.75rem 2rem;
+  text-align: center;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.lux-services-page .lux-svc-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, rgba(160, 255, 90, 0.06) 0%, transparent 45%, rgba(0, 0, 0, 0.15) 100%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.lux-services-page .lux-svc-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(160, 255, 90, 0.45);
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.45),
+    0 0 36px rgba(160, 255, 90, 0.12);
+}
+
+.lux-services-page .lux-svc-card-icon {
+  position: relative;
+  z-index: 1;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.25rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(160, 255, 90, 0.08);
+  border: 1px solid rgba(160, 255, 90, 0.3);
+  color: #a6ff4d;
+  box-shadow: 0 0 24px rgba(160, 255, 90, 0.15);
+}
+
+.lux-services-page .lux-svc-card-icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.lux-services-page .lux-svc-card-title {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 0.65rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.35rem, 3vw, 1.65rem);
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.03em;
+}
+
+.lux-services-page .lux-svc-card-desc {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 1.15rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.lux-services-page .lux-svc-features {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.lux-services-page .lux-svc-features li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.4;
+}
+
+.lux-services-page .lux-svc-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(160, 255, 90, 0.15);
+  color: #a6ff4d;
+  font-size: 0.65rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.lux-services-page .lux-svc-prices {
+  position: relative;
+  z-index: 1;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(160, 255, 90, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  width: 100%;
+}
+
+.lux-services-page .lux-svc-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
+  text-align: left;
+}
+
+.lux-services-page .lux-svc-price-row strong {
+  color: #a6ff4d;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+body.prices-hidden .lux-services-page .lux-svc-prices,
+body.prices-hidden .lux-services-page .lux-svc-food-price,
+body.prices-hidden .lux-services-page .lux-svc-charge-price {
+  display: none !important;
+}
+
+/* Legacy wrappers from old markup */
+.lux-services-page .lux-svc-premium-card,
+.lux-services-page .lux-svc-card-shell,
+.lux-services-page .lux-svc-card-panel {
+  all: unset;
+  display: contents;
+}
+
+/* —— Restaurant menu —— */
+.lux-services-page .lux-svc-menu-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 4vw, 3rem);
+  text-align: center;
+}
+
+.lux-services-page .lux-svc-menu-category {
+  padding: clamp(2rem, 4vw, 2.75rem) clamp(1.25rem, 3vw, 2rem);
+  text-align: center;
+}
+
+.lux-services-page .lux-svc-menu-cat-title {
+  margin: 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.35rem, 3.5vw, 1.85rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.lux-services-page .lux-svc-menu-cat-rule {
+  width: min(220px, 50%);
+  height: 2px;
+  margin: 1rem auto 1.75rem;
+  background: linear-gradient(90deg, transparent, rgba(160, 255, 90, 0.7), transparent);
+  box-shadow: 0 0 12px rgba(160, 255, 90, 0.2);
+}
+
+.lux-services-page .lux-svc-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: clamp(0.85rem, 2vw, 1.25rem);
+  justify-items: center;
+}
+
+.lux-services-page .lux-svc-food-card {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.lux-services-page .lux-svc-food-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(160, 255, 90, 0.05), transparent 60%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.lux-services-page .lux-svc-food-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(160, 255, 90, 0.4);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.4), 0 0 28px rgba(160, 255, 90, 0.1);
+}
+
+.lux-services-page .lux-svc-food-icon {
+  position: relative;
+  z-index: 1;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(160, 255, 90, 0.1);
+  border: 1px solid rgba(160, 255, 90, 0.22);
+  color: #a6ff4d;
+  font-size: 1.1rem;
+}
+
+.lux-services-page .lux-svc-food-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6;
+}
+
+.lux-services-page .lux-svc-food-name {
+  position: relative;
+  z-index: 1;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.4;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+.lux-services-page .lux-svc-food-price {
+  position: relative;
+  z-index: 1;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #9fe870;
+}
+
+/* Legacy menu item class */
+.lux-services-page .lux-svc-menu-item {
+  display: contents;
+}
+
+/* —— Other charges —— */
+.lux-services-page .lux-svc-charges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+  justify-items: center;
+}
+
+.lux-services-page .lux-svc-charge-card {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  overflow: hidden;
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.lux-services-page .lux-svc-charge-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, rgba(160, 255, 90, 0.05), transparent 50%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.lux-services-page .lux-svc-charge-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(160, 255, 90, 0.42);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.42), 0 0 30px rgba(160, 255, 90, 0.1);
+}
+
+.lux-services-page .lux-svc-charge-icon {
+  position: relative;
+  z-index: 1;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(160, 255, 90, 0.1);
+  border: 1px solid rgba(160, 255, 90, 0.28);
+  color: #a6ff4d;
+}
+
+.lux-services-page .lux-svc-charge-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.7;
+}
+
+.lux-services-page .lux-svc-charge-body {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.lux-services-page .lux-svc-charge-name {
+  display: block;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.4;
+}
+
+.lux-services-page .lux-svc-charge-price {
+  display: block;
+  margin-top: 0.35rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  color: #9fe870;
+  font-weight: 600;
+}
+
+/* Apply glass to all service cards */
+.lux-services-page .lux-svc-card,
+.lux-services-page .lux-svc-menu-category,
+.lux-services-page .lux-svc-food-card,
+.lux-services-page .lux-svc-charge-card,
+.lux-services-page .packages-cta-modern {
+  background: rgba(15, 15, 15, 0.75);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(160, 255, 90, 0.25);
+  border-radius: 28px;
+}
+
+/* —— CTA —— */
+.lux-services-page .lux-svc-cta-wrap {
+  padding-top: clamp(3rem, 6vw, 80px);
+  padding-bottom: clamp(4rem, 8vw, 120px);
+}
+
+.lux-services-page .packages-cta-modern {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: clamp(2.25rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem) !important;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35) !important;
+}
+
+.lux-services-page .packages-cta-modern h3 {
+  margin: 0 0 0.65rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.lux-services-page .packages-cta-modern p {
+  margin: 0 0 1.5rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.lux-services-page .packages-cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  justify-content: center;
+}
+
+.lux-services-page .packages-cta-modern .btn-primary {
+  background: #a6ff4d !important;
+  color: #050505 !important;
+  border: none !important;
+  border-radius: 999px !important;
+  font-weight: 600 !important;
+  padding: 0.85rem 2rem !important;
+}
+
+/* —— Mobile —— */
+@media (max-width: 640px) {
+  .lux-services-page .lux-svc-section {
+    padding-top: clamp(3.5rem, 12vw, 80px);
+    padding-bottom: clamp(3.5rem, 12vw, 80px);
+  }
+
+  .lux-services-page .lux-svc-premium-grid,
+  .lux-services-page .lux-svc-charges-grid,
+  .lux-services-page .lux-svc-menu-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lux-services-page .lux-svc-card,
+  .lux-services-page .lux-svc-food-card,
+  .lux-services-page .lux-svc-charge-card {
+    max-width: 100%;
+  }
+
+  .lux-services-page .lux-svc-card {
+    padding: 2rem 1.35rem 1.75rem;
+  }
+
+  .lux-services-page .lux-svc-price-row {
+    font-size: 0.82rem;
+  }
+}
