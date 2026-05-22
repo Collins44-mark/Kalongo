@@ -14,6 +14,11 @@ body.lux-menu-page {
   background: #050505 !important;
 }
 
+/* No category/decorative icons in menu UI */
+.lux-menu-page .lux-menu-cat-icon {
+  display: none !important;
+}
+
 .lux-menu-page .lux-menu-cat-card,
 .lux-menu-page .lux-menu-hero-inner,
 .lux-menu-page .lux-menu-section-head {
@@ -148,13 +153,6 @@ body.lux-menu-page {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #fff;
-}
-
-.lux-menu-page .lux-menu-section-title::before,
-.lux-menu-page .lux-menu-section-title::after {
-  content: ' ❋ ';
-  color: #9fe870;
-  font-size: 0.6em;
 }
 
 .lux-menu-page .lux-menu-section-sub {
@@ -307,24 +305,6 @@ body.lux-menu-page {
   background: rgba(5, 8, 5, 0.98);
 }
 
-.lux-menu-page .lux-menu-cat-icon {
-  width: 18px;
-  height: 18px;
-  color: var(--lux-neon);
-  flex-shrink: 0;
-  filter: drop-shadow(0 0 6px var(--lux-neon-soft));
-}
-
-.lux-menu-page .lux-menu-cat-icon svg {
-  width: 100%;
-  height: 100%;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
 .lux-menu-page .lux-menu-cat-name {
   margin: 0;
   font-family: 'Cormorant Garamond', Georgia, serif;
@@ -367,15 +347,6 @@ body.lux-menu-page {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--lux-neon);
-}
-
-.lux-menu-page .lux-menu-cat-cta svg {
-  width: 12px;
-  height: 12px;
-  flex-shrink: 0;
-  border: 1px solid rgba(182, 255, 92, 0.45);
-  border-radius: 50%;
-  padding: 2px;
 }
 
 /* Mobile: vertical premium cards */
@@ -449,11 +420,6 @@ body.lux-menu-page {
     background: linear-gradient(90deg, rgba(5, 8, 5, 0.3) 0%, transparent 55%);
   }
 
-  .lux-menu-page .lux-menu-cat-icon {
-    width: 22px;
-    height: 22px;
-  }
-
   .lux-menu-page .lux-menu-cat-name {
     font-size: clamp(0.82rem, 1.4vw, 1.05rem);
     -webkit-line-clamp: 2;
@@ -469,10 +435,6 @@ body.lux-menu-page {
     margin-top: 0.15rem;
   }
 
-  .lux-menu-page .lux-menu-cat-cta svg {
-    width: 13px;
-    height: 13px;
-  }
 }
 
 @media (min-width: 1100px) {
@@ -664,6 +626,10 @@ body.lux-menu-page {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.35rem;
+  line-height: 1;
+  padding: 0;
 }
 
 .lux-menu-page .lux-menu-modal-nav {
@@ -681,6 +647,10 @@ body.lux-menu-page {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.75rem;
+  line-height: 1;
+  padding: 0 0 0.1rem;
 }
 
 .lux-menu-page .lux-menu-modal-nav--prev { left: 0.4rem; }
@@ -722,11 +692,6 @@ body.lux-menu-page {
   gap: 0.65rem;
   margin-bottom: 1rem;
   padding-right: 2rem;
-}
-
-.lux-menu-page .lux-menu-modal-head .lux-menu-cat-icon {
-  width: 32px;
-  height: 32px;
 }
 
 .lux-menu-page .lux-menu-modal-title {

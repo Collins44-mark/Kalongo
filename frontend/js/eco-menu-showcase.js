@@ -128,23 +128,6 @@
     },
   };
 
-  const ICONS = {
-    breakfast: '<svg viewBox="0 0 24 24"><path d="M4 14h16M6 10h12M8 6h8"/><circle cx="12" cy="16" r="2"/></svg>',
-    main: '<svg viewBox="0 0 24 24"><path d="M4 12h16M6 8h12M8 4h8"/><path d="M5 16h14v2H5z"/></svg>',
-    burger: '<svg viewBox="0 0 24 24"><path d="M4 10h16M5 7h14M6 13h12M7 16h10"/></svg>',
-    bbq: '<svg viewBox="0 0 24 24"><path d="M8 18l2-8h4l2 8M6 20h12"/><path d="M10 6c0-2 2-3 2-3s2 1 2 3"/></svg>',
-    salad: '<svg viewBox="0 0 24 24"><path d="M12 4c-3 2-5 5-5 8a5 5 0 0010 0c0-3-2-6-5-8z"/><path d="M8 14h8"/></svg>',
-    'other-dish': '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8 12h8M12 8v8"/></svg>',
-    'soft-drink': '<svg viewBox="0 0 24 24"><path d="M9 3h6v4l-1 14H10L9 7V3z"/></svg>',
-    vodka: '<svg viewBox="0 0 24 24"><path d="M9 3h6v3l-2 15H11L9 6V3z"/></svg>',
-    liquor: '<svg viewBox="0 0 24 24"><path d="M8 4h8l-1 16H9L8 4zM10 8h4"/></svg>',
-    beer: '<svg viewBox="0 0 24 24"><path d="M8 6h9a2 2 0 012 2v9a3 3 0 01-3 3H9a3 3 0 01-3-3V8a2 2 0 012-2z"/><path d="M17 9h2v6h-2"/></svg>',
-    gin: '<svg viewBox="0 0 24 24"><path d="M10 3h4l-1 17h-2L10 3z"/></svg>',
-    wine: '<svg viewBox="0 0 24 24"><path d="M8 4h8l-2 14H10L8 4z"/><path d="M9 20h6"/></svg>',
-    whiskey: '<svg viewBox="0 0 24 24"><path d="M9 4h6l-1 14h-4L9 4z"/><circle cx="12" cy="10" r="2"/></svg>',
-    'other-drink': '<svg viewBox="0 0 24 24"><path d="M8 6h8v2l-2 12h-4l-2-12V6z"/></svg>',
-  };
-
   const OTHER_CHARGES = [
     { title: 'Room Service', subtitle: 'In-room convenience', price: 'TZS 5,000' },
     { title: 'Laundry (Soft)', subtitle: 'Per cloth', price: 'TZS 2,000' },
@@ -234,17 +217,11 @@
     const key = normName(cat.name);
     const def = MENU_DEFAULTS[key] || {};
     const group = DRINK_NAMES.has(key) ? 'drinks' : (def.group || 'food');
-    const icon = cat.icon_key || def.icon || 'main';
     return {
       subtitle: cat.subtitle || def.subtitle || '',
       image: resolveCategoryImage(cat, def),
-      icon,
       group,
     };
-  }
-
-  function iconHtml(key) {
-    return `<span class="lux-menu-cat-icon" aria-hidden="true">${ICONS[key] || ICONS.main}</span>`;
   }
 
   function optimizeImg(url, w, h) {
@@ -261,7 +238,6 @@
         <div class="lux-menu-cat-card-inner">
           <div class="lux-menu-cat-card-media"></div>
           <div class="lux-menu-cat-card-content">
-            <span class="lux-menu-skel-line" style="width:22px;height:22px;border-radius:6px"></span>
             <span class="lux-menu-skel-line lux-menu-skel-line--title"></span>
             <span class="lux-menu-skel-line lux-menu-skel-line--sub"></span>
             <span class="lux-menu-skel-line lux-menu-skel-line--cta"></span>
@@ -287,10 +263,9 @@
             <div class="lux-menu-cat-card-shade" aria-hidden="true"></div>
           </div>
           <div class="lux-menu-cat-card-content">
-            ${iconHtml(meta.icon)}
             <h4 class="lux-menu-cat-name">${title}</h4>
             <p class="lux-menu-cat-sub">${esc(meta.subtitle)}</p>
-            <span class="lux-menu-cat-cta">View Menu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            <span class="lux-menu-cat-cta">View Menu →</span>
           </div>
         </div>
       </button>`;
@@ -380,7 +355,6 @@
       </div>
       <div class="lux-menu-modal-content">
         <div class="lux-menu-modal-head">
-          ${iconHtml(meta.icon)}
           <div>
             <h2 class="lux-menu-modal-title" id="luxMenuModalTitle">${esc((cat.name || '').toUpperCase())}</h2>
             <p class="lux-menu-modal-sub">${esc(meta.subtitle)}</p>
