@@ -6,13 +6,38 @@ body.lux-kalongo-page {
   background: #050505 !important;
 }
 
-body.lux-kalongo-page .pricing-hero {
-  display: none !important;
+body.lux-kalongo-page .pricing-hero.lux-page-hero {
+  display: flex !important;
+  min-height: clamp(42vh, 52vw, 52vh) !important;
+  margin-top: 0 !important;
+  padding-top: var(--eco-nav-h, 76px) !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+body.lux-kalongo-page .pricing-hero.lux-page-hero .pricing-hero-title {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+}
+
+body.lux-kalongo-page .pricing-hero.lux-page-hero .pricing-hero-subtitle {
+  font-family: 'Outfit', sans-serif !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  max-width: 36rem;
+  margin: 0.75rem auto 0 !important;
+  line-height: 1.6 !important;
+}
+
+.lux-kalongo-page .lux-kalongo-header--below-hero {
+  margin-bottom: clamp(2rem, 4vw, 2.75rem);
 }
 
 .lux-kalongo-page .lux-kalongo-main {
   position: relative;
-  padding: clamp(5.5rem, 10vw, 7rem) 0 clamp(4rem, 8vw, 6rem);
+  padding: clamp(2.5rem, 5vw, 3.5rem) 0 clamp(4rem, 8vw, 6rem);
   overflow-x: hidden;
 }
 
