@@ -24,7 +24,7 @@ WHERE LOWER(TRIM(name)) = :name
 
 SEEDS = [
     ("breakfast", "Fresh farm breakfast selections", "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247200/farm-fresh-food_tkrtak.jpg", "breakfast"),
-    ("main course", "Hearty local and international meals", "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247284/hero-slide2_f67kon.jpg", "main"),
+    ("main course", "Hearty local and international meals", "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247200/farm-fresh-food_tkrtak.jpg", "main"),
     ("burgers & pizza", "Crispy, cheesy and delicious", "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247205/activities_im4edt.jpg", "burger"),
     ("bbq", "Smoked and grilled favorites", "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247205/activities_im4edt.jpg", "bbq"),
     ("salads and juices", "Fresh organic healthy choices", "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247200/farm-fresh-food_tkrtak.jpg", "salad"),

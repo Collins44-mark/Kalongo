@@ -44,7 +44,7 @@
     },
     'main course': {
       subtitle: 'Hearty local and international meals',
-      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247284/hero-slide2_f67kon.jpg`,
+      image: `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247200/farm-fresh-food_tkrtak.jpg`,
       icon: 'main',
       group: 'food',
     },
@@ -203,6 +203,33 @@
     return [...list].sort((a, b) => orderRank(a.name, order) - orderRank(b.name, order));
   }
 
+  /** Legacy seed URLs that mismatch categories — prefer canonical defaults */
+  const LEGACY_MISMATCH = {
+    'main course': ['hero-slide2_f67kon', 'a-cabin_fpmuuz', 'cottage_fzxdif'],
+    'main courses': ['hero-slide2_f67kon', 'a-cabin_fpmuuz', 'cottage_fzxdif'],
+    breakfast: ['hero-slide2_f67kon', 'activities_im4edt'],
+    'burgers & pizza': ['natural-farm_difqzg', 'hero-slide2_f67kon'],
+    'burgers & pizzas': ['natural-farm_difqzg', 'hero-slide2_f67kon'],
+    bbq: ['farm-fresh-food_tkrtak', 'natural-farm_difqzg'],
+    'salads and juices': ['activities_im4edt', 'hero-slide2_f67kon'],
+    'salads & juices': ['activities_im4edt', 'hero-slide2_f67kon'],
+    beer: ['customer1_expjr7', 'kalongo-surroundings'],
+    wine: ['activities_im4edt'],
+    whiskey: ['kalongo-surroundings1', 'customer1_expjr7'],
+    vodka: ['kalongo-surroundings'],
+    gin: ['farm-fresh-food_tkrtak'],
+  };
+
+  function resolveCategoryImage(cat, def) {
+    const key = normName(cat.name);
+    const fallback = def.image || `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247200/farm-fresh-food_tkrtak.jpg`;
+    const url = cat.image_url || '';
+    if (!url) return fallback;
+    const badIds = LEGACY_MISMATCH[key];
+    if (badIds && badIds.some((id) => url.includes(id))) return fallback;
+    return url;
+  }
+
   function catMeta(cat) {
     const key = normName(cat.name);
     const def = MENU_DEFAULTS[key] || {};
@@ -210,7 +237,7 @@
     const icon = cat.icon_key || def.icon || 'main';
     return {
       subtitle: cat.subtitle || def.subtitle || '',
-      image: cat.image_url || def.image || `${SVC_CLOUD}/c_fill,w_900,h_600,q_auto/v1769247200/farm-fresh-food_tkrtak.jpg`,
+      image: resolveCategoryImage(cat, def),
       icon,
       group,
     };
@@ -232,13 +259,13 @@
     return `
       <div class="lux-menu-cat-card lux-menu-cat-card--skeleton" aria-hidden="true">
         <div class="lux-menu-cat-card-inner">
+          <div class="lux-menu-cat-card-media"></div>
           <div class="lux-menu-cat-card-content">
             <span class="lux-menu-skel-line" style="width:22px;height:22px;border-radius:6px"></span>
             <span class="lux-menu-skel-line lux-menu-skel-line--title"></span>
             <span class="lux-menu-skel-line lux-menu-skel-line--sub"></span>
             <span class="lux-menu-skel-line lux-menu-skel-line--cta"></span>
           </div>
-          <div class="lux-menu-cat-card-media"></div>
         </div>
       </div>`;
   }
@@ -255,15 +282,15 @@
     return `
       <button type="button" class="lux-menu-cat-card" data-menu-index="${index}" aria-label="View ${esc(cat.name)} menu">
         <div class="lux-menu-cat-card-inner">
+          <div class="lux-menu-cat-card-media">
+            <img src="${img}" alt="" width="${CARD_IMG_W}" height="${CARD_IMG_H}" loading="lazy" decoding="async">
+            <div class="lux-menu-cat-card-shade" aria-hidden="true"></div>
+          </div>
           <div class="lux-menu-cat-card-content">
             ${iconHtml(meta.icon)}
             <h4 class="lux-menu-cat-name">${title}</h4>
             <p class="lux-menu-cat-sub">${esc(meta.subtitle)}</p>
             <span class="lux-menu-cat-cta">View Menu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </div>
-          <div class="lux-menu-cat-card-media">
-            <img src="${img}" alt="" width="${CARD_IMG_W}" height="${CARD_IMG_H}" loading="lazy" decoding="async">
-            <div class="lux-menu-cat-card-shade" aria-hidden="true"></div>
           </div>
         </div>
       </button>`;
