@@ -442,29 +442,259 @@
   display: none !important;
 }
 
+/* —— Mobile only (≤899px): compact single-card testimonial — desktop unchanged —— */
 @media (max-width: 899px) {
+  #reviews.lux-reviews-section {
+    padding: clamp(2rem, 5vw, 2.75rem) 0 !important;
+  }
+
+  #reviews .lux-reviews-wrap {
+    width: 92%;
+    max-width: 100%;
+  }
+
+  #reviews .lux-reviews-header {
+    margin-bottom: 1.15rem;
+  }
+
+  #reviews .lux-reviews-heading {
+    font-size: clamp(1.35rem, 5vw, 1.75rem);
+  }
+
+  #reviews .lux-reviews-sub {
+    margin-top: 0.65rem;
+    font-size: clamp(0.78rem, 2.5vw, 0.88rem);
+    line-height: 1.5;
+  }
+
+  #reviews .lux-reviews-stage {
+    padding: 0 34px;
+  }
+
+  #reviews .lux-reviews-slider-container,
+  #reviews .reviews-slider-container {
+    border-radius: 20px !important;
+    box-shadow:
+      0 10px 32px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(159, 232, 112, 0.08) !important;
+  }
+
+  #reviews .lux-review-card {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: unset !important;
+    gap: 0 !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    height: auto !important;
+    padding: 0.7rem 0.75rem 0.8rem !important;
+    align-items: stretch;
+  }
+
+  #reviews .lux-review-visual {
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    min-height: 0 !important;
+    aspect-ratio: 16 / 9;
+    max-height: clamp(118px, 30vw, 148px);
+    border-radius: 14px;
+    margin-bottom: 0.55rem;
+  }
+
+  #reviews .lux-review-photo,
+  #reviews .lux-review-photo--empty {
+    width: 100%;
+    height: 100%;
+    min-height: 0 !important;
+    max-height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 14px;
+  }
+
+  #reviews .lux-review-panel {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+  }
+
+  #reviews .lux-review-stars {
+    justify-content: center;
+    margin: 0 0 0.4rem;
+    font-size: 0.8rem;
+    gap: 0.15rem;
+  }
+
+  #reviews .lux-review-quote-wrap {
+    flex: 0 0 auto;
+    position: relative;
+    width: 100%;
+    max-width: min(100%, 34ch);
+    margin: 0 auto 0.35rem;
+    padding: 0 0.35rem;
+  }
+
+  #reviews .lux-review-quote-wrap::before {
+    content: '"';
+    display: block;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.15rem;
+    line-height: 1;
+    color: rgba(159, 232, 112, 0.65);
+    margin-bottom: 0.2rem;
+  }
+
+  #reviews .lux-review-q-mark {
+    display: none !important;
+  }
+
+  #reviews .lux-review-quote {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: clamp(0.76rem, 2.5vw, 0.88rem) !important;
+    line-height: 1.55 !important;
+    text-align: center !important;
+  }
+
+  #reviews .lux-review-author-divider {
+    margin: 0.25rem 0 0.45rem;
+    font-size: 0.42rem;
+    letter-spacing: 0.25em;
+  }
+
+  #reviews .lux-review-author {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    padding-top: 0.45rem;
+    gap: 0.55rem;
+    border-top: 1px solid rgba(159, 232, 112, 0.12);
+  }
+
+  #reviews .lux-review-author > div {
+    text-align: left;
+    min-width: 0;
+  }
+
+  #reviews .lux-review-avatar,
+  #reviews .lux-review-avatar--placeholder {
+    width: 34px;
+    height: 34px;
+    border-width: 1px;
+  }
+
+  #reviews .lux-review-name {
+    font-size: clamp(0.8rem, 2.6vw, 0.92rem) !important;
+    margin-bottom: 0.1rem !important;
+  }
+
+  #reviews .lux-review-location {
+    font-size: clamp(0.62rem, 2vw, 0.72rem) !important;
+    margin-bottom: 0 !important;
+  }
+
+  #reviews .lux-review-date {
+    display: none;
+  }
+
+  #reviews .lux-review-nav {
+    width: 30px;
+    height: 30px;
+    font-size: 0.95rem;
+    border-color: rgba(159, 232, 112, 0.35);
+    background: rgba(5, 8, 5, 0.88);
+  }
+
+  #reviews .lux-review-nav--prev {
+    left: 2px;
+  }
+
+  #reviews .lux-review-nav--next {
+    right: 2px;
+  }
+
+  #reviews .lux-reviews-dots {
+    margin-top: 0.75rem;
+    gap: 0.35rem;
+  }
+
+  #reviews .lux-reviews-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  #reviews .lux-reviews-dot.is-active {
+    width: 18px;
+  }
+}
+
+@media (max-width: 430px) {
+  #reviews .lux-reviews-stage {
+    padding: 0 30px;
+  }
+
+  #reviews .lux-review-visual {
+    max-height: clamp(108px, 28vw, 132px);
+  }
+
+  #reviews .lux-review-card {
+    padding: 0.6rem 0.65rem 0.7rem !important;
+  }
+}
+
+@media (max-width: 390px) {
   #reviews .lux-reviews-wrap {
     width: 94%;
   }
 
-  #reviews .lux-reviews-stage {
-    padding: 0 40px;
+  #reviews .lux-review-quote-wrap {
+    max-width: 100%;
   }
 
-  #reviews .lux-review-card {
-    height: auto;
-    max-height: none;
-  }
-
-  #reviews .lux-review-nav {
-    width: 38px;
-    height: 38px;
-    font-size: 1.15rem;
+  #reviews .lux-review-quote-wrap .lux-review-quote {
+    -webkit-line-clamp: 3;
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 375px) {
   #reviews .lux-reviews-stage {
-    padding: 0 32px;
+    padding: 0 28px;
+  }
+
+  #reviews .lux-review-nav {
+    width: 28px;
+    height: 28px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 320px) {
+  #reviews .lux-reviews-stage {
+    padding: 0 26px;
+  }
+
+  #reviews .lux-review-visual {
+    max-height: 100px;
+    border-radius: 12px;
+  }
+
+  #reviews .lux-review-photo {
+    border-radius: 12px;
+  }
+
+  #reviews .lux-reviews-heading {
+    font-size: 1.25rem;
   }
 }

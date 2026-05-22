@@ -92,7 +92,6 @@ body.eco-luxury {
 @media (max-width: 899px) {
   #rooms.lux-rooms-section,
   #facilities.lux-facilities-section,
-  #reviews.lux-reviews-section,
   .lux-services-page .lux-svc-section,
   .lux-kalongo-page .lux-kalongo-videos,
   .lux-kalongo-page .lux-kalongo-gallery,
@@ -397,24 +396,7 @@ body.eco-luxury {
   }
 }
 
-/* —— Reviews —— */
-@media (max-width: 899px) {
-  #reviews .lux-review-card {
-    flex-direction: column !important;
-    min-height: 0 !important;
-    max-height: none !important;
-  }
-
-  #reviews .lux-review-visual {
-    width: 100% !important;
-    min-height: 200px !important;
-    flex: 0 0 auto !important;
-  }
-
-  #reviews .lux-review-panel {
-    padding: 1.25rem !important;
-  }
-}
+/* —— Reviews: mobile compact styles in eco-reviews-section.css —— */
 
 /* —— Services page —— */
 @media (max-width: 899px) {
