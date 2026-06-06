@@ -421,6 +421,37 @@ function svcFilterByPriority(entries, priority) {
     return ordered;
 }
 
+/** Digits-only WhatsApp number for wa.me links */
+function whatsappDigits(raw) {
+    if (!raw) return '';
+    return String(raw).replace(/\D/g, '');
+}
+
+/** Apply admin WhatsApp setting across footer links, CTAs, and floating button */
+function applyWhatsAppFromSettings(whatsapp) {
+    if (!whatsapp) return;
+    const digits = whatsappDigits(whatsapp);
+    if (!digits) return;
+    const display = String(whatsapp).trim();
+    const href = `https://wa.me/${digits}`;
+
+    document.querySelectorAll('a[href*="wa.me"]').forEach((link) => {
+        link.href = href;
+    });
+
+    document.querySelectorAll('.lux-footer-contact-card').forEach((card) => {
+        const label = card.querySelector('.lux-footer-contact-label');
+        if (label && /whatsapp/i.test(label.textContent)) {
+            const value = card.querySelector('.lux-footer-contact-value');
+            if (value) value.textContent = display;
+        }
+    });
+
+    if (window.EcoWhatsAppFab && typeof window.EcoWhatsAppFab.update === 'function') {
+        window.EcoWhatsAppFab.update(whatsapp);
+    }
+}
+
 // Render functions
 const Render = {
     heroSlides: (slides) => {
@@ -1155,6 +1186,11 @@ const Render = {
         visitLinks.forEach(a => {
             a.href = mapsUrl;
         });
+
+        if (settings.whatsapp) {
+            applyWhatsAppFromSettings(settings.whatsapp);
+            console.log('✅ Updated WhatsApp contact links');
+        }
         
         // Store for other uses
         window.siteSettings = settings;

@@ -417,8 +417,9 @@ if (checkInInput) {
 }
 
 // Booking Form WhatsApp Submission
-// Hotel WhatsApp Number
-const HOTEL_WHATSAPP_NUMBER = '+255 653 626 410';
+function getHotelWhatsAppNumber() {
+    return (window.siteSettings && window.siteSettings.whatsapp) || '+255 653 626 410';
+}
 
 // WhatsApp Modal Function
 function showWhatsAppModal(whatsappURL) {
@@ -640,8 +641,8 @@ This booking was submitted through the KALONGO FARM website`;
         // Encode message for URL
         const encodedMessage = encodeURIComponent(bookingMessage);
         
-        // Create WhatsApp URL with hotel number (keep + sign, only remove spaces)
-        const whatsappNumber = HOTEL_WHATSAPP_NUMBER.replace(/\s+/g, '');
+        // Create WhatsApp URL with hotel number (digits only for wa.me)
+        const whatsappNumber = getHotelWhatsAppNumber().replace(/\D/g, '');
         const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
         
         console.log('📱 Opening WhatsApp with URL:', whatsappURL);
