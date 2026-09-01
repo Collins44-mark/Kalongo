@@ -701,8 +701,10 @@ body.lux-booking-page {
 /* ============================================================
    9. REVIEWS
    ============================================================ */
-#reviews.lux-reviews-section {
-  background: linear-gradient(180deg, #ffffff 0%, #f4f8f2 100%) !important;
+#reviews.lux-reviews-section,
+.eco-luxury #reviews.lux-reviews-section {
+  /* Same tint as the footer */
+  background: linear-gradient(180deg, #f4f8f2 0%, #e9f1e4 100%) !important;
 }
 
 #reviews.lux-reviews-section::before {
@@ -767,9 +769,24 @@ body.lux-booking-page {
   background: linear-gradient(145deg, #e8f0e4, #dce8d6) !important;
 }
 
-#reviews .lux-review-location {
+#reviews .lux-review-location,
+.eco-luxury #reviews .lux-review-location {
   color: var(--lt-green) !important;
   -webkit-text-fill-color: var(--lt-green) !important;
+}
+
+#reviews .lux-reviews-slider-container,
+#reviews .reviews-slider-container {
+  box-shadow: var(--lt-shadow) !important;
+}
+
+#reviews .lux-reviews-dot {
+  background: rgba(30, 43, 34, 0.2) !important;
+}
+
+#reviews .lux-reviews-dot.is-active {
+  background: var(--lt-green) !important;
+  box-shadow: 0 0 10px rgba(103, 193, 94, 0.35) !important;
 }
 
 #reviews .lux-review-date {
