@@ -30,17 +30,17 @@
   }
 
   function initGalleryLightbox() {
-    const lb = document.getElementById('ecoLightbox');
-    if (!lb) return;
-    document.querySelectorAll('.lux-kalongo-gallery-thumb').forEach((thumb) => {
-      thumb.addEventListener('click', () => {
-        const img = thumb.querySelector('img');
-        if (!img) return;
-        const im = lb.querySelector('img');
-        im.src = img.src;
-        im.alt = img.alt || '';
-        lb.classList.add('is-open');
-      });
+    // Delegated so admin-managed images rendered later still work
+    document.addEventListener('click', (e) => {
+      const thumb = e.target.closest('.lux-kalongo-gallery-thumb');
+      if (!thumb) return;
+      const img = thumb.querySelector('img');
+      const lb = document.getElementById('ecoLightbox');
+      if (!img || !lb) return;
+      const im = lb.querySelector('img');
+      im.src = img.src;
+      im.alt = img.alt || '';
+      lb.classList.add('is-open');
     });
   }
 

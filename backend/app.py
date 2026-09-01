@@ -29,6 +29,12 @@ from models import (
 
 load_dotenv()
 
+# Ensure all tables exist (idempotent; covers newer tables like gallery_images)
+try:
+    Base.metadata.create_all(bind=engine)
+except Exception as _e:
+    print(f"⚠️ Table creation check failed: {_e}")
+
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev-secret-key")
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16MB max upload

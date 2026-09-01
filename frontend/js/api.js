@@ -186,6 +186,7 @@ const API = {
     getFood: () => fetchAPI('/food'),
     getRestaurantMenu: () => fetchAPI('/restaurant-menu'),
     getVideos: () => fetchAPI('/videos'),
+    getGalleryImages: () => fetchAPI('/gallery-images'),
     getReviews: () => fetchAPI('/reviews'),
     getSettings: () => fetchAPI('/settings'),
     // Combined endpoint for faster homepage loading
@@ -1139,7 +1140,35 @@ const Render = {
         console.log(`✅ Rendered ${list.length} Kalongo videos`);
         window.dispatchEvent(new CustomEvent('kalongoRendered', { detail: { videos: list } }));
     },
-    
+
+    kalongoGallery: (images) => {
+        if (!document.body.classList.contains('lux-kalongo-page')) return;
+
+        const grid = document.querySelector('#luxKalongoGallery .lux-kalongo-gallery-grid');
+        if (!grid) return;
+
+        // Admin-managed images for this page; keep hardcoded fallback when none exist
+        const list = (images || [])
+            .filter((img) => img.image_url && (!img.section || img.section === 'our-kalongo'))
+            .sort((a, b) => (a.order || 0) - (b.order || 0) || (a.id || 0) - (b.id || 0));
+        if (!list.length) {
+            console.log('ℹ️ No admin gallery images — keeping default gallery');
+            return;
+        }
+
+        const esc = (t) => String(t || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        grid.innerHTML = list.map((img) => {
+            const url = optimizeCloudinaryUrl(img.image_url, 900, 700, 'auto', 'auto');
+            const caption = esc(img.caption);
+            return `<div class="lux-kalongo-gallery-thumb">
+                <img src="${url}" alt="${caption || 'Kalongo Farm gallery'}" loading="lazy">
+                ${caption ? `<div class="lux-kalongo-gallery-caption">${caption}</div>` : ''}
+            </div>`;
+        }).join('');
+        console.log(`✅ Rendered ${list.length} gallery images`);
+        window.dispatchEvent(new CustomEvent('kalongoGalleryRendered', { detail: { images: list } }));
+    },
+
     
     settings: (settings) => {
         console.log('🎨 Rendering settings...', settings);
@@ -1385,16 +1414,23 @@ async function initializeDataLoading() {
             link.classList.add('is-active');
         });
         try {
-            const videos = await API.getVideos();
+            const [videos, galleryImages] = await Promise.all([
+                API.getVideos().catch(() => []),
+                API.getGalleryImages().catch(() => []),
+            ]);
             console.log('📊 Videos loaded:', videos?.length || 0);
-            const apply = () => Render.kalongoPage(videos || []);
+            console.log('📊 Gallery images loaded:', galleryImages?.length || 0);
+            const apply = () => {
+                Render.kalongoPage(videos || []);
+                Render.kalongoGallery(galleryImages || []);
+            };
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', () => setTimeout(apply, 50));
             } else {
                 setTimeout(apply, 50);
             }
         } catch (error) {
-            console.error('❌ Error loading Our Kalongo videos:', error);
+            console.error('❌ Error loading Our Kalongo content:', error);
         }
     }
     
