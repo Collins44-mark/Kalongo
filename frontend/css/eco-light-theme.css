@@ -320,6 +320,37 @@ body.lux-booking-page {
 .eco-hero-trust-stats li { color: var(--lt-muted) !important; }
 .eco-hero-trust-stats strong { color: var(--lt-text) !important; }
 
+/* Homepage hero: center copy + CTAs on mobile, keep them at the top */
+@media (max-width: 899px) {
+  .eco-luxury .hero {
+    text-align: center !important;
+  }
+
+  .eco-luxury .hero-content {
+    align-items: center !important;
+    text-align: center !important;
+    justify-content: flex-start !important;
+    margin: 0 auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+
+  .eco-luxury .eco-hero-actions {
+    justify-content: center !important;
+    align-items: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .eco-luxury .eco-hero-badges {
+    justify-content: center !important;
+  }
+}
+
 /* ============================================================
    6. ABOUT SECTION
    ============================================================ */

@@ -288,17 +288,29 @@ body.eco-luxury {
   .eco-luxury .hero-content {
     align-items: center !important;
     text-align: center !important;
+    justify-content: flex-start !important;
+    margin: 0 auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+    padding-top: calc(88px + 1.5rem) !important;
     padding-bottom: clamp(3rem, 12vw, 5rem) !important;
   }
 
   .eco-luxury .eco-hero-actions {
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     max-width: 280px;
     margin: 0 auto;
   }
 
-  .eco-luxury .eco-hero-actions .btn-primary {
+  .eco-luxury .eco-hero-actions .btn-primary,
+  .eco-luxury .eco-hero-actions .eco-btn-ghost {
     width: 100%;
     justify-content: center;
   }
