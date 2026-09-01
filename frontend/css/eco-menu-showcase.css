@@ -42,7 +42,7 @@ body.lux-menu-page {
 .lux-menu-page .lux-menu-hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url('https://res.cloudinary.com/dae3rpnmg/image/upload/e_blur:800,q_auto/v1769247283/booking-hero-background_idfar7.jpg');
+  background-image: url('https://res.cloudinary.com/dae3rpnmg/image/upload/q_auto,f_auto/v1769247283/booking-hero-background_idfar7.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -51,9 +51,7 @@ body.lux-menu-page {
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(180deg, rgba(5, 8, 5, 0.55) 0%, rgba(5, 8, 5, 0.9) 75%, #050505 100%),
-    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(90, 160, 60, 0.18), transparent 55%);
+  background: linear-gradient(180deg, rgba(5, 8, 5, 0.38) 0%, rgba(5, 8, 5, 0.22) 70%, rgba(5, 8, 5, 0.08) 100%);
 }
 
 .lux-menu-page .lux-menu-hero-glow {

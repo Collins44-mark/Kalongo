@@ -955,32 +955,43 @@ body.lux-booking-page {
   background: radial-gradient(ellipse 70% 45% at 50% 0%, rgba(103, 193, 94, 0.06), transparent 50%) !important;
 }
 
-/* Hero: keep the blurred farm photo, wash it with white instead of black */
+/* Hero: photo must stay visible. Light darkening for text only,
+   thin white fade at the very bottom to meet the page. */
 .lux-menu-page .lux-menu-hero-bg::after {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.92) 75%, #ffffff 100%),
-    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(103, 193, 94, 0.12), transparent 55%) !important;
+    linear-gradient(180deg,
+      rgba(18, 30, 22, 0.38) 0%,
+      rgba(18, 30, 22, 0.28) 58%,
+      rgba(18, 30, 22, 0.12) 88%,
+      rgba(255, 255, 255, 0.2) 100%) !important;
 }
 
 .lux-menu-page .lux-menu-hero-glow {
-  background: radial-gradient(circle at 50% 40%, rgba(103, 193, 94, 0.06), transparent 50%) !important;
+  background: none !important;
+}
+
+.lux-menu-page .lux-menu-hero-eyebrow {
+  color: rgba(255, 255, 255, 0.92) !important;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
 }
 
 .lux-menu-page .lux-menu-hero-line--white {
-  color: var(--lt-text) !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
 }
 
 .lux-menu-page .lux-menu-hero-line--green {
-  color: var(--lt-green) !important;
-  text-shadow: none !important;
+  color: #A3FF9D !important;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45) !important;
 }
 
 .lux-menu-page .lux-menu-hero-sub {
-  color: var(--lt-muted) !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.4);
 }
 
 .lux-menu-page .lux-menu-hero-divider {
-  color: var(--lt-green) !important;
+  color: #A3FF9D !important;
 }
 
 .lux-menu-page .lux-menu-section-title {
