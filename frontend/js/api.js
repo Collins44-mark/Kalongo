@@ -223,10 +223,10 @@ const SVC_ACT_SHOWCASE = [
     { title: 'Campfire', subtitle: 'Evening under stars', image: `${SVC_CLOUD}/c_fill,w_800,h_1000,q_auto/v1769247395/our-kalongo-hero-background_sedoxy.jpg`, href: '/activities.html', match: ['bonfire', 'camp', 'fire'] },
 ];
 const SVC_FAC_SHOWCASE = [
-    { title: 'Swimming Pool', subtitle: 'Refresh & relax', image: `${SVC_CLOUD}/c_fill,w_800,h_1000,q_auto/v1769247203/swimming-pool_hk8isg.jpg`, href: '/#facilities', keys: ['pool', 'swim'] },
-    { title: 'Meeting Room', subtitle: 'Events & retreats', image: `${SVC_CLOUD}/c_fill,w_800,h_1000,q_auto/v1769247543/cottage-inside2_gykjie.jpg`, href: '/#facilities', keys: ['meeting', 'conference'] },
-    { title: 'Ample Parking', subtitle: 'Easy access', image: `${SVC_CLOUD}/c_fill,w_800,h_1000,q_auto/v1769247597/kalongo-surroundings2_k0rfgu.jpg`, href: '/#facilities', keys: ['parking', 'park'] },
-    { title: 'Free Wi-Fi', subtitle: 'Stay connected', image: `${SVC_CLOUD}/c_fill,w_800,h_1000,q_auto/v1769247538/a-cabin-inside2_vl8uoz.jpg`, href: '/#facilities', keys: ['wifi', 'wi-fi', 'internet'] },
+    { title: 'Swimming Pool', subtitle: 'Refresh & relax', image: `${SVC_CLOUD}/c_fill,w_800,h_1000,q_auto/v1769247203/swimming-pool_hk8isg.jpg`, href: '/', keys: ['pool', 'swim'] },
+    { title: 'Meeting Room', subtitle: 'Events & retreats', image: `${SVC_CLOUD}/c_fill,w_800,h_1000,q_auto/v1769247543/cottage-inside2_gykjie.jpg`, href: '/', keys: ['meeting', 'conference'] },
+    { title: 'Ample Parking', subtitle: 'Easy access', image: `${SVC_CLOUD}/c_fill,w_800,h_1000,q_auto/v1769247597/kalongo-surroundings2_k0rfgu.jpg`, href: '/', keys: ['parking', 'park'] },
+    { title: 'Free Wi-Fi', subtitle: 'Stay connected', image: `${SVC_CLOUD}/c_fill,w_800,h_1000,q_auto/v1769247538/a-cabin-inside2_vl8uoz.jpg`, href: '/', keys: ['wifi', 'wi-fi', 'internet'] },
 ];
 const SVC_CHARGES = [
     { title: 'Room Service', subtitle: 'In-room convenience', price: 'TZS 5,000' },
