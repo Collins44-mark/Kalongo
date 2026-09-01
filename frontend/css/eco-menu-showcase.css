@@ -27,10 +27,11 @@ body.lux-menu-page {
   filter: none !important;
 }
 
-/* —— Hero —— */
+/* —— Hero — same height as Booking / Pricing / Activities inner heroes —— */
 .lux-menu-page .lux-menu-hero {
   position: relative;
-  min-height: clamp(280px, 48vh, 420px);
+  min-height: 48vh;
+  min-height: 48dvh;
   display: flex;
   align-items: center;
   justify-content: center;

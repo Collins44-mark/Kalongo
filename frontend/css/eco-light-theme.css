@@ -1025,6 +1025,13 @@ body.lux-booking-page {
   color: #A3FF9D !important;
 }
 
+@media (min-width: 900px) {
+  .lux-menu-page .lux-menu-hero {
+    min-height: 48vh !important;
+    min-height: 48dvh !important;
+  }
+}
+
 .lux-menu-page .lux-menu-section-title {
   color: var(--lt-text) !important;
 }

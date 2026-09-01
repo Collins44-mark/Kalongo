@@ -647,7 +647,8 @@ body.eco-luxury {
 @media (max-width: 899px) {
   .eco-luxury .pricing-hero,
   .eco-luxury .booking-hero,
-  .eco-luxury .activities-hero {
+  .eco-luxury .activities-hero,
+  .lux-menu-page .lux-menu-hero {
     min-height: 36vh !important;
     min-height: 36dvh !important;
   }
