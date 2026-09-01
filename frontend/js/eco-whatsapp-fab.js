@@ -17,6 +17,9 @@
   }
 
   function waHref(raw) {
+    if (typeof buildWhatsAppHref === 'function') {
+      return buildWhatsAppHref(raw);
+    }
     return 'https://wa.me/' + waDigits(raw) + '?text=' + encodeURIComponent(WA_MESSAGE);
   }
 

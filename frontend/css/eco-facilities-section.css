@@ -233,36 +233,9 @@
   background: linear-gradient(160deg, #121c12, #1c2c1e);
 }
 
-/* Icon — lower-left on image edge */
+/* Facility icon badges removed — hide any legacy markup */
 #facilities .lux-facility-icon-badge {
-  position: absolute;
-  left: 20px;
-  bottom: 18px;
-  z-index: 4;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(15, 20, 15, 0.92);
-  border: 1px solid rgba(145, 255, 90, 0.3);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 0 18px rgba(145, 255, 90, 0.28);
-  color: #b6ff4d;
-  pointer-events: none;
-}
-
-#facilities .lux-facility-icon-badge svg {
-  width: 28px;
-  height: 28px;
-  stroke: #b6ff4d !important;
-  fill: none;
-  stroke-width: 1.75;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  filter: drop-shadow(0 0 6px rgba(182, 255, 77, 0.45));
+  display: none !important;
 }
 
 /* —— Text block — light, no heavy black slab —— */

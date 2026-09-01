@@ -73,18 +73,6 @@ const mergeFacilitiesList = (apiList) => {
     });
 };
 
-const facilityLuxIconSvg = (key) => {
-    const icons = {
-        pool: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12c2-4 4-4 6 0s4 4 6 0 4-4 6 0"/><path d="M2 16c2-4 4-4 6 0s4 4 6 0 4-4 6 0"/><circle cx="18" cy="6" r="2"/></svg>',
-        farm: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c-4 4-6 8-6 12a6 6 0 0 0 12 0c0-4-2-8-6-12z"/><path d="M12 10v8"/></svg>',
-        animals: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="2"/><circle cx="16" cy="8" r="2"/><path d="M5 14c1.5 3 4 4 7 4s5.5-1 7-4"/><path d="M9 12h6"/></svg>',
-        food: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h16v2H4z"/><path d="M8 7v10M16 7v10"/><path d="M6 4h12v3H6z"/></svg>',
-        trails: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20L10 8l4 4 6-12"/></svg>',
-        activities: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M9 17h6M6 14l3-7h6l3 7"/></svg>',
-    };
-    return icons[key] || icons.farm;
-};
-
 const ecoFeatureIcon = (text) => {
     const t = (text || '').toLowerCase();
     let icon = '◆';
@@ -427,13 +415,24 @@ function whatsappDigits(raw) {
     return String(raw).replace(/\D/g, '');
 }
 
-/** Apply admin WhatsApp setting across footer links, CTAs, and floating button */
+const DEFAULT_WHATSAPP_NUMBER = '+255 653 626 410';
+const DEFAULT_WHATSAPP_MESSAGE = 'Hello, I would like to inquire about KALONGO FARM.';
+
+/** Build wa.me link with pre-filled default message */
+function buildWhatsAppHref(rawNumber, message) {
+    const digits = whatsappDigits(rawNumber || DEFAULT_WHATSAPP_NUMBER);
+    if (!digits) return '#';
+    const text = message || DEFAULT_WHATSAPP_MESSAGE;
+    return `https://wa.me/${digits}?text=${encodeURIComponent(text)}`;
+}
+
+/** Apply default message to all WhatsApp links (footer contact, CTAs, FAB) */
 function applyWhatsAppFromSettings(whatsapp) {
-    if (!whatsapp) return;
-    const digits = whatsappDigits(whatsapp);
+    const number = whatsapp || DEFAULT_WHATSAPP_NUMBER;
+    const digits = whatsappDigits(number);
     if (!digits) return;
-    const display = String(whatsapp).trim();
-    const href = `https://wa.me/${digits}`;
+    const display = String(number).trim();
+    const href = buildWhatsAppHref(number);
 
     document.querySelectorAll('a[href*="wa.me"]').forEach((link) => {
         link.href = href;
@@ -448,8 +447,14 @@ function applyWhatsAppFromSettings(whatsapp) {
     });
 
     if (window.EcoWhatsAppFab && typeof window.EcoWhatsAppFab.update === 'function') {
-        window.EcoWhatsAppFab.update(whatsapp);
+        window.EcoWhatsAppFab.update(number);
     }
+}
+
+function bootWhatsAppLinks() {
+    applyWhatsAppFromSettings(
+        (window.siteSettings && window.siteSettings.whatsapp) || DEFAULT_WHATSAPP_NUMBER
+    );
 }
 
 // Render functions
@@ -592,7 +597,6 @@ const Render = {
         const imgUrl = fac.image_url ? optimizeCloudinaryUrl(fac.image_url, 640, 620, 'auto', 'auto') : '';
         const safeName = (fac.name || '').replace(/"/g, '&quot;');
         const safeDesc = (fac.description || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        const iconSvg = facilityLuxIconSvg(fac.iconKey);
         const mediaInner = imgUrl
             ? `<img class="lux-facility-img" src="${imgUrl}" alt="${safeName}" loading="lazy">`
             : '<div class="lux-facility-img-placeholder" aria-hidden="true"></div>';
@@ -600,7 +604,6 @@ const Render = {
             <div class="lux-facility-media${imgUrl ? '' : ' lux-facility-media--empty'}">
                 ${mediaInner}
                 <div class="lux-facility-img-overlay" aria-hidden="true"></div>
-                <div class="lux-facility-icon-badge" aria-hidden="true">${iconSvg}</div>
             </div>
             <div class="lux-facility-body">
                 <h3 class="lux-facility-title">${fac.name}</h3>
@@ -1190,6 +1193,8 @@ const Render = {
         if (settings.whatsapp) {
             applyWhatsAppFromSettings(settings.whatsapp);
             console.log('✅ Updated WhatsApp contact links');
+        } else {
+            applyWhatsAppFromSettings(DEFAULT_WHATSAPP_NUMBER);
         }
         
         // Store for other uses
@@ -1444,6 +1449,13 @@ async function initializeDataLoading() {
             console.log('📢 Dispatched heroSlidesRendered event');
         }, 100);
     }
+}
+
+// Pre-fill WhatsApp contact links with default message before settings API returns
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootWhatsAppLinks);
+} else {
+    bootWhatsAppLinks();
 }
 
 // Initialize when DOM is ready
