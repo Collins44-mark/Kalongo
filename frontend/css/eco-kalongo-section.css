@@ -11,7 +11,8 @@ body.lux-kalongo-page .pricing-hero.lux-page-hero {
   min-height: clamp(42vh, 52vw, 52vh) !important;
   margin-top: 0 !important;
   padding-top: var(--eco-nav-h, 76px) !important;
-  background-image: url('https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247283/booking-hero-background_idfar7.jpg') !important;
+  /* Default only — admin Page Heroes setting overrides this via inline style */
+  background-image: url('https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247283/booking-hero-background_idfar7.jpg');
   background-size: cover !important;
   background-position: center center !important;
   background-repeat: no-repeat !important;

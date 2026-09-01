@@ -1241,9 +1241,10 @@ const Render = {
                 const heroEl = document.querySelector(selector);
                 if (heroEl) {
                     const heroUrl = optimizeCloudinaryUrl(settings[key], 1920, 900, 'auto', 'auto');
-                    heroEl.style.backgroundImage = `url('${heroUrl}')`;
-                    heroEl.style.backgroundSize = 'cover';
-                    heroEl.style.backgroundPosition = 'center';
+                    // 'important' so it also beats stylesheet !important rules
+                    heroEl.style.setProperty('background-image', `url('${heroUrl}')`, 'important');
+                    heroEl.style.setProperty('background-size', 'cover', 'important');
+                    heroEl.style.setProperty('background-position', 'center', 'important');
                     console.log(`✅ Applied admin hero background for ${slug}`);
                 }
             }
