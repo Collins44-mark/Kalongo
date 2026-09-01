@@ -1,0 +1,1540 @@
+/**
+ * KALONGO FARM — LIGHT THEME OVERRIDE
+ * Loads LAST on every page. Converts the dark green/black theme into a
+ * clean, bright, premium white/light theme.
+ *
+ * WHITE + NATURAL GREEN + DARK CHARCOAL
+ * Color/theme conversion ONLY — no layout, spacing or component changes.
+ */
+
+/* ============================================================
+   1. DESIGN TOKENS
+   ============================================================ */
+:root {
+  /* eco-luxury.css tokens */
+  --eco-bg-deep: #ffffff;
+  --eco-bg-mid: #f6f9f4;
+  --eco-bg-card: #f2f6f0;
+  --eco-green: #4d9a46;
+  --eco-green-bright: #3e8e41;
+  --eco-green-dark: #3c7a37;
+  --eco-text: #1e2b22;
+  --eco-muted: rgba(30, 43, 34, 0.68);
+  --eco-glass: rgba(255, 255, 255, 0.88);
+  --eco-glass-hover: rgba(255, 255, 255, 0.96);
+  --eco-border: rgba(62, 142, 65, 0.18);
+  --eco-glow: rgba(77, 154, 70, 0.18);
+
+  /* eco-menu-showcase.css tokens (neon lime → readable deep green) */
+  --lux-neon: #3e8e41;
+  --lux-neon-soft: rgba(62, 142, 65, 0.22);
+
+  /* Light-theme helper tokens */
+  --lt-white: #ffffff;
+  --lt-soft: #f6f9f4;
+  --lt-text: #1e2b22;
+  --lt-muted: rgba(30, 43, 34, 0.68);
+  --lt-faint: rgba(30, 43, 34, 0.48);
+  --lt-green: #3e8e41;
+  --lt-green-deep: #2e6b31;
+  --lt-border: rgba(62, 142, 65, 0.16);
+  --lt-border-strong: rgba(62, 142, 65, 0.32);
+  --lt-shadow: 0 10px 30px rgba(35, 60, 40, 0.08);
+  --lt-shadow-lg: 0 18px 44px rgba(35, 60, 40, 0.13);
+}
+
+/* ============================================================
+   2. GLOBAL PAGE BACKGROUNDS
+   ============================================================ */
+.eco-luxury,
+body.eco-luxury {
+  background:
+    radial-gradient(ellipse 80% 50% at 15% 0%, rgba(103, 193, 94, 0.06), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(103, 193, 94, 0.05), transparent 45%),
+    linear-gradient(180deg, #ffffff 0%, #f8faf6 50%, #ffffff 100%) !important;
+  color: var(--lt-text) !important;
+}
+
+body.lux-menu-page,
+body.lux-services-page,
+body.lux-kalongo-page,
+body.lux-booking-page {
+  background: #ffffff !important;
+}
+
+.eco-luxury::selection,
+.eco-luxury *::selection {
+  background: rgba(103, 193, 94, 0.25);
+  color: var(--lt-text);
+}
+
+/* Ambient orbs — barely-there green tints */
+.eco-orb--1 { background: rgba(103, 193, 94, 0.06) !important; }
+.eco-orb--2 { background: rgba(103, 193, 94, 0.05) !important; }
+.eco-orb--3 { background: rgba(103, 193, 94, 0.04) !important; }
+
+/* ============================================================
+   3. GLOBAL TYPOGRAPHY — dark charcoal instead of white
+   ============================================================ */
+.eco-luxury h1, .eco-luxury h2, .eco-luxury h3, .eco-luxury h4 {
+  color: var(--lt-text) !important;
+  -webkit-text-fill-color: var(--lt-text) !important;
+}
+
+.eco-luxury .section-title-modern,
+.eco-luxury .section-title,
+.eco-luxury .rate-category-title,
+.eco-luxury .room-name,
+.eco-luxury .eco-room-body .room-name,
+.eco-luxury .review-name,
+.eco-luxury .activity-name-modern,
+.eco-luxury .accommodation-name-modern,
+.eco-luxury .food-name-modern,
+.eco-luxury .activities-group-title,
+.eco-luxury .footer-section h3,
+.eco-luxury .footer-section h4 {
+  color: var(--lt-text) !important;
+  -webkit-text-fill-color: var(--lt-text) !important;
+}
+
+.eco-luxury p,
+.eco-luxury .section-description,
+.eco-luxury .section-description-modern,
+.eco-luxury .about-description-modern p,
+.eco-luxury .about-description p,
+.eco-luxury .room-description,
+.eco-luxury .room-features li,
+.eco-luxury .room-features li span,
+.eco-luxury .review-quote,
+.eco-luxury .review-text,
+.eco-luxury .review-text p,
+.eco-luxury .eco-activity-desc,
+.eco-luxury .activity-duration-modern,
+.eco-luxury .food-description-modern,
+.eco-luxury .price-label-modern,
+.eco-luxury .menu-item-name-modern,
+.eco-luxury .charge-name-modern {
+  color: var(--lt-muted) !important;
+  -webkit-text-fill-color: unset !important;
+}
+
+/* Green accents: deep natural green instead of neon lime */
+.eco-luxury .room-capacity,
+.eco-luxury .activity-price-modern,
+.eco-luxury .price-value-modern,
+.eco-luxury .food-price-modern,
+.eco-luxury .charge-price-modern,
+.eco-luxury .menu-item-price-modern,
+.eco-luxury .eco-about-tagline,
+.eco-luxury .eco-stat-num,
+.eco-luxury .footer-brand h3,
+.eco-about-tagline {
+  color: var(--lt-green) !important;
+  -webkit-text-fill-color: var(--lt-green) !important;
+}
+
+.eco-luxury .section-title-modern .eco-title-accent,
+.eco-luxury .eco-about-copy .section-title-modern .eco-title-accent {
+  color: var(--lt-green) !important;
+  -webkit-text-fill-color: var(--lt-green) !important;
+}
+
+/* Section divider hairlines */
+.eco-luxury .packages-page + .packages-page::before,
+.eco-luxury .packages-page + .reviews::before {
+  background: linear-gradient(90deg, transparent, var(--lt-border-strong), transparent) !important;
+}
+
+/* ============================================================
+   4. HEADER / NAVBAR — white glass pill, dark links
+   ============================================================ */
+.eco-luxury .header > .container {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid var(--lt-border) !important;
+  border-color: var(--lt-border) !important;
+  box-shadow:
+    0 10px 32px rgba(35, 60, 40, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+@media (min-width: 992px) {
+  .eco-luxury .header > .container {
+    background: rgba(255, 255, 255, 0.92) !important;
+  }
+}
+
+.eco-luxury .nav-link {
+  color: rgba(30, 43, 34, 0.8) !important;
+}
+
+.eco-luxury .nav-link:hover,
+.eco-luxury .nav-link.is-active {
+  color: var(--lt-green) !important;
+  text-shadow: none !important;
+}
+
+/* Original logo artwork is dark — show it as-is on the light header */
+.eco-luxury .logo,
+.eco-luxury .logo--transparent,
+.eco-luxury #logo,
+.eco-luxury .logo-link:hover .logo,
+.eco-luxury .logo-link:hover #logo {
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+.eco-luxury .logo-section .logo-glow {
+  background: radial-gradient(circle, rgba(103, 193, 94, 0.12) 0%, transparent 70%) !important;
+}
+
+/* Book Now CTA — keep the bright eco-green with dark text */
+.eco-luxury .btn-primary,
+.eco-luxury .btn-submit-modern,
+.eco-luxury .nav-link.btn-booking {
+  color: #0c1a0e !important;
+  background: linear-gradient(135deg, #8ede6a, #67C15E) !important;
+  box-shadow: 0 6px 22px rgba(103, 193, 94, 0.35) !important;
+}
+
+.eco-luxury .btn-primary:hover {
+  box-shadow: 0 10px 30px rgba(103, 193, 94, 0.45) !important;
+}
+
+.eco-luxury .eco-btn-ghost {
+  color: var(--lt-text) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  border: 1px solid var(--lt-border-strong) !important;
+}
+
+.eco-luxury .eco-btn-ghost:hover {
+  background: rgba(103, 193, 94, 0.08) !important;
+  border-color: var(--lt-green) !important;
+}
+
+/* Mobile: hamburger + dropdown menu → light */
+.eco-luxury .mobile-menu-toggle span {
+  background: var(--lt-text) !important;
+}
+
+.eco-luxury .nav-menu.active {
+  background: rgba(255, 255, 255, 0.97) !important;
+  border: 1px solid var(--lt-border-strong) !important;
+}
+
+.eco-luxury .nav-menu-overlay.active {
+  background: rgba(30, 43, 34, 0.3) !important;
+}
+
+@media (max-width: 899px) {
+  .eco-luxury .nav-menu,
+  .eco-luxury .nav-menu.active {
+    background: rgba(255, 255, 255, 0.97) !important;
+    border: 1px solid var(--lt-border-strong) !important;
+    box-shadow: 0 20px 50px rgba(35, 60, 40, 0.18) !important;
+  }
+
+  .eco-luxury .nav-menu .nav-link {
+    color: rgba(30, 43, 34, 0.85) !important;
+  }
+
+  .eco-luxury .nav-menu .nav-link:hover,
+  .eco-luxury .nav-menu .nav-link.is-active {
+    background: rgba(103, 193, 94, 0.12) !important;
+    color: var(--lt-green-deep) !important;
+  }
+
+  .eco-luxury .nav-menu-overlay {
+    background: rgba(30, 43, 34, 0.25) !important;
+  }
+
+  .header-mobile-book {
+    color: #0c1a0e !important;
+    background: linear-gradient(135deg, #8ede6a, #67C15E) !important;
+    box-shadow: 0 4px 16px rgba(103, 193, 94, 0.35) !important;
+  }
+}
+
+.eco-luxury .nav-menu.active .nav-link {
+  color: rgba(30, 43, 34, 0.85) !important;
+}
+
+/* Bottom mobile nav bar (if shown) */
+.eco-mobile-nav {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border-top: 1px solid var(--lt-border) !important;
+}
+
+/* ============================================================
+   5. HERO (homepage) — keep photo, subtle overlay, white text on image
+   ============================================================ */
+.eco-luxury .hero::before {
+  background:
+    linear-gradient(90deg, rgba(18, 30, 22, 0.6) 0%, rgba(18, 30, 22, 0.4) 42%, rgba(18, 30, 22, 0.1) 68%, rgba(18, 30, 22, 0.18) 100%),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.92) 0%, transparent 24%) !important;
+}
+
+.eco-luxury .hero-slide {
+  filter: brightness(1) saturate(1.05) !important;
+}
+
+/* Text sitting directly on the hero photo stays white for readability */
+.eco-luxury .hero-title,
+.eco-hero-line {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.eco-hero-line--green {
+  color: #A3FF9D !important;
+  -webkit-text-fill-color: #A3FF9D !important;
+}
+
+.eco-hero-eyebrow {
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.eco-luxury .hero-subtitle {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.eco-badge {
+  color: #ffffff !important;
+  background: rgba(18, 30, 22, 0.42) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+.eco-luxury .eco-btn-play {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.14) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Hero trust card — white glass */
+.eco-hero-trust {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid var(--lt-border-strong) !important;
+  box-shadow: var(--lt-shadow-lg) !important;
+}
+
+.eco-hero-trust h4 { color: var(--lt-green) !important; }
+.eco-hero-trust-stats li { color: var(--lt-muted) !important; }
+.eco-hero-trust-stats strong { color: var(--lt-text) !important; }
+
+/* ============================================================
+   6. ABOUT SECTION
+   ============================================================ */
+#about.packages-page {
+  background: linear-gradient(180deg, #ffffff 0%, #f4f8f2 100%) !important;
+}
+
+#about.packages-page::before {
+  background:
+    radial-gradient(circle at top left, rgba(103, 193, 94, 0.06), transparent 45%),
+    radial-gradient(ellipse 55% 45% at 18% 50%, rgba(103, 193, 94, 0.04), transparent 55%) !important;
+}
+
+#about .about-lux-title-white {
+  color: var(--lt-text) !important;
+  -webkit-text-fill-color: var(--lt-text) !important;
+}
+
+#about .about-description-modern p {
+  color: var(--lt-muted) !important;
+  -webkit-text-fill-color: var(--lt-muted) !important;
+}
+
+#about .about-lux-stat-num {
+  color: var(--lt-green) !important;
+  -webkit-text-fill-color: var(--lt-green) !important;
+}
+
+.eco-about-copy.eco-glass,
+.eco-glass {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+
+.eco-about-visual {
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow-lg) !important;
+}
+
+/* About luxury card (reference layout) */
+#about .about-lux-card {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+
+#about .about-lux-card::before {
+  background: radial-gradient(ellipse 80% 60% at 20% 20%, rgba(103, 193, 94, 0.08), transparent 60%) !important;
+}
+
+#about .about-lux-label {
+  color: var(--lt-green) !important;
+}
+
+#about .about-lux-label-line {
+  background: linear-gradient(90deg, var(--lt-border-strong), transparent) !important;
+}
+
+#about .about-lux-title-green {
+  color: var(--lt-green) !important;
+  -webkit-text-fill-color: var(--lt-green) !important;
+  text-shadow: none !important;
+}
+
+#about .about-lux-divider::before,
+#about .about-lux-divider::after {
+  background: linear-gradient(90deg, transparent, var(--lt-border-strong), transparent) !important;
+}
+
+#about .about-lux-divider-leaf {
+  color: var(--lt-green) !important;
+}
+
+#about .about-lux-subtitle {
+  color: var(--lt-muted) !important;
+}
+
+#about .about-description-modern {
+  background: #ffffff !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+
+#about .about-lux-stats {
+  background: #f6f9f4 !important;
+  border: 1px solid var(--lt-border) !important;
+}
+
+#about .about-lux-stat-item {
+  background: transparent !important;
+  border-color: var(--lt-border) !important;
+}
+
+#about .about-lux-stat-item:hover {
+  background: rgba(103, 193, 94, 0.08) !important;
+}
+
+@media (min-width: 640px) {
+  #about .about-lux-stat-item:not(:last-child) {
+    border-right: 1px solid var(--lt-border) !important;
+  }
+}
+
+@media (max-width: 899px) {
+  #about .about-lux-stat-item {
+    background: #ffffff !important;
+    border: 1px solid var(--lt-border) !important;
+  }
+
+  #about .about-lux-stats {
+    background: #f6f9f4 !important;
+    border: 1px solid var(--lt-border) !important;
+  }
+
+  #about .about-lux-visual {
+    border: 1px solid var(--lt-border) !important;
+    box-shadow: var(--lt-shadow) !important;
+  }
+
+  #about .about-description-modern {
+    border: 1px solid var(--lt-border) !important;
+    box-shadow: var(--lt-shadow) !important;
+  }
+}
+
+#about .about-lux-stat-icon {
+  color: var(--lt-green) !important;
+}
+
+#about .about-lux-stat-label {
+  color: var(--lt-muted) !important;
+}
+
+#about .about-lux-visual {
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow-lg) !important;
+}
+
+#about .about-lux-visual-shade {
+  background: linear-gradient(180deg, transparent 0%, rgba(5, 8, 5, 0.08) 50%, rgba(5, 8, 5, 0.22) 100%) !important;
+}
+
+/* Stats */
+.eco-stat-card,
+.eco-stats-bar .eco-stat-card {
+  background: #ffffff !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+
+.eco-stat-card:hover {
+  box-shadow: 0 12px 32px rgba(62, 142, 65, 0.14) !important;
+}
+
+.eco-stat-label {
+  color: var(--lt-muted) !important;
+}
+
+/* ============================================================
+   7. ROOMS / ACCOMMODATIONS
+   ============================================================ */
+#rooms.lux-rooms-section {
+  background: #ffffff !important;
+}
+
+#rooms.lux-rooms-section::before {
+  background:
+    radial-gradient(ellipse 50% 40% at 50% 0%, rgba(103, 193, 94, 0.05), transparent 55%),
+    radial-gradient(ellipse 40% 30% at 80% 80%, rgba(103, 193, 94, 0.04), transparent 50%) !important;
+}
+
+#rooms .lux-rooms-heading,
+#rooms .lux-room-title {
+  color: var(--lt-text) !important;
+  -webkit-text-fill-color: var(--lt-text) !important;
+}
+
+#rooms .lux-rooms-heading-accent {
+  color: var(--lt-green) !important;
+  -webkit-text-fill-color: var(--lt-green) !important;
+  text-shadow: none !important;
+}
+
+#rooms .lux-rooms-sub,
+#rooms .lux-room-amenities li {
+  color: var(--lt-muted) !important;
+  -webkit-text-fill-color: unset !important;
+}
+
+#rooms .lux-room-card.room-card,
+.eco-luxury #rooms .lux-room-card.room-card {
+  background: #ffffff !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+
+#rooms .lux-room-card:hover {
+  border-color: var(--lt-border-strong) !important;
+  box-shadow: var(--lt-shadow-lg) !important;
+}
+
+#rooms .lux-room-media {
+  background: #eef3ec !important;
+}
+
+/* Photo shade — keep a light touch so badges stay readable */
+#rooms .lux-room-shade {
+  background: linear-gradient(180deg, transparent 0%, rgba(10, 18, 12, 0.28) 100%) !important;
+}
+
+#rooms .lux-room-body {
+  background: #ffffff !important;
+}
+
+#rooms .lux-room-capacity {
+  color: var(--lt-green) !important;
+}
+
+#rooms .lux-room-footer {
+  border-top: 1px solid var(--lt-border) !important;
+}
+
+#rooms .lux-room-price {
+  color: var(--lt-muted) !important;
+}
+
+#rooms .lux-room-price strong {
+  color: var(--lt-text) !important;
+}
+
+#rooms .lux-room-amenities .lux-amenity-icon {
+  color: var(--lt-green) !important;
+}
+
+@media (max-width: 899px) {
+  #rooms .lux-room-card.room-card {
+    background: #ffffff !important;
+    border: 1px solid var(--lt-border) !important;
+    box-shadow: var(--lt-shadow) !important;
+  }
+
+  #rooms .lux-room-card.room-card:active {
+    border-color: var(--lt-border-strong) !important;
+  }
+
+  #rooms .lux-room-body {
+    background: #ffffff !important;
+  }
+
+  #rooms .lux-room-capacity {
+    color: var(--lt-muted) !important;
+  }
+}
+
+/* Room detail modal — white panel, soft scrim */
+.lux-room-modal-backdrop {
+  background: rgba(24, 36, 27, 0.5) !important;
+}
+
+.lux-room-modal-panel {
+  background: #ffffff !important;
+  border: 1px solid var(--lt-border-strong) !important;
+  box-shadow: var(--lt-shadow-lg) !important;
+}
+
+.lux-room-modal-title {
+  color: var(--lt-text) !important;
+  -webkit-text-fill-color: var(--lt-text) !important;
+}
+
+.lux-room-modal-capacity {
+  color: var(--lt-green) !important;
+}
+
+.lux-room-modal-desc,
+.lux-room-modal-specs li,
+.lux-room-modal-price-label {
+  color: var(--lt-muted) !important;
+}
+
+.lux-room-modal-price-label strong {
+  color: var(--lt-text) !important;
+}
+
+.lux-room-modal-specs .spec-icon {
+  color: var(--lt-green) !important;
+}
+
+.lux-room-modal-back {
+  color: var(--lt-muted) !important;
+}
+
+.lux-room-modal-back:hover {
+  color: var(--lt-green) !important;
+}
+
+.lux-room-modal-close {
+  color: var(--lt-text) !important;
+  background: rgba(30, 43, 34, 0.06) !important;
+  border: 1px solid var(--lt-border) !important;
+}
+
+.lux-room-modal-close:hover {
+  background: rgba(103, 193, 94, 0.15) !important;
+  border-color: var(--lt-green) !important;
+}
+
+.lux-room-modal-gallery {
+  background: #f4f8f2 !important;
+}
+
+.lux-room-modal-main-img-wrap,
+.lux-room-modal-thumb {
+  background: #eef3ec !important;
+}
+
+.lux-room-modal-thumb.is-active,
+.lux-room-modal-thumb:hover {
+  border-color: var(--lt-green) !important;
+}
+
+/* ============================================================
+   8. FACILITIES
+   ============================================================ */
+#facilities.lux-facilities-section {
+  background: linear-gradient(180deg, #f4f8f2 0%, #ffffff 100%) !important;
+}
+
+#facilities.lux-facilities-section::before {
+  background:
+    radial-gradient(circle at 50% 30%, rgba(103, 193, 94, 0.05), transparent 55%),
+    radial-gradient(circle at 15% 80%, rgba(103, 193, 94, 0.04), transparent 45%) !important;
+}
+
+#facilities .lux-facilities-heading-white,
+#facilities .lux-facility-title {
+  color: var(--lt-text) !important;
+  -webkit-text-fill-color: var(--lt-text) !important;
+}
+
+#facilities .lux-facilities-heading-green,
+#facilities .lux-facilities-script {
+  color: var(--lt-green) !important;
+  -webkit-text-fill-color: var(--lt-green) !important;
+  text-shadow: none !important;
+}
+
+#facilities .lux-facilities-sub,
+#facilities .lux-facility-desc {
+  color: var(--lt-muted) !important;
+  -webkit-text-fill-color: var(--lt-muted) !important;
+}
+
+#facilities .lux-facility-card.facility-item,
+.eco-luxury #facilities .facility-item.lux-facility-card {
+  background: #ffffff !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+
+#facilities .lux-facility-card.facility-item:hover {
+  border-color: var(--lt-border-strong) !important;
+  box-shadow: var(--lt-shadow-lg) !important;
+}
+
+#facilities .lux-facility-media {
+  background: #eef3ec !important;
+}
+
+#facilities .lux-facility-img-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.16), transparent) !important;
+}
+
+#facilities .lux-facility-media--empty .lux-facility-img-placeholder {
+  background: linear-gradient(160deg, #e8f0e4, #dce8d6) !important;
+}
+
+/* ============================================================
+   9. REVIEWS
+   ============================================================ */
+#reviews.lux-reviews-section {
+  background: linear-gradient(180deg, #ffffff 0%, #f4f8f2 100%) !important;
+}
+
+#reviews.lux-reviews-section::before {
+  background: radial-gradient(circle at 50% 35%, rgba(103, 193, 94, 0.04), transparent 58%) !important;
+}
+
+#reviews .lux-reviews-heading-white,
+#reviews .lux-review-name,
+.eco-luxury #reviews .lux-review-name {
+  color: var(--lt-text) !important;
+  -webkit-text-fill-color: var(--lt-text) !important;
+}
+
+#reviews .lux-reviews-heading-green,
+#reviews .lux-reviews-script {
+  color: var(--lt-green) !important;
+  -webkit-text-fill-color: var(--lt-green) !important;
+  text-shadow: none !important;
+}
+
+#reviews .lux-reviews-sub {
+  color: var(--lt-muted) !important;
+  -webkit-text-fill-color: unset !important;
+}
+
+#reviews .lux-review-card {
+  background: #ffffff !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+
+#reviews .lux-review-visual {
+  background: #eef3ec !important;
+}
+
+#reviews .lux-review-photo--empty {
+  background: linear-gradient(160deg, #e8f0e4, #dce8d6) !important;
+}
+
+#reviews .lux-review-quote {
+  color: var(--lt-text) !important;
+  -webkit-text-fill-color: var(--lt-text) !important;
+}
+
+#reviews .lux-review-q-mark {
+  color: var(--lt-green) !important;
+}
+
+#reviews .lux-review-author-divider {
+  color: var(--lt-green) !important;
+}
+
+#reviews .lux-review-author {
+  border-top: 1px solid var(--lt-border) !important;
+}
+
+#reviews .lux-review-avatar {
+  border-color: var(--lt-border-strong) !important;
+}
+
+#reviews .lux-review-avatar--placeholder {
+  background: linear-gradient(145deg, #e8f0e4, #dce8d6) !important;
+}
+
+#reviews .lux-review-location {
+  color: var(--lt-green) !important;
+  -webkit-text-fill-color: var(--lt-green) !important;
+}
+
+#reviews .lux-review-date {
+  color: var(--lt-faint) !important;
+  -webkit-text-fill-color: var(--lt-faint) !important;
+}
+
+#reviews .lux-review-nav {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid var(--lt-border-strong) !important;
+  color: var(--lt-green) !important;
+}
+
+#reviews .lux-review-nav:hover {
+  background: #ffffff !important;
+  border-color: var(--lt-green) !important;
+  box-shadow: 0 0 18px rgba(103, 193, 94, 0.2) !important;
+}
+
+/* Legacy review slider (style.css variant) */
+.eco-luxury .review-slide .review-content,
+.eco-luxury .review-content,
+.eco-luxury .reviews-slider-container {
+  background: #ffffff !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+
+.eco-luxury .review-quote { color: var(--lt-muted) !important; }
+.eco-luxury .review-name { color: var(--lt-green) !important; }
+
+/* ============================================================
+   9b. SECTION DIVIDER HAIRLINES — subtle green, no neon glow
+   ============================================================ */
+#rooms .lux-rooms-divider::before,
+#rooms .lux-rooms-divider::after,
+#facilities .lux-facilities-divider::before,
+#facilities .lux-facilities-divider::after,
+#reviews .lux-reviews-divider::before,
+#reviews .lux-reviews-divider::after {
+  background: linear-gradient(90deg, transparent, var(--lt-border-strong), transparent) !important;
+  box-shadow: none !important;
+}
+
+#rooms .lux-rooms-divider-leaf,
+#facilities .lux-facilities-divider-leaf,
+#reviews .lux-reviews-divider-leaf {
+  color: var(--lt-green) !important;
+}
+
+/* ============================================================
+   10. FOOTER — light natural green tint
+   ============================================================ */
+.lux-footer.footer,
+.eco-luxury .lux-footer.footer,
+.eco-luxury .footer {
+  background: linear-gradient(180deg, #f4f8f2 0%, #e9f1e4 100%) !important;
+  border-top: 1px solid var(--lt-border) !important;
+}
+
+.lux-footer-brand-title .lux-ft-white,
+.lux-footer-col-title,
+.lux-footer-location-name,
+.lux-footer-contact-value,
+.lux-footer-credit {
+  color: var(--lt-text) !important;
+}
+
+.lux-footer-brand-title .lux-ft-green,
+.lux-footer-brand-tag,
+.lux-footer-location-place,
+.lux-footer-contact-label,
+.lux-footer-heart {
+  color: var(--lt-green) !important;
+}
+
+.lux-footer-brand-desc,
+.lux-footer-copy {
+  color: var(--lt-muted) !important;
+}
+
+.lux-footer-links a {
+  color: rgba(30, 43, 34, 0.8) !important;
+}
+
+.lux-footer-links a:hover {
+  color: var(--lt-green) !important;
+  text-shadow: none !important;
+}
+
+.lux-footer-links a::before {
+  background: var(--lt-green) !important;
+}
+
+.lux-footer-social a {
+  border-color: var(--lt-border-strong) !important;
+  color: var(--lt-green) !important;
+}
+
+.lux-footer-social a:hover {
+  border-color: var(--lt-green) !important;
+  box-shadow: 0 0 14px rgba(103, 193, 94, 0.25) !important;
+  color: var(--lt-green-deep) !important;
+}
+
+.lux-footer-col-line {
+  background: linear-gradient(90deg, var(--lt-green), transparent) !important;
+}
+
+/* Location card: keep the photo, switch to a soft white overlay */
+.lux-footer-location-card {
+  border: 1px solid var(--lt-border-strong) !important;
+  box-shadow: var(--lt-shadow) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.94) 100%),
+    url('https://res.cloudinary.com/dae3rpnmg/image/upload/q_auto,f_auto/v1769247202/nature-trails_qtkau3.jpg') center / cover no-repeat !important;
+}
+
+.lux-footer-pin {
+  background: rgba(103, 193, 94, 0.12) !important;
+  border-color: var(--lt-border-strong) !important;
+  color: var(--lt-green) !important;
+  box-shadow: none !important;
+}
+
+.lux-footer-map-btn {
+  border-color: var(--lt-border-strong) !important;
+  color: var(--lt-text) !important;
+}
+
+.lux-footer-map-btn:hover {
+  border-color: var(--lt-green) !important;
+  color: var(--lt-green) !important;
+  box-shadow: 0 0 16px rgba(103, 193, 94, 0.2) !important;
+}
+
+.lux-footer-contact-card {
+  background: #ffffff !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+
+.lux-footer-contact-card:hover {
+  border-color: var(--lt-border-strong) !important;
+  box-shadow: var(--lt-shadow-lg) !important;
+}
+
+.lux-footer-rule {
+  background: linear-gradient(90deg, transparent, var(--lt-border-strong), transparent) !important;
+}
+
+.eco-luxury .quick-link-item,
+.eco-luxury .footer-section p,
+.eco-luxury .footer-bottom p {
+  color: var(--lt-muted) !important;
+}
+
+/* ============================================================
+   11. RESTAURANT MENU PAGE (packages.html)
+   ============================================================ */
+.lux-menu-page .lux-menu-main {
+  background: #ffffff !important;
+}
+
+.lux-menu-page .lux-menu-main::before {
+  background: radial-gradient(ellipse 70% 45% at 50% 0%, rgba(103, 193, 94, 0.06), transparent 50%) !important;
+}
+
+/* Hero: keep the blurred farm photo, wash it with white instead of black */
+.lux-menu-page .lux-menu-hero-bg::after {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.92) 75%, #ffffff 100%),
+    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(103, 193, 94, 0.12), transparent 55%) !important;
+}
+
+.lux-menu-page .lux-menu-hero-glow {
+  background: radial-gradient(circle at 50% 40%, rgba(103, 193, 94, 0.06), transparent 50%) !important;
+}
+
+.lux-menu-page .lux-menu-hero-line--white {
+  color: var(--lt-text) !important;
+}
+
+.lux-menu-page .lux-menu-hero-line--green {
+  color: var(--lt-green) !important;
+  text-shadow: none !important;
+}
+
+.lux-menu-page .lux-menu-hero-sub {
+  color: var(--lt-muted) !important;
+}
+
+.lux-menu-page .lux-menu-hero-divider {
+  color: var(--lt-green) !important;
+}
+
+.lux-menu-page .lux-menu-section-title {
+  color: var(--lt-text) !important;
+}
+
+.lux-menu-page .lux-menu-section-sub,
+.lux-menu-page .lux-menu-grid-empty {
+  color: var(--lt-muted) !important;
+}
+
+/* Category cards — white with soft green edge, no neon glow animation */
+.lux-menu-page .lux-menu-cat-card {
+  background: #ffffff !important;
+  box-shadow:
+    0 0 0 1px var(--lt-border),
+    0 10px 26px rgba(35, 60, 40, 0.1) !important;
+  animation: none !important;
+}
+
+@media (max-width: 767px) {
+  .lux-menu-page .lux-menu-cat-card {
+    animation: none !important;
+  }
+}
+
+@media (hover: hover) {
+  .lux-menu-page .lux-menu-cat-card:hover {
+    box-shadow:
+      0 0 0 1px var(--lt-border-strong),
+      0 16px 34px rgba(35, 60, 40, 0.14) !important;
+  }
+}
+
+.lux-menu-page .lux-menu-cat-card-media {
+  background: #eef3ec !important;
+}
+
+.lux-menu-page .lux-menu-cat-card-shade {
+  background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.18) 100%) !important;
+}
+
+.lux-menu-page .lux-menu-cat-card-content {
+  background: #ffffff !important;
+}
+
+@media (min-width: 768px) {
+  .lux-menu-page .lux-menu-cat-card-content {
+    background: linear-gradient(90deg, #ffffff 0%, rgba(255, 255, 255, 0.92) 88%, rgba(255, 255, 255, 0.75) 100%) !important;
+  }
+
+  .lux-menu-page .lux-menu-cat-card-shade {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.25) 0%, transparent 55%) !important;
+  }
+}
+
+.lux-menu-page .lux-menu-cat-name {
+  color: var(--lt-text) !important;
+}
+
+.lux-menu-page .lux-menu-cat-sub {
+  color: var(--lt-muted) !important;
+}
+
+/* Skeletons */
+.lux-menu-page .lux-menu-cat-card--skeleton .lux-menu-cat-card-content {
+  background: #f2f6f0 !important;
+}
+
+.lux-menu-page .lux-menu-skel-line {
+  background: rgba(30, 43, 34, 0.08) !important;
+}
+
+.lux-menu-page .lux-menu-cat-card--skeleton .lux-menu-cat-card-media {
+  background: linear-gradient(
+    110deg,
+    #eef3ec 0%,
+    #f8fbf6 45%,
+    #eef3ec 90%
+  ) !important;
+  background-size: 200% 100% !important;
+}
+
+/* Modal — white sheet, soft scrim */
+.lux-menu-page .lux-menu-modal-backdrop {
+  background: rgba(24, 36, 27, 0.5) !important;
+}
+
+.lux-menu-page .lux-menu-modal-panel {
+  background: #ffffff !important;
+  border-color: var(--lt-border-strong) !important;
+  box-shadow: 0 -8px 40px rgba(35, 60, 40, 0.18), 0 0 24px rgba(103, 193, 94, 0.06) !important;
+}
+
+.lux-menu-page .lux-menu-modal-handle {
+  background: rgba(30, 43, 34, 0.18) !important;
+}
+
+.lux-menu-page .lux-menu-modal-media {
+  background: #eef3ec !important;
+}
+
+.lux-menu-page .lux-menu-modal-close {
+  color: #ffffff !important;
+  background: rgba(20, 30, 22, 0.45) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+.lux-menu-page .lux-menu-modal-nav {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: var(--lt-border-strong) !important;
+  color: var(--lt-green) !important;
+}
+
+.lux-menu-page .lux-menu-modal-title {
+  color: var(--lt-text) !important;
+}
+
+.lux-menu-page .lux-menu-item-name {
+  color: var(--lt-text) !important;
+}
+
+.lux-menu-page .lux-menu-item {
+  border-bottom: 1px dotted rgba(62, 142, 65, 0.3) !important;
+}
+
+.lux-menu-page .lux-menu-modal-close-btn {
+  border: 1px solid var(--lt-border-strong) !important;
+  background: rgba(103, 193, 94, 0.08) !important;
+  color: var(--lt-green) !important;
+}
+
+/* Other charges */
+.lux-menu-page .lux-menu-charges {
+  border-top: 1px solid var(--lt-border) !important;
+}
+
+.lux-menu-page .lux-svc-charges-panel,
+.lux-services-page .lux-svc-charges-panel {
+  background: #f6f9f4 !important;
+  border: 1px solid var(--lt-border) !important;
+}
+
+.lux-menu-page .lux-svc-charge-row,
+.lux-services-page .lux-svc-charge-row {
+  border-bottom: 1px solid rgba(30, 43, 34, 0.08) !important;
+}
+
+.lux-menu-page .lux-svc-charge-name,
+.lux-services-page .lux-svc-charge-name {
+  color: var(--lt-text) !important;
+}
+
+/* ============================================================
+   12. SERVICES PAGE (legacy lux-svc layout)
+   ============================================================ */
+.lux-services-page .lux-svc-hero {
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(103, 193, 94, 0.1), transparent 55%),
+    linear-gradient(180deg, #f4f8f2 0%, #ffffff 100%) !important;
+}
+
+.lux-services-page .lux-svc-hero-line--white,
+.lux-services-page .lux-svc-row-title,
+.lux-services-page .lux-svc-menu-item-name,
+.lux-services-page .lux-svc-menu-panel-title,
+.lux-services-page .lux-svc-menu-cat-title {
+  color: var(--lt-text) !important;
+}
+
+.lux-services-page .lux-svc-hero-line--green {
+  color: var(--lt-green) !important;
+  text-shadow: none !important;
+}
+
+.lux-services-page .lux-svc-hero-sub,
+.lux-services-page .lux-svc-menu-panel-desc {
+  color: var(--lt-muted) !important;
+}
+
+.lux-services-page .lux-svc-menu-panel {
+  background: #ffffff !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+
+.lux-services-page .lux-svc-cta-glass {
+  background: #ffffff !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+
+.lux-services-page .lux-svc-cta-glass h3 { color: var(--lt-text) !important; }
+.lux-services-page .lux-svc-cta-glass p { color: var(--lt-muted) !important; }
+
+/* Image cards keep photos; the text over them stays white */
+.lux-services-page .lux-svc-img-card-title,
+.lux-services-page .lux-svc-img-card-price {
+  color: #ffffff !important;
+}
+
+/* ============================================================
+   13. OUR KALONGO PAGE
+   ============================================================ */
+.lux-kalongo-page .lux-kalongo-title,
+.lux-kalongo-page .lux-kalongo-section-label {
+  color: var(--lt-text) !important;
+  -webkit-text-fill-color: var(--lt-text) !important;
+}
+
+.lux-kalongo-page .lux-kalongo-eyebrow,
+.lux-kalongo-page .lux-kalongo-section-desc {
+  color: var(--lt-muted) !important;
+}
+
+.lux-kalongo-page .lux-kalongo-divider::before,
+.lux-kalongo-page .lux-kalongo-divider::after {
+  background: linear-gradient(90deg, transparent, var(--lt-border-strong), transparent) !important;
+  box-shadow: none !important;
+}
+
+.lux-kalongo-page .lux-kalongo-divider-gem {
+  color: var(--lt-green) !important;
+}
+
+.lux-kalongo-page .lux-kalongo-main::before {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(103, 193, 94, 0.07), transparent 55%),
+    radial-gradient(ellipse 45% 40% at 15% 70%, rgba(103, 193, 94, 0.04), transparent 50%) !important;
+}
+
+/* Video / gallery cards: white frame, keep media shades subtle */
+.lux-kalongo-page .lux-kalongo-video-featured,
+.lux-kalongo-page .lux-kalongo-video-card,
+.lux-kalongo-page .lux-kalongo-gallery-thumb {
+  background: #eef3ec !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+
+.lux-kalongo-page .lux-kalongo-video-featured:hover,
+.lux-kalongo-page .lux-kalongo-video-card:hover,
+.lux-kalongo-page .lux-kalongo-gallery-thumb:hover {
+  border-color: var(--lt-border-strong) !important;
+  box-shadow: var(--lt-shadow-lg) !important;
+}
+
+.lux-kalongo-page .lux-kalongo-video-shade {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.08) 50%, rgba(0, 0, 0, 0.1) 100%) !important;
+}
+
+.lux-kalongo-page .lux-kalongo-gallery-caption {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), transparent) !important;
+  color: #ffffff !important;
+}
+
+.lux-kalongo-page .lux-kalongo-video-caption,
+.lux-kalongo-page .lux-kalongo-play {
+  color: #ffffff !important;
+}
+
+.lux-kalongo-page .lux-kalongo-play {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+.lux-kalongo-page .lux-kalongo-videos-empty {
+  color: var(--lt-muted) !important;
+  background: #f6f9f4 !important;
+  border: 1px solid var(--lt-border) !important;
+}
+
+.lux-kalongo-page .lux-kalongo-gallery {
+  border-top: 1px solid var(--lt-border) !important;
+}
+
+/* ============================================================
+   14. BOOKING PAGE
+   ============================================================ */
+.lux-booking-page .lux-booking-label,
+.lux-booking-page .lux-booking-section-label {
+  color: var(--lt-green) !important;
+}
+
+.lux-booking-page .lux-booking-heading,
+.lux-booking-page .lux-booking-form-title,
+.lux-booking-page .lux-booking-feature-title {
+  color: var(--lt-text) !important;
+  -webkit-text-fill-color: var(--lt-text) !important;
+}
+
+.lux-booking-page .lux-booking-heading-accent {
+  color: var(--lt-green) !important;
+  text-shadow: none !important;
+}
+
+.lux-booking-page .lux-booking-intro,
+.lux-booking-page .lux-booking-feature-sub,
+.lux-booking-page .lux-booking-submit-note,
+.lux-booking-page .lux-booking-trust-text {
+  color: var(--lt-muted) !important;
+}
+
+.lux-booking-page .lux-booking-feature,
+.lux-booking-page .lux-booking-form-card,
+.lux-booking-page .lux-booking-trust {
+  background: #ffffff !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+
+.lux-booking-page .lux-booking-feature:hover {
+  border-color: var(--lt-border-strong) !important;
+  box-shadow: var(--lt-shadow-lg) !important;
+}
+
+.lux-booking-page .lux-booking-feature-icon,
+.lux-booking-page .lux-booking-estimate-icon {
+  background: rgba(103, 193, 94, 0.1) !important;
+  border-color: var(--lt-border-strong) !important;
+  color: var(--lt-green) !important;
+}
+
+.lux-booking-page .lux-booking-trust-icon {
+  color: var(--lt-green) !important;
+}
+
+.lux-booking-page .lux-booking-trust-item:not(:last-child) {
+  border-right: 1px solid var(--lt-border) !important;
+}
+
+.lux-booking-page .lux-booking-visual-shade {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.35), transparent 50%) !important;
+}
+
+.lux-booking-page .lux-booking-form-divider {
+  background: linear-gradient(90deg, transparent, var(--lt-border-strong), transparent) !important;
+  box-shadow: none !important;
+}
+
+.lux-booking-page .lux-booking-field label {
+  color: var(--lt-muted) !important;
+}
+
+.lux-booking-page .lux-booking-field input,
+.lux-booking-page .lux-booking-field select,
+.lux-booking-page .lux-booking-field textarea {
+  background: #f6f9f4 !important;
+  border: 1px solid var(--lt-border) !important;
+  color: var(--lt-text) !important;
+}
+
+.lux-booking-page .lux-booking-field input::placeholder,
+.lux-booking-page .lux-booking-field textarea::placeholder {
+  color: var(--lt-faint) !important;
+}
+
+.lux-booking-page .lux-booking-field select option {
+  background: #ffffff !important;
+  color: var(--lt-text) !important;
+}
+
+.lux-booking-page .lux-booking-field input:focus,
+.lux-booking-page .lux-booking-field select:focus,
+.lux-booking-page .lux-booking-field textarea:focus {
+  border-color: var(--lt-green) !important;
+  box-shadow: 0 0 0 3px rgba(103, 193, 94, 0.15) !important;
+}
+
+.lux-booking-page .lux-booking-estimate {
+  background: #f6f9f4 !important;
+  border: 1px solid var(--lt-border) !important;
+}
+
+.lux-booking-page .lux-booking-estimate-title {
+  color: var(--lt-muted) !important;
+}
+
+.lux-booking-page .lux-booking-estimate-amount {
+  color: var(--lt-green) !important;
+  text-shadow: none !important;
+}
+
+@media (max-width: 899px) {
+  .lux-booking-page .lux-booking-submit-wrap {
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.96) 70%, transparent) !important;
+  }
+}
+
+/* ============================================================
+   15. PAGE HEROES (pricing / activities / booking / kalongo)
+   Keep the photo and white text; scrim fades into the white page
+   ============================================================ */
+.eco-luxury .pricing-hero-title,
+.eco-luxury .activities-hero-title,
+.eco-luxury .booking-hero-title,
+body.lux-kalongo-page .pricing-hero.lux-page-hero .pricing-hero-title {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
+}
+
+.eco-luxury .pricing-hero-subtitle,
+.eco-luxury .activities-hero-subtitle,
+body.lux-kalongo-page .pricing-hero.lux-page-hero .pricing-hero-subtitle {
+  color: rgba(255, 255, 255, 0.92) !important;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.4);
+}
+
+.eco-luxury .pricing-hero::before,
+.eco-luxury .activities-hero::before,
+.eco-luxury .booking-hero::before,
+.eco-luxury .booking-hero-overlay,
+.eco-luxury .lux-page-hero::before {
+  background: linear-gradient(180deg, rgba(18, 30, 22, 0.42) 0%, rgba(18, 30, 22, 0.32) 55%, rgba(255, 255, 255, 0.4) 100%) !important;
+}
+
+/* ============================================================
+   16. PRICING CARDS
+   ============================================================ */
+.eco-luxury .pricing-card {
+  background: #ffffff !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+
+.eco-luxury .pricing-card-title {
+  color: var(--lt-text) !important;
+}
+
+.eco-luxury .pricing-note,
+.eco-luxury .pricing-features li {
+  color: var(--lt-muted) !important;
+}
+
+.eco-luxury .pricing-amount {
+  color: var(--lt-green) !important;
+}
+
+@media (max-width: 899px) {
+  .eco-luxury .pricing-card {
+    background: #ffffff !important;
+    border: 1px solid var(--lt-border) !important;
+    box-shadow: var(--lt-shadow) !important;
+  }
+
+  .eco-luxury .pricing-card-title {
+    color: var(--lt-text) !important;
+  }
+
+  .eco-luxury .pricing-note,
+  .eco-luxury .pricing-features li {
+    color: var(--lt-muted) !important;
+  }
+
+  .eco-luxury .pricing-amount {
+    color: var(--lt-green) !important;
+  }
+}
+
+/* ============================================================
+   17. ACTIVITIES / LEGACY GLASS PANELS (style.css components)
+   ============================================================ */
+.eco-luxury .room-card,
+.eco-luxury .facility-item,
+.eco-luxury .activity-card-modern,
+.eco-luxury .accommodation-card-modern,
+.eco-luxury .food-card-modern,
+.eco-luxury .menu-category-modern,
+.eco-luxury .menu-item-modern,
+.eco-luxury .other-charges-card-modern,
+.eco-luxury .packages-cta-modern,
+.eco-luxury .booking-form-container,
+.eco-luxury .booking-summary,
+.eco-luxury .eco-activity-block,
+.eco-luxury .facility-item:not(.eco-facility-card) {
+  background: #ffffff !important;
+  color: var(--lt-text) !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+
+.eco-activity-shade {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35)) !important;
+}
+
+/* Legacy room/facility cards (api.js renderers) */
+.eco-room-media-shade {
+  background: linear-gradient(180deg, transparent 0%, rgba(10, 18, 12, 0.12) 40%, rgba(10, 18, 12, 0.3) 100%) !important;
+}
+
+/* Facility caption text sits on the photo — keep it white over a soft shade */
+.eco-facility-shade {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.12) 55%, transparent 100%) !important;
+}
+
+.eco-luxury .eco-facility-copy h3 {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.eco-luxury .eco-facility-copy p {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.eco-facility-media--empty {
+  background: linear-gradient(135deg, #e8f0e4, #dce8d6) !important;
+}
+
+/* Services image cards: frame goes light, photo + white text stay */
+.lux-services-page .lux-svc-img-card {
+  background: #eef3ec !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+
+/* Video cards / gallery (Our Kalongo legacy renderers) */
+.eco-luxury .eco-video-overlay {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), transparent 55%) !important;
+}
+
+.eco-luxury .eco-video-caption {
+  color: #ffffff !important;
+}
+
+.eco-luxury .eco-play-btn {
+  color: #ffffff !important;
+  background: rgba(20, 30, 22, 0.4) !important;
+}
+
+.eco-luxury .gallery-overlay-modern {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), transparent) !important;
+}
+
+.eco-luxury .gallery-caption-modern {
+  color: #ffffff !important;
+}
+
+/* Forms (generic) */
+.eco-luxury input,
+.eco-luxury select,
+.eco-luxury textarea {
+  background: #f6f9f4 !important;
+  border: 1px solid var(--lt-border) !important;
+  color: var(--lt-text) !important;
+}
+
+.eco-luxury label {
+  color: var(--lt-muted) !important;
+}
+
+/* Shimmer placeholder */
+.eco-shimmer {
+  background: linear-gradient(90deg, rgba(30, 43, 34, 0.04) 25%, rgba(30, 43, 34, 0.09) 50%, rgba(30, 43, 34, 0.04) 75%) !important;
+  background-size: 200% 100% !important;
+}
+
+/* ============================================================
+   18. LIGHTBOX / VIDEO MODALS — soft dark scrim (media needs it)
+   ============================================================ */
+.eco-lightbox,
+.eco-video-modal {
+  background: rgba(20, 30, 22, 0.85) !important;
+}
+
+.eco-modal-close {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+/* WhatsApp FAB stays green — just soften its halo */
+.eco-wa-fab {
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35) !important;
+}
