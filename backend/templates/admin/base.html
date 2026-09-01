@@ -206,6 +206,7 @@
             <nav>
                 <a href="{{ url_for('admin.dashboard') }}" class="{% if request.endpoint == 'admin.dashboard' %}active{% endif %}">Dashboard</a>
                 <a href="{{ url_for('admin.hero_list') }}" class="{% if request.endpoint == 'admin.hero_list' %}active{% endif %}">Hero Slides</a>
+                <a href="{{ url_for('admin.page_heroes') }}" class="{% if request.endpoint == 'admin.page_heroes' %}active{% endif %}">Page Heroes</a>
                 <a href="{{ url_for('admin.rooms_list') }}" class="{% if 'room' in request.endpoint %}active{% endif %}">Rooms & Images</a>
                 <a href="{{ url_for('admin.facilities_list') }}" class="{% if 'facility' in request.endpoint %}active{% endif %}">Facilities</a>
                 <a href="{{ url_for('admin.activities_list') }}" class="{% if 'activity' in request.endpoint %}active{% endif %}">Activities</a>

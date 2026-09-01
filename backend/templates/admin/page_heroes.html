@@ -1,0 +1,32 @@
+{% extends "admin/base.html" %}
+{% block title %}Page Heroes{% endblock %}
+{% block content %}
+<h2>Page hero backgrounds</h2>
+<p style="color: var(--text-muted); margin-bottom: 1rem;">Change the hero (top banner) background image for each page. Homepage hero is managed under <strong>Hero Slides</strong>. Leave a page unset to use its built-in default image.</p>
+
+{% for key, label in pages.items() %}
+<div class="card">
+    <h3 style="margin-bottom: 0.75rem;">{{ label }}</h3>
+    {% if current.get(key) %}
+    <img src="{{ current.get(key) }}" alt="{{ label }} hero" style="max-width: 320px; max-height: 160px; object-fit: cover; border-radius: 8px; display: block; margin-bottom: 0.75rem;">
+    {% else %}
+    <p style="color: var(--text-muted); margin-bottom: 0.75rem;">Using default image.</p>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data" style="margin-bottom: 0.5rem;">
+        <input type="hidden" name="key" value="{{ key }}">
+        <div class="form-row">
+            <div><label>Image (file)</label><input type="file" name="image" accept="image/*"></div>
+            <div><label>Or image URL</label><input type="url" name="image_url" placeholder="https://..."></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save hero image</button>
+    </form>
+    {% if current.get(key) %}
+    <form method="post" style="display:inline;">
+        <input type="hidden" name="key" value="{{ key }}">
+        <input type="hidden" name="action" value="clear">
+        <button type="submit" class="btn btn-secondary btn-sm">Reset to default</button>
+    </form>
+    {% endif %}
+</div>
+{% endfor %}
+{% endblock %}

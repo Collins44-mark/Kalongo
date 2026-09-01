@@ -1225,6 +1225,30 @@ const Render = {
         } else {
             applyWhatsAppFromSettings(DEFAULT_WHATSAPP_NUMBER);
         }
+
+        // Admin-managed hero backgrounds for inner pages (homepage uses Hero Slides)
+        const pagePath = window.location.pathname;
+        const heroTargets = [
+            ['packages', 'hero_services', '.lux-menu-hero-bg'],
+            ['booking', 'hero_booking', '.booking-hero'],
+            ['activities', 'hero_activities', '.activities-hero'],
+            ['our-kalongo', 'hero_kalongo', '.pricing-hero'],
+            ['pricing', 'hero_pricing', '.pricing-hero'],
+        ];
+        for (const [slug, key, selector] of heroTargets) {
+            if (!pagePath.includes(slug)) continue;
+            if (settings[key]) {
+                const heroEl = document.querySelector(selector);
+                if (heroEl) {
+                    const heroUrl = optimizeCloudinaryUrl(settings[key], 1920, 900, 'auto', 'auto');
+                    heroEl.style.backgroundImage = `url('${heroUrl}')`;
+                    heroEl.style.backgroundSize = 'cover';
+                    heroEl.style.backgroundPosition = 'center';
+                    console.log(`✅ Applied admin hero background for ${slug}`);
+                }
+            }
+            break;
+        }
         
         // Store for other uses
         window.siteSettings = settings;

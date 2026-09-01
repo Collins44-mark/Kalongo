@@ -943,6 +943,60 @@ def settings():
         s.close()
 
 
+# ---------- Page Hero Backgrounds ----------
+
+PAGE_HERO_KEYS = {
+    "hero_services": "Our Services page",
+    "hero_booking": "Booking page",
+    "hero_activities": "Activities page",
+    "hero_kalongo": "Our Kalongo page",
+    "hero_pricing": "Pricing page",
+}
+
+
+@admin_bp.route("/page-heroes", methods=["GET", "POST"])
+@login_required
+def page_heroes():
+    s = get_session()
+    try:
+        if request.method == "POST":
+            key = (request.form.get("key") or "").strip()
+            if key not in PAGE_HERO_KEYS:
+                flash("Unknown page.", "error")
+                return redirect(url_for("admin.page_heroes"))
+            clear_settings_cache()
+            row = s.query(SiteSettings).filter_by(key=key).first()
+            if request.form.get("action") == "clear":
+                if row:
+                    row.value = None
+                    s.commit()
+                flash(f"{PAGE_HERO_KEYS[key]} hero reset to default.", "success")
+                return redirect(url_for("admin.page_heroes"))
+            url = (request.form.get("image_url") or "").strip()
+            f = request.files.get("image")
+            if f and f.filename:
+                url = upload_image(f, folder="kalongo/page-heroes")
+            if not url:
+                flash("Choose an image file or paste an image URL.", "error")
+                return redirect(url_for("admin.page_heroes"))
+            if row:
+                row.value = url
+            else:
+                s.add(SiteSettings(key=key, value=url))
+            s.commit()
+            flash(f"{PAGE_HERO_KEYS[key]} hero updated.", "success")
+            return redirect(url_for("admin.page_heroes"))
+        rows = s.query(SiteSettings).filter(SiteSettings.key.in_(PAGE_HERO_KEYS.keys())).all()
+        current = {r.key: r.value for r in rows}
+        return render_template("admin/page_heroes.html", pages=PAGE_HERO_KEYS, current=current)
+    except Exception as e:
+        s.rollback()
+        flash(str(e), "error")
+        return redirect(url_for("admin.page_heroes"))
+    finally:
+        s.close()
+
+
 # ---------- Rooms (list + images) ----------
 
 
