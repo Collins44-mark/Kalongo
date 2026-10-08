@@ -180,49 +180,46 @@
     return json.secure_url;
   }
 
+  async function firebaseIdToken() {
+    const mod = await import('/admin/js/firebase-auth.js');
+    const user = mod.getFirebaseAuth().currentUser;
+    if (!user) throw new Error('Sign in required to save.');
+    return user.getIdToken();
+  }
+
   async function publish(data) {
     if (!isSiteData(data)) {
       throw new Error('Refusing to publish: payload is not valid site data.');
     }
-    const cloud = cloudName();
-    const preset = uploadPreset();
-    const pid = canonicalPublicId();
-    if (!cloud || !preset) {
-      throw new Error('Set CLOUDINARY_UPLOAD_PRESET so admin changes can be published (unsigned Cloudinary preset).');
-    }
-    const blob = new Blob([JSON.stringify(data)], { type: 'application/json; charset=utf-8' });
-    const form = new FormData();
-    // Filename must NOT be *.json — that writes a different asset (kalongo/site-content.json).
-    form.append('file', blob, 'site-content');
-    form.append('upload_preset', preset);
-    form.append('public_id', pid);
-    const res = await fetch(`https://api.cloudinary.com/v1_1/${cloud}/raw/upload`, {
+    const token = await firebaseIdToken();
+    const res = await fetch('/api/publish', {
       method: 'POST',
-      body: form,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify(data),
     });
-    const json = await res.json();
+    const json = await res.json().catch(() => ({}));
     if (!res.ok) {
-      throw new Error(json.error && json.error.message ? json.error.message : 'Could not publish site content');
+      throw new Error(json.error || 'Could not publish site content');
     }
-    if (!isCanonicalContentResource(json)) {
-      throw new Error(
-        'Publish did not update kalongo/site-content. In Cloudinary, set unsigned preset kalongo_unsigned to Unique filename OFF and Overwrite ON.'
-      );
+    const publishedUrl = String(json.url || '');
+    if (!isCanonicalContentResource({ public_id: json.public_id, secure_url: publishedUrl })) {
+      throw new Error('Publish did not update kalongo/site-content.');
     }
     let stored = null;
     try {
-      stored = await fetchJson(String(json.secure_url) + (String(json.secure_url).includes('?') ? '&' : '?') + 't=' + Date.now(), 8000);
+      stored = await fetchJson(publishedUrl + (publishedUrl.includes('?') ? '&' : '?') + 't=' + Date.now(), 8000);
     } catch (_) {
       stored = null;
     }
     if (!isSiteData(stored) || siteFingerprint(stored) !== siteFingerprint(data)) {
-      throw new Error(
-        'Cloudinary did not store the new site content at kalongo/site-content. In the unsigned preset kalongo_unsigned, turn Unique filename OFF and Overwrite ON, then save again.'
-      );
+      throw new Error('Cloudinary did not store the new site content at kalongo/site-content.');
     }
     cache = data;
     cacheAt = Date.now();
-    return json.secure_url;
+    return publishedUrl;
   }
 
   global.KalongoContent = {
