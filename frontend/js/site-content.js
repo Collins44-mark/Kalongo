@@ -6,6 +6,7 @@
   'use strict';
 
   const BUNDLED_URL = '/data/site.json';
+  const CANONICAL_PUBLIC_ID = 'kalongo/site-content';
   let cache = null;
   let cacheAt = 0;
   const TTL = 15000;
@@ -14,11 +15,29 @@
     return global.KALONGO_CONFIG || {};
   }
 
+  function canonicalPublicId() {
+    return (cfg().contentPublicId || CANONICAL_PUBLIC_ID).replace(/^\/+/, '').replace(/\.json$/i, '');
+  }
+
+  function cloudinaryContentUrls() {
+    const cloud = cfg().cloudinaryCloudName || 'dae3rpnmg';
+    const pid = canonicalPublicId();
+    const base = `https://res.cloudinary.com/${cloud}/raw/upload/${pid}`;
+    // Do not prefer `pid.json` — that is a different Cloudinary asset (the old probe file).
+    return [base, `${base}.json`];
+  }
+
   function cloudinaryContentUrl() {
-    const c = cfg();
-    const cloud = c.cloudinaryCloudName || 'dae3rpnmg';
-    const pid = (c.contentPublicId || 'kalongo/site-content').replace(/^\/+/, '');
-    return `https://res.cloudinary.com/${cloud}/raw/upload/${pid}.json`;
+    return cloudinaryContentUrls()[0];
+  }
+
+  function isCanonicalContentResource(json) {
+    if (!json || typeof json !== 'object') return false;
+    const pid = String(json.public_id || '');
+    if (pid === canonicalPublicId()) return true;
+    const url = String(json.secure_url || json.url || '');
+    if (/site-content\.json/.test(url)) return false;
+    return /\/raw\/upload\/(?:v\d+\/)?kalongo\/site-content(?:$|\?)/.test(url);
   }
 
   async function fetchJson(url, timeoutMs) {
@@ -42,32 +61,46 @@
   }
 
   function isSiteData(data) {
-    return Boolean(data && typeof data === 'object' && (Array.isArray(data.hero_slides) || data.settings));
+    if (!data || typeof data !== 'object' || Array.isArray(data)) return false;
+    const hasSettings = data.settings && typeof data.settings === 'object' && !Array.isArray(data.settings);
+    const hasSlides = Array.isArray(data.hero_slides);
+    return Boolean(hasSettings || hasSlides);
   }
 
-  function fromLocalStorage() {
-    try {
-      const raw = localStorage.getItem('kalongo-site-content');
-      if (!raw) return null;
-      const parsed = JSON.parse(raw);
-      return isSiteData(parsed) ? parsed : null;
-    } catch (_) {
-      return null;
-    }
+  function siteFingerprint(data) {
+    const s = (data && data.settings) || {};
+    return JSON.stringify({
+      hs: s.hero_services || '',
+      hb: s.hero_booking || '',
+      ha: s.hero_activities || '',
+      hk: s.hero_kalongo || '',
+      hp: s.hero_pricing || '',
+      slides: (data.hero_slides || []).length,
+      rooms: (data.rooms || []).length,
+      gallery: (data.gallery_images || []).length,
+      menu: (data.restaurant_menu || []).length,
+      videos: (data.videos || []).length,
+    });
   }
 
   async function load(force) {
     if (!force && cache && Date.now() - cacheAt < TTL) return cache;
     const bundledPromise = fetchJson(BUNDLED_URL, 8000);
     let remote = null;
-    try {
-      remote = await fetchJson(cloudinaryContentUrl() + '?t=' + Date.now(), 2500);
-    } catch (_) { /* unpublished or unreachable */ }
+    const bust = '?t=' + Date.now();
+    for (const url of cloudinaryContentUrls()) {
+      try {
+        const candidate = await fetchJson(url + bust, 4000);
+        if (isSiteData(candidate)) {
+          remote = candidate;
+          break;
+        }
+      } catch (_) { /* try next */ }
+    }
     let bundled = null;
     try { bundled = await bundledPromise; } catch (_) { /* missing bundled file */ }
     cache = (isSiteData(remote) ? remote : null)
       || (isSiteData(bundled) ? bundled : null)
-      || fromLocalStorage()
       || emptySite();
     cacheAt = Date.now();
     return cache;
@@ -148,16 +181,19 @@
   }
 
   async function publish(data) {
-    const c = cfg();
+    if (!isSiteData(data)) {
+      throw new Error('Refusing to publish: payload is not valid site data.');
+    }
     const cloud = cloudName();
     const preset = uploadPreset();
-    const pid = c.contentPublicId || 'kalongo/site-content';
+    const pid = canonicalPublicId();
     if (!cloud || !preset) {
       throw new Error('Set CLOUDINARY_UPLOAD_PRESET so admin changes can be published (unsigned Cloudinary preset).');
     }
-    const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(data)], { type: 'application/json; charset=utf-8' });
     const form = new FormData();
-    form.append('file', blob, 'site-content.json');
+    // Filename must NOT be *.json — that writes a different asset (kalongo/site-content.json).
+    form.append('file', blob, 'site-content');
     form.append('upload_preset', preset);
     form.append('public_id', pid);
     const res = await fetch(`https://api.cloudinary.com/v1_1/${cloud}/raw/upload`, {
@@ -168,10 +204,25 @@
     if (!res.ok) {
       throw new Error(json.error && json.error.message ? json.error.message : 'Could not publish site content');
     }
+    if (!isCanonicalContentResource(json)) {
+      throw new Error(
+        'Publish did not update kalongo/site-content. In Cloudinary, set unsigned preset kalongo_unsigned to Unique filename OFF and Overwrite ON.'
+      );
+    }
+    let stored = null;
+    try {
+      stored = await fetchJson(String(json.secure_url) + (String(json.secure_url).includes('?') ? '&' : '?') + 't=' + Date.now(), 8000);
+    } catch (_) {
+      stored = null;
+    }
+    if (!isSiteData(stored) || siteFingerprint(stored) !== siteFingerprint(data)) {
+      throw new Error(
+        'Cloudinary did not store the new site content at kalongo/site-content. In the unsigned preset kalongo_unsigned, turn Unique filename OFF and Overwrite ON, then save again.'
+      );
+    }
     cache = data;
     cacheAt = Date.now();
-    try { localStorage.setItem('kalongo-site-content', JSON.stringify(data)); } catch (_) {}
-    return json.secure_url || true;
+    return json.secure_url;
   }
 
   global.KalongoContent = {
