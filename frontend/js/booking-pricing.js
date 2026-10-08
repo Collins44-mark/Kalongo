@@ -8,11 +8,6 @@
 (function() {
     'use strict';
 
-    // API base URL (matches api.js)
-    const API_BASE = (() => {
-        const h = window.location.hostname;
-        return (h === 'localhost' || h === '127.0.0.1') ? 'http://localhost:5001/api' : 'https://kalongo.onrender.com/api';
-    })();
 
     // Fallback prices if API fails (TZS per night) - matches admin/database
     const FALLBACK_PRICES = {
@@ -90,14 +85,16 @@
 
     async function fetchPricing() {
         try {
-            const res = await fetch(API_BASE + '/pricing', { mode: 'cors' });
-            const data = await res.json();
-            if (data && Array.isArray(data)) {
-                pricingFromAPI = parsePricingFromAPI(data);
-                return pricingFromAPI;
+            if (window.KalongoContent) {
+                await window.KalongoContent.load();
+                const data = window.KalongoContent.slice('/pricing');
+                if (data && Array.isArray(data)) {
+                    pricingFromAPI = parsePricingFromAPI(data);
+                    return pricingFromAPI;
+                }
             }
         } catch (e) {
-            console.warn('Booking pricing: API fetch failed, using fallback prices:', e.message);
+            console.warn('Booking pricing: content load failed, using fallback prices:', e.message);
         }
         pricingFromAPI = {};
         return null;

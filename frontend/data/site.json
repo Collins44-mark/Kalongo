@@ -1,0 +1,1483 @@
+{
+  "hero_slides": [
+    {
+      "id": 181,
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247285/hero-background_xprz3b.jpg",
+      "title": "Welcome to KALONGO FARM",
+      "subtitle": "Experience the Perfect Blend of Nature, Comfort & Farm Life",
+      "order": 0,
+      "active": true
+    },
+    {
+      "id": 182,
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247284/hero-slide2_f67kon.jpg",
+      "title": "",
+      "subtitle": "",
+      "order": 1,
+      "active": true
+    },
+    {
+      "id": 183,
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247293/hero-slide3_photno.jpg",
+      "title": "",
+      "subtitle": "",
+      "order": 2,
+      "active": true
+    },
+    {
+      "id": 184,
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247286/hero-slide4_e7hiiy.jpg",
+      "title": "",
+      "subtitle": "",
+      "order": 3,
+      "active": true
+    }
+  ],
+  "rooms": [
+    {
+      "id": 1,
+      "name": "A-Cabin",
+      "slug": "a-cabin",
+      "description": "Cozy cabin for 2-3 people.",
+      "capacity": "2 Adults or Small Family",
+      "features": [
+        "Comfortable beds",
+        "Private bathroom",
+        "Farm view",
+        "Air conditioning",
+        "Sitting area"
+      ],
+      "order": 0,
+      "images": [
+        {
+          "id": 2,
+          "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247539/a-cabin_fpmuuz.jpg",
+          "caption": "A-Cabin",
+          "order": 0
+        },
+        {
+          "id": 3,
+          "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247537/a-cabin-inside1_bigacm.jpg",
+          "caption": "",
+          "order": 1
+        },
+        {
+          "id": 4,
+          "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247538/a-cabin-inside2_vl8uoz.jpg",
+          "caption": "",
+          "order": 2
+        },
+        {
+          "id": 5,
+          "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247535/a-cabin-bathroom_gb17ya.jpg",
+          "caption": "",
+          "order": 3
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Cottage",
+      "slug": "cottage",
+      "description": "Family cottage for 4-6 people.",
+      "capacity": "Family (4-6 people)",
+      "features": [
+        "Multiple bedrooms",
+        "Living area",
+        "Kitchenette",
+        "Private veranda"
+      ],
+      "order": 1,
+      "images": [
+        {
+          "id": 7,
+          "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247546/cottage_fzxdif.jpg",
+          "caption": "Cottage",
+          "order": 0
+        },
+        {
+          "id": 8,
+          "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247541/cottage-inside1_b6zcxz.jpg",
+          "caption": "",
+          "order": 1
+        },
+        {
+          "id": 9,
+          "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247543/cottage-inside2_gykjie.jpg",
+          "caption": "",
+          "order": 2
+        },
+        {
+          "id": 10,
+          "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247540/cottage-bathroom_d75jxs.jpg",
+          "caption": "",
+          "order": 3
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Kikota",
+      "slug": "kikota",
+      "description": "Traditional Kikota design for 2-4 adults.",
+      "capacity": "2-4 Adults",
+      "features": [
+        "Unique design",
+        "Garden access",
+        "Modern amenities"
+      ],
+      "order": 2,
+      "images": [
+        {
+          "id": 12,
+          "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247549/kikota_zwpblm.jpg",
+          "caption": "Kikota",
+          "order": 0
+        },
+        {
+          "id": 13,
+          "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247547/kikota-inside1_utwfgn.jpg",
+          "caption": "",
+          "order": 1
+        },
+        {
+          "id": 14,
+          "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247548/kikota-inside2_irf1i3.jpg",
+          "caption": "",
+          "order": 2
+        },
+        {
+          "id": 15,
+          "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247545/kikota-bathroom_oclgvo.jpg",
+          "caption": "",
+          "order": 3
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "name": "Family House",
+      "slug": "family-house",
+      "description": "Spacious family house for longer stays.",
+      "capacity": "Family (6-8 people)",
+      "features": [
+        "Multiple bedrooms",
+        "Living area",
+        "Kitchen",
+        "Private veranda",
+        "Full amenities"
+      ],
+      "order": 3,
+      "images": [
+        {
+          "id": 17,
+          "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247541/cottage-inside1_b6zcxz.jpg",
+          "caption": "Family House",
+          "order": 0
+        }
+      ]
+    }
+  ],
+  "facilities": [
+    {
+      "id": 185,
+      "name": "Swimming Pool",
+      "description": "Relax and cool off in our refreshing swimming pool",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247203/swimming-pool_hk8isg.jpg",
+      "order": 0
+    },
+    {
+      "id": 186,
+      "name": "Natural Farm",
+      "description": "Experience authentic farm life with our natural farming practices and organic produce",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247201/natural-farm_difqzg.jpg",
+      "order": 1
+    },
+    {
+      "id": 187,
+      "name": "Domestic Animals",
+      "description": "Interact with our friendly domestic animals including cows, goats, chickens, and more",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247209/domestic-animals_wmsykl.jpg",
+      "order": 2
+    },
+    {
+      "id": 188,
+      "name": "Farm-Fresh Food",
+      "description": "Enjoy delicious meals made from fresh, locally sourced ingredients from our farm",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247200/farm-fresh-food_tkrtak.jpg",
+      "order": 3
+    },
+    {
+      "id": 189,
+      "name": "Nature Trails",
+      "description": "Explore our beautiful surroundings through guided nature walks and trails",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247202/nature-trails_qtkau3.jpg",
+      "order": 4
+    },
+    {
+      "id": 190,
+      "name": "Activities",
+      "description": "Participate in various farm activities, animal feeding, and educational programs",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247205/activities_im4edt.jpg",
+      "order": 5
+    }
+  ],
+  "activities": [
+    {
+      "id": 191,
+      "name": "Farm Tours",
+      "description": "Guided farm experience through Kalongo’s fields and livestock.",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247201/natural-farm_difqzg.jpg",
+      "order": 0
+    },
+    {
+      "id": 192,
+      "name": "Planting",
+      "description": "Hands-on planting and farm activities.",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247205/activities_im4edt.jpg",
+      "order": 1
+    },
+    {
+      "id": 193,
+      "name": "Nature Walks",
+      "description": "Scenic trails around the farm and surrounding hills.",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247202/nature-trails_qtkau3.jpg",
+      "order": 2
+    },
+    {
+      "id": 194,
+      "name": "Campfire",
+      "description": "Evening under the stars with a farm campfire.",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247395/our-kalongo-hero-background_sedoxy.jpg",
+      "order": 3
+    }
+  ],
+  "pricing": [
+    {
+      "id": 18,
+      "name": "Accommodation (Bed & Breakfast)",
+      "description": "Comfortable rooms with breakfast included",
+      "category_type": "accommodation",
+      "order": 0,
+      "items": [
+        {
+          "id": 21,
+          "name": "A-Cabin",
+          "price_label": "Couple",
+          "price_value": "TZS 180,000",
+          "description": "",
+          "featured": false,
+          "order": 0
+        },
+        {
+          "id": 22,
+          "name": "A-Cabin",
+          "price_label": "Single occupancy",
+          "price_value": "TZS 150,000",
+          "description": "",
+          "featured": false,
+          "order": 1
+        },
+        {
+          "id": 23,
+          "name": "Cottage",
+          "price_label": "Couple",
+          "price_value": "TZS 180,000",
+          "description": "",
+          "featured": false,
+          "order": 2
+        },
+        {
+          "id": 24,
+          "name": "Cottage",
+          "price_label": "Single occupancy",
+          "price_value": "TZS 150,000",
+          "description": "",
+          "featured": false,
+          "order": 3
+        },
+        {
+          "id": 25,
+          "name": "Family",
+          "price_label": "Couples",
+          "price_value": "TZS 250,000",
+          "description": "",
+          "featured": true,
+          "order": 4
+        },
+        {
+          "id": 26,
+          "name": "Family",
+          "price_label": "5 occupants",
+          "price_value": "TZS 550,000",
+          "description": "",
+          "featured": true,
+          "order": 5
+        },
+        {
+          "id": 27,
+          "name": "Kikota",
+          "price_label": "Per Night (BB)",
+          "price_value": "TZS 400,000",
+          "description": "",
+          "featured": false,
+          "order": 6
+        },
+        {
+          "id": 28,
+          "name": "Tents",
+          "price_label": "Single (BB)",
+          "price_value": "TZS 50,000",
+          "description": "",
+          "featured": false,
+          "order": 7
+        },
+        {
+          "id": 29,
+          "name": "Tents",
+          "price_label": "Double (BB)",
+          "price_value": "TZS 80,000",
+          "description": "",
+          "featured": false,
+          "order": 8
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "name": "Food (Per Person)",
+      "description": "Delicious meals to complement your stay",
+      "category_type": "food",
+      "order": 1,
+      "items": [
+        {
+          "id": 30,
+          "name": "Half Board",
+          "price_label": "1 Meal Included",
+          "price_value": "TZS 30,000",
+          "description": "",
+          "featured": false,
+          "order": 0
+        },
+        {
+          "id": 31,
+          "name": "Full Board",
+          "price_label": "2 Meals Included",
+          "price_value": "TZS 50,000",
+          "description": "",
+          "featured": true,
+          "order": 1
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "name": "Activities (Per Person)",
+      "description": "Exciting activities to enhance your farm experience",
+      "category_type": "activity",
+      "order": 2,
+      "items": [
+        {
+          "id": 32,
+          "name": "Quad Bike",
+          "price_label": "30 Minutes",
+          "price_value": "TZS 30,000",
+          "description": "",
+          "featured": false,
+          "order": 0
+        },
+        {
+          "id": 33,
+          "name": "Sports Bike",
+          "price_label": "1 Hour",
+          "price_value": "TZS 20,000",
+          "description": "",
+          "featured": false,
+          "order": 1
+        },
+        {
+          "id": 34,
+          "name": "Bonfire",
+          "price_label": "Evening Activity",
+          "price_value": "Free",
+          "description": "",
+          "featured": false,
+          "order": 2
+        },
+        {
+          "id": 35,
+          "name": "Farm Tour",
+          "price_label": "Guided Tour",
+          "price_value": "Free",
+          "description": "",
+          "featured": false,
+          "order": 3
+        }
+      ]
+    }
+  ],
+  "food": [
+    {
+      "id": 195,
+      "name": "Half Board",
+      "description": "1 Meal Included",
+      "price": "TZS 30,000",
+      "featured": false,
+      "order": 0
+    },
+    {
+      "id": 196,
+      "name": "Full Board",
+      "description": "2 Meals Included",
+      "price": "TZS 50,000",
+      "featured": true,
+      "order": 1
+    }
+  ],
+  "restaurant_menu": [
+    {
+      "id": 36,
+      "name": "Breakfast",
+      "subtitle": "Fresh farm breakfast selections",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247200/farm-fresh-food_tkrtak.jpg",
+      "icon_key": "breakfast",
+      "order": 0,
+      "items": [
+        {
+          "id": 37,
+          "name": "Chicken soup",
+          "price": "TZS 10,000",
+          "order": 0
+        },
+        {
+          "id": 38,
+          "name": "Beef soup",
+          "price": "TZS 10,000",
+          "order": 1
+        },
+        {
+          "id": 39,
+          "name": "Fish soup",
+          "price": "TZS 15,000",
+          "order": 2
+        },
+        {
+          "id": 40,
+          "name": "Eggs",
+          "price": "TZS 3,000",
+          "order": 3
+        },
+        {
+          "id": 41,
+          "name": "Toasted bread",
+          "price": "TZS 2,000",
+          "order": 4
+        },
+        {
+          "id": 42,
+          "name": "Mchemcho chicken",
+          "price": "TZS 13,000",
+          "order": 5
+        },
+        {
+          "id": 43,
+          "name": "Mchemcho ng'ombe",
+          "price": "TZS 13,000",
+          "order": 6
+        },
+        {
+          "id": 44,
+          "name": "Mchemcho samaki",
+          "price": "TZS 18,000",
+          "order": 7
+        },
+        {
+          "id": 45,
+          "name": "Mtoli",
+          "price": "TZS 5,000",
+          "order": 8
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "name": "Main Course",
+      "subtitle": "Hearty local and international meals",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247200/farm-fresh-food_tkrtak.jpg",
+      "icon_key": "main",
+      "order": 1,
+      "items": [
+        {
+          "id": 47,
+          "name": "Chicken ¼",
+          "price": "TZS 10,000",
+          "order": 0
+        },
+        {
+          "id": 48,
+          "name": "Beef ¼",
+          "price": "TZS 10,000",
+          "order": 1
+        },
+        {
+          "id": 49,
+          "name": "Samaki",
+          "price": "TZS 15,000",
+          "order": 2
+        },
+        {
+          "id": 50,
+          "name": "Sungura",
+          "price": "TZS 40,000",
+          "order": 3
+        },
+        {
+          "id": 51,
+          "name": "Mbogamboga",
+          "price": "TZS 5,000",
+          "order": 4
+        },
+        {
+          "id": 52,
+          "name": "Maharage",
+          "price": "TZS 5,000",
+          "order": 5
+        },
+        {
+          "id": 53,
+          "name": "Chips",
+          "price": "TZS 3,000",
+          "order": 6
+        },
+        {
+          "id": 54,
+          "name": "Ugali",
+          "price": "TZS 3,000",
+          "order": 7
+        },
+        {
+          "id": 55,
+          "name": "Wali",
+          "price": "TZS 3,000",
+          "order": 8
+        },
+        {
+          "id": 56,
+          "name": "Spaghetti",
+          "price": "TZS 4,000",
+          "order": 9
+        },
+        {
+          "id": 57,
+          "name": "Macaron",
+          "price": "TZS 7,000",
+          "order": 10
+        },
+        {
+          "id": 58,
+          "name": "Ndizi",
+          "price": "TZS 3,000",
+          "order": 11
+        },
+        {
+          "id": 59,
+          "name": "Potato wedges",
+          "price": "TZS 3,000",
+          "order": 12
+        },
+        {
+          "id": 60,
+          "name": "Chips zege",
+          "price": "TZS 5,000",
+          "order": 13
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "name": "Burgers & Pizza",
+      "subtitle": "Crispy, cheesy and delicious",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247205/activities_im4edt.jpg",
+      "icon_key": "burger",
+      "order": 2,
+      "items": [
+        {
+          "id": 62,
+          "name": "Beef burger",
+          "price": "TZS 17,000",
+          "order": 0
+        },
+        {
+          "id": 63,
+          "name": "Chicken burger",
+          "price": "TZS 17,000",
+          "order": 1
+        },
+        {
+          "id": 64,
+          "name": "Veggie burger",
+          "price": "TZS 15,000",
+          "order": 2
+        },
+        {
+          "id": 65,
+          "name": "King beef burger",
+          "price": "TZS 22,000",
+          "order": 3
+        },
+        {
+          "id": 66,
+          "name": "Beef pizza",
+          "price": "TZS 20,000",
+          "order": 4
+        },
+        {
+          "id": 67,
+          "name": "Chicken pizza",
+          "price": "TZS 20,000",
+          "order": 5
+        },
+        {
+          "id": 68,
+          "name": "Margherita pizza",
+          "price": "TZS 15,000",
+          "order": 6
+        },
+        {
+          "id": 69,
+          "name": "Four season pizza",
+          "price": "TZS 30,000",
+          "order": 7
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "name": "BBQ",
+      "subtitle": "Smoked and grilled favorites",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247205/activities_im4edt.jpg",
+      "icon_key": "bbq",
+      "order": 3,
+      "items": [
+        {
+          "id": 71,
+          "name": "Family platter",
+          "price": "TZS 140,000",
+          "order": 0
+        },
+        {
+          "id": 72,
+          "name": "Friends platter",
+          "price": "TZS 100,000",
+          "order": 1
+        },
+        {
+          "id": 73,
+          "name": "BBQ wings",
+          "price": "TZS 30,000",
+          "order": 2
+        },
+        {
+          "id": 74,
+          "name": "Chicken Wings portion",
+          "price": "TZS 5,000",
+          "order": 3
+        },
+        {
+          "id": 75,
+          "name": "Mishikaki",
+          "price": "TZS 3,000",
+          "order": 4
+        }
+      ]
+    },
+    {
+      "id": 76,
+      "name": "Salads and Juices",
+      "subtitle": "Fresh organic healthy choices",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247200/farm-fresh-food_tkrtak.jpg",
+      "icon_key": "salad",
+      "order": 4,
+      "items": [
+        {
+          "id": 77,
+          "name": "Fruit salad",
+          "price": "TZS 5,000",
+          "order": 0
+        },
+        {
+          "id": 78,
+          "name": "Vegetable salad",
+          "price": "TZS 5,000",
+          "order": 1
+        },
+        {
+          "id": 79,
+          "name": "Fruit smooth",
+          "price": "TZS 7,000",
+          "order": 2
+        },
+        {
+          "id": 80,
+          "name": "Special salad",
+          "price": "TZS 5,000",
+          "order": 3
+        },
+        {
+          "id": 81,
+          "name": "Coffee",
+          "price": "TZS 3,000",
+          "order": 4
+        },
+        {
+          "id": 82,
+          "name": "Tea",
+          "price": "TZS 3,000",
+          "order": 5
+        }
+      ]
+    },
+    {
+      "id": 83,
+      "name": "Other Dishes",
+      "subtitle": "Tasty side dishes and specials",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247541/cottage-inside1_b6zcxz.jpg",
+      "icon_key": "other-dish",
+      "order": 5,
+      "items": [
+        {
+          "id": 84,
+          "name": "Chapati portion",
+          "price": "TZS 10,000",
+          "order": 0
+        },
+        {
+          "id": 85,
+          "name": "Chapati maji",
+          "price": "TZS 5,000",
+          "order": 1
+        },
+        {
+          "id": 86,
+          "name": "Vegetable crunch",
+          "price": "TZS 10,000",
+          "order": 2
+        },
+        {
+          "id": 87,
+          "name": "Vegetable wrap",
+          "price": "TZS 5,000",
+          "order": 3
+        },
+        {
+          "id": 88,
+          "name": "Chicken biriani",
+          "price": "TZS 20,000",
+          "order": 4
+        },
+        {
+          "id": 89,
+          "name": "Vegetable rice",
+          "price": "TZS 5,000",
+          "order": 5
+        },
+        {
+          "id": 90,
+          "name": "Samosa",
+          "price": "TZS 10,000",
+          "order": 6
+        }
+      ]
+    },
+    {
+      "id": 91,
+      "name": "Soft Drinks",
+      "subtitle": "Refreshing chilled beverages",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247489/customer1_expjr7.jpg",
+      "icon_key": "soft-drink",
+      "order": 6,
+      "items": [
+        {
+          "id": 92,
+          "name": "Maji madogo",
+          "price": "TZS 1,000",
+          "order": 0
+        },
+        {
+          "id": 93,
+          "name": "Soda",
+          "price": "TZS 2,000",
+          "order": 1
+        },
+        {
+          "id": 94,
+          "name": "Bavaria",
+          "price": "TZS 6,000",
+          "order": 2
+        },
+        {
+          "id": 95,
+          "name": "Grandmalta",
+          "price": "TZS 4,000",
+          "order": 3
+        },
+        {
+          "id": 96,
+          "name": "Redbull",
+          "price": "TZS 5,000",
+          "order": 4
+        },
+        {
+          "id": 97,
+          "name": "Basil seeds fruit juice",
+          "price": "TZS 6,000",
+          "order": 5
+        },
+        {
+          "id": 98,
+          "name": "Ceres",
+          "price": "TZS 10,000",
+          "order": 6
+        },
+        {
+          "id": 99,
+          "name": "Azam box",
+          "price": "TZS 7,000",
+          "order": 7
+        }
+      ]
+    },
+    {
+      "id": 100,
+      "name": "Vodka",
+      "subtitle": "Premium vodka collection",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247595/kalongo-surroundings1_iha0us.jpg",
+      "icon_key": "vodka",
+      "order": 7,
+      "items": [
+        {
+          "id": 101,
+          "name": "Smirnoff vodka 750mls",
+          "price": "TZS 50,000",
+          "order": 0
+        },
+        {
+          "id": 102,
+          "name": "Captain Morgan 750mls",
+          "price": "TZS 40,000",
+          "order": 1
+        },
+        {
+          "id": 103,
+          "name": "Beefeater 750mls",
+          "price": "TZS 45,000",
+          "order": 2
+        },
+        {
+          "id": 104,
+          "name": "Gordon 750mls",
+          "price": "TZS 60,000",
+          "order": 3
+        },
+        {
+          "id": 105,
+          "name": "Absolute vodka 750mls",
+          "price": "TZS 45,000",
+          "order": 4
+        },
+        {
+          "id": 106,
+          "name": "Zunchi 750mls",
+          "price": "TZS 30,000",
+          "order": 5
+        },
+        {
+          "id": 107,
+          "name": "Camino 750mls",
+          "price": "TZS 60,000",
+          "order": 6
+        }
+      ]
+    },
+    {
+      "id": 108,
+      "name": "Liquor",
+      "subtitle": "Smooth premium liquor",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247597/kalongo-surroundings2_k0rfgu.jpg",
+      "icon_key": "liquor",
+      "order": 8,
+      "items": [
+        {
+          "id": 109,
+          "name": "Amarula 750mls",
+          "price": "TZS 50,000",
+          "order": 0
+        },
+        {
+          "id": 110,
+          "name": "Amarula 350mls",
+          "price": "TZS 30,000",
+          "order": 1
+        },
+        {
+          "id": 111,
+          "name": "Zanzi 750mls",
+          "price": "TZS 40,000",
+          "order": 2
+        },
+        {
+          "id": 112,
+          "name": "Zanzi 250mls",
+          "price": "TZS 10,000",
+          "order": 3
+        }
+      ]
+    },
+    {
+      "id": 113,
+      "name": "Beer",
+      "subtitle": "Local and imported beers",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247489/customer1_expjr7.jpg",
+      "icon_key": "beer",
+      "order": 9,
+      "items": [
+        {
+          "id": 114,
+          "name": "Flying fish",
+          "price": "TZS 4,000",
+          "order": 0
+        },
+        {
+          "id": 115,
+          "name": "Heineken",
+          "price": "TZS 6,000",
+          "order": 1
+        },
+        {
+          "id": 116,
+          "name": "Savannah",
+          "price": "TZS 6,000",
+          "order": 2
+        },
+        {
+          "id": 117,
+          "name": "Windock",
+          "price": "TZS 7,000",
+          "order": 3
+        },
+        {
+          "id": 118,
+          "name": "Budweiser",
+          "price": "TZS 6,000",
+          "order": 4
+        },
+        {
+          "id": 119,
+          "name": "Desperado",
+          "price": "TZS 6,000",
+          "order": 5
+        },
+        {
+          "id": 120,
+          "name": "Reds chupa",
+          "price": "TZS 3,000",
+          "order": 6
+        },
+        {
+          "id": 121,
+          "name": "Kilimanjaro lager",
+          "price": "TZS 3,000",
+          "order": 7
+        },
+        {
+          "id": 122,
+          "name": "Kilimanjaro lite",
+          "price": "TZS 3,000",
+          "order": 8
+        },
+        {
+          "id": 123,
+          "name": "Safari larger",
+          "price": "TZS 3,000",
+          "order": 9
+        },
+        {
+          "id": 124,
+          "name": "Serengeti lite",
+          "price": "TZS 3,000",
+          "order": 10
+        },
+        {
+          "id": 125,
+          "name": "Serengeti lemon",
+          "price": "TZS 3,000",
+          "order": 11
+        },
+        {
+          "id": 126,
+          "name": "Serengeti larger",
+          "price": "TZS 3,000",
+          "order": 12
+        },
+        {
+          "id": 127,
+          "name": "Castle lite",
+          "price": "TZS 3,000",
+          "order": 13
+        },
+        {
+          "id": 128,
+          "name": "Castle larger",
+          "price": "TZS 4,000",
+          "order": 14
+        }
+      ]
+    },
+    {
+      "id": 129,
+      "name": "Gin",
+      "subtitle": "Classic gin selections",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247598/kalongo-surroundings3_urxadi.jpg",
+      "icon_key": "gin",
+      "order": 10,
+      "items": [
+        {
+          "id": 130,
+          "name": "K-vant 750mls",
+          "price": "TZS 20,000",
+          "order": 0
+        },
+        {
+          "id": 131,
+          "name": "K-vant 200mls",
+          "price": "TZS 7,000",
+          "order": 1
+        },
+        {
+          "id": 132,
+          "name": "Konyagi 750mls",
+          "price": "TZS 20,000",
+          "order": 2
+        },
+        {
+          "id": 133,
+          "name": "Konyagi 200mls",
+          "price": "TZS 7,000",
+          "order": 3
+        },
+        {
+          "id": 134,
+          "name": "Value 750mls",
+          "price": "TZS 20,000",
+          "order": 4
+        },
+        {
+          "id": 135,
+          "name": "Value 200mls",
+          "price": "TZS 7,000",
+          "order": 5
+        }
+      ]
+    },
+    {
+      "id": 136,
+      "name": "Wine",
+      "subtitle": "Fine wine collection",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247395/our-kalongo-hero-background_sedoxy.jpg",
+      "icon_key": "wine",
+      "order": 11,
+      "items": [
+        {
+          "id": 137,
+          "name": "Kwv 750mls",
+          "price": "TZS 40,000",
+          "order": 0
+        },
+        {
+          "id": 138,
+          "name": "Saint anna 750mls",
+          "price": "TZS 30,000",
+          "order": 1
+        },
+        {
+          "id": 139,
+          "name": "Drostoff 750mls",
+          "price": "TZS 30,000",
+          "order": 2
+        },
+        {
+          "id": 140,
+          "name": "Roberson 750mls",
+          "price": "TZS 30,000",
+          "order": 3
+        },
+        {
+          "id": 141,
+          "name": "Dodoma 750mls",
+          "price": "TZS 30,000",
+          "order": 4
+        },
+        {
+          "id": 142,
+          "name": "Dompo 750mls",
+          "price": "TZS 30,000",
+          "order": 5
+        },
+        {
+          "id": 143,
+          "name": "Bone Esperance 750mls",
+          "price": "TZS 30,000",
+          "order": 6
+        },
+        {
+          "id": 144,
+          "name": "Four couns 750mls",
+          "price": "TZS 30,000",
+          "order": 7
+        },
+        {
+          "id": 145,
+          "name": "Image 250mls",
+          "price": "TZS 8,000",
+          "order": 8
+        },
+        {
+          "id": 146,
+          "name": "Pearly bay 750mls",
+          "price": "TZS 30,000",
+          "order": 9
+        },
+        {
+          "id": 147,
+          "name": "Twelve apostle 5ls",
+          "price": "TZS 100,000",
+          "order": 10
+        }
+      ]
+    },
+    {
+      "id": 148,
+      "name": "Whiskey",
+      "subtitle": "Premium whiskey collection",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247595/kalongo-surroundings1_iha0us.jpg",
+      "icon_key": "whiskey",
+      "order": 12,
+      "items": [
+        {
+          "id": 149,
+          "name": "Grant 750mls",
+          "price": "TZS 50,000",
+          "order": 0
+        },
+        {
+          "id": 150,
+          "name": "Grand 250mls",
+          "price": "TZS 25,000",
+          "order": 1
+        },
+        {
+          "id": 151,
+          "name": "Gridifidich 750mls",
+          "price": "TZS 160,000",
+          "order": 2
+        },
+        {
+          "id": 152,
+          "name": "Hanson choice 250mls",
+          "price": "TZS 8,000",
+          "order": 3
+        },
+        {
+          "id": 153,
+          "name": "Hanson choice 750mls",
+          "price": "TZS 25,000",
+          "order": 4
+        },
+        {
+          "id": 154,
+          "name": "Hennessy 750mls",
+          "price": "TZS 150,000",
+          "order": 5
+        },
+        {
+          "id": 155,
+          "name": "Jack danies 750mls",
+          "price": "TZS 150,000",
+          "order": 6
+        },
+        {
+          "id": 156,
+          "name": "Jager master 750mls",
+          "price": "TZS 70,000",
+          "order": 7
+        },
+        {
+          "id": 157,
+          "name": "Jager master 200mls",
+          "price": "TZS 30,000",
+          "order": 8
+        },
+        {
+          "id": 158,
+          "name": "Jameson 750mls",
+          "price": "TZS 90,000",
+          "order": 9
+        },
+        {
+          "id": 159,
+          "name": "Red label 750mls",
+          "price": "TZS 80,000",
+          "order": 10
+        },
+        {
+          "id": 160,
+          "name": "Black label 750mls",
+          "price": "TZS 150,000",
+          "order": 11
+        },
+        {
+          "id": 161,
+          "name": "J&b 750mls",
+          "price": "TZS 90,000",
+          "order": 12
+        }
+      ]
+    },
+    {
+      "id": 162,
+      "name": "Other Drinks",
+      "subtitle": "Special drinks and collections",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/c_fill,w_900,h_600,q_auto/v1769247283/booking-hero-background_idfar7.jpg",
+      "icon_key": "other-drink",
+      "order": 13,
+      "items": [
+        {
+          "id": 163,
+          "name": "Provetto 750mls",
+          "price": "TZS 40,000",
+          "order": 0
+        },
+        {
+          "id": 164,
+          "name": "Freixenent 750mls",
+          "price": "TZS 70,000",
+          "order": 1
+        },
+        {
+          "id": 165,
+          "name": "Grants 350mls",
+          "price": "TZS 30,000",
+          "order": 2
+        },
+        {
+          "id": 166,
+          "name": "Roman off 750mls",
+          "price": "TZS 30,000",
+          "order": 3
+        },
+        {
+          "id": 167,
+          "name": "Southen comfort 750mls",
+          "price": "TZS 60,000",
+          "order": 4
+        },
+        {
+          "id": 168,
+          "name": "Aperol 750mls",
+          "price": "TZS 60,000",
+          "order": 5
+        },
+        {
+          "id": 169,
+          "name": "Mohans 750mls",
+          "price": "TZS 30,000",
+          "order": 6
+        },
+        {
+          "id": 170,
+          "name": "Saaga 750MLS",
+          "price": "TZS 30,000",
+          "order": 7
+        },
+        {
+          "id": 171,
+          "name": "Sierra 750mls",
+          "price": "TZS 60,000",
+          "order": 8
+        },
+        {
+          "id": 172,
+          "name": "Hennesy 500ml",
+          "price": "TZS 70,000",
+          "order": 9
+        },
+        {
+          "id": 173,
+          "name": "Serengeti wine 750mls",
+          "price": "TZS 40,000",
+          "order": 10
+        },
+        {
+          "id": 174,
+          "name": "Spiers 750mls",
+          "price": "TZS 50,000",
+          "order": 11
+        },
+        {
+          "id": 175,
+          "name": "Demands 750mls",
+          "price": "TZS 40,000",
+          "order": 12
+        },
+        {
+          "id": 176,
+          "name": "Class 21 vodka 750mls",
+          "price": "TZS 20,000",
+          "order": 13
+        },
+        {
+          "id": 177,
+          "name": "Parrot bay 750mls",
+          "price": "TZS 45,000",
+          "order": 14
+        },
+        {
+          "id": 178,
+          "name": "Huntng lodge 750mls",
+          "price": "TZS 40,000",
+          "order": 15
+        },
+        {
+          "id": 179,
+          "name": "Kiprinsk 750mls",
+          "price": "TZS 40,000",
+          "order": 16
+        },
+        {
+          "id": 180,
+          "name": "Absolute vodka 200mls",
+          "price": "TZS 30,000",
+          "order": 17
+        }
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "id": 197,
+      "url": "https://res.cloudinary.com/dae3rpnmg/video/upload/v1769248628/kalongo-video1_bcmr2y.mp4",
+      "caption": "Kalongo Farm Experience",
+      "section": "our-kalongo",
+      "order": 0
+    },
+    {
+      "id": 198,
+      "url": "https://res.cloudinary.com/dae3rpnmg/video/upload/v1769250514/kalongo-video2_sg6y1a.mp4",
+      "caption": "Poultry",
+      "section": "our-kalongo",
+      "order": 1
+    },
+    {
+      "id": 199,
+      "url": "https://res.cloudinary.com/dae3rpnmg/video/upload/v1769251250/kalongo-video3_narnrr.mp4",
+      "caption": "Natural Surroundings",
+      "section": "our-kalongo",
+      "order": 2
+    },
+    {
+      "id": 200,
+      "url": "https://res.cloudinary.com/dae3rpnmg/video/upload/v1769252256/kalongo-video4_gn8xce.mp4",
+      "caption": "Farm Life",
+      "section": "our-kalongo",
+      "order": 3
+    },
+    {
+      "id": 201,
+      "url": "https://res.cloudinary.com/dae3rpnmg/video/upload/v1769252596/kalongo-video5_aym8e8.mp4",
+      "caption": "Personal Experience & Admiration",
+      "section": "our-kalongo",
+      "order": 4
+    },
+    {
+      "id": 202,
+      "url": "https://res.cloudinary.com/dae3rpnmg/video/upload/v1769252820/kalongo-video6_exghpp.mp4",
+      "caption": "Food and Nature",
+      "section": "our-kalongo",
+      "order": 5
+    }
+  ],
+  "gallery_images": [
+    {
+      "id": 203,
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247595/kalongo-surroundings1_iha0us.jpg",
+      "caption": "Kalongo surroundings",
+      "section": "our-kalongo",
+      "order": 0
+    },
+    {
+      "id": 204,
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247597/kalongo-surroundings2_k0rfgu.jpg",
+      "caption": "Farm landscape",
+      "section": "our-kalongo",
+      "order": 1
+    },
+    {
+      "id": 205,
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247598/kalongo-surroundings3_urxadi.jpg",
+      "caption": "Nature around Kalongo",
+      "section": "our-kalongo",
+      "order": 2
+    }
+  ],
+  "reviews": [
+    {
+      "id": 206,
+      "customer_name": "",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247489/customer1_expjr7.jpg",
+      "quote": "",
+      "rating": 5,
+      "order": 0
+    },
+    {
+      "id": 207,
+      "customer_name": "",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247490/customer2_lanxjd.jpg",
+      "quote": "",
+      "rating": 5,
+      "order": 1
+    },
+    {
+      "id": 208,
+      "customer_name": "",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247495/customer3_yv86ii.jpg",
+      "quote": "",
+      "rating": 5,
+      "order": 2
+    },
+    {
+      "id": 209,
+      "customer_name": "",
+      "image_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769247493/customer4_u1p98k.jpg",
+      "quote": "",
+      "rating": 5,
+      "order": 3
+    }
+  ],
+  "settings": {
+    "phone": "+255 798 924 280",
+    "whatsapp": "+255 653 626 410",
+    "email": "info@kalongogroup.co.tz",
+    "address": "ibulla village, Kiwira, Tukuyu -Mbeya, Tanzania",
+    "instagram": "https://instagram.com/kalongofarm",
+    "facebook": "https://facebook.com/kalongofarm",
+    "logo_url": "https://res.cloudinary.com/dae3rpnmg/image/upload/v1769261545/logo_xgfgcj.jpg",
+    "about_text": "KALONGO FARM is an ecosystem farm lodge located in KIWIRA TUKUYU, Mbeya Region, Tanzania, combining sustainable agriculture with hospitality services. Founded on agro-ecology and environmental conservation principles, the facility offers accommodation in A-Cabins, Cottages, and Kikota structures, providing guests with farm-to-table dining experiences and immersive agricultural activities.",
+    "show_prices": "false",
+    "map_coordinates": "-9.1379842,33.5286078",
+    "hero_services": "",
+    "hero_booking": "",
+    "hero_activities": "",
+    "hero_kalongo": "",
+    "hero_pricing": ""
+  }
+}

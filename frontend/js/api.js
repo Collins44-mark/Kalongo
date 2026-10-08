@@ -1,17 +1,7 @@
 /**
- * API Client for Kalongo Farm - Fetches data from backend
- * Optimized for fast loading with error handling
+ * API Client for Kalongo Farm
+ * Reads site content from bundled JSON / Cloudinary — no Render backend.
  */
-// Auto-detect API URL (works for both localhost and production)
-const API_BASE_URL = (() => {
-    const hostname = window.location.hostname;
-    if (hostname === 'localhost' || hostname === '127.0.0.1') {
-        return 'http://localhost:5001/api';
-    }
-    // For production, use Render backend URL
-    return 'https://kalongo.onrender.com/api';
-})();
-const API_TIMEOUT = 15000; // 15 seconds (allows backend cold start on Render)
 
 // Image preloading cache
 const imageCache = new Map();
@@ -118,60 +108,27 @@ const apiCache = new Map();
 const CACHE_TTL = 60000; // 60 seconds (increased for better performance)
 
 async function fetchAPI(endpoint, useCache = true) {
-    // Check cache first
     if (useCache && apiCache.has(endpoint)) {
         const cached = apiCache.get(endpoint);
         if (Date.now() - cached.timestamp < CACHE_TTL) {
-            console.log(`📦 Using cached data for ${endpoint}`);
             return cached.data;
         }
         apiCache.delete(endpoint);
     }
-    
+
     try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), API_TIMEOUT);
-        
-        const url = `${API_BASE_URL}${endpoint}`;
-        console.log(`📡 Fetching: ${url}`);
-        
-            const response = await fetch(url, {
-            signal: controller.signal,
-            headers: {
-                'Accept': 'application/json',
-                'Cache-Control': 'max-age=60' // Allow browser caching for 60 seconds
-            },
-            mode: 'cors',
-            cache: 'default' // Use browser cache
-        });
-        
-        clearTimeout(timeoutId);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        if (!window.KalongoContent) {
+            throw new Error('KalongoContent is not loaded');
         }
-        
-        const data = await response.json();
-        
-        // Cache the response
-        if (useCache) {
-            apiCache.set(endpoint, {
-                data,
-                timestamp: Date.now()
-            });
+        await window.KalongoContent.load();
+        const data = window.KalongoContent.slice(endpoint);
+        if (useCache && data != null) {
+            apiCache.set(endpoint, { data, timestamp: Date.now() });
         }
-        
         console.log(`✅ Loaded ${endpoint}: ${Array.isArray(data) ? data.length + ' items' : 'data received'}`);
         return data;
     } catch (error) {
-        if (error.name === 'AbortError') {
-            console.error(`❌ API Timeout (${endpoint}): Request took too long`);
-        } else if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
-            console.error(`❌ API Connection Error (${endpoint}): Backend server may not be running at ${API_BASE_URL}`);
-            console.error(`   Make sure backend is running: python3 run_backend.py`);
-        } else {
-            console.error(`❌ API Error (${endpoint}):`, error.message);
-        }
+        console.error(`❌ Content error (${endpoint}):`, error.message);
         return null;
     }
 }
@@ -1258,60 +1215,17 @@ const Render = {
     },
 };
 
-// Check if backend is available
 async function checkBackendHealth() {
-    try {
-        // Build health URL - handle both localhost and production
-        let healthUrl;
-        if (API_BASE_URL.includes('localhost') || API_BASE_URL.includes('127.0.0.1')) {
-            healthUrl = 'http://localhost:5001/health';
-        } else {
-            // Use the same base URL as API (production backend)
-            healthUrl = API_BASE_URL.replace('/api', '/health');
-        }
-        
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 3000); // Increased timeout
-        const response = await fetch(healthUrl, { 
-            signal: controller.signal,
-            mode: 'cors',
-            cache: 'no-cache'
-        });
-        clearTimeout(timeoutId);
-        
-        if (response.ok) {
-            const data = await response.json();
-            console.log('✅ Backend health check:', data);
-            return true;
-        }
-        return false;
-    } catch (error) {
-        console.warn('⚠️ Backend health check failed:', error.message);
-        return false;
-    }
+    return true;
 }
 
 // Initialize data loading - optimized
 // Use both DOMContentLoaded and window.onload to ensure DOM is ready
 async function initializeDataLoading() {
     console.log('🚀 Initializing frontend data loading...');
-    console.log(`📍 API Base URL: ${API_BASE_URL}`);
     console.log('📍 Current URL:', window.location.href);
     console.log('📍 Document ready state:', document.readyState);
-    
-    // Check backend availability (non-blocking - don't block page load)
-    checkBackendHealth().then(available => {
-        if (!available) {
-            console.warn('⚠️ Backend health check failed - but continuing to load content');
-            console.warn('   If content doesn\'t load, start backend: python3 run_backend.py');
-            // Try to fetch data anyway - might be a temporary network issue
-        } else {
-            console.log('✅ Backend server is running and healthy');
-        }
-    }).catch(err => {
-        console.warn('⚠️ Health check error (non-critical):', err.message);
-    });
-    
+
     // Load settings first (cached, fast)
     console.log('📥 Fetching settings...');
     const settings = await API.getSettings();

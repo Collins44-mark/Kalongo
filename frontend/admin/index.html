@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Kalongo Farm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+<body>
+    <div id="auth-loading" aria-live="polite">Checking sign-in…</div>
+    <div id="login-screen">
+        <div class="login-box">
+            <h1>🌿 Kalongo Admin</h1>
+            <div id="login-flash"></div>
+            <form id="login-form">
+                <input type="email" name="email" placeholder="Email" required autofocus autocomplete="username">
+                <div class="password-field">
+                    <input type="password" name="password" placeholder="Password" required id="passwordInput" autocomplete="current-password">
+                    <button type="button" id="togglePassword" aria-label="Show password">Show</button>
+                </div>
+                <button type="submit">Sign in</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="app-screen">
+        <div class="mobile-header">
+            <img src="https://res.cloudinary.com/dae3rpnmg/image/upload/v1769261545/logo_xgfgcj.jpg" alt="Kalongo Logo" class="mobile-logo">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <span id="menuIcon">☰</span>
+            </button>
+        </div>
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <div class="layout">
+            <aside class="sidebar" id="sidebar">
+                <div class="logo-section" style="padding: 1.5rem; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border);">
+                    <img src="https://res.cloudinary.com/dae3rpnmg/image/upload/v1769261545/logo_xgfgcj.jpg" alt="Kalongo Logo" style="max-width: 180px; height: auto; object-fit: contain;">
+                </div>
+                <nav id="admin-nav">
+                    <a href="#dashboard" data-route="dashboard">Dashboard</a>
+                    <a href="#hero" data-route="hero">Hero Slides</a>
+                    <a href="#page-heroes" data-route="page-heroes">Page Heroes</a>
+                    <a href="#rooms" data-route="rooms">Rooms & Images</a>
+                    <a href="#facilities" data-route="facilities">Facilities</a>
+                    <a href="#activities" data-route="activities">Activities</a>
+                    <a href="#pricing" data-route="pricing">Pricing</a>
+                    <a href="#food" data-route="food">Food</a>
+                    <a href="#restaurant-menu" data-route="restaurant-menu">Restaurant Menu</a>
+                    <a href="#videos" data-route="videos">Videos</a>
+                    <a href="#gallery" data-route="gallery">Gallery</a>
+                    <a href="#reviews" data-route="reviews">Reviews</a>
+                    <a href="#settings" data-route="settings">Settings</a>
+                    <a href="#logout" id="logout-link" style="margin-top: 1rem; color: #f87171;">Logout</a>
+                </nav>
+            </aside>
+            <main class="main">
+                <div id="flash-host"></div>
+                <div id="view"></div>
+            </main>
+        </div>
+    </div>
+
+    <script src="/js/kalongo-config.js"></script>
+    <script src="/js/site-content.js"></script>
+    <script type="module" src="/admin/js/admin-app.js"></script>
+</body>
+</html>
