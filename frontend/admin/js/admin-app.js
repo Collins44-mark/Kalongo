@@ -565,7 +565,55 @@ function renderPricing() {
   });
 }
 
+function renderMenuCategoryEdit(cat) {
+  const preview = cat.image_url
+    ? `<p style="margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">Current preview:</p>
+       <img src="${esc(cat.image_url)}" alt="" loading="lazy" referrerpolicy="no-referrer" style="max-width:220px;border-radius:8px;margin-top:0.25rem;display:block;" onerror="this.alt='Missing';this.style.opacity='0.35';">`
+    : `<p style="color:var(--text-muted);margin-top:0.5rem;">No image yet.</p>`;
+  viewEl.innerHTML = `
+    <h2>Edit menu category</h2>
+    <div class="card">
+      <form id="edit-mcat">
+        <div class="form-row">
+          <div><label>Name</label><input name="name" value="${esc(cat.name)}" required></div>
+          <div><label>Subtitle</label><input name="subtitle" value="${esc(cat.subtitle || '')}"></div>
+        </div>
+        <div class="form-row">
+          <div><label>Image (file)</label><input type="file" name="image" accept="image/*"></div>
+          <div><label>Or image URL</label><input type="url" name="image_url" value="${esc(cat.image_url || '')}" placeholder="https://res.cloudinary.com/..."></div>
+        </div>
+        ${preview}
+        <div class="actions" style="margin-top:1rem;">
+          <button class="btn btn-primary" type="submit">Save</button>
+          <button class="btn btn-secondary" type="button" data-cancel-edit>Cancel</button>
+        </div>
+      </form>
+    </div>`;
+  viewEl.querySelector('[data-cancel-edit]').addEventListener('click', () => {
+    nested = { type: null, id: null };
+    render();
+  });
+  viewEl.querySelector('#edit-mcat').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const f = e.target;
+    try {
+      const url = await mediaValue(f.image, f.image_url);
+      cat.name = f.name.value;
+      cat.subtitle = f.subtitle.value;
+      cat.image_url = url || cat.image_url;
+      if (!(await persist())) return;
+      nested = { type: null, id: null };
+      flash('Category saved.');
+      render();
+    } catch (err) { flash(err.message, 'error'); }
+  });
+}
+
 function renderMenu() {
+  if (nested.type === 'menu-edit') {
+    const cat = data.restaurant_menu.find((c) => String(c.id) === String(nested.id));
+    if (cat) return renderMenuCategoryEdit(cat);
+  }
   if (nested.type === 'menu-items') {
     const cat = data.restaurant_menu.find((c) => String(c.id) === String(nested.id));
     if (cat) {
@@ -605,6 +653,7 @@ function renderMenu() {
     <td>${esc(c.name)}</td>
     <td>${c.items?.length || 0}</td>
     <td class="actions">
+      <button class="btn btn-secondary btn-sm" data-edit="${c.id}">Edit</button>
       <button class="btn btn-primary btn-sm" data-items="${c.id}">Items</button>
       <button class="btn btn-danger btn-sm" data-del="${c.id}">Delete</button>
     </td>
@@ -636,6 +685,10 @@ function renderMenu() {
       render();
     } catch (err) { flash(err.message, 'error'); }
   });
+  viewEl.querySelectorAll('[data-edit]').forEach((b) => b.addEventListener('click', () => {
+    nested = { type: 'menu-edit', id: b.dataset.edit };
+    render();
+  }));
   viewEl.querySelectorAll('[data-items]').forEach((b) => b.addEventListener('click', () => {
     nested = { type: 'menu-items', id: b.dataset.items };
     render();
@@ -643,6 +696,7 @@ function renderMenu() {
   viewEl.querySelectorAll('[data-del]').forEach((b) => b.addEventListener('click', async () => {
     data.restaurant_menu = data.restaurant_menu.filter((c) => String(c.id) !== b.dataset.del);
     if (!(await persist())) return;
+    flash('Category deleted.');
     render();
   }));
 }
