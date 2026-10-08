@@ -39,6 +39,12 @@ function esc(s) {
     .replace(/"/g, '&quot;');
 }
 
+function thumbHtml(url) {
+  const src = String(url || '').trim();
+  if (!src) return '—';
+  return `<img src="${esc(src)}" class="thumb" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.alt='Missing';this.style.opacity='0.35';">`;
+}
+
 function flash(msg, kind = 'success') {
   flashHost.innerHTML = `<div class="flash ${kind}">${esc(msg)}</div>`;
   setTimeout(() => { if (flashHost.textContent.trim() === msg) flashHost.innerHTML = ''; }, 4000);
@@ -114,7 +120,7 @@ function renderDashboard() {
 function renderHero() {
   const rows = listByOrder(data.hero_slides).map((s) => `
     <tr>
-      <td data-label="Preview">${s.image_url ? `<img src="${esc(s.image_url)}" class="thumb" alt="">` : '—'}</td>
+      <td data-label="Preview">${thumbHtml(s.image_url)}</td>
       <td data-label="Title">${esc(s.title || '—')}</td>
       <td data-label="Order">${esc(s.order)}</td>
       <td data-label="Actions"><button class="btn btn-danger btn-sm" data-del="${s.id}">Delete</button></td>
@@ -173,7 +179,7 @@ function renderPageHeroes() {
       const url = data.settings[key] || '';
       return `<div class="card">
         <h3>${esc(label)}</h3>
-        ${url ? `<img src="${esc(url)}" alt="" style="max-width:320px;max-height:160px;object-fit:cover;border-radius:8px;display:block;margin-bottom:.75rem;">` : `<p style="color:var(--text-muted);margin-bottom:.75rem;">Using default image.</p>`}
+        ${url ? `<img src="${esc(url)}" alt="" loading="lazy" referrerpolicy="no-referrer" style="max-width:320px;max-height:160px;object-fit:cover;border-radius:8px;display:block;margin-bottom:.75rem;" onerror="this.alt='Missing';this.style.opacity='0.35';">` : `<p style="color:var(--text-muted);margin-bottom:.75rem;">Using default image.</p>`}
         <form data-hero-key="${key}">
           <div class="form-row">
             <div><label>Image (file)</label><input type="file" name="image" accept="image/*"></div>
@@ -243,7 +249,7 @@ function renderRoomEdit(room) {
 function renderRoomImages(room) {
   const rows = listByOrder(room.images || []).map((img) => `
     <tr>
-      <td>${img.image_url ? `<img src="${esc(img.image_url)}" class="thumb" alt="">` : '—'}</td>
+      <td>${thumbHtml(img.image_url)}</td>
       <td>${esc(img.caption || '—')}</td>
       <td>${esc(img.order)}</td>
       <td><button class="btn btn-danger btn-sm" data-del="${img.id}">Delete</button></td>
@@ -363,7 +369,7 @@ function simpleCollection(opts) {
   const fields = opts.fields;
   const rows = listByOrder(data[key]).map((item) => `
     <tr>
-      ${opts.columns.map((c) => `<td>${c === 'image_url' && item[c] ? `<img src="${esc(item[c])}" class="thumb" alt="">` : esc(item[c] ?? '—')}</td>`).join('')}
+      ${opts.columns.map((c) => `<td>${c === 'image_url' ? thumbHtml(item[c]) : esc(item[c] ?? '—')}</td>`).join('')}
       <td><button class="btn btn-danger btn-sm" data-del="${item.id}">Delete</button></td>
     </tr>`).join('') || `<tr><td colspan="${opts.columns.length + 1}" style="color:var(--text-muted);">None yet.</td></tr>`;
   viewEl.innerHTML = `
@@ -595,7 +601,7 @@ function renderMenu() {
     }
   }
   const rows = listByOrder(data.restaurant_menu).map((c) => `<tr>
-    <td>${c.image_url ? `<img src="${esc(c.image_url)}" class="thumb" alt="">` : '—'}</td>
+    <td>${thumbHtml(c.image_url)}</td>
     <td>${esc(c.name)}</td>
     <td>${c.items?.length || 0}</td>
     <td class="actions">

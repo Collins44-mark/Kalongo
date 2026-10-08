@@ -59,7 +59,7 @@
         table { width: 100%; border-collapse: collapse; }
         th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
         th { color: var(--text-muted); font-weight: 500; font-size: 0.85rem; }
-        .thumb { width: 60px; height: 40px; object-fit: cover; border-radius: 6px; loading: lazy; }
+        .thumb { width: 60px; height: 40px; object-fit: cover; border-radius: 6px; background: var(--border); display: block; }
         .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
         /* Mobile Header */
         .mobile-header { display: none; position: fixed; top: 0; left: 0; right: 0; background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 0.75rem 1rem; z-index: 1000; align-items: center; justify-content: space-between; }

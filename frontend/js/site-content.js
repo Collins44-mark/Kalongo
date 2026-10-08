@@ -120,16 +120,22 @@
     return max + 1;
   }
 
+  function cloudName() {
+    return cfg().cloudinaryCloudName || 'dae3rpnmg';
+  }
+
+  function uploadPreset() {
+    return cfg().cloudinaryUploadPreset || 'kalongo_unsigned';
+  }
+
   async function uploadToCloudinary(file, resourceType) {
-    const c = cfg();
-    const cloud = c.cloudinaryCloudName;
-    const preset = c.cloudinaryUploadPreset;
+    const cloud = cloudName();
+    const preset = uploadPreset();
     if (!cloud || !preset) throw new Error('Cloudinary unsigned upload preset is not configured.');
     const type = resourceType || (file.type && file.type.startsWith('video/') ? 'video' : 'image');
     const form = new FormData();
     form.append('file', file);
     form.append('upload_preset', preset);
-    form.append('folder', 'kalongo');
     const res = await fetch(`https://api.cloudinary.com/v1_1/${cloud}/${type}/upload`, {
       method: 'POST',
       body: form,
@@ -143,8 +149,8 @@
 
   async function publish(data) {
     const c = cfg();
-    const cloud = c.cloudinaryCloudName;
-    const preset = c.cloudinaryUploadPreset;
+    const cloud = cloudName();
+    const preset = uploadPreset();
     const pid = c.contentPublicId || 'kalongo/site-content';
     if (!cloud || !preset) {
       throw new Error('Set CLOUDINARY_UPLOAD_PRESET so admin changes can be published (unsigned Cloudinary preset).');
@@ -154,8 +160,6 @@
     form.append('file', blob, 'site-content.json');
     form.append('upload_preset', preset);
     form.append('public_id', pid);
-    form.append('overwrite', 'true');
-    form.append('invalidate', 'true');
     const res = await fetch(`https://api.cloudinary.com/v1_1/${cloud}/raw/upload`, {
       method: 'POST',
       body: form,

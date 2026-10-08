@@ -12,6 +12,6 @@ window.KALONGO_CONFIG = {
     "appId": ""
   },
   "cloudinaryCloudName": "dae3rpnmg",
-  "cloudinaryUploadPreset": "",
+  "cloudinaryUploadPreset": "kalongo_unsigned",
   "contentPublicId": "kalongo/site-content"
 };
