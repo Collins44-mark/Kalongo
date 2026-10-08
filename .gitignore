@@ -23,7 +23,7 @@ npm-debug.log*
 *.temp
 
 # Python
-backend/venv/
+venv/
 __pycache__/
 *.py[cod]
 .env

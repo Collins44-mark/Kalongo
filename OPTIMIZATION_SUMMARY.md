@@ -102,7 +102,7 @@
 - Breakpoints: 360px, 480px, 768px, 1024px
 
 ### Admin Panel
-- Navigate to http://localhost:5001/admin
+- Navigate to `/admin`
 - Pages now load faster with pagination
 - Settings are cached for instant access
 - Mobile-friendly interface for on-the-go management

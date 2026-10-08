@@ -54,7 +54,7 @@
 - Better user experience
 
 **Fixes Applied**:
-- **Backend** (`backend/templates/admin/base.html`):
+- **Admin** (`frontend/admin/`):
   
   **Mobile Header**:
   - Fixed header at top with logo on left, menu toggle on right
@@ -179,7 +179,7 @@
 
 1. `frontend/js/api.js` - Fixed room and review image rendering
 2. `frontend/css/style.css` - Updated room slide CSS
-3. `backend/templates/admin/base.html` - Complete mobile UI/UX redesign
+3. `frontend/admin/` - Admin mobile UI
 
 ---
 

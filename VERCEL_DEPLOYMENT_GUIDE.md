@@ -83,12 +83,7 @@ For static sites:
 
 ### Similar Mistakes You Might Make
 
-1. **Backend API calls**: Your frontend calls `/api/*` endpoints. If your backend isn't deployed on Vercel, these will fail. You'll need to:
-   - Deploy backend separately (e.g., Railway, Render, Heroku)
-   - Update `api.js` to point to the backend URL
-   - Or use Vercel serverless functions (more complex)
-
-2. **Missing static assets**: If you reference images/CSS/JS with absolute paths that don't match your routing, they'll 404
+1. **Missing static assets**: If you reference images/CSS/JS with absolute paths that don't match your routing, they'll 404
 
 3. **Build configuration**: If you add a build step later (e.g., bundling), you'll need to update `buildCommand` in `vercel.json`
 
@@ -111,11 +106,9 @@ For static sites:
 - ✅ Works perfectly for static HTML/CSS/JS
 
 **Cons:**
-- ❌ Backend must be deployed separately
-- ❌ API calls need CORS configuration
-- ❌ Two separate deployments to manage
+- ❌ Requires `vercel.json` because files live in `frontend/`
 
-**Best for**: Static frontends with separate backend (your current setup)
+**Best for**: This static site plus `/api/publish`
 
 ---
 
@@ -128,44 +121,9 @@ For static sites:
 
 **Cons:**
 - ❌ Requires restructuring your project
-- ❌ Mixes frontend and backend files at root
 - ❌ Less organized project structure
 
-**Best for**: Simple projects without backend separation
-
----
-
-### Option 3: Vercel Serverless Functions for Backend
-**What**: Convert Flask backend to Vercel serverless functions
-
-**Pros:**
-- ✅ Single deployment
-- ✅ No CORS issues
-- ✅ Unified hosting
-
-**Cons:**
-- ❌ Requires significant refactoring
-- ❌ Flask → Serverless function conversion
-- ❌ Database connection pooling challenges
-- ❌ More complex deployment
-
-**Best for**: New projects designed for serverless from the start
-
----
-
-### Option 4: Monorepo with Multiple Projects
-**What**: Configure Vercel to deploy frontend and backend as separate projects
-
-**Pros:**
-- ✅ Clean separation
-- ✅ Independent deployments
-- ✅ Different scaling for frontend/backend
-
-**Cons:**
-- ❌ More complex Vercel setup
-- ❌ Two deployment pipelines
-
-**Best for**: Large projects with clear frontend/backend boundaries
+**Best for**: Simple static projects
 
 ---
 
@@ -188,41 +146,7 @@ For static sites:
    - Verify CSS and JS files load
    - Test navigation to other pages
 
-3. **Handle Backend API**:
-   - Your frontend expects `/api/*` endpoints
-   - You have two options:
-     
-     **Option A**: Deploy backend separately (Railway, Render, etc.)
-     - Update `frontend/js/api.js` line 12 to use your backend URL:
-     ```javascript
-     return 'https://your-backend-url.com/api';
-     ```
-     
-     **Option B**: Use environment variables for API URL:
-     ```javascript
-     const API_BASE_URL = process.env.API_URL || '/api';
-     ```
-
-### Backend Deployment Options
-
-Since your backend is Flask (Python), consider:
-
-1. **Railway** (Recommended): Easy Python deployment
-   - Connect GitHub repo
-   - Set environment variables
-   - Auto-deploys on push
-
-2. **Render**: Similar to Railway
-   - Free tier available
-   - PostgreSQL support
-
-3. **Heroku**: Traditional option
-   - More expensive
-   - Well-documented
-
-4. **Vercel Serverless**: Convert Flask routes to serverless functions
-   - Most complex option
-   - Requires significant refactoring
+3. **Catalog writes**: Admin Save posts to `/api/publish` (signed Cloudinary overwrite). Media uploads go directly to Cloudinary with `kalongo_unsigned`.
 
 ## 📝 Configuration File Explained
 
@@ -255,7 +179,7 @@ After deployment, verify:
 - [ ] JS files load (`/js/api.js`, `/js/script.js`)
 - [ ] Images from Cloudinary load (external, should work)
 - [ ] Navigation between pages works
-- [ ] API calls work (if backend is deployed)
+- [ ] `/admin` loads and `/api/publish` exists
 
 ## 🆘 Troubleshooting
 
@@ -265,12 +189,6 @@ After deployment, verify:
 2. **Verify vercel.json**: Make sure it's in the project root
 3. **Check Vercel logs**: `vercel logs` to see what's happening
 4. **Test locally**: `vercel dev` to test before deploying
-
-### API Calls Failing?
-
-1. **CORS**: Ensure backend allows requests from your Vercel domain
-2. **API URL**: Check that `api.js` uses correct production URL
-3. **Backend health**: Verify backend is deployed and running
 
 ### Assets Not Loading?
 

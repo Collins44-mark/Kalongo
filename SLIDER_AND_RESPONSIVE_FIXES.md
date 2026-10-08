@@ -52,7 +52,7 @@
 - Forms and buttons needed better mobile styling
 
 **Fixes Applied**:
-- **Backend** (`backend/templates/admin/base.html`):
+- **Admin** (`frontend/admin/`):
   - **Mobile Menu Toggle**: Added hamburger menu button for mobile devices
   - **Sidebar**: Made sidebar collapsible on mobile, sticky when open
   - **Tables**: 
@@ -143,7 +143,7 @@ function startReviewSlider() {
 ## Files Modified
 
 1. `frontend/js/script.js` - Fixed room and review sliders
-2. `backend/templates/admin/base.html` - Added comprehensive mobile responsiveness
+2. `frontend/admin/` - Admin mobile layout
 
 ---
 

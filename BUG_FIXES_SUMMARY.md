@@ -6,16 +6,11 @@
 **Problem**: Some room images from Cloudinary weren't displaying on the website.
 
 **Root Cause**: 
-- Backend was returning images with null or empty `image_url` values
+- Some room records had null or empty `image_url` values
 - Frontend wasn't handling missing images gracefully
 - No filtering of invalid image URLs
 
 **Fixes Applied**:
-- **Backend** (`backend/app.py`):
-  - Added filtering to exclude images with null/empty URLs in `/api/rooms` endpoint
-  - Only return images where `image_url` exists and is not empty
-  - Added fallback values for missing room data (description, capacity)
-  
 - **Frontend** (`frontend/js/api.js`):
   - Filter out invalid images before rendering
   - Use `<img>` tags instead of just background-image for better error handling
@@ -37,11 +32,6 @@
 - Activities without names were causing rendering issues
 
 **Fixes Applied**:
-- **Backend** (`backend/app.py`):
-  - Filter out activities without names in `/api/activities` endpoint
-  - Only return activities with valid data
-  - Handle null/empty image URLs properly
-  
 - **Frontend** (`frontend/js/api.js`):
   - Improved container detection (tries `.activities-list-container` first)
   - Better error messages when container not found
@@ -58,17 +48,11 @@
 **Problem**: Reviews weren't showing up on the homepage.
 
 **Root Cause**:
-- Backend was returning reviews with null/empty data
+- Some reviews had null/empty data
 - No filtering of invalid reviews
 - Missing fallback values
 
 **Fixes Applied**:
-- **Backend** (`backend/app.py`):
-  - Filter out reviews without customer_name or quote in `/api/reviews` endpoint
-  - Added fallback values: "Guest" for missing names, 5 for missing ratings
-  - Handle null image URLs properly
-  - Only return reviews with valid data
-  
 - **Frontend** (`frontend/js/api.js`):
   - Already had good error handling, but now receives cleaner data
   - Reviews with missing images still display (image is optional)
@@ -103,7 +87,6 @@
 **Problem**: Invalid Cloudinary URLs were causing display issues.
 
 **Fixes Applied**:
-- **Backend**: All endpoints now filter out null/empty image URLs
 - **Frontend**: 
   - Added `onerror` handlers on all images
   - Images hide gracefully if they fail to load
@@ -115,34 +98,6 @@
 ---
 
 ## Technical Details
-
-### Backend Changes (`backend/app.py`)
-
-1. **`/api/rooms`**:
-   ```python
-   # Filter out images with null/empty URLs
-   valid_images = [
-       {...} for img in room.images
-       if img.image_url and img.image_url.strip()
-   ]
-   ```
-
-2. **`/api/activities`**:
-   ```python
-   # Only include activities with names
-   if a.name:
-       result.append({...})
-   ```
-
-3. **`/api/reviews`**:
-   ```python
-   # Only include reviews with valid data
-   if r.customer_name or r.quote:
-       result.append({...})
-   ```
-
-4. **`/api/homepage-data`**:
-   - Same filtering applied to rooms and reviews in combined endpoint
 
 ### Frontend Changes
 
@@ -182,9 +137,8 @@
 
 ## Files Modified
 
-1. `backend/app.py` - All API endpoints improved with data validation
-2. `frontend/js/api.js` - Improved rendering logic for rooms, activities, reviews
-3. `frontend/js/script.js` - Fixed WhatsApp form submission
+1. `frontend/js/api.js` - Improved rendering logic for rooms, activities, reviews
+2. `frontend/js/script.js` - Fixed WhatsApp form submission
 
 ---
 
